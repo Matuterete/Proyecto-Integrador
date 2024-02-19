@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
 
 const TOGGLE_THEME = "TOGGLE_THEME";
 
@@ -19,10 +19,12 @@ const reducer = (state, action) => {
 };
 
 const userHook = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return [state, dispatch,];
 };
 
 export {
   userHook,
   TOGGLE_THEME,
-  reducer
 };

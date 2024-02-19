@@ -36,5 +36,20 @@
     margin-right: 40px; 
   }
 
+  .Logo-ProT{ 
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 20px;
+    padding: 20px;
+   
+
+  }
+
+  .navbar button{
+    display: inline-block;
+    justify-content: space-between;
+    margin-right: 3%;
+  }
 
  

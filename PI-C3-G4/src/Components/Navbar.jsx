@@ -31,7 +31,10 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
+        <button className ='btn-Login'>Iniciar Sesión</button>
+        <button className ='btn-Login'>Registrarse</button>
         <button className='btn-theme' onClick={handleTheme}><img src={state.theme === 'light' ? Moon : Sun}></img></button>
+        
       </nav>
     );
   };

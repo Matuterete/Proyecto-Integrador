@@ -1,14 +1,14 @@
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext } from 'react';
 import { userHook } from '../Reducers/Reducer';
 
 const Context = createContext();
 
 const AppProvider = ({ children }) => {
-  const [state,  dispatch, fetchDataDetail ] = userHook();
+  const [state,  dispatch] = userHook();
   
 
   return (
-    <Context.Provider value={{ state, dispatch, fetchDataDetail}}>
+    <Context.Provider value={{ state, dispatch}}>
       {children}
     </Context.Provider>
   );
