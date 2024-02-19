@@ -1,8 +1,9 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Navbar from './Components/Navbar.jsx'
-import Home from './Routes/Home.jsx'
-import { useContext } from './Utils/Context.jsx'
+import Navbar from './Components/Navbar'
+import Footer from "./Routes/Footer";
+import Home from './Routes/Home'
+import { useContext } from './Utils/Context'
 import './App.css'
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='*' element={() => <h1>Not Found</h1>} />
         </Routes>
+        <Footer></Footer>
       </div>
     </Router>
   )

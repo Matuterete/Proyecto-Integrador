@@ -1,0 +1,34 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #122E4F;
+  color: var(--color-text);
+  padding: 0, 5%;
+  width: 100vw;
+  height: 150px;
+}
+
+.footer-logo {
+  padding-left: 60px;
+}
+
+.footer-copyright {
+  padding-right: 60px;
+}
+
+.footer-iconos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-iconos img {
+  padding: 10px;
+}
+
+.copyright {
+  color: white;
+  font-size: x-large;
+  font-weight: bold;
+}

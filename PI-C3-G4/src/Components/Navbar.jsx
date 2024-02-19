@@ -9,35 +9,37 @@ import './styles/Navbar.css';
 
 
 const Navbar = () => {
-    const { state, dispatch } = useContext();
-  
-    const routes = [
-      { path: '/home', name: 'Home' },
+  const { state, dispatch } = useContext();
 
-    ]
-  
-    const handleTheme = () => {
-      dispatch({ type: TOGGLE_THEME });
-    }
-    return (
-      <nav className='navbar'>
-        <div className='Logo-ProT'>
-        <img src={Logo}></img>
-        </div>
-        <ul>
-          {routes.map((route, index) => (
-            <li key={index}>
-              <Link to={route.path}>{route.name}</Link>
-            </li>
-          ))}
-        </ul>
-        <div className='buttons'>
-        <button className ='btn-Login'>Iniciar Sesión</button>
-        <button className ='btn-Login'>Registrarse</button>
-        <button className='btn-theme' onClick={handleTheme}><img src={state.theme === 'light' ? Moon : Sun}></img></button>
-        </div>
-      </nav>
-    );
-  };
-  
-  export default Navbar;
+  const routes = [
+    { path: '/home', name: 'Home' },
+
+  ]
+
+  const handleTheme = () => {
+    dispatch({ type: TOGGLE_THEME });
+  }
+  return (
+    <nav className='navbar'>
+      <div className='navbar-logo'>
+        <img src={Logo} width='308px'></img>
+      </div>
+      <ul>
+        {routes.map((route, index) => (
+          <li key={index}>
+            <Link to={route.path}>{route.name}</Link>
+          </li>
+        ))}
+      </ul>
+      <div className='buttons'>
+        <button className='btn-login'>Iniciar Sesión</button>
+        <button className='btn-registro'>Registrarse</button>
+        <button className='btn-theme' onClick={handleTheme}>
+          <img src={state.theme === 'light' ? Moon : Sun} width='25px'></img>
+        </button>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;

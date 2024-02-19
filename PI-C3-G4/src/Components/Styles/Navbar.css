@@ -2,38 +2,55 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #c2c1c1;
+  background-color: #F9F7F7;
   color: var(--color-text);
-  padding: 0,5%;
-  width:100vw;
+  padding: 0, 5%;
+  width: 100vw;
+  height: 200px;
 }
-.navbar button{
+
+.navbar button {
   margin: 1vw;
   text-align: right;
-  
+
 }
-.btn-theme img{
+
+.navbar-logo{
+  padding-left: 60px;
+}
+
+.btn-theme {
+  background-color: #4073AF;
+  padding: 8px;
+}
+
+.btn-theme img {
   border-radius: 0px;
 }
-  
-  .navbar a {
-    text-decoration: none;
-    color: inherit;
-    transition: color 0.3s ease;
-  }
-  
-  .navbar a:hover {
-    color: var(--color-accent);
-  }
-  
-  .navbar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-  }
-  
 
- 
+.navbar a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
 
- 
+.navbar a:hover {
+  color: var(--color-accent);
+}
+
+.navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.btn-login {
+  background-color: #122E4F;
+  color: white;
+}
+
+.btn-registro {
+  background-color: #4073AF;
+  color: white;
+}
