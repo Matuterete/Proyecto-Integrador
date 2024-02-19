@@ -4,10 +4,14 @@
   align-items: center;
   background-color: #c2c1c1;
   color: var(--color-text);
-  padding: 10px 5px;
+  padding: 0,5%;
+  width:100vw;
 }
-
-
+.navbar button{
+  margin: 1vw;
+  text-align: right;
+  
+}
 .btn-theme img{
   border-radius: 0px;
 }
@@ -15,7 +19,6 @@
   .navbar a {
     text-decoration: none;
     color: inherit;
-    padding: 0 5px;
     transition: color 0.3s ease;
   }
   
@@ -28,28 +31,9 @@
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: space-between;
   }
   
-  .navbar li:not(:last-child) {
-    align-items: center;
-    margin-right: 40px; 
-  }
 
-  .Logo-ProT{ 
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin: 20px;
-    padding: 20px;
-   
-
-  }
-
-  .navbar button{
-    display: inline-block;
-    justify-content: space-between;
-    margin-right: 3%;
-  }
+ 
 
  
