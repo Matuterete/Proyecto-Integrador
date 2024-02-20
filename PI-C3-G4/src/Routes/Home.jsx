@@ -3,6 +3,27 @@ import Card from '../Components/Card';
 import "../Components/Styles/Home.css"
 
 const Home = () => {
+  // ARRAY PARA CATEGORIAS
+  const [categories, setCategories] = useState([
+    {
+      id: 1,
+      name: 'Eventos grandes',
+      description: 'Descripción de eventos grandes',
+      photo: 'https://via.placeholder.com/150'
+    },
+    {
+      id: 2,
+      name: 'Eventos medianos',
+      description: 'Descripción de eventos medianos',
+      photo: 'https://via.placeholder.com/150'
+    },
+    {
+      id: 3,
+      name: 'Eventos pequeños',
+      description: 'Descripción de eventos pequeños',
+      photo: 'https://via.placeholder.com/150'
+    }
+  ]);
 
   // ARRAY PARA SIMULAR LLAMADO A API
   const [products, setProducts] = useState([
@@ -86,10 +107,21 @@ const Home = () => {
   }, []);
 
   return (
-    <div className=''>
-
-      <div className='cardGrid'>
-        {productsRandom.map(product => <Card product={product} key={product.id} />)}
+    <div className='body'>
+      <div className="buscador">
+        <input className="buscador-input" type="search" placeholder="Buscador" />
+      </div>
+      <div>
+        <p className='cardTitle'>Categorias</p>
+        <div className='cardGrid'>
+          {categories.map(product => <Card product={product} key={product.id} />)}
+        </div>
+      </div>
+      <div>
+        <p className='cardTitle'>Recomendados</p>
+        <div className='cardGrid'>
+          {productsRandom.map(product => <Card product={product} key={product.id} />)}
+        </div>
       </div>
 
     </div>

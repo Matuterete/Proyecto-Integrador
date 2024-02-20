@@ -1,12 +1,13 @@
 .navbar {
   display: flex;
+  position:fixed;
   justify-content: space-between;
   align-items: center;
   background-color: #F9F7F7;
   color: var(--color-text);
   padding: 0, 5%;
   width: 100vw;
-  height: 200px;
+  height: 120px;
 }
 
 .navbar button {
@@ -54,3 +55,10 @@
   background-color: #4073AF;
   color: white;
 }
+
+
+/*Media query
+Si la pantalla es menor o igual a 480px aplica esta reglas 
+@media (max-width:480px) {
+  .art2_header {
+      display: none;*/
