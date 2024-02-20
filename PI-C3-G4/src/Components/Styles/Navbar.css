@@ -54,3 +54,22 @@
   background-color: #4073AF;
   color: white;
 }
+.btn-administracion {
+  background-color: #122E4F;
+  color: white;
+}
+
+.btn-agregar-producto {
+  background-color: #4073AF;
+  color: white;
+}
+
+
+.agregarproducto {
+  display: flex;
+  align-items: center;
+}
+
+.btn-agregar-producto {
+  margin-left: 10px;
+}
