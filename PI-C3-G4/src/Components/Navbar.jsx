@@ -13,32 +13,36 @@ const Navbar = () => {
 
   const routes = [
     { path: '/home', name: 'Home' },
-
+    { path: '/Products', name: 'Products' },
   ]
 
   const handleTheme = () => {
     dispatch({ type: TOGGLE_THEME });
   }
   return (
-    <nav className='navbar'>
-      <div className='navbar-logo'>
-        <img src={Logo} width='308px'></img>
-      </div>
-      <ul>
-        {routes.map((route, index) => (
-          <li key={index}>
-            <Link to={route.path}>{route.name}</Link>
-          </li>
-        ))}
-      </ul>
-      <div className='buttons'>
-        <button className='btn-login'>Iniciar Sesión</button>
-        <button className='btn-registro'>Registrarse</button>
-        <button className='btn-theme' onClick={handleTheme}>
-          <img src={state.theme === 'light' ? Moon : Sun} width='25px'></img>
-        </button>
-      </div>
-    </nav>
+    <section className='header'>
+      <nav className='navbar'>
+        <div className='navbar-logo'>
+          <Link to={routes[0].path}>
+            <img src={Logo} width='308px'></img>
+          </Link>
+        </div>
+        <ul>
+          {routes.map((route, index) => (
+            <li key={index}>
+              <Link to={route.path}>{route.name}</Link>
+            </li>
+          ))}
+        </ul>
+        <div className='buttons'>
+          <button className='btn-login'>Iniciar Sesión</button>
+          <button className='btn-registro'>Registrarse</button>
+          <button className='btn-theme' onClick={handleTheme}>
+            <img src={state.theme === 'light' ? Moon : Sun} width='25px'></img>
+          </button>
+        </div>
+      </nav>
+    </section>
   );
 };
 
