@@ -85,11 +85,11 @@
   }
 
   .navbar {
-    width: 100%;
+    width: 100vw;
     height: auto;
   }
     .navbar-logo {
-        width: 75%;
+        width: 75vw;
         height: auto; 
     }
 
