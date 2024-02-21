@@ -1,22 +1,29 @@
 .navbar {
   display: flex;
+  position:fixed;
   justify-content: space-between;
   align-items: center;
   background-color: #F9F7F7;
   color: var(--color-text);
   padding: 0, 5%;
   width: 100vw;
-  height: 200px;
+  height: auto;
 }
 
-.navbar button {
-  margin: 1vw;
-  text-align: right;
+.buttons {
+  display: flex; 
+  align-items: center;
+  padding-right: 15px;
+}
 
+.buttons button {
+  margin: 0 10px;
+  width: auto;
 }
 
 .navbar-logo{
-  padding-left: 60px;
+  height: auto;
+  width: 100vw;
 }
 
 .btn-theme {
@@ -26,6 +33,10 @@
 
 .btn-theme img {
   border-radius: 0px;
+}
+
+.btn-login {
+  white-space: nowrap;
 }
 
 .navbar a {
@@ -54,6 +65,7 @@
   background-color: #4073AF;
   color: white;
 }
+
 .btn-administracion {
   background-color: #122E4F;
   color: white;
@@ -73,3 +85,71 @@
 .btn-agregar-producto {
   margin-left: 10px;
 }
+
+
+
+  @media (min-width: 481px) {
+    nav#mobile {
+      display: none;
+    }
+  }
+
+
+@media (max-width: 480px) {
+
+  .desktop-nav {
+      display: none;
+  }
+
+  .navbar button{
+    display: none;
+  }
+
+  .navbar {
+    width: 100%;
+    height: auto;
+  }
+    .navbar-logo {
+        width: 75%;
+        height: auto; 
+    }
+
+  .mobile-nav {
+      display: block;
+  }
+
+  #menu-toggle {
+    color: black;
+      display: block;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+  }
+
+  #mobile-menu {
+    display: none;
+    width: 100%;
+    max-width: 20%; 
+    position: absolute;
+    top: 100%;
+    left: 78%;
+    background-color: #122E4F;
+    border: 1% solid #ccc;
+}
+
+#mobile-menu.active {
+    display: block; 
+}
+  
+.mobile-menu-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobile-menu-items a {
+  margin-bottom: 10px;
+}
+}
+
