@@ -7,6 +7,7 @@ import FormProducto from './Components/FormProducto'
 import AgregarProducto from './Components/AgregarProducto'
 import { useContext } from './Utils/Context'
 import './App.css'
+import Detail from './Routes/Detail';
 
 function App() {
   const { state } = useContext()
@@ -20,6 +21,7 @@ function App() {
           <Route path='/AgregarProducto' element={<AgregarProducto />} />
           <Route path='/FormProducto' element={<FormProducto />} />
           <Route path='*' element={() => <h1>Not Found</h1>} />
+          <Route path="/detail/:id" element={<Detail/>}/>
         </Routes>
         <Footer></Footer>
       </div>
