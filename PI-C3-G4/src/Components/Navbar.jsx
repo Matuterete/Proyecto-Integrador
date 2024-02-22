@@ -40,15 +40,23 @@ const Navbar = () => {
             <img src={Logo} alt="Logo"></img>
           </Link>
         </div>
-        
-      <nav id='mobile'>
-        <button id="menu-toggle" onClick={toggleMobileMenu}>☰</button>
-        <div id="mobile-menu" className={isMobileMenuOpen ? 'active' : ''}>
-        <div className="mobile-menu-items">
+
+        <nav id='mobile'>
+          <button id="menu-toggle" onClick={toggleMobileMenu}>☰</button>
+          <div id="mobile-menu" className={isMobileMenuOpen ? 'active' : ''}>
+            <div className="mobile-menu-items">
               {routes.map((route, index) => (<a key={index} href={route.path}>{route.name}</a>))}
-        </div>
-        </div>
-      </nav>
+            </div>
+          </div>
+        </nav>
+
+        <ul className='menu'>
+          {routes.map((route, index) => (
+            <li key={index}>
+              <Link to={route.path}>{route.name}</Link>
+            </li>
+          ))}
+        </ul>
 
         <div className='buttons'>
           <button className='btn-login'>Iniciar Sesión</button>
