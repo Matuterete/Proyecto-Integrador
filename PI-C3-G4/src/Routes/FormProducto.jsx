@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../Components/Card';
-import "../Components/Styles/Home.css";
 import { useNavigate } from "react-router-dom";
 
 
@@ -30,49 +29,36 @@ function FormProducto() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(producto);
-    // Aquí podrías enviar los datos a un servidor o hacer cualquier otra acción con ellos
+    var productList = JSON.parse(localStorage.getItem('productos'))
+    if (!productList) productList = []
+    productList.push(producto)
+    localStorage.setItem('productos', JSON.stringify(productList))
   };
 
-
-
   return (
-    <div className="FormProducto">
+    <div className="Form">
       <h1>Formulario de Producto</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          Nombre del Producto:
-          <input
-            type="text"
-            name="nombre"
-            value={producto.nombre}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Precio:
-          <input
-            type="number"
-            name="precio"
-            value={producto.precio}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Descripción:
-          <textarea
-            name="descripcion"
-            value={producto.descripcion}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Imagen:
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
-        </label>
+        <div className="form-group">
+          <label>Nombre del Producto:
+            <input type="text" name="nombre" value={producto.nombre} onChange={handleChange} />
+          </label>
+        </div>
+        <div className="form-group">
+          <label>Precio:
+            <input type="number" name="precio" value={producto.precio} onChange={handleChange} />
+          </label>
+        </div>
+        <div className="form-group">
+          <label>Descripción:
+            <textarea name="descripcion" value={producto.descripcion} onChange={handleChange} />
+          </label>
+        </div>
+        <div className="form-group">
+          <label>Imagen:
+            <input type="file" accept="image/*" onChange={handleImageChange} />
+          </label>
+        </div>
         <button type="submit">Guardar Producto</button>
       </form>
     </div>

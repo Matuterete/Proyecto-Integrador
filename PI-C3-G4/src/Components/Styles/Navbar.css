@@ -23,7 +23,6 @@
 
 .navbar-logo{
   height: auto;
-  width: 100vw;
 }
 
 .btn-theme {
@@ -54,6 +53,12 @@
   margin: 0;
   padding: 0;
   display: flex;
+  justify-content: space-between;
+}
+
+.navbar li:not(:last-child) {
+  align-items: center;
+  margin-right: 40px; 
 }
 
 .btn-login {
@@ -86,6 +91,10 @@
   margin-left: 10px;
 }
 
+.menu {
+  display: flex;
+  align-items: center;
+}
 
 
   @media (min-width: 481px) {
