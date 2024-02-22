@@ -5,6 +5,7 @@ import Footer from "./Routes/Footer";
 import Home from './Routes/Home'
 import { useContext } from './Utils/Context'
 import './App.css'
+import Detail from './Routes/Detail';
 
 function App() {
   const { state } = useContext()
@@ -16,6 +17,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/home' element={<Home />} />
           <Route path='*' element={() => <h1>Not Found</h1>} />
+          <Route path="/detail/:id" element={<Detail/>}/>
         </Routes>
         <Footer></Footer>
       </div>
