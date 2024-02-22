@@ -201,7 +201,7 @@ const initialState = {
     - Dimmer.<br/>
     - Posibilidad de trabajo sincronizado mediante conexión Maestro-esclavo.
     `,
-      photo: 'src/assets/products/ID 11.1.jpg'
+      photo: 'src/assets/products/ID 11.1.jpeg'
     },
     {
       id: 12,
