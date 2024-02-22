@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Card from '../Components/Card';
-import "../Components/Styles/Products.css";
+import Card from './Card';
+import "../Components/Styles/Home.css";
 import { useNavigate } from "react-router-dom";
 
 
@@ -105,7 +105,7 @@ const Agregarproducto = () =>{
 
 return (
     
-  <div className='productos'>
+  <div className=''>
 
     <div className='agregarproducto'>
     <button className='btn-agregar-producto' onClick ={Agregarproducto}>Agregar Producto</button>

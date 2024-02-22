@@ -1,10 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './Components/Navbar'
-import Footer from "./Routes/Footer"
+import Footer from './Components/Footer'
 import Home from './Routes/Home'
-import FormProducto from './Routes/FormProducto'
-import AgregarProducto from './Routes/AgregarProducto'
+import FormProducto from './Components/FormProducto'
+import AgregarProducto from './Components/AgregarProducto'
 import { useContext } from './Utils/Context'
 import './App.css'
 

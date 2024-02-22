@@ -5,8 +5,8 @@
   background-color: #122E4F;
   color: var(--color-text);
   padding: 0, 5%;
-  width: 100vw;
-  height: 150px;
+  width: 100%;
+  height: auto;
 }
 
 .footer-logo {
@@ -32,3 +32,29 @@
   font-size: x-large;
   font-weight: bold;
 }
+
+@media (max-width: 480px) {
+  .footer{
+    display:block;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: auto;
+  }
+  .footer-logo{
+    padding: 0;
+    padding-top: 5%;
+  }
+  .footer-copyright{
+    padding: 0;
+    padding-bottom: 5%;
+  }
+.footer-iconos{
+  display:block;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  margin-top: 5%;
+}
+  }
