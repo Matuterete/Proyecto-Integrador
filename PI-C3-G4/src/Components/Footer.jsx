@@ -12,8 +12,9 @@ const Footer = () => {
 
   return (
     <footer className='footer'>
+      
       <div className='footer-logo'>
-        <img width='308px' src={Logo}></img>
+        <img src={Logo}></img>
       </div>
       
       <div className='footer-iconos'>
