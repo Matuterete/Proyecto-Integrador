@@ -10,12 +10,12 @@ const Card = (product) => {
 
             <div className='card'>
                 <div>
-                    <img src="https://via.placeholder.com/150" alt="" />
+                    <img src={product.product.photo} alt="" />
                 </div>
 
-                <h2>{product.product.nombre}</h2>
+                <h2>{product.product.name}</h2>
                 <h2>{product.product.descripcion}</h2>
-                <h2>USD: {product.product.precio}</h2>
+                <h2>USD: {product.product.price}</h2>
             </div>
 
         </Link>
