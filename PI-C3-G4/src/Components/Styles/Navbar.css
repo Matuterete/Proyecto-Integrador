@@ -3,10 +3,10 @@
   position:fixed;
   justify-content: space-between;
   align-items: center;
+  text-align: center;
   background-color: #F9F7F7;
   color: var(--color-text);
-  padding: 0, 5%;
-  width: 100vw;
+  width: 100%;
   height: auto;
 }
 
@@ -23,6 +23,7 @@
 
 .navbar-logo{
   height: auto;
+  padding-left: 60px;
 }
 
 .btn-theme {
@@ -40,7 +41,7 @@
 
 .navbar a {
   text-decoration: none;
-  color: inherit;
+  color: black;
   transition: color 0.3s ease;
 }
 
@@ -97,14 +98,14 @@
 }
 
 
-  @media (min-width: 481px) {
+  @media (min-width: 761px) {
     nav#mobile {
       display: none;
     }
   }
 
 
-@media (max-width: 480px) {
+@media (max-width: 760px) {
 
   .desktop-nav {
       display: none;
@@ -114,13 +115,21 @@
     display: none;
   }
 
+  .navbar ul{  
+  display: none;
+}
   .navbar {
-    width: 100%;
+    width: 100vw;
     height: auto;
   }
     .navbar-logo {
-        width: 80%;
+        width: 70vw;
         height: auto; 
+        padding-left: 8%;
+    }
+    .navbar img{
+      width: 75vw;
+      
     }
 
   .mobile-nav {
