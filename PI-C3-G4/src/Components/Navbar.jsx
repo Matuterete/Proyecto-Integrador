@@ -61,7 +61,7 @@ const Navbar = () => {
         <div className='buttons'>
           <button className='btn-login'>Iniciar Sesión</button>
           <button className='btn-registro'>Registrarse</button>
-          <button className='btn-agregar-producto' onClick ={Agregarproducto}>Agregar Producto</button>
+          <button className='btn-agregar-producto' onClick ={Agregarproducto}>Admin Productos</button>
           <button className='btn-theme' onClick={handleTheme}>
             <img src={state.theme === 'light' ? Moon : Sun} width='25px' alt="Theme"></img>
           </button>
