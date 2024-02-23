@@ -49,20 +49,25 @@ const Home = () => {
 
   return (
     <div className='body'>
+
       <div className="buscador">
         <input className="buscador-input" type="search" placeholder="Buscador" />
       </div>
-      <div>
-        <p className='cardTitle'>Categorias</p>
-        <div className='cardGrid'>
+
+      <div className='Categories'>
+        <p className='cardTitle-1'>Categorias</p>
+        <div className='cardGrid-1'>
           {categories.map(product => <Card product={product} key={product.id} />)}
         </div>
       </div>
+
+      <div className='Container'>
       <div>
-        <p className='cardTitle'>Recomendados</p>
-        <div className='cardGrid'>
+        <p className='cardTitle-2'>Recomendados</p>
+        <div className='cardGrid-2'>
           {productsRandom.map(product => <Card product={product} key={product.id} />)}
         </div>
+      </div>
       </div>
 
     </div>

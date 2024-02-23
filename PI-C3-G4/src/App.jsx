@@ -13,7 +13,7 @@ function App() {
   const { state } = useContext()
   return (
     <Router>
-      <div className={`${state.theme}`}>
+      <div className={`${state.theme} pagina`}>
         <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
