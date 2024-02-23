@@ -1,6 +1,7 @@
 package com.ctdg4.ProThechnics.service;
 
 import com.ctdg4.ProThechnics.entity.Product;
+import com.ctdg4.ProThechnics.exception.DuplicateProductException;
 import com.ctdg4.ProThechnics.repository.ProductRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,8 @@ public class ProductService {
     public Optional<Product> findProductById(Long product_id){
         return productRepository.findById(product_id);
     }
-    public Optional<Product> findProductByName(String name){
-        return productRepository.findByName(name);
+    public List<Product> findProductByNameLike(String name){
+        return productRepository.findByNameLike('%' + name + '%');
     }
 
 }

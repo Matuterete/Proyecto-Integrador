@@ -1,6 +1,7 @@
 package com.ctdg4.ProThechnics.controller;
 
 import com.ctdg4.ProThechnics.entity.Product;
+import com.ctdg4.ProThechnics.exception.DuplicateProductException;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,16 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping
-    public ResponseEntity<Product> registerProduct(@RequestBody Product product) {
+    @PostMapping("/add")
+    public ResponseEntity<Product> registerProduct(@RequestBody Product product) throws DuplicateProductException {
+        List<Product> existingProduct = productService.findProductByNameLike(product.getName());
+        if (!existingProduct.isEmpty()) {
+            throw new DuplicateProductException("Product with name: '" + product.getName() + "' already exists.");
+        }
         return ResponseEntity.ok(productService.saveProduct(product));
     }
 
-    @GetMapping()
+    @GetMapping("/find/all")
     public ResponseEntity<List<Product>> listProducts() {
         return ResponseEntity.ok(productService.listAllProducts());
     }
@@ -37,11 +42,11 @@ public class ProductController {
     }
 
     @GetMapping("/find/name/{name}")
-    public ResponseEntity<Optional<Product>> findProductByEmail(@PathVariable String name) {
-        return ResponseEntity.ok(productService.findProductByName(name));
+    public ResponseEntity<List<Product>> findProductByEmail(@PathVariable String name) {
+        return ResponseEntity.ok(productService.findProductByNameLike(name));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/id/{product_id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long product_id) throws ResourceNotFoundException {
         Optional<Product> productSearched = productService.findProductById(product_id);
         if (productSearched.isPresent()) {
@@ -52,7 +57,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<String> updateProduct(@RequestBody Product product) throws ResourceNotFoundException {
         Optional<Product> productSearched = productService.findProductById(product.getProduct_id());
         if (productSearched.isPresent()) {
