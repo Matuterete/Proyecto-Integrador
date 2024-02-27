@@ -1,21 +1,20 @@
 package com.ctdg4.ProThechnics.service;
 
 import com.ctdg4.ProThechnics.entity.Product;
-import com.ctdg4.ProThechnics.exception.DuplicateProductException;
 import com.ctdg4.ProThechnics.repository.ProductRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
-    @Autowired
-    private ModelMapper modelMapper;
 
     public Product saveProduct(Product product) {
         return productRepository.save(product);
