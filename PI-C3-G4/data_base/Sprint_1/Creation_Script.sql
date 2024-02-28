@@ -21,10 +21,11 @@ USE `ProThechnics` ;
 DROP TABLE IF EXISTS `ProThechnics`.`categories` ;
 
 CREATE TABLE IF NOT EXISTS `ProThechnics`.`categories` (
-  `category_id` INT NOT NULL,
+  `category_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NULL,
   `description` TEXT NULL,
-  PRIMARY KEY (`category_id`))
+  PRIMARY KEY (`category_id`),
+  UNIQUE INDEX `category_id_UNIQUE` (`category_id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -34,7 +35,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ProThechnics`.`products` ;
 
 CREATE TABLE IF NOT EXISTS `ProThechnics`.`products` (
-  `product_id` INT NOT NULL,
+  `product_id` INT NOT NULL AUTO_INCREMENT,
   `is_active` TINYINT NOT NULL,
   `name` VARCHAR(255) NULL,
   `description` TEXT NULL,
@@ -44,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`products` (
   PRIMARY KEY (`product_id`),
   FULLTEXT INDEX `Name` (`name`) VISIBLE,
   INDEX `fk_products_categories_idx` (`category_id` ASC) VISIBLE,
+  UNIQUE INDEX `product_id_UNIQUE` (`product_id` ASC) VISIBLE,
   CONSTRAINT `fk_products_categories`
     FOREIGN KEY (`category_id`)
     REFERENCES `ProThechnics`.`categories` (`category_id`)
@@ -58,12 +60,13 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ProThechnics`.`product_images` ;
 
 CREATE TABLE IF NOT EXISTS `ProThechnics`.`product_images` (
-  `image_id` INT NOT NULL,
+  `image_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NULL,
   `url` VARCHAR(255) NULL,
   `product_id` INT NULL,
   PRIMARY KEY (`image_id`),
   INDEX `fk_image_products_idx` (`product_id` ASC) VISIBLE,
+  UNIQUE INDEX `image_id_UNIQUE` (`image_id` ASC) VISIBLE,
   CONSTRAINT `fk_image_products`
     FOREIGN KEY (`product_id`)
     REFERENCES `ProThechnics`.`products` (`product_id`)
@@ -78,13 +81,14 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ProThechnics`.`users` ;
 
 CREATE TABLE IF NOT EXISTS `ProThechnics`.`users` (
-  `user_id` INT NOT NULL,
+  `user_id` INT NOT NULL AUTO_INCREMENT,
   `is_active` TINYINT NOT NULL,
   `name` VARCHAR(50) NULL,
   `last_name` VARCHAR(50) NULL,
   `email` VARCHAR(100) NULL,
   `password` VARCHAR(255) NULL,
-  PRIMARY KEY (`user_id`))
+  PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -94,9 +98,10 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ProThechnics`.`roles` ;
 
 CREATE TABLE IF NOT EXISTS `ProThechnics`.`roles` (
-  `role_id` INT NOT NULL,
+  `role_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NULL,
-  PRIMARY KEY (`role_id`))
+  PRIMARY KEY (`role_id`),
+  UNIQUE INDEX `role_id_UNIQUE` (`role_id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 

@@ -1,7 +1,6 @@
 .bodyDetail{
 background-color:rgb(105, 105, 105);
-margin: 40px;
-
+margin: 50px;
 }
 .gallery{
     width: 60vw;
@@ -46,3 +45,35 @@ margin: 30px;
     margin: 0px;
     padding-top: 10px;
 }
+
+@media (max-width: 760px) {
+    .bodyDetail {
+        width: 100%;
+        margin: 2px; 
+    }
+  
+    .galleryAndPay {
+      flex-direction: column; 
+    }
+  
+    .gallery {
+      width: 90%; 
+      margin:5px; 
+    }
+  
+    .image-gallery-slide img {
+        max-width: 100%; 
+        height: auto; 
+      }
+
+    .product_description {
+      width: 90%; 
+      margin: 10px; 
+    }
+  
+    .pay {
+      width: 90%;  
+      margin-top: 10px;
+      margin:2px 
+    }
+  }

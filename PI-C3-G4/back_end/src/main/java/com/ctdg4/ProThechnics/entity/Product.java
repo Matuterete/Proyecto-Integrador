@@ -12,32 +12,31 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long product_id;
     @Column(columnDefinition = "TINYINT(1)", nullable = false)
-    private Boolean is_active;
-    @Column
+    private Boolean product_active = true;
+    @Column(nullable = false)
     private String name;
     @Column
     private String description;
     @Column
     private String tech_specs;
-    @Column
+    @Column(nullable = false)
     private Double price;
-    @ManyToOne // Hay que confirmar si un producto puede estar en varias categorias o no.
+    @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 
     public Product() {
     }
 
-    public Product(Long product_id, Boolean is_active, String name, String description, Double price) {
+    public Product(Long product_id, Boolean product_active, String name, String description, Double price) {
         this.product_id = product_id;
-        this.is_active = is_active;
+        this.product_active = product_active;
         this.name = name;
         this.description = description;
         this.price = price;
     }
 
-    public Product(Boolean is_active, String name, String description, Double price) {
-        this.is_active = is_active;
+    public Product(String name, String description, Double price) {
         this.name = name;
         this.description = description;
         this.price = price;

@@ -9,11 +9,21 @@ import lombok.*;
 public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long image_id;
+    private Long product_image_id;
     @Column
     private String title;
-    @Column
+    @Column(nullable = false)
     private String url;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    // Falta completar
+    public ProductImage() {
+    }
+
+    public ProductImage(String title, String url, Product product) {
+        this.title = title;
+        this.url = url;
+        this.product = product;
+    }
 }

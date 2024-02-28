@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '../Components/Card';
 import "../Components/Styles/Home.css"
 import { useContext } from '../Utils/Context';
@@ -46,22 +46,29 @@ const Home = () => {
     const productsSeleccionados = indicesAleatorios.map(indice => products[indice]);
     setProductsRandom(productsSeleccionados);
   }, []);
-
+/*
+  <div className='Categories'>
+    <p className='cardTitle-1'>Categorias</p>
+    <div className='cardGrid-1'>
+      {categories.map(product => <Card product={product} key={product.id} />)}
+    </div>
+  </div>
+*/
   return (
     <div className='body'>
+
       <div className="buscador">
         <input className="buscador-input" type="search" placeholder="Buscador" />
       </div>
-      <div>
-        <p className='cardTitle'>Categorias</p>
-        <div className='cardGrid'>
-          {categories.map(product => <Card product={product} key={product.id} />)}
-        </div>
-      </div>
-      <div>
-        <p className='cardTitle'>Recomendados</p>
-        <div className='cardGrid'>
-          {productsRandom.map(product => <Card product={product} key={product.id} />)}
+
+
+
+      <div className='Container'>
+        <div>
+          <p className='cardTitle-2'>Recomendados</p>
+          <div className='cardGrid-2'>
+            {productsRandom.map(product => <Card product={product} key={product.id} />)}
+          </div>
         </div>
       </div>
 

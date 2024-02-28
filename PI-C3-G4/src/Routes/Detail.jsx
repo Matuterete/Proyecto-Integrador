@@ -46,7 +46,7 @@ const Detail = () => {
                         autoPlay={false}
                         showPlayButton={false}
                         showBullets={false}
-                        thumbnailPosition='bottom'
+                        thumbnailPosition='right'
                         showNav={false}
                         showFullscreenButton={false}
                     />
