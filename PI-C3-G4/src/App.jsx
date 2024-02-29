@@ -14,6 +14,7 @@ import Login from './Login/FormLogin';
 import Registrar from './Login/FormRegistrar';
 import Recuperar from './Login/FormRecuperar';
 
+//se anexan las nuevas form
 
 function App() {
   const { state } = useContext()

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 //import Card from './Card';
 import "../Components/Styles/Home.css";
 
-
+//forma login
 function FormLogin(props) {
   return (
     <div className="Auth-form-container">

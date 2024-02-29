@@ -35,6 +35,8 @@ const Navbar = () => {
   }
   
 
+  //se agregan las formas para autenticar 
+
   const handleTheme = () => {
     dispatch({ type: TOGGLE_THEME });
   }
@@ -68,7 +70,6 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-
         <div className='buttons'>
           <button className='btn-login' onClick ={Login} >Iniciar Sesión</button>
           <button className='btn-registro' onClick ={Registrar}>Registrarse</button>
