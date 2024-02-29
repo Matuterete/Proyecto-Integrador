@@ -1,72 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../Components/Card';
 import "../Components/Styles/Home.css"
+import { useContext } from '../Utils/Context';
 
 const Home = () => {
-
-  // ARRAY PARA SIMULAR LLAMADO A API
-  const [products, setProducts] = useState([
+  // ARRAY PARA CATEGORIAS
+  const [categories, setCategories] = useState([
     {
       id: 1,
-      name: 'Objeto 1',
-      description: 'Descripción del objeto 1',
+      name: 'Eventos grandes',
+      description: 'Descripción de eventos grandes',
       photo: 'https://via.placeholder.com/150'
     },
     {
       id: 2,
-      name: 'Objeto 2',
-      description: 'Descripción del objeto 2',
+      name: 'Eventos medianos',
+      description: 'Descripción de eventos medianos',
       photo: 'https://via.placeholder.com/150'
     },
     {
       id: 3,
-      name: 'Objeto 3',
-      description: 'Descripción del objeto 3',
-      photo: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 4,
-      name: 'Objeto 4',
-      description: 'Descripción del objeto 4',
-      photo: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 5,
-      name: 'Objeto 5',
-      description: 'Descripción del objeto 5',
-      photo: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 6,
-      name: 'Objeto 6',
-      description: 'Descripción del objeto 6',
-      photo: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 7,
-      name: 'Objeto 7',
-      description: 'Descripción del objeto 7',
-      photo: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 8,
-      name: 'Objeto 8',
-      description: 'Descripción del objeto 8',
-      photo: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 9,
-      name: 'Objeto 9',
-      description: 'Descripción del objeto 9',
-      photo: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 10,
-      name: 'Objeto 10',
-      description: 'Descripción del objeto 10',
+      name: 'Eventos pequeños',
+      description: 'Descripción de eventos pequeños',
       photo: 'https://via.placeholder.com/150'
     }
   ]);
+
+  const { state } = useContext()
+
+  const products = state.data
 
   const [productsRandom, setProductsRandom] = useState([]);
 
@@ -84,12 +46,30 @@ const Home = () => {
     const productsSeleccionados = indicesAleatorios.map(indice => products[indice]);
     setProductsRandom(productsSeleccionados);
   }, []);
-
+/*
+  <div className='Categories'>
+    <p className='cardTitle-1'>Categorias</p>
+    <div className='cardGrid-1'>
+      {categories.map(product => <Card product={product} key={product.id} />)}
+    </div>
+  </div>
+*/
   return (
-    <div className=''>
+    <div className='body'>
 
-      <div className='cardGrid'>
-        {productsRandom.map(product => <Card product={product} key={product.id} />)}
+      <div className="buscador">
+        <input className="buscador-input" type="search" placeholder="Buscador" />
+      </div>
+
+
+
+      <div className='Container'>
+        <div>
+          <p className='cardTitle-2'>Recomendados</p>
+          <div className='cardGrid-2'>
+            {productsRandom.map(product => <Card product={product} key={product.id} />)}
+          </div>
+        </div>
       </div>
 
     </div>

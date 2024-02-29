@@ -1,6 +1,70 @@
-.cardGrid {
+.body {
+    padding-top: 10vh;
+    width: 100%;
+    padding-bottom: 10vh;
+}
+
+.buscador {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    
+    padding-top: 80px;
+  }
+
+.buscador-input {
+    background: url(https://cdn0.iconfinder.com/data/icons/slim-square-icons-basics/100/basics-19-32.png) no-repeat 0px 5px;
+    background-size: 24px;
+    width: 50%;
+    height: 20%;
+    border: solid 1px rgba(0, 0, 0, 0.362);
+    border-bottom: solid 2px #3f0707;
+    padding: 10px 10px 10px 30px;
+    outline: none;
+    background-color: #c5c9cd;
+    border-radius: 40px;
+  }
+
+.Categories{
+  text-align: center;
+}
+
+.cardTitle {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0px;
+    margin-left: 90px;
+    padding-top: 20px;
+    font-size: 24px;
+    font-weight: bolder;
+   
+}
+
+.cardGrid-1 {
+    margin-top: 7vh;
+    margin-bottom: 5vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.Container{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  height: auto;
+}
+
+.cardGrid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  grid-template-rows: repeat(6, 1fr); 
+  gap: 20px; 
+}
+
+@media (max-width: 760px) {
+  .cardGrid-2 {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+}
+
 }

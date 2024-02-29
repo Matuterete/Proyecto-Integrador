@@ -1,21 +1,28 @@
 .navbar {
   display: flex;
+  position:fixed;
   justify-content: space-between;
   align-items: center;
+  text-align: center;
   background-color: #F9F7F7;
   color: var(--color-text);
-  padding: 0, 5%;
-  width: 100vw;
-  height: 200px;
+  width: 100%;
+  height: auto;
 }
 
-.navbar button {
-  margin: 1vw;
-  text-align: right;
+.buttons {
+  display: flex; 
+  align-items: center;
+  padding-right: 15px;
+}
 
+.buttons button {
+  margin: 0 10px;
+  width: auto;
 }
 
 .navbar-logo{
+  height: auto;
   padding-left: 60px;
 }
 
@@ -28,9 +35,13 @@
   border-radius: 0px;
 }
 
+.btn-login {
+  white-space: nowrap;
+}
+
 .navbar a {
   text-decoration: none;
-  color: inherit;
+  color: black;
   transition: color 0.3s ease;
 }
 
@@ -43,6 +54,12 @@
   margin: 0;
   padding: 0;
   display: flex;
+  justify-content: space-between;
+}
+
+.navbar li:not(:last-child) {
+  align-items: center;
+  margin-right: 40px; 
 }
 
 .btn-login {
@@ -54,3 +71,103 @@
   background-color: #4073AF;
   color: white;
 }
+
+.btn-administracion {
+  background-color: #122E4F;
+  color: white;
+}
+
+.btn-agregar-producto {
+  background-color: #4073AF;
+  color: white;
+}
+
+
+.agregarproducto {
+  display: flex;
+  align-items: center;
+}
+
+.btn-agregar-producto {
+  margin-left: 10px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+
+  @media (min-width: 761px) {
+    nav#mobile {
+      display: none;
+    }
+  }
+
+
+@media (max-width: 760px) {
+
+  .desktop-nav {
+      display: none;
+  }
+
+  .navbar button{
+    display: none;
+  }
+
+  .navbar ul{  
+  display: none;
+}
+  .navbar {
+    width: 100vw;
+    height: auto;
+  }
+    .navbar-logo {
+        width: 70vw;
+        height: auto; 
+        padding-left: 8%;
+    }
+    .navbar img{
+      width: 75vw;
+      
+    }
+
+  .mobile-nav {
+      display: block;
+  }
+
+  #menu-toggle {
+    color: black;
+      display: block;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+  }
+
+  #mobile-menu {
+    display: none;
+    width: 100%;
+    max-width: 20%; 
+    position: absolute;
+    top: 100%;
+    left: 80%;
+    background-color: #122E4F;
+    border: 1% solid #ccc;
+}
+
+#mobile-menu.active {
+    display: block; 
+}
+  
+.mobile-menu-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobile-menu-items a {
+  margin-bottom: 10px;
+}
+}
+
