@@ -4,7 +4,7 @@ import "../Components/Styles/Products.css";
 import { useNavigate } from "react-router-dom";
 
 
-const AgregarProducto = () => {
+const AdminProductos = () => {
 
   // ARRAY PARA SIMULAR LLAMADO A API
   const [products] = useState([
@@ -128,4 +128,4 @@ const AgregarProducto = () => {
 
 };
 
-export default AgregarProducto;
+export default AdminProductos;

@@ -43,7 +43,7 @@ function FormProducto() {
     productList.push(producto)
     localStorage.setItem('productos', JSON.stringify(productList))
     alert(`El producto ${producto.nombre} ha quedado registrado correctamente.`)
-    navigate("/AgregarProducto");
+    navigate("/adminProductos");
   };
 
   return (

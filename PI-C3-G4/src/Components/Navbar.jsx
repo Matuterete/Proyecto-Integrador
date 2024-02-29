@@ -18,10 +18,19 @@ const Navbar = () => {
 
   ]
   let navigate = useNavigate(); 
-  const Agregarproducto = () =>{ 
-    let path = '/AgregarProducto'; 
+  const AdminProductos = () =>{ 
+    let path = '/adminProductos'; 
     navigate(path);
   }
+  const RegistroUsuario = () =>{ 
+    let path = '/registroUsuario'; 
+    navigate(path);
+  }
+  const Login = () =>{ 
+    let path = '/login'; 
+    navigate(path);
+  }
+  
   
 
   const handleTheme = () => {
@@ -59,9 +68,9 @@ const Navbar = () => {
         </ul>
 
         <div className='buttons'>
-          <button className='btn-login'>Iniciar Sesión</button>
-          <button className='btn-registro'>Registrarse</button>
-          <button className='btn-agregar-producto' onClick ={Agregarproducto}>Admin Productos</button>
+          <button className='btn-login' onClick ={Login}>Iniciar Sesión</button>
+          <button className='btn-registro' onClick ={RegistroUsuario}>Registrarse</button>
+          <button className='btn-agregar-producto' onClick ={AdminProductos}>Admin Productos</button>
           <button className='btn-theme' onClick={handleTheme}>
             <img src={state.theme === 'light' ? Moon : Sun} width='25px' alt="Theme"></img>
           </button>
