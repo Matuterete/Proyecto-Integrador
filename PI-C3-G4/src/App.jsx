@@ -1,9 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
-
 import { useContext } from './Utils/Context'
-
 import Navbar from './Components/Navbar'
 import Home from './Routes/Home'
 import Footer from './Components/Footer'
@@ -11,9 +9,9 @@ import RegistroUsuario from './Components/RegistroUsuario'
 import Login from './Components/Login'
 import AdminProductos from './Components/AdminProductos'
 import FormProducto from './Components/FormProducto'
-import { useContext } from './Utils/Context'
-import './App.css'
 import Detail from './Routes/Detail';
+import Registrar from './Login/FormRegistrar';
+import Recuperar from './Login/FormRecuperar';
 
 function App() {
   const { state } = useContext()
