@@ -9,12 +9,9 @@ import Footer from './Components/Footer'
 import Home from './Routes/Home'
 import FormProducto from './Components/FormProducto'
 import AgregarProducto from './Components/AgregarProducto'
+import { useContext } from './Utils/Context'
+import './App.css'
 import Detail from './Routes/Detail';
-import Login from './Login/FormLogin';
-import Registrar from './Login/FormRegistrar';
-import Recuperar from './Login/FormRecuperar';
-
-//se anexan las nuevas form
 
 function App() {
   const { state } = useContext()
@@ -28,6 +25,7 @@ function App() {
           <Route path='/AgregarProducto' element={<AgregarProducto />} />
           <Route path='/FormProducto' element={<FormProducto />} />
           <Route path='*' element={() => <h1>Not Found</h1>} />
+          <Route path="/detail/:id" element={<Detail/>}/>
           <Route path="/detail/:id" element={<Detail/>}/>          
           <Route path='/FormRegistrar' element={<Registrar />} />
           <Route path='/FormRecuperar' element={<Recuperar />} />
