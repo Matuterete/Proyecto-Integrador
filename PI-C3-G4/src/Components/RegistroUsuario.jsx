@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import Card from './Card';
 import "../Components/Styles/Home.css";
 import { useNavigate } from "react-router-dom";
 import "../Components/Styles/RegistroUsuario.css";
-
+import registroUsuario from '../assets/imagen-Usuario.png';
 
 
 function RegistroUsuario() {
@@ -12,6 +12,7 @@ function RegistroUsuario() {
     apellido: '',
     correo: '',
     contrasena: ''
+  
   });
   let navigate = useNavigate();
 
@@ -52,7 +53,7 @@ function RegistroUsuario() {
   return (
     <div className="Form container">
      <h1 className='title'>Formulario de Registro de Usuarios</h1>
-    
+     <img src={registroUsuario} alt="logo registro de usuario" height= "100px" width= "100px" />
     
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -67,15 +68,15 @@ function RegistroUsuario() {
         </div>
         <div className="form-group">
           <label>Correo electrónico:
-            <input type="text" name="correo" value={usuario.correo} onChange={handleChange} />
+            <input type="email" name="correo" value={usuario.correo} onChange={handleChange} />
           </label>
         </div>
         <div className="form-group">
           <label>Contraseña:
-            <input type="text" name="contrasena" value={usuario.contrasena} onChange={handleChange} />
+            <input type="password" name="contrasena" value={usuario.contrasena} onChange={handleChange} />
           </label>
         </div>
-        <button type="submit">Guardar Usuario</button>
+        <div className = "boton"><button  type="submit">Guardar Usuario</button></div>
       </form>
     </div>
   );
