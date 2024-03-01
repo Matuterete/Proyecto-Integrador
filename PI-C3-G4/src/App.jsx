@@ -19,8 +19,9 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/home' element={<Home />} />
-          <Route path='/administracion' element={<AdminPage />} />
-          <Route path='/AgregarProducto' element={<AgregarProducto />} />
+          <Route path='/administracion' element={<AdminPage />}>
+            <Route path='/agregar-producto' element={<AgregarProducto />} />
+          </Route>
           <Route path='/FormProducto' element={<FormProducto />} />
           <Route path='*' element={() => <h1>Not Found</h1>} />
           <Route path="/detail/:id" element={<Detail/>}/>
@@ -30,6 +31,5 @@ function App() {
     </Router>
   )
 }
-
 
 export default App
