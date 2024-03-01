@@ -10,9 +10,20 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long category_id;
-    @Column
+    @Column(nullable = false)
     private String title;
     @Column
     private String description;
-// Falta completar
+    @OneToOne
+    @JoinColumn(name = "category_image_id", unique = true)
+    private CategoryImage categoryImage;
+
+    public Category() {
+    }
+
+    public Category(String title, String description, CategoryImage categoryImage) {
+        this.title = title;
+        this.description = description;
+        this.categoryImage = categoryImage;
+    }
 }

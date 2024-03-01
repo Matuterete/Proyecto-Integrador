@@ -12,8 +12,8 @@ public class GlobalException {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(rnfe.getMessage());
     }
 
-    @ExceptionHandler({DuplicateProductException.class})
-    public ResponseEntity<String> handleDuplicateProductException(DuplicateProductException dpe){
+    @ExceptionHandler({DuplicateException.class})
+    public ResponseEntity<String> handleDuplicateProductException(DuplicateException dpe){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(dpe.getMessage());
     }
 }

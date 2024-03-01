@@ -1,21 +1,21 @@
 package com.ctdg4.ProThechnics.controller;
 
 import com.ctdg4.ProThechnics.entity.Product;
-import com.ctdg4.ProThechnics.exception.DuplicateProductException;
+import com.ctdg4.ProThechnics.exception.DuplicateException;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
     private ProductService productService;
+    private List<Product> lastReturnedProducts = new ArrayList<>();
 
     @Autowired
     public ProductController(ProductService productService) {
@@ -23,10 +23,10 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Product> registerProduct(@RequestBody Product product) throws DuplicateProductException {
+    public ResponseEntity<Product> registerProduct(@RequestBody Product product) throws DuplicateException {
         List<Product> existingProduct = productService.findProductByNameLike(product.getName());
         if (!existingProduct.isEmpty()) {
-            throw new DuplicateProductException("Product with name: '" + product.getName() + "' already exists.");
+            throw new DuplicateException("Product with name: '" + product.getName() + "' already exists.");
         }
         return ResponseEntity.ok(productService.saveProduct(product));
     }
@@ -42,10 +42,30 @@ public class ProductController {
     }
 
     @GetMapping("/find/name/{name}")
-    public ResponseEntity<List<Product>> findProductByEmail(@PathVariable String name) {
+    public ResponseEntity<List<Product>> findProductByName(@PathVariable String name) {
         return ResponseEntity.ok(productService.findProductByNameLike(name));
     }
 
+    @GetMapping("/find/random/{quantity}")
+    public ResponseEntity<List<Product>> findRandomProducts(@PathVariable int quantity) {
+        List<Product> allProducts = productService.listAllProducts();
+        Collections.shuffle(allProducts, new Random());
+
+        Set<Product> randomProductsSet = new LinkedHashSet<>();
+        while (randomProductsSet.size() < Math.min(quantity, allProducts.size())) {
+            int randomIndex = new Random().nextInt(allProducts.size());
+            randomProductsSet.add(allProducts.get(randomIndex));
+        }
+
+        List<Product> randomProducts = new ArrayList<>(randomProductsSet);
+        if (randomProducts.equals(lastReturnedProducts)) {
+            return findRandomProducts(quantity);
+        }
+
+        lastReturnedProducts = randomProducts;
+
+        return ResponseEntity.ok(randomProducts);
+    }
     @DeleteMapping("/delete/id/{product_id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long product_id) throws ResourceNotFoundException {
         Optional<Product> productSearched = productService.findProductById(product_id);

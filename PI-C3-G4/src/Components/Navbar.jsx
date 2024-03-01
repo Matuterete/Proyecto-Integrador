@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from '../Utils/Context.jsx';
 import { TOGGLE_THEME } from '../Reducers/Reducer.jsx';
 import './styles/Navbar.css';
-import { useNavigate } from "react-router-dom";
+
 
 const Navbar = () => {
   const { state, dispatch } = useContext();
@@ -17,12 +17,6 @@ const Navbar = () => {
     { path: '/Products', name: 'Products' },
 
   ]
-  let navigate = useNavigate(); 
-  const Agregarproducto = () =>{ 
-    let path = '/AgregarProducto'; 
-    navigate(path);
-  }
-  
 
   const handleTheme = () => {
     dispatch({ type: TOGGLE_THEME });
@@ -61,7 +55,6 @@ const Navbar = () => {
         <div className='buttons'>
           <button className='btn-login'>Iniciar Sesión</button>
           <button className='btn-registro'>Registrarse</button>
-          <button className='btn-agregar-producto' onClick ={Agregarproducto}>Admin Productos</button>
           <button className='btn-theme' onClick={handleTheme}>
             <img src={state.theme === 'light' ? Moon : Sun} width='25px' alt="Theme"></img>
           </button>
