@@ -33,6 +33,20 @@ const Navbar = () => {
     let path = '/login'; 
     navigate(path);
   }
+  let auth = useNavigate(); 
+  const Login = () =>{ 
+    let path = '/FormLogin'; 
+    auth(path);
+  }
+ 
+  let registrar = useNavigate(); 
+  const Registrar = () =>{ 
+    let path = '/FormRegistrar'; 
+    registrar(path);
+  }
+  
+
+  //se agregan las formas para autenticar 
 
   const handleTheme = () => {
     dispatch({ type: TOGGLE_THEME });
