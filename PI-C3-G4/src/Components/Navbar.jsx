@@ -33,16 +33,9 @@ const Navbar = () => {
     let path = '/login'; 
     navigate(path);
   }
-  let auth = useNavigate(); 
-  const Login = () =>{ 
-    let path = '/FormLogin'; 
-    auth(path);
-  }
- 
-  let registrar = useNavigate(); 
   const Registrar = () =>{ 
     let path = '/FormRegistrar'; 
-    registrar(path);
+    navigate(path);
   }
   
 
