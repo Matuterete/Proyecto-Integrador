@@ -4,16 +4,18 @@ import Moon from '../assets/Moon.svg';
 import Logo from '../assets/Logo.png';
 import Output from '../assets/cerrar.svg';
 import Usuario from '../assets/usuario.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from '../Utils/Context.jsx';
 import { TOGGLE_THEME } from '../Reducers/Reducer.jsx';
 import './styles/Navbar.css';
-import { useNavigate } from "react-router-dom";
+
 
 const Navbar = () => {
   const { state, dispatch } = useContext();
   const [ isMobileMenuOpen , setMobileMenuOpen] = useState(false);
   const [ usuarioLogueado ] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
+
+  const navigate = useNavigate();
 
   const routesSinUsuario = [
     { path: '/home', name: 'Home' },
@@ -21,14 +23,9 @@ const Navbar = () => {
   ]
 
   const routesConUsuario = [
-    { path: '/adminProductos', name: 'Admin Productos' },
+    { path: '/administracion', name: 'Admin Productos' },
   ]
 
-  let navigate = useNavigate(); 
-  const RegistroUsuario = () =>{ 
-    let path = '/registroUsuario'; 
-    navigate(path);
-  }
   const Login = () =>{ 
     let path = '/login'; 
     navigate(path);
@@ -38,9 +35,6 @@ const Navbar = () => {
     navigate(path);
   }
   
-
-  //se agregan las formas para autenticar 
-
   const handleTheme = () => {
     dispatch({ type: TOGGLE_THEME });
   }
@@ -92,11 +86,12 @@ const Navbar = () => {
         }
 
         <div className='buttons'>
+
             {
               !usuarioLogueado &&
               <div>
                 <button className='btn-login' onClick ={Login}>Iniciar Sesión</button>
-                <button className='btn-registro' onClick ={RegistroUsuario}>Registrarse</button>
+                <button className='btn-registro' onClick ={Registrar}>Registrarse</button>
               </div>
             }
             {
