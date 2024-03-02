@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`categories` (
   `category_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL,
   `description` TEXT NULL,
-  `category_image_id` INT NULL,
+  `category_image_id` INT NOT NULL,
   PRIMARY KEY (`category_id`),
   UNIQUE INDEX `category_id_UNIQUE` (`category_id` ASC),
   INDEX `fk_categories_category_images1_idx` (`category_image_id` ASC),
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`product_images` (
   `product_image_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NULL,
   `url` VARCHAR(255) NOT NULL,
-  `product_id` INT NULL,
+  `product_id` INT NOT NULL,
   PRIMARY KEY (`product_image_id`),
   INDEX `fk_image_products_idx` (`product_id` ASC),
   UNIQUE INDEX `image_id_UNIQUE` (`product_image_id` ASC),
@@ -93,19 +93,6 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`product_images` (
     REFERENCES `ProThechnics`.`products` (`product_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `ProThechnics`.`roles`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `ProThechnics`.`roles` ;
-
-CREATE TABLE IF NOT EXISTS `ProThechnics`.`roles` (
-  `role_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(50) NULL,
-  PRIMARY KEY (`role_id`),
-  UNIQUE INDEX `role_id_UNIQUE` (`role_id` ASC))
 ENGINE = InnoDB;
 
 
@@ -121,13 +108,26 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`users` (
   `last_name` VARCHAR(50) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
-  `role_id` INT NOT NULL,
   PRIMARY KEY (`user_id`),
-  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC),
-  INDEX `fk_users_roles1_idx` (`role_id` ASC),
-  CONSTRAINT `fk_users_roles`
-    FOREIGN KEY (`role_id`)
-    REFERENCES `ProThechnics`.`roles` (`role_id`)
+  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ProThechnics`.`roles`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `ProThechnics`.`roles` ;
+
+CREATE TABLE IF NOT EXISTS `ProThechnics`.`roles` (
+  `role_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`role_id`),
+  UNIQUE INDEX `role_id_UNIQUE` (`role_id` ASC),
+  INDEX `fk_roles_users1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_roles_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `ProThechnics`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
