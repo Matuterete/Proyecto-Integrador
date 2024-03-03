@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from '../Utils/Context.jsx';
 import { TOGGLE_THEME } from '../Reducers/Reducer.jsx';
 import './styles/Navbar.css';
-import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 
 // Estilos para el menú hamburguesa
