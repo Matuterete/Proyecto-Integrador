@@ -37,10 +37,10 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`categories` (
   `category_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL,
   `description` TEXT NULL,
-  `category_image_id` INT NULL,
+  `category_image_id` INT NOT NULL,
   PRIMARY KEY (`category_id`),
-  UNIQUE INDEX `category_id_UNIQUE` (`category_id` ASC) VISIBLE,
-  INDEX `fk_categories_category_images1_idx` (`category_image_id` ASC) VISIBLE,
+  UNIQUE INDEX `category_id_UNIQUE` (`category_id` ASC),
+  INDEX `fk_categories_category_images1_idx` (`category_image_id` ASC),
   CONSTRAINT `fk_categories_category_images`
     FOREIGN KEY (`category_image_id`)
     REFERENCES `ProThechnics`.`category_images` (`category_image_id`)
@@ -59,14 +59,14 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`products` (
   `product_active` TINYINT NOT NULL DEFAULT 1,
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NULL,
-  `tech_specs` TEXT NULL,
   `price` DECIMAL(10,2) NOT NULL,
+  `stock` INT NULL DEFAULT 1,
   `category_id` INT NULL,
   PRIMARY KEY (`product_id`),
-  FULLTEXT INDEX `Name` (`name`) VISIBLE,
-  INDEX `fk_products_categories_idx` (`category_id` ASC) VISIBLE,
-  UNIQUE INDEX `product_id_UNIQUE` (`product_id` ASC) VISIBLE,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  FULLTEXT INDEX `Name` (`name`),
+  INDEX `fk_products_categories_idx` (`category_id` ASC),
+  UNIQUE INDEX `product_id_UNIQUE` (`product_id` ASC),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   CONSTRAINT `fk_products_categories`
     FOREIGN KEY (`category_id`)
     REFERENCES `ProThechnics`.`categories` (`category_id`)
@@ -84,10 +84,10 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`product_images` (
   `product_image_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NULL,
   `url` VARCHAR(255) NOT NULL,
-  `product_id` INT NULL,
+  `product_id` INT NOT NULL,
   PRIMARY KEY (`product_image_id`),
-  INDEX `fk_image_products_idx` (`product_id` ASC) VISIBLE,
-  UNIQUE INDEX `image_id_UNIQUE` (`product_image_id` ASC) VISIBLE,
+  INDEX `fk_image_products_idx` (`product_id` ASC),
+  UNIQUE INDEX `image_id_UNIQUE` (`product_image_id` ASC),
   CONSTRAINT `fk_image_products`
     FOREIGN KEY (`product_id`)
     REFERENCES `ProThechnics`.`products` (`product_id`)
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`users` (
   `email` VARCHAR(100) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`user_id`),
-  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE)
+  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC))
 ENGINE = InnoDB;
 
 
@@ -121,29 +121,53 @@ DROP TABLE IF EXISTS `ProThechnics`.`roles` ;
 CREATE TABLE IF NOT EXISTS `ProThechnics`.`roles` (
   `role_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NULL,
+  `user_id` INT NOT NULL,
   PRIMARY KEY (`role_id`),
-  UNIQUE INDEX `role_id_UNIQUE` (`role_id` ASC) VISIBLE)
+  UNIQUE INDEX `role_id_UNIQUE` (`role_id` ASC),
+  INDEX `fk_roles_users1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_roles_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `ProThechnics`.`users` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ProThechnics`.`user_roles`
+-- Table `ProThechnics`.`features`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ProThechnics`.`user_roles` ;
+DROP TABLE IF EXISTS `ProThechnics`.`features` ;
 
-CREATE TABLE IF NOT EXISTS `ProThechnics`.`user_roles` (
-  `user_id` INT NOT NULL,
-  `role_id` INT NOT NULL,
-  PRIMARY KEY (`user_id`, `role_id`),
-  INDEX `fk_userRoles_roles_idx` (`role_id` ASC) VISIBLE,
-  CONSTRAINT `fk_userRoles_users`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `ProThechnics`.`users` (`user_id`)
+CREATE TABLE IF NOT EXISTS `ProThechnics`.`features` (
+  `feature_id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(50) NOT NULL,
+  `url` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`feature_id`),
+  UNIQUE INDEX `features_id_UNIQUE` (`feature_id` ASC),
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ProThechnics`.`products_features`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `ProThechnics`.`products_features` ;
+
+CREATE TABLE IF NOT EXISTS `ProThechnics`.`products_features` (
+  `products_product_id` INT NOT NULL,
+  `features_features_id` INT NOT NULL,
+  `feature_value` VARCHAR(255) NULL,
+  PRIMARY KEY (`products_product_id`, `features_features_id`),
+  INDEX `fk_products_has_features_features1_idx` (`features_features_id` ASC),
+  INDEX `fk_products_has_features_products1_idx` (`products_product_id` ASC),
+  CONSTRAINT `fk_products_has_features_products1`
+    FOREIGN KEY (`products_product_id`)
+    REFERENCES `ProThechnics`.`products` (`product_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_userRoles_roles`
-    FOREIGN KEY (`role_id`)
-    REFERENCES `ProThechnics`.`roles` (`role_id`)
+  CONSTRAINT `fk_products_has_features_features1`
+    FOREIGN KEY (`features_features_id`)
+    REFERENCES `ProThechnics`.`features` (`feature_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

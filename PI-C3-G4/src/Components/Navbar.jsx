@@ -3,7 +3,7 @@ import Sun from '../assets/Sun.svg';
 import Moon from '../assets/Moon.svg';
 import Logo from '../assets/Logo.png';
 import Usuario from '../assets/usuario.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from '../Utils/Context.jsx';
 import { TOGGLE_THEME } from '../Reducers/Reducer.jsx';
 import './styles/Navbar.css';
@@ -72,7 +72,7 @@ const Navbar = () => {
   ]
 
   const routesConUsuario = [
-    { path: '/adminProductos', name: 'Admin Productos' },
+    { path: '/administracion', name: 'Admin Productos' },
   ]
 
   let navigate = useNavigate();
