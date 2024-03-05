@@ -10,7 +10,7 @@ const Card = (product) => {
 
             <div className='card'>
                 <div>
-                    <img src={product.product.photo} alt="" />
+                    <img src={`/src/assets/products/ID ${product.product.id}.1.jpeg`} alt="" />
                 </div>
 
                 <h2>{product.product.name}</h2>
