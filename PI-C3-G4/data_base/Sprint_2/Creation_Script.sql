@@ -16,19 +16,6 @@ CREATE SCHEMA IF NOT EXISTS `ProThechnics` DEFAULT CHARACTER SET utf8 ;
 USE `ProThechnics` ;
 
 -- -----------------------------------------------------
--- Table `ProThechnics`.`category_images`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `ProThechnics`.`category_images` ;
-
-CREATE TABLE IF NOT EXISTS `ProThechnics`.`category_images` (
-  `category_image_id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(255) NULL,
-  `url` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`category_image_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `ProThechnics`.`categories`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `ProThechnics`.`categories` ;
@@ -37,15 +24,9 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`categories` (
   `category_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL,
   `description` TEXT NULL,
-  `category_image_id` INT NOT NULL,
+  `url` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`category_id`),
-  UNIQUE INDEX `category_id_UNIQUE` (`category_id` ASC),
-  INDEX `fk_categories_category_images1_idx` (`category_image_id` ASC),
-  CONSTRAINT `fk_categories_category_images`
-    FOREIGN KEY (`category_image_id`)
-    REFERENCES `ProThechnics`.`category_images` (`category_image_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  UNIQUE INDEX `category_id_UNIQUE` (`category_id` ASC))
 ENGINE = InnoDB;
 
 
@@ -60,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`products` (
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NULL,
   `price` DECIMAL(10,2) NOT NULL,
-  `stock` INT NULL DEFAULT 1,
+  `stock` INT NULL DEFAULT 10,
   `category_id` INT NULL,
   PRIMARY KEY (`product_id`),
   FULLTEXT INDEX `Name` (`name`),
@@ -84,6 +65,7 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`product_images` (
   `product_image_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NULL,
   `url` VARCHAR(255) NOT NULL,
+  `is_primary` TINYINT NULL,
   `product_id` INT NOT NULL,
   PRIMARY KEY (`product_image_id`),
   INDEX `fk_image_products_idx` (`product_id` ASC),
@@ -143,8 +125,7 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`features` (
   `title` VARCHAR(50) NOT NULL,
   `url` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`feature_id`),
-  UNIQUE INDEX `features_id_UNIQUE` (`feature_id` ASC),
-  UNIQUE INDEX `title_UNIQUE` (`title` ASC))
+  UNIQUE INDEX `features_id_UNIQUE` (`feature_id` ASC))
 ENGINE = InnoDB;
 
 
@@ -154,19 +135,21 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ProThechnics`.`products_features` ;
 
 CREATE TABLE IF NOT EXISTS `ProThechnics`.`products_features` (
-  `products_product_id` INT NOT NULL,
-  `features_features_id` INT NOT NULL,
-  `feature_value` VARCHAR(255) NULL,
-  PRIMARY KEY (`products_product_id`, `features_features_id`),
-  INDEX `fk_products_has_features_features1_idx` (`features_features_id` ASC),
-  INDEX `fk_products_has_features_products1_idx` (`products_product_id` ASC),
+  `product_feature_id` INT NOT NULL AUTO_INCREMENT,
+  `product_id` INT NOT NULL,
+  `feature_id` INT NOT NULL,
+  `feature_value` VARCHAR(255) NOT NULL,
+  INDEX `fk_products_has_features_features1_idx` (`feature_id` ASC),
+  INDEX `fk_products_has_features_products1_idx` (`product_id` ASC),
+  PRIMARY KEY (`product_feature_id`),
+  UNIQUE INDEX `product_feature_id_UNIQUE` (`product_feature_id` ASC),
   CONSTRAINT `fk_products_has_features_products1`
-    FOREIGN KEY (`products_product_id`)
+    FOREIGN KEY (`product_id`)
     REFERENCES `ProThechnics`.`products` (`product_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_products_has_features_features1`
-    FOREIGN KEY (`features_features_id`)
+    FOREIGN KEY (`feature_id`)
     REFERENCES `ProThechnics`.`features` (`feature_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

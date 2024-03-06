@@ -9,21 +9,12 @@ import lombok.*;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long category_id;
+    @Column(name = "category_id")
+    private Long categoryId;
     @Column(nullable = false)
     private String title;
     @Column
     private String description;
-    @OneToOne
-    @JoinColumn(name = "category_image_id", unique = true)
-    private CategoryImage categoryImage;
-
-    public Category() {
-    }
-
-    public Category(String title, String description, CategoryImage categoryImage) {
-        this.title = title;
-        this.description = description;
-        this.categoryImage = categoryImage;
-    }
+    @Column
+    private String url;
 }
