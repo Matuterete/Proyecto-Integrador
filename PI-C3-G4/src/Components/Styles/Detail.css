@@ -45,6 +45,25 @@ margin: 30px;
     margin: 0px;
     padding-top: 10px;
 }
+.feactures li{
+    display: flex;
+    background-color: #707b86;
+    margin: 5px;
+    border-radius: 5px;
+}
+.feactures div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(255, 255, 255);
+    border-radius:100%;
+    margin: 3px 10px;
+}
+.feactures li p{
+    margin: 2px 0px;
+}
 
 @media (max-width: 760px) {
     .bodyDetail {

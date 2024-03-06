@@ -13,6 +13,7 @@ import AgregarProducto from './Components/AgregarProducto'
 import Registrar from './Login/FormRegistrar';
 import Recuperar from './Login/FormRecuperar';
 import './App.css'
+import AdminFeatures from './Routes/AdminFeatures';
 
 function App() {
   const { state } = useContext()
@@ -27,8 +28,9 @@ function App() {
           <Route path="/detail/:id" element={<Detail/>}/>          
           <Route path='/registroUsuario' element={<RegistroUsuario />} />
           <Route path='/administracion' element={<AdminPage />}>
-            <Route path='/administracion/agregar-producto' element={<AgregarProducto />} />
+            <Route path='/administracion/agregar-producto' element={<AgregarProducto />} />            
           </Route>
+          <Route path='/adminFeatures' element={<AdminFeatures />} />
           <Route path='/FormProducto' element={<FormProducto />} />
           <Route path='/FormRegistrar' element={<Registrar />} />
           <Route path='/FormLogin' element={<Login />} />

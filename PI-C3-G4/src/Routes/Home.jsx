@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const url = 'http://ec2-18-117-185-189.us-east-2.compute.amazonaws.com:8080/products/find/random/6';
+        const url = 'http://prothechnics.us.to:8080/products/find/random/6';
         const method = 'GET';
         const data = null;
         const headers = {};

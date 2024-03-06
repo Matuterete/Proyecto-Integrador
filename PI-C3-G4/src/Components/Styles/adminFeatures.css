@@ -1,0 +1,9 @@
+.bodyFeatures{
+background-color: rgb(66, 67, 69);
+padding-top: 100px;
+}
+.titleFeatures{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

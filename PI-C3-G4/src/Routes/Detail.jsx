@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom'
 import "../Components/Styles/Detail.css"
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import { useContext } from '../Utils/Context';
 import requestToAPI from '../services/requestToAPI';
 
 const Detail = () => {
@@ -15,7 +14,7 @@ const Detail = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const url = `http://ec2-18-117-185-189.us-east-2.compute.amazonaws.com:8080/products/find/id/${id}`;
+                const url = `http://prothechnics.us.to:8080/products/find/id/${id}`;
                 const method = 'GET';
                 const data = null;
                 const headers = {};
@@ -95,13 +94,11 @@ const Detail = () => {
 
                 <div>
                     <h2>Caracteristicas</h2>
-                    <ul>
+                    <ul className='feactures'>
                         {resposeData.features.map((objeto, index) => (
                             <li key={index}>
-                                {/* Renderizar propiedades del objeto */}
-                                <p>{objeto.title}:</p>
-                                <p>{objeto.featureValue}</p>
-                                {/* Añadir más propiedades según tus necesidades */}
+                                <div><img src={objeto.url} alt=""/></div>
+                                <p>{objeto.title}: {objeto.featureValue}</p>
                             </li>
                         ))}
                     </ul>
