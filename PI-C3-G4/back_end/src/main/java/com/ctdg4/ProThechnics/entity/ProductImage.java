@@ -1,5 +1,7 @@
 package com.ctdg4.ProThechnics.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,21 +11,20 @@ import lombok.*;
 public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long product_image_id;
+    @Column(name = "product_image_id")
+    private Long imageId;
     @Column
     private String title;
     @Column(nullable = false)
     private String url;
+    @Column(name = "is_primary")
+    private Boolean isPrimary;
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnore
     private Product product;
 
-    public ProductImage() {
-    }
-
-    public ProductImage(String title, String url, Product product) {
-        this.title = title;
-        this.url = url;
-        this.product = product;
+    public boolean isPrimary() {
+        return isPrimary;
     }
 }
