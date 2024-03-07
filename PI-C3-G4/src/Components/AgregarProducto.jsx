@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
-import "../Components/Styles/Products.css";
+import "../Components/styles/Products.css";
 import { useNavigate } from "react-router-dom";
 
 const AgregarProducto = () => {

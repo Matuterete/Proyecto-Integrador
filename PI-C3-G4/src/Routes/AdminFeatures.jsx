@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Components/Styles/AdminFeatures.css'
+import '../Components/styles/AdminFeatures.css'
 
 
 const AdminFeatures = () => {
