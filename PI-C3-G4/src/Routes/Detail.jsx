@@ -97,7 +97,7 @@ const Detail = () => {
                     <ul className='feactures'>
                         {resposeData.features.map((objeto, index) => (
                             <li key={index}>
-                                <div><img src={objeto.url} alt=""/></div>
+                                <div><img src={objeto.url} alt="" /></div>
                                 <p>{objeto.title}: {objeto.featureValue}</p>
                             </li>
                         ))}
@@ -110,7 +110,9 @@ const Detail = () => {
 
             :
 
-            (<div>... cargando</div>)
+            (<div className="loader-container">
+                <div className="loader"></div>
+            </div>)
 
     )
 }

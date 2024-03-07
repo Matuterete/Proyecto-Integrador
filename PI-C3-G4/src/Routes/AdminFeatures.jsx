@@ -88,7 +88,11 @@ const AdminFeatures = () => {
                         </div>
 
                     ))}
-                </ul>) : (<div>...CARGANDO</div>)}
+                </ul>)
+                : 
+                (<div className="loader-container">
+                    <div className="loader"></div>
+                </div>)}
             </div>
         </div>
     )
