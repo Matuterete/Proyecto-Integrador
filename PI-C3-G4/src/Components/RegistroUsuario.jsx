@@ -1,9 +1,11 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect, Component, useRef } from 'react';
 import Card from './Card';
 import "../Components/Styles/Home.css";
 import { useNavigate } from "react-router-dom";
 import "../Components/Styles/RegistroUsuario.css";
 import registroUsuario from '../assets/imagen-Usuario.png';
+
+import emailjs from '@emailjs/browser';
 
 
 function RegistroUsuario() {
@@ -12,7 +14,7 @@ function RegistroUsuario() {
     apellido: '',
     correo: '',
     contrasena: ''
-  
+
   });
   let navigate = useNavigate();
 
@@ -32,8 +34,25 @@ function RegistroUsuario() {
     });
   };
 
+  const form = useRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // send email
+    emailjs
+      .sendForm('service_9nydvzd', 'template_vf09e5z', form.current, {
+        publicKey: '_tQw4BNfAWBkcyhJO',
+      })
+      .then(
+        () => {
+          console.log('SUCCESS!');
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+      );
+
     console.log(usuario);
     // Aquí podrías enviar los datos a un servidor o hacer cualquier otra acción con ellos
     var usuarioList = JSON.parse(localStorage.getItem('usuarios'))
@@ -46,16 +65,17 @@ function RegistroUsuario() {
     }
     usuarioList.push(usuario)
     localStorage.setItem('usuarios', JSON.stringify(usuarioList))
-    alert(`El usuario ${usuario.nombre} ha quedado registrado correctamente.`)
-    navigate("/login");
+    // alert(`El usuario ${usuario.nombre} ha quedado registrado correctamente.`)
+    navigate("/emailRegister");
+
   };
 
   return (
     <div className="Form container">
      <h1 className='title'>Formulario de Registro de Usuarios</h1>
      <img src={registroUsuario} alt="logo registro de usuario" height= "100px" width= "100px" />
-    
-      <form onSubmit={handleSubmit}>
+
+      <form ref={form}  onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Nombre:
             <input type="text" name="nombre" value={usuario.nombre} onChange={handleChange} />

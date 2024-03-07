@@ -12,6 +12,7 @@ import AdminPage from './Routes/AdminPage'
 import AgregarProducto from './Components/AgregarProducto'
 import Registrar from './Login/FormRegistrar';
 import Recuperar from './Login/FormRecuperar';
+import EmailRegister from './Components/EmailRegister';
 import './App.css'
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path="/detail/:id" element={<Detail/>}/>          
           <Route path='/registroUsuario' element={<RegistroUsuario />} />
+          <Route path='/emailRegister' element={<EmailRegister />} />
           <Route path='/administracion' element={<AdminPage />}>
             <Route path='/administracion/agregar-producto' element={<AgregarProducto />} />
           </Route>
