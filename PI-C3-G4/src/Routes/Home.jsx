@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../Components/Card';
-import "../Components/Styles/Home.css"
+import "../Components/styles/Home.css"
 import { useContext } from '../Utils/Context';
 import requestToAPI from '../services/requestToAPI';
 
@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const url = 'http://ec2-18-117-185-189.us-east-2.compute.amazonaws.com:8080/products/find/random/6';
+        const url = 'http://prothechnics.us.to:8080/products/find/random/6';
         const method = 'GET';
         const data = null;
         const headers = {};
@@ -37,7 +37,11 @@ const Home = () => {
         <div>
           <p className='cardTitle-2'>Recomendados</p>
           <div className='cardGrid-2'>
-            {responseData ? responseData.map(product => <Card product={product} key={product.id} />):(<div>Cargando...</div>)}
+            {responseData ? responseData.map(product => <Card product={product} key={product.id} />)
+              :
+              (<div className="loader-container">
+              <div className="loader"></div>
+            </div>)}
           </div>
         </div>
       </div>

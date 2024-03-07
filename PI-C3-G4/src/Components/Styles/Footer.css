@@ -1,4 +1,6 @@
 .footer {
+  position: absolute;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -6,8 +8,8 @@
   background-color: #122E4F;
   color: var(--color-text);
   padding: 0;
-  width: 100%;
-  height: auto;}
+  width: 100vw;
+}
 
 .footer-logo {
   padding-left: 60px;

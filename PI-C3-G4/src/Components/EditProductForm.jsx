@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function ProductForm({ onAdd }) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [isActive, setIsActive] = useState(true);
-  const [stock, setStock] = useState('');
+function EditProductForm({ product, onSave }) {
+  const [name, setName] = useState(product.name);
+  const [description, setDescription] = useState(product.description);
+  const [price, setPrice] = useState(product.price);
+  const [isActive, setIsActive] = useState(product.isActive);
+  const [stock, setStock] = useState(product.stock);
+  const [category, setCategory] = useState(product.category);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
     axios.get('http://prothechnics.us.to:8080/categories/find/all')
@@ -41,33 +41,35 @@ function ProductForm({ onAdd }) {
   };
 
   const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
+    setCategory(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post('http://prothechnics.us.to:8080/products/add', {
+    axios.put(`http://prothechnics.us.to:8080/products/update/${product.productId}`, {
       name,
       description,
       price,
       isActive,
       stock,
-      categoryId: selectedCategory
+      categoryId: category
     })
-      .then(response => {
-        onAdd(response.data);
-        alert('Producto agregado correctamente');
-        setName('');
-        setDescription('');
-        setPrice('');
-        setIsActive(true);
-        setStock('');
-        setSelectedCategory('');
+      .then(() => {
+        onSave({
+          productId: product.productId,
+          name,
+          description,
+          price,
+          isActive,
+          stock,
+          categoryId: category
+        });
+        alert('Producto actualizado correctamente');
       })
       .catch(error => {
         console.error(error);
-        alert('Hubo un error al intentar agregar el producto');
+        alert('Hubo un error al intentar actualizar el producto');
       });
   };
 
@@ -75,15 +77,15 @@ function ProductForm({ onAdd }) {
     <form onSubmit={handleSubmit}>
       <label>
         Nombre:
-        <input type="text" value={name} onChange={handleNameChange} required />
+        <input type="text" value={name} onChange={handleNameChange} />
       </label>
       <label>
         Descripción:
-        <input type="text" value={description} onChange={handleDescriptionChange} required />
+        <input type="text" value={description} onChange={handleDescriptionChange} />
       </label>
       <label>
         Precio:
-        <input type="number" value={price} onChange={handlePriceChange} required />
+        <input type="number" value={price} onChange={handlePriceChange} />
       </label>
       <label>
         Activo:
@@ -91,12 +93,11 @@ function ProductForm({ onAdd }) {
       </label>
       <label>
         Stock:
-        <input type="number" value={stock} onChange={handleStockChange} required />
+        <input type="number" value={stock} onChange={handleStockChange} />
       </label>
       <label>
         Categoría:
-        <select value={selectedCategory} onChange={handleCategoryChange}>
-          <option value="">Selecciona una categoría</option>
+        <select value={category} onChange={handleCategoryChange}>
           {categories.map(category => (
             <option key={category.categoryId} value={category.categoryId}>
               {category.title}
@@ -104,9 +105,9 @@ function ProductForm({ onAdd }) {
           ))}
         </select>
       </label>
-      <button type="submit">Agregar Producto</button>
+      <button type="submit">Guardar Cambios</button>
     </form>
   );
 }
 
-export default ProductForm;
+export default EditProductForm;
