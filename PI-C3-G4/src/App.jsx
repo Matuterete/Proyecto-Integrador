@@ -11,6 +11,7 @@ import Detail from './Routes/Detail';
 import AdminPage from './Routes/AdminPage'
 import Registrar from './Login/FormRegistrar';
 import Recuperar from './Login/FormRecuperar';
+import EmailRegister from './Components/EmailRegister';
 import './App.css'
 import AdminFeatures from './Routes/AdminFeatures';
 
@@ -26,6 +27,10 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path="/detail/:id" element={<Detail/>}/>          
           <Route path='/registroUsuario' element={<RegistroUsuario />} />
+          <Route path='/emailRegister' element={<EmailRegister />} />
+          <Route path='/administracion' element={<AdminPage />}>
+          <Route path='/administracion/agregar-producto' element={<AgregarProducto />} />
+          </Route>
           <Route path='/administracion' element={<AdminPage />} /> 
           <Route path='/adminFeatures' element={<AdminFeatures />} />
           <Route path='/FormProducto' element={<FormProducto />} />
@@ -33,7 +38,6 @@ function App() {
           <Route path='/FormLogin' element={<Login />} />
           <Route path='/FormRecuperar' element={<Recuperar />} />
           <Route path='*' element={() => <h1>Not Found</h1>} />
-
         </Routes>
         <Footer></Footer>
       </div>
