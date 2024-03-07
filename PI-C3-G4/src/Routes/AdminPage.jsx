@@ -11,6 +11,7 @@ function AdminPage() {
   const [productsPerPage] = useState(10);
   const [showProductList, setShowProductList] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [showAddProductForm, setShowAddProductForm] = useState(false);
 
   useEffect(() => {
     axios.get('http://prothechnics.us.to:8080/products/find/all')
@@ -29,7 +30,8 @@ function AdminPage() {
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const handleShowProductList = () => {
-    setShowProductList(true);
+    setShowProductList(!showProductList);
+    setShowAddProductForm(false); // Hide the add product form when showing the product list
   };
 
   const handleEditProduct = (product) => {
@@ -64,16 +66,16 @@ function AdminPage() {
       <div>
         <h2>Menú de Funcionalidades</h2>
         <ul>
-          <li> <button>Administrar Productos</button> </li>
+          <li> <button onClick={handleShowProductList}>Administrar Productos</button> </li>
           <li>Administrar Usuarios</li>
           <li>Administrar Características</li>
           <li>Administrar Categorías</li>
         </ul>
       </div>
       <div>
-        <button onClick={handleShowProductList}>Mostrar Listado de Productos</button>
         {showProductList && (
           <div>
+            <button onClick={() => setShowAddProductForm(!showAddProductForm)}>Agregar Producto</button>
             <h2>Listado de Productos</h2>
             {editingProduct ? (
               <EditProductForm product={editingProduct} onSave={handleSaveEdit} />
@@ -91,8 +93,8 @@ function AdminPage() {
             />
           </div>
         )}
+        {showAddProductForm && <ProductForm />}
       </div>
-      <ProductForm />
     </div>
   );
 }

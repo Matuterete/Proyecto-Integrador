@@ -9,7 +9,6 @@ import Login from './Components/Login'
 import FormProducto from './Components/FormProducto'
 import Detail from './Routes/Detail';
 import AdminPage from './Routes/AdminPage'
-import AgregarProducto from './Components/AgregarProducto'
 import Registrar from './Login/FormRegistrar';
 import Recuperar from './Login/FormRecuperar';
 import './App.css'
@@ -27,9 +26,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path="/detail/:id" element={<Detail/>}/>          
           <Route path='/registroUsuario' element={<RegistroUsuario />} />
-          <Route path='/administracion' element={<AdminPage />}>
-            <Route path='/administracion/agregar-producto' element={<AgregarProducto />} />            
-          </Route>
+          <Route path='/administracion' element={<AdminPage />} /> 
           <Route path='/adminFeatures' element={<AdminFeatures />} />
           <Route path='/FormProducto' element={<FormProducto />} />
           <Route path='/FormRegistrar' element={<Registrar />} />
