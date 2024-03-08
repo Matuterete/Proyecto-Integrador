@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Component, useRef } from 'react';
 import Card from './Card';
-import "../Components/styles/Home.css";
-import { useNavigate } from "react-router-dom";
-import "../Components/styles/RegistroUsuario.css";
+import '../Components/styles/Home.css';
+import { useNavigate } from 'react-router-dom';
+import '../Components/styles/RegistroUsuario.css';
 import registroUsuario from '../assets/imagen-Usuario.png';
 
 //import emailjs from '@emailjs/browser';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 //import Card from './Card';
-import "../Components/styles/Home.css";
+'../Components/styles/Home.css';
 
 //forma login
 function FormLogin(props) {

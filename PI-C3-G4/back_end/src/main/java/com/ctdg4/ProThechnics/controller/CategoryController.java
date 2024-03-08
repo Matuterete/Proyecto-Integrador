@@ -4,11 +4,12 @@ import com.ctdg4.ProThechnics.entity.Category;
 import com.ctdg4.ProThechnics.exception.DuplicateException;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.service.CategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/categories")
 @CrossOrigin(origins = "*")
+@Tags(value = { @Tag(name = "Categories") })
 public class CategoryController {
     private CategoryService categoryService;
 
@@ -86,12 +88,12 @@ public class CategoryController {
     })
     @PutMapping("/update")
     public ResponseEntity<String> updateCategory(@RequestBody Category category) throws ResourceNotFoundException {
-        Optional<Category> CategorySearched = categoryService.findCategoryById(category.getCategoryId());
+        Optional<Category> CategorySearched = categoryService.findCategoryById(category.getId());
         if (CategorySearched.isPresent()) {
             categoryService.updateCategory(category);
-            return ResponseEntity.ok("Category updated successfully: " + category.getCategoryId() + " - " + category.getTitle());
+            return ResponseEntity.ok("Category updated successfully: " + category.getId() + " - " + category.getTitle());
         } else {
-            throw new ResourceNotFoundException(String.format("Category: %d - %s not found. Category update failed. Please verify the Category exists and try again.", category.getCategoryId(), category.getTitle()));
+            throw new ResourceNotFoundException(String.format("Category: %d - %s not found. Category update failed. Please verify the Category exists and try again.", category.getId(), category.getTitle()));
 
         }
     }
