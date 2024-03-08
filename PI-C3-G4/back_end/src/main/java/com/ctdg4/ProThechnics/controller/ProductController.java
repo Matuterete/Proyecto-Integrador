@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
+@Tags(value = { @Tag(name = "Products") })
 @CrossOrigin(origins = "*")
 public class ProductController {
 
@@ -38,7 +41,7 @@ public class ProductController {
             @ApiResponse(responseCode = "409", description = "Product with the same name already exists")
     })
     @PostMapping("/add")
-    public ResponseEntity<Product> registerProduct(@RequestBody Product product) throws DuplicateException {
+    public ResponseEntity<Product> registerProduct(@RequestBody Product product) throws DuplicateException, ResourceNotFoundException {
         List<ProductDTO> existingProduct = productService.findProductByNameWithEverything(product.getName());
         if (!existingProduct.isEmpty()) {
             throw new DuplicateException("Product with name: '" + product.getName() + "' already exists.");
@@ -92,7 +95,11 @@ public class ProductController {
     public ResponseEntity<List<ProductDTO>> findRandomProducts(@PathVariable int quantity) {
         List<ProductDTO> allProducts = productService.findAllProductDTOs();
 
-        List<ProductDTO> availableProducts = allProducts.stream()
+        List<ProductDTO> activeProducts = allProducts.stream()
+                .filter(ProductDTO::getIsActive)
+                .collect(Collectors.toList());
+
+        List<ProductDTO> availableProducts = activeProducts.stream()
                 .filter(productDTO -> !lastReturnedProductIds.contains(productDTO.getId()))
                 .collect(Collectors.toList());
 
@@ -130,14 +137,23 @@ public class ProductController {
             @ApiResponse(responseCode = "200", description = "Product updated successfully"),
             @ApiResponse(responseCode = "404", description = "Product not found")
     })
-    @PutMapping("/update/{productId}")
-    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody Product updatedProduct) {
+    @PutMapping("/update")
+    public ResponseEntity<String> updateProduct(@RequestBody Product updatedProduct) {
         try {
-            productService.updateProduct(productId, updatedProduct);
-            return ResponseEntity.ok("Product updated successfully: " + productId + " - " + updatedProduct.getName());
+            productService.updateProduct(updatedProduct);
+            return ResponseEntity.ok("Product updated successfully: " + updatedProduct.getId() + " - " + updatedProduct.getName());
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
     }
+//    @PutMapping("/update/{productId}")
+//    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody Product updatedProduct) {
+//        try {
+//            productService.updateProduct(productId, updatedProduct);
+//            return ResponseEntity.ok("Product updated successfully: " + productId + " - " + updatedProduct.getName());
+//        } catch (ResourceNotFoundException e) {
+//            return ResponseEntity.status(404).body(e.getMessage());
+//        }
+//    }
 }
 
