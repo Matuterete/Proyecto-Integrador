@@ -72,9 +72,9 @@ const Navbar = () => {
   ]
 
   const routesConUsuario = [
-    { path: '/administracion', name: 'Administrar productos' },
-    { path: '/administracion', name: 'Administrar caracteristicas' },
-    { path: '/administracion', name: 'Administrar categorias' }
+    { path: '/adminProducts', name: 'Administrar productos' },
+    { path: '/adminFeatures', name: 'Administrar caracteristicas' },
+    { path: '/adminCategories', name: 'Administrar categorias' }
   ]
 
   let navigate = useNavigate();

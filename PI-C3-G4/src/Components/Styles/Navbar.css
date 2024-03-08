@@ -46,7 +46,8 @@
 
 .navbar a {
   text-decoration: none;
-  color: black;
+  color: #213547;
+  font-weight: bold;
   transition: color 0.3s ease;
 }
 

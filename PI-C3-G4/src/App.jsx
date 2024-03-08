@@ -6,9 +6,8 @@ import Home from './Routes/Home'
 import Footer from './Components/Footer'
 import RegistroUsuario from './Components/RegistroUsuario'
 import Login from './Components/Login'
-import FormProducto from './Components/FormProducto'
 import Detail from './Routes/Detail';
-import AdminPage from './Routes/AdminPage'
+import AdminProducts from './Routes/AdminProducts'
 import Registrar from './Login/FormRegistrar';
 import Recuperar from './Login/FormRecuperar';
 import EmailRegister from './Components/EmailRegister';
@@ -28,12 +27,8 @@ function App() {
           <Route path="/detail/:id" element={<Detail/>}/>          
           <Route path='/registroUsuario' element={<RegistroUsuario />} />
           <Route path='/emailRegister' element={<EmailRegister />} />
-          <Route path='/administracion' element={<AdminPage />}>
-          <Route path='/administracion/agregar-producto' element={<AgregarProducto />} />
-          </Route>
-          <Route path='/administracion' element={<AdminPage />} /> 
+          <Route path='/adminProducts' element={<AdminProducts />} /> 
           <Route path='/adminFeatures' element={<AdminFeatures />} />
-          <Route path='/FormProducto' element={<FormProducto />} />
           <Route path='/FormRegistrar' element={<Registrar />} />
           <Route path='/FormLogin' element={<Login />} />
           <Route path='/FormRecuperar' element={<Recuperar />} />
