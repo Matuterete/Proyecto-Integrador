@@ -92,4 +92,14 @@ margin: 30px;
       margin-top: 10px;
       margin:2px 
     }
+
+    .info{
+        display: flex;
+        flex-direction: column;
+    }
+   .feactures{
+    margin: 20px;
+    padding: 0;
+   }
+
   }
