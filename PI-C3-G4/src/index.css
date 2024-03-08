@@ -37,6 +37,15 @@ button {
 button:hover {
   border-color: #646cff;
 }
+.navbar {
+  background-color: #fafafa;
+  color: white;
+  padding: 10px 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000; 
+}
 
 @media (prefers-color-scheme: light) {
   :root {

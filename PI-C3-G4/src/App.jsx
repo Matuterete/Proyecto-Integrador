@@ -13,6 +13,7 @@ import Recuperar from './Login/FormRecuperar';
 import EmailRegister from './Components/EmailRegister';
 import './App.css'
 import AdminFeatures from './Routes/AdminFeatures';
+import AdminPage from './Routes/AdminPage';
 
 function App() {
   const { state } = useContext()
@@ -27,6 +28,7 @@ function App() {
           <Route path="/detail/:id" element={<Detail/>}/>          
           <Route path='/registroUsuario' element={<RegistroUsuario />} />
           <Route path='/emailRegister' element={<EmailRegister />} />
+          <Route path='/administracion' element={<AdminPage />} />
           <Route path='/adminProducts' element={<AdminProducts />} /> 
           <Route path='/adminFeatures' element={<AdminFeatures />} />
           <Route path='/FormRegistrar' element={<Registrar />} />

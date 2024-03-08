@@ -1,6 +1,10 @@
 .App {
     background-color: white;
   }
+
+  .content {
+    flex-grow: 1;
+  }
   
   .Auth-form-container {
     display: flex;

@@ -1,0 +1,48 @@
+.bodyPage {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+  }
+  
+  .adminMenu {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 150px;
+    flex-grow: 1; 
+}
+  
+  .TitleAdminP {
+    display: block;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .Menu {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+  }
+  
+  .Menu h2 {
+    font-size: 1.5rem;
+  }
+  
+  .ButtonContainer {
+    margin-top: 10px;
+  }
+  
+  .Button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+  }
+  
+  .Button:last-child {
+    margin-right: 0;
+  }
