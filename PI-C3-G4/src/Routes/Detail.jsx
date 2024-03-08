@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import "../Components/styles/Detail.css"
-import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
+'../Components/styles/Detail.css'
+import ImageGallery from 'react-image-gallery';
+import 'react-image-gallery/styles/css/image-gallery.css';
 import requestToAPI from '../services/requestToAPI';
 
 const Detail = () => {
@@ -54,7 +54,7 @@ const Detail = () => {
 
     return (
         resposeData ? (<div className='bodyDetail body'>
-
+            
             <div className='galleryAndPay'>
 
                 <div className='gallery'>
@@ -97,7 +97,7 @@ const Detail = () => {
                     <ul className='feactures'>
                         {resposeData.features.map((objeto, index) => (
                             <li key={index}>
-                                <div><img src={objeto.url} alt=""/></div>
+                                <div><img src={objeto.url} alt="" /></div>
                                 <p>{objeto.title}: {objeto.featureValue}</p>
                             </li>
                         ))}
@@ -110,7 +110,9 @@ const Detail = () => {
 
             :
 
-            (<div>... cargando</div>)
+            (<div className="loader-container">
+                <div className="loader"></div>
+            </div>)
 
     )
 }

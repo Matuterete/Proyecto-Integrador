@@ -31,7 +31,7 @@ function AdminPage() {
 
   const handleShowProductList = () => {
     setShowProductList(!showProductList);
-    setShowAddProductForm(false); // Hide the add product form when showing the product list
+    setShowAddProductForm(false); 
   };
 
   const handleEditProduct = (product) => {

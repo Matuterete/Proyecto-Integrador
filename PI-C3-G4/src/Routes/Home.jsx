@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../Components/Card';
-import "../Components/styles/Home.css"
+import '../Components/styles/Home.css'
 import { useContext } from '../Utils/Context';
 import requestToAPI from '../services/requestToAPI';
 
@@ -37,7 +37,11 @@ const Home = () => {
         <div>
           <p className='cardTitle-2'>Recomendados</p>
           <div className='cardGrid-2'>
-            {responseData ? responseData.map(product => <Card product={product} key={product.id} />):(<div>Cargando...</div>)}
+            {responseData ? responseData.map(product => <Card product={product} key={product.id} />)
+              :
+              (<div className="loader-container">
+              <div className="loader"></div>
+            </div>)}
           </div>
         </div>
       </div>
