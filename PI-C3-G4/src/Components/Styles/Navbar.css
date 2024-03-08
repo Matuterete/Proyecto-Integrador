@@ -6,8 +6,9 @@
   text-align: center;
   background-color: #F9F7F7;
   color: var(--color-text);
-  width: 100%;
+  width: 100vw;
   height: auto;
+  z-index: 9999;
 }
 
 .buttons {

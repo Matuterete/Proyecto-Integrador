@@ -37,7 +37,11 @@ const Home = () => {
         <div>
           <p className='cardTitle-2'>Recomendados</p>
           <div className='cardGrid-2'>
-            {responseData ? responseData.map(product => <Card product={product} key={product.id} />):(<div>Cargando...</div>)}
+            {responseData ? responseData.map(product => <Card product={product} key={product.id} />)
+              :
+              (<div className="loader-container">
+              <div className="loader"></div>
+            </div>)}
           </div>
         </div>
       </div>
