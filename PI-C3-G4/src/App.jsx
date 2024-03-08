@@ -14,6 +14,7 @@ import EmailRegister from './Components/EmailRegister';
 import AdminFeatures from './Routes/AdminFeatures';
 import AdminPage from './Routes/AdminPage';
 import Categories from './Routes/Categories';
+import ProductosPorCategoria from './Routes/ProductosPorCategoria';
 import './App.css';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path='/FormLogin' element={<Login />} />
           <Route path='/FormRecuperar' element={<Recuperar />} />
           <Route path='/categories' element={<Categories />} />
+          <Route path="/categories/:categoryId" element={<ProductosPorCategoria />} />
           <Route path='*' element={() => <h1>Not Found</h1>} />
         </Routes>
         <Footer></Footer>
