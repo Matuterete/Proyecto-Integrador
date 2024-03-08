@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import '../Components/styles/AdminFeatures.css'
 import requestToAPI from '../services/requestToAPI';
-//import Swal from 'sweetalert';
 import Swal from 'sweetalert2';
 
 const AdminFeatures = () => {
@@ -11,8 +10,8 @@ const AdminFeatures = () => {
     const [resposeDataCRUD, setResponseDataCRUD] = useState()
     const [dataRequest, setDataRequest] = useState(
         {
-            url: 'http://prothechnics.us.to:8080/features/find/all',
-            method: 'GET',
+            url: '',
+            method: '',
             data: null,
             headers: {}
         }
@@ -26,10 +25,10 @@ const AdminFeatures = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const url = dataRequest.url;
-                const method = dataRequest.method;
-                const data = dataRequest.data;
-                const headers = dataRequest.headers;
+                const url = 'http://prothechnics.us.to:8080/features/find/all';
+                const method = 'GET';
+                const data = null;
+                const headers = {}
 
                 setResponseData(await requestToAPI(url, method, data, headers))
 
@@ -40,6 +39,27 @@ const AdminFeatures = () => {
             }
         }
         fetchData();
+    }, [resposeDataCRUD])
+
+    useEffect(() => {
+        if (dataRequest.url != '') {
+            async function fetchData() {
+                try {
+                    const url = dataRequest.url;
+                    const method = dataRequest.method;
+                    const data = dataRequest.data;
+                    const headers = dataRequest.headers;
+
+                    setResponseDataCRUD(await requestToAPI(url, method, data, headers))
+
+                    console.log('llamado de api CRUD')
+                } catch (error) {
+                    // Manejo de errores
+                    console.error('Error fetching data:');
+                }
+            }
+            fetchData();
+        }
     }, [dataRequest])
 
     /*========= EDIT FEATURE ==========*/
@@ -90,11 +110,13 @@ const AdminFeatures = () => {
     /*========= ADD FEATURE ==========*/
 
     const [selectedImage, setSelectedImage] = useState(null);
+
     const handleChangeImage = (event) => {
         setSelectedImage(event);
     };
 
     const [inputValue, setInputValue] = useState('');
+
     const handleChange = (event) => {
         setInputValue(event.target.value);
         console.log(inputValue)
@@ -124,6 +146,7 @@ const AdminFeatures = () => {
                 },
                 headers: {}
             })
+            setEnviar(!enviar)
 
         } else {
             Swal.fire({
@@ -132,8 +155,9 @@ const AdminFeatures = () => {
                 text: 'Por favor, completa todos los campos antes de continuar.',
             });
         }
-
+        setMostrarFormulario(!mostrarFormulario)
     }
+
     /*========= DELETE FEATURE ==========*/
 
     const handleClickDelete = (key) => {
@@ -184,7 +208,6 @@ const AdminFeatures = () => {
 
                     {mostrarFormulario && (
                         <div className='addFeature'>
-
                             <label>
                                 Nombre de la nueva Caracteristica:
                                 <input type="text" value={inputValue} onChange={handleChange} />
@@ -209,14 +232,10 @@ const AdminFeatures = () => {
                             }
 
                             <button className='addFeatureButton' type="button" onClick={handleChangeSend}>Enviar</button>
-
                         </div>
                     )}
 
-
-
-                    <ul className='adminFeactures'> {console.log(responseData)}
-
+                    <ul className='adminFeactures'>
                         {responseData.map((objeto, index) => (
                             <div className='divLi' key={objeto.id}>
 
@@ -236,18 +255,14 @@ const AdminFeatures = () => {
                                     Eliminar
                                 </button>
                             </div>
-
                         ))}
                     </ul>
-
-
                 </div>
             </div>)
-                :
-                (<div className="loader-container">
-                    <div className="loader"></div>
-                </div>)}
-
+            :
+            (<div className="loader-container">
+                <div className="loader"></div>
+            </div>)}
         </>
     )
 }
