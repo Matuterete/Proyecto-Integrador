@@ -69,7 +69,7 @@ const AdminFeatures = () => {
                 <div>
                     <button className='addFeature'>añadir Caracteristica</button>
                 </div>
-                {resposeData ? (<ul className='adminFeactures'>
+                {resposeData ? (<ul className='adminFeactures'> {console.log(resposeData)}
 
                     {resposeData.map((objeto, index) => (
                         <div className='divLi' key={objeto.id}>

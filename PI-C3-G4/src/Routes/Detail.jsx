@@ -54,7 +54,7 @@ const Detail = () => {
 
     return (
         resposeData ? (<div className='bodyDetail body'>
-
+            
             <div className='galleryAndPay'>
 
                 <div className='gallery'>
