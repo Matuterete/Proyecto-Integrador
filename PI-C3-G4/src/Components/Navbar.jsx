@@ -34,6 +34,7 @@ const MenuContainer = styled.div`
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   overflow: hidden;
+  width: 20vw;
   display: ${(props) => (props.isOpen ? 'block' : 'none')};
 `;
 
@@ -71,7 +72,9 @@ const Navbar = () => {
   ]
 
   const routesConUsuario = [
-    { path: '/administracion', name: 'Admin Productos' },
+    { path: '/administracion', name: 'Administrar productos' },
+    { path: '/administracion', name: 'Administrar caracteristicas' },
+    { path: '/administracion', name: 'Administrar categorias' }
   ]
 
   let navigate = useNavigate();
