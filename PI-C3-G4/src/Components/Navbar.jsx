@@ -68,7 +68,7 @@ const Navbar = () => {
 
   const routesSinUsuario = [
     { path: '/home', name: 'Home' },
-    { path: '/Products', name: 'Productos' },
+    { path: '/Categories', name: 'Categorias' },
   ]
 
   const routesConUsuario = [

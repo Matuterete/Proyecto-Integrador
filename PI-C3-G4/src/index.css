@@ -1,13 +1,10 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light, dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #122E4F;
+  background-color: #bcbcbc;
 }
-
 
 body {
   margin: 0;
@@ -18,11 +15,6 @@ body {
   position: relative;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -30,13 +22,15 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #4073AF; 
+  color: #F9F7F7; 
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
   border-color: #646cff;
 }
+
 .navbar {
   background-color: #fafafa;
   color: white;
@@ -49,13 +43,11 @@ button:hover {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
+    color: #122E4F; 
+    background-color: #bcbcbc; 
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #4073AF; 
+    color: #F9F7F7; 
   }
 }

@@ -1,0 +1,27 @@
+.categories {
+  padding: 20px;
+}
+
+.categories h1 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.categories ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.categories li {
+  margin-bottom: 10px;
+}
+
+.categories a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.categories a:hover {
+  color: #007bff;
+}
