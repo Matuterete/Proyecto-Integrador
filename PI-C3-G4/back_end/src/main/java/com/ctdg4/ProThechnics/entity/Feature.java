@@ -1,8 +1,6 @@
 package com.ctdg4.ProThechnics.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,12 +14,12 @@ public class Feature {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "feature_id")
-    private Long featureId;
+    private Long id;
     @Column
     private String title;
     @Column
     private String url;
-    @OneToMany(mappedBy = "feature")
+    @OneToMany(mappedBy = "feature", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<ProductFeature> features;
 }

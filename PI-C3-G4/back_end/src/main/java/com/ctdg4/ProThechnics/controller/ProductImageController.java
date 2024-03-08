@@ -3,11 +3,12 @@ package com.ctdg4.ProThechnics.controller;
 import com.ctdg4.ProThechnics.entity.ProductImage;
 import com.ctdg4.ProThechnics.service.ProductImageService;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/products/images")
 @CrossOrigin(origins = "*")
+@Tags(value = { @Tag(name = "Products Images") })
 public class ProductImageController {
     private ProductImageService productImageService;
 
@@ -80,12 +82,12 @@ public class ProductImageController {
     })
     @PutMapping("/update")
     public ResponseEntity<String> updateProductImage(@RequestBody ProductImage productImage) throws ResourceNotFoundException {
-        Optional<ProductImage> productImageSearched = productImageService.findProductImageById(productImage.getImageId());
+        Optional<ProductImage> productImageSearched = productImageService.findProductImageById(productImage.getId());
         if (productImageSearched.isPresent()) {
             productImageService.updateProductImage(productImage);
-            return ResponseEntity.ok("Product Image updated successfully: " + productImage.getImageId() + " - " + productImage.getTitle());
+            return ResponseEntity.ok("Product Image updated successfully: " + productImage.getId() + " - " + productImage.getTitle());
         } else {
-            throw new ResourceNotFoundException(String.format("Product Image: %d - %s not found. Product Image update failed. Please verify the product Image exists and try again.", productImage.getImageId(), productImage.getTitle()));
+            throw new ResourceNotFoundException(String.format("Product Image: %d - %s not found. Product Image update failed. Please verify the product Image exists and try again.", productImage.getId(), productImage.getTitle()));
 
         }
     }
