@@ -1,9 +1,57 @@
-.bodyFeatures{
-background-color: rgb(15, 76, 199);
-padding-top: 100px;
-}
-.titleFeatures{
+.bodyFeatures {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    padding:100px 50px;
+}
+
+.titleFeatures {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.addFeature{
+    color: white;
+}
+
+.adminFeactures li{
+    display: flex;
+    background-color: #707b86;
+    margin: 5px;
+    border-radius: 5px;
+    width: 600PX;
+}
+.divSVG{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(255, 255, 255);
+    border-radius:100%;
+    margin: 3px 10px;
+}
+.adminFeactures li p{
+    margin: 2px 0px;
+}
+.divLi{
+    display: flex;
+    align-items: center;
+}
+
+.buttonFeature{
+    display: flex;
+    height: 36px;
+    margin: 0px 5px;
+    align-items: center;
+    justify-content: center;
+}
+.editFeature{
+    background-color:#122E4F;
+    color: #DBE2EF;
+}
+.deletefeature{
+    background-color:#DBE2EF;
+    color: #122E4F;
 }

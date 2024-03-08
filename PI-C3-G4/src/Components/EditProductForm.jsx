@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function EditProductForm({ product, onSave }) {
@@ -7,6 +7,18 @@ function EditProductForm({ product, onSave }) {
   const [price, setPrice] = useState(product.price);
   const [isActive, setIsActive] = useState(product.isActive);
   const [stock, setStock] = useState(product.stock);
+  const [category, setCategory] = useState(product.category);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://prothechnics.us.to:8080/categories/find/all')
+      .then(response => {
+        setCategories(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -28,6 +40,10 @@ function EditProductForm({ product, onSave }) {
     setStock(e.target.value);
   };
 
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -36,7 +52,8 @@ function EditProductForm({ product, onSave }) {
       description,
       price,
       isActive,
-      stock
+      stock,
+      categoryId: category
     })
       .then(() => {
         onSave({
@@ -45,7 +62,8 @@ function EditProductForm({ product, onSave }) {
           description,
           price,
           isActive,
-          stock
+          stock,
+          categoryId: category
         });
         alert('Producto actualizado correctamente');
       })
@@ -76,6 +94,16 @@ function EditProductForm({ product, onSave }) {
       <label>
         Stock:
         <input type="number" value={stock} onChange={handleStockChange} />
+      </label>
+      <label>
+        Categoría:
+        <select value={category} onChange={handleCategoryChange}>
+          {categories.map(category => (
+            <option key={category.categoryId} value={category.categoryId}>
+              {category.title}
+            </option>
+          ))}
+        </select>
       </label>
       <button type="submit">Guardar Cambios</button>
     </form>
