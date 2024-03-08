@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import requestToAPI from '../services/requestToAPI';
+import '../Components/Styles/Detail.css'
 
 const Detail = () => {
 
@@ -71,7 +72,7 @@ const Detail = () => {
                 </div>
                 <div className='pay'>
 
-                    <Link to={'/home'}> <img src="\src\assets\back.png" alt="" srcset="" /> </Link>
+                    <Link to={'/home'}> <img src="\src\assets\back.png"/> </Link>
 
                     <div className='price'>
                         <h2>USD: {resposeData.price}</h2>
