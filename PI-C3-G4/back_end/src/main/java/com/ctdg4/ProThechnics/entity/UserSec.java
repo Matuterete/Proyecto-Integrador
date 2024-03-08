@@ -1,3 +1,4 @@
+/*
 package com.ctdg4.ProThechnics.entity;
 
 import jakarta.persistence.*;
@@ -67,3 +68,4 @@ public class User implements UserDetails {
     }
 
 }
+*/
