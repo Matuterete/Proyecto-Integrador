@@ -6,7 +6,6 @@ import Home from './Routes/Home'
 import Footer from './Components/Footer'
 import RegistroUsuario from './Components/RegistroUsuario'
 import Login from './Components/Login'
-import FormProducto from './Components/FormProducto'
 import Detail from './Routes/Detail';
 import AdminPage from './Routes/AdminPage'
 import Registrar from './Login/FormRegistrar';
@@ -29,9 +28,7 @@ function App() {
           <Route path='/registroUsuario' element={<RegistroUsuario />} />
           <Route path='/emailRegister' element={<EmailRegister />} />
           <Route path='/administracion' element={<AdminPage />} />
-          <Route path='/administracion' element={<AdminPage />} /> 
           <Route path='/adminFeatures' element={<AdminFeatures />} />
-          <Route path='/FormProducto' element={<FormProducto />} />
           <Route path='/FormRegistrar' element={<Registrar />} />
           <Route path='/FormLogin' element={<Login />} />
           <Route path='/FormRecuperar' element={<Recuperar />} />
