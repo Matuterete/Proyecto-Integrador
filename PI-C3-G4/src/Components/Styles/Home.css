@@ -2,6 +2,7 @@
     padding-top: 10vh;
     width: 100%;
     padding-bottom: 10vh;
+    background: linear-gradient(to bottom, #b7cfff, #b8e3e5);
 }
 
 .buscador {

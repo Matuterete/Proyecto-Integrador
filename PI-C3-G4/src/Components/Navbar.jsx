@@ -62,9 +62,9 @@ const Avatar = styled.img`
 
 const Navbar = () => {
   const { state, dispatch } = useContext();
-  const [ isMobileMenuOpen, setMobileMenuOpen ] = useState(false);
-  const [ usuarioLogueado ] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
-  const [ isDropdownOpen, setDropdownOpen ] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [usuarioLogueado] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const routesSinUsuario = [
     { path: '/home', name: 'Home' },
@@ -182,6 +182,14 @@ const Navbar = () => {
           </button>
         </div>
       </nav>
+
+      <div className='sugerencia'>
+        <button>home</button>
+        <button>categorias</button>
+        <button>otra cosa</button>
+        <button>otra cosa mas</button>
+      </div>
+
     </section>
   );
 };

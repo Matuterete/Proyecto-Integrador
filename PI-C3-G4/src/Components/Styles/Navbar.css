@@ -1,3 +1,25 @@
+.header{
+  display: flex;
+  position:fixed;
+  flex-direction: column;
+}
+.sugerencia{
+  display: flex;
+background-color: #122E4F;
+padding-top: 85px;
+padding-bottom: 10px;
+width: 100vw;
+align-items: center;
+justify-content: center;
+color: white;
+}
+.sugerencia button{
+  display: flex;
+  align-items: center;
+  margin: 0px 12px;
+  height: 20px;
+  border-radius: 0%;
+}
 .navbar {
   display: flex;
   position:fixed;
@@ -23,8 +45,13 @@
 }
 
 .navbar-logo{
-  height: auto;
   padding-left: 60px;
+}
+.navbar-logo:hover{
+  transform: scale(1.02);
+}
+.navbar-logo img{
+  width: 300px;
 }
 
 .btn-theme {
@@ -52,7 +79,7 @@
 }
 
 .navbar a:hover {
-  color: var(--color-accent);
+  color:#5bacf4;
 }
 
 .navbar ul {

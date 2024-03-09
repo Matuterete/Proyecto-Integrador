@@ -6,16 +6,15 @@ const Card = (product) => {
 
     return (
 
-        <Link to={'/detail/' + product.product.id}>
+        <Link to={'/detail/' + product.product.id} className='h2card'>
 
             <div className='card'>
                 <div>
                     <img src={`/src/assets/products/ID ${product.product.id}.1.jpeg`} alt="" />
                 </div>
 
-                <h2>{product.product.name}</h2>
-                <h2>{product.product.descripcion}</h2>
-                <h2>USD: {product.product.price}</h2>
+                <h2 className='name'>{product.product.name}</h2>
+                <p className='price'>USD: {product.product.price}</p>
             </div>
 
         </Link>
