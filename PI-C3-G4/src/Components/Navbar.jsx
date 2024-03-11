@@ -35,6 +35,7 @@ const MenuContainer = styled.div`
   border-radius: 4px;
   overflow: hidden;
   width: 20vw;
+  color: black;
   display: ${(props) => (props.isOpen ? 'block' : 'none')};
 `;
 
@@ -74,7 +75,8 @@ const Navbar = () => {
   const routesConUsuario = [
     { path: '/adminProducts', name: 'Administrar productos' },
     { path: '/adminFeatures', name: 'Administrar caracteristicas' },
-    { path: '/adminCategories', name: 'Administrar categorias' }
+    { path: '/adminCategories', name: 'Administrar categorias' },
+    { path: '/adminUsers', name: 'Administrar usuarios' },
   ]
 
   let navigate = useNavigate();
@@ -165,7 +167,7 @@ const Navbar = () => {
                 <MenuContainer isOpen={isDropdownOpen}>
                   <AvatarContainer>
                     <Avatar src={Usuario} alt="Avatar" />
-                    <span>{usuarioLogueado.nombre}</span>
+                    <span>{usuarioLogueado.name}</span>
                   </AvatarContainer>
                   <MenuItem>
                     Perfil
@@ -183,12 +185,14 @@ const Navbar = () => {
         </div>
       </nav>
 
+      {/* 
       <div className='sugerencia'>
         <button>home</button>
         <button>categorias</button>
         <button>otra cosa</button>
         <button>otra cosa mas</button>
       </div>
+      */}
 
     </section>
   );

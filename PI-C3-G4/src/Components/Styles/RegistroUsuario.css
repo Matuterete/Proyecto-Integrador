@@ -3,8 +3,12 @@
 }
 
 .container h1 {
-  padding-block: 50px;
+  padding: 20px;
   font-size: 1.5rem;
+}
+
+.container-img{
+  text-align: center;
 }
 
 form {

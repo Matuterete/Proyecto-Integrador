@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import '../Components/styles/Home.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,27 +29,22 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(usuario);
-    var usuarioList = JSON.parse(localStorage.getItem('usuarios'))
-    if (!usuarioList) {
+    axios.get(`http://prothechnics.us.to:8080/users/find/${usuario.correo}/${usuario.contrasena}`)
+    .then(response => {
+      console.log(response.data);
+      localStorage.setItem('usuarioLogueado', JSON.stringify(response.data))
+      alert(`Bienvenido usuario: ${response.data.name}`)
+      navigate("/home");
+      window.location.reload(); 
+    })
+    .catch(error => {
+      console.error(error);
       alert(`El usuario ${usuario.correo} no se encuentra registrado en el sistema`)
-    }
-    else {
-      const usuarioEncontrado = usuarioList.find((elemento) => elemento.correo == usuario.correo && elemento.contrasena == usuario.contrasena);
-      if (!usuarioEncontrado) {
-        alert(`El usuario ${usuario.correo} no se encuentra registrado en el sistema`)
-      }
-      else {
-        localStorage.setItem('usuarioLogueado', JSON.stringify(usuarioEncontrado))
-        alert(`Bienvenido usuario ${usuarioEncontrado.nombre}`)
-        navigate("/home");
-        window.location.reload(); 
-      }
-    }
+    });
   };
 
   return (
-    <div className="Form">
+    <div className="form">
       <h1>Iniciar Sesión</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

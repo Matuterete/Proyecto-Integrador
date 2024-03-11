@@ -15,6 +15,28 @@ body {
   position: relative;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  margin-top: auto;
+}
+
+.form {
+  padding-top: 60px;
+}
+
+.form h1 {
+  text-align: center;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -27,6 +49,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }

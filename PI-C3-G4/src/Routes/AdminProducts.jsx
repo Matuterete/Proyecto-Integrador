@@ -4,6 +4,7 @@ import ProductList from '../Components/ProductList';
 import ProductEditForm from '../Components/ProductEditForm';
 import ProductAddForm from '../Components/ProductAddForm'
 import Pagination from '../Components/Pagination';
+import { useNavigate } from 'react-router-dom';
 import "../Components/styles/AdminProducts.css";
 
 function AdminProducts() {
@@ -11,17 +12,25 @@ function AdminProducts() {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(10);
   const [showProductList, setShowProductList] = useState(true);
-  const [showAddProductAddForm, setShowProductAddForm] = useState(false);
+  const [showProductAddForm, setShowProductAddForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [usuarioLogueado] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
+
+  let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://prothechnics.us.to:8080/products/find/all')
+    if (usuarioLogueado) {
+      axios.get('http://prothechnics.us.to:8080/products/find/all')
       .then(response => {
         setProducts(response.data);
       })
       .catch(error => {
         console.error(error);
       });
+    }
+    else {
+      navigate("/home");
+    }
   }, []);
 
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -93,7 +102,7 @@ function AdminProducts() {
             currentPage={currentPage} />
         </div>
       )}
-      {showAddProductAddForm && 
+      {showProductAddForm && 
         <ProductAddForm onAdd={handleSaveProduct} onCancel={handleCancelProduct} />
       }
       {editingProduct && 
