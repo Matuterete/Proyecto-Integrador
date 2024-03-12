@@ -1,7 +1,4 @@
-.bodyDetail{
-background-color:rgb(105, 105, 105);
-margin: 50px;
-}
+
 .gallery{
     width: 60vw;
     margin: 30px;
@@ -45,6 +42,25 @@ margin: 30px;
     margin: 0px;
     padding-top: 10px;
 }
+.feactures li{
+    display: flex;
+    background-color: #707b86;
+    margin: 5px;
+    border-radius: 5px;
+}
+.feactures div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(255, 255, 255);
+    border-radius:100%;
+    margin: 3px 10px;
+}
+.feactures li p{
+    margin: 2px 0px;
+}
 
 @media (max-width: 760px) {
     .bodyDetail {
@@ -76,4 +92,14 @@ margin: 30px;
       margin-top: 10px;
       margin:2px 
     }
+
+    .info{
+        display: flex;
+        flex-direction: column;
+    }
+   .feactures{
+    margin: 20px;
+    padding: 0;
+   }
+
   }

@@ -1,3 +1,25 @@
+.header{
+  display: flex;
+  position:fixed;
+  flex-direction: column;
+}
+.sugerencia{
+  display: flex;
+background-color: #122E4F;
+padding-top: 85px;
+padding-bottom: 10px;
+width: 100vw;
+align-items: center;
+justify-content: center;
+color: white;
+}
+.sugerencia button{
+  display: flex;
+  align-items: center;
+  margin: 0px 12px;
+  height: 20px;
+  border-radius: 0%;
+}
 .navbar {
   display: flex;
   position:fixed;
@@ -6,8 +28,9 @@
   text-align: center;
   background-color: #F9F7F7;
   color: var(--color-text);
-  width: 100%;
+  width: 100vw;
   height: auto;
+  z-index: 9999;
 }
 
 .buttons {
@@ -22,8 +45,13 @@
 }
 
 .navbar-logo{
-  height: auto;
   padding-left: 60px;
+}
+.navbar-logo:hover{
+  transform: scale(1.02);
+}
+.navbar-logo img{
+  width: 300px;
 }
 
 .btn-theme {
@@ -45,12 +73,13 @@
 
 .navbar a {
   text-decoration: none;
-  color: black;
+  color: #213547;
+  font-weight: bold;
   transition: color 0.3s ease;
 }
 
 .navbar a:hover {
-  color: var(--color-accent);
+  color:#5bacf4;
 }
 
 .navbar ul {
@@ -76,25 +105,6 @@
   color: white;
 }
 
-.btn-administracion {
-  background-color: #122E4F;
-  color: white;
-}
-
-.btn-agregar-producto {
-  background-color: #4073AF;
-  color: white;
-}
-
-
-.agregarproducto {
-  display: flex;
-  align-items: center;
-}
-
-.btn-agregar-producto {
-  margin-left: 10px;
-}
 
 .menu {
   display: flex;

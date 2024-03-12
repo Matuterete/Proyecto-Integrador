@@ -6,8 +6,8 @@
   background-color: #122E4F;
   color: var(--color-text);
   padding: 0;
-  width: 100%;
-  height: auto;}
+  width: 100vw;
+}
 
 .footer-logo {
   padding-left: 60px;
@@ -21,6 +21,7 @@
   display: inline-block;
   justify-content: space-between;
   align-items: center;
+  text-align: center;
 }
 
 .footer-iconos img {
