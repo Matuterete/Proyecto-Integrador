@@ -1,7 +1,6 @@
 .bodyPage {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; 
   }
   
   .adminMenu {
@@ -30,17 +29,6 @@
   
   .ButtonContainer {
     margin-top: 10px;
-  }
-  
-  .Button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-right: 10px;
-    text-decoration: none;
-    color: #fff;
-    background-color: #007bff;
-    border: 1px solid #007bff;
-    border-radius: 5px;
   }
   
   .Button:last-child {

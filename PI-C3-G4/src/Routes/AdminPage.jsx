@@ -25,12 +25,17 @@ const AdminPage = () => {
         <div className='Menu'>
           <h2>Menú</h2>
           <div className='ButtonContainer'>
+<<<<<<< HEAD
             {!isMobile && (
               <>
                 <Link to="/adminFeatures" className='Button'>Admin Features</Link>
                 <Link to="/adminProducts" className='Button'>Admin Products</Link>
               </>
             )}
+=======
+            <Link to="/adminFeatures"><button className='button buttonPrimary'>Admin Features</button></Link>
+            <Link to="/adminProducts"><button className='button buttonTerciary'>Admin Products</button></Link>
+>>>>>>> martin_cerbin
           </div>
         </div>
         {isMobile && <p>Esta página no está disponible en dispositivos móviles.</p>}
