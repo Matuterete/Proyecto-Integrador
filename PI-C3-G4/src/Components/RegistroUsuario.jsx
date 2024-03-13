@@ -123,7 +123,7 @@ function RegistroUsuario() {
             <input type="password" name="password2" value={password2} onChange={handlePassword2Change} />
           </label>
         </div>
-        <div className = "boton"><button  type="submit">Guardar Usuario</button></div>
+        <div className = "boton"><button  className='button buttonSecundary' type="submit">Guardar Usuario</button></div>
       </form>
     </div>
   );

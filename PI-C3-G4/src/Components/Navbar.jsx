@@ -7,59 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from '../Utils/Context.jsx';
 import { TOGGLE_THEME } from '../Reducers/Reducer.jsx';
 import './Styles/Navbar.css';
-import styled from 'styled-components';
-
-// Estilos para el menú hamburguesa
-const HamburgerMenuWrapper = styled.div`
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-`;
-
-const HamburgerIcon = styled.div`
-  width: 30px;
-  height: 0px;
-  background-color: #333;
-  margin: 6px 0;
-  transition: 0.4s;
-  margin-top: 10px;
-  margin-right: 10px;
-`;
-
-const MenuContainer = styled.div`
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: #f9f9f9;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-  width: 20vw;
-  color: black;
-  display: ${(props) => (props.isOpen ? 'block' : 'none')};
-`;
-
-const MenuItem = styled.div`
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  cursor: pointer;
-  &:hover {
-    background-color: #ddd;
-  }
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px;
-`;
-
-const Avatar = styled.img`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin-right: 10px;
-`;
 
 const Navbar = () => {
   const { state, dispatch } = useContext();
@@ -153,8 +100,8 @@ const Navbar = () => {
           {
             !usuarioLogueado &&
             <div>
-              <button className='button buttonDark' onClick={Login}>Iniciar Sesión</button>
-              <button className='button buttonLight' onClick={RegistroUsuario}>Registrarse</button>
+              <button className='button buttonPrimary' onClick={Login}>Iniciar Sesión</button>
+              <button className='button buttonTerciary' onClick={RegistroUsuario}>Registrarse</button>
             </div>
           }
           {
@@ -179,7 +126,7 @@ const Navbar = () => {
               </HamburgerMenuWrapper>
             </div>
           }
-          <button className='btn-theme' onClick={handleTheme}>
+          <button className='button buttonSecundary' onClick={handleTheme}>
             <img src={state.theme === 'light' ? Moon : Sun} width='25px' alt="Theme"></img>
           </button>
         </div>
