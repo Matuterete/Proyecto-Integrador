@@ -153,8 +153,8 @@ const Navbar = () => {
           {
             !usuarioLogueado &&
             <div>
-              <button className='btn-login' onClick={Login}>Iniciar Sesión</button>
-              <button className='btn-registro' onClick={RegistroUsuario}>Registrarse</button>
+              <button className='button buttonDark' onClick={Login}>Iniciar Sesión</button>
+              <button className='button buttonLight' onClick={RegistroUsuario}>Registrarse</button>
             </div>
           }
           {

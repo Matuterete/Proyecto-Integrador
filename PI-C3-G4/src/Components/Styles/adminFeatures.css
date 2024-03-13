@@ -7,9 +7,7 @@
 }
 
 .addFeatureButton {
-    background-color: #2878d4;
     margin: 20px;
-    color: white;
 }
 
 /*======== ADD FEATURES =========*/
@@ -83,16 +81,14 @@ label {
     justify-content: center;
 }
 
-.addFeature {
-    color: white;
-}
-
 .adminFeactures li {
     display: flex;
-    background-color: #707b86;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F9F7F7;
     margin: 5px;
-    border-radius: 5px;
-    width: 600PX;
+    border-radius: 8px;
+    width: 900PX;
 }
 
 .divSVG {
@@ -115,20 +111,4 @@ label {
     align-items: center;
 }
 
-.buttonFeature {
-    display: flex;
-    height: 36px;
-    margin: 0px 5px;
-    align-items: center;
-    justify-content: center;
-}
 
-.editFeature {
-    background-color: #122E4F;
-    color: #DBE2EF;
-}
-
-.deletefeature {
-    background-color: #DBE2EF;
-    color: #122E4F;
-}
