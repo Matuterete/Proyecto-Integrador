@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef} from 'react';
 import axios from 'axios';
 import '../Components/Styles/Home.css';
 import { useNavigate } from 'react-router-dom';
@@ -45,13 +45,13 @@ function RegistroUsuario() {
     });
   };
 
-  //const form = useRef();
+  const form = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // send email
-    /*
+   
     emailjs
       .sendForm('service_9nydvzd', 'template_vf09e5z', form.current, {
         publicKey: '_tQw4BNfAWBkcyhJO',
@@ -64,7 +64,7 @@ function RegistroUsuario() {
           console.log('FAILED...', error.text);
         },
       );
-    */
+    
 
     if (password == password2) {
       // Aquí podrías enviar los datos a un servidor o hacer cualquier otra acción con ellos
@@ -77,7 +77,7 @@ function RegistroUsuario() {
       })
         .then(response => {
           alert(`El usuario ${response.data.name} ha quedado registrado correctamente.`)
-          navigate("/login");
+          navigate("/emailRegister");
         })
         .catch(error => {
           console.error(error);
@@ -88,7 +88,7 @@ function RegistroUsuario() {
       alert('Las contraseñas no coinciden');
     }
 
-    // navigate("/emailRegister");
+    //  navigate("/emailRegister");
   };
 
   return (
@@ -97,7 +97,7 @@ function RegistroUsuario() {
      <div className='container-img'>
      <img src={registroUsuario} alt="logo registro de usuario" height= "100px" width= "100px" />
      </div>
-      <form onSubmit={handleSubmit}>
+      <form ref={form} onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Nombre:
             <input type="text" name="name" value={name} onChange={handleNameChange} />
