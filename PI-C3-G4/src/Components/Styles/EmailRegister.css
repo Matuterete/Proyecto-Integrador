@@ -1,0 +1,32 @@
+.title {
+    font-size: 2em;
+  }
+  
+  .container {
+    color: black;
+  }
+  
+  .container h1 {
+    padding-block: 50px;
+    font-size: 1.5rem;
+  }
+  
+  .container2 {
+    align-items: center;
+    background: #fff;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(2, 20, 123, 0.3);
+    box-sizing: border-box;
+  }
+  
+  .boton {
+  cursor: pointer;
+  }
+  
+  
+  
+  
+  
+  
+  

@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface ProductImageRepository extends JpaRepository<ProductImage, Long> {
     List<ProductImage> findByTitleLike(String title);
+    List<ProductImage> findByProduct(Product product);
 }

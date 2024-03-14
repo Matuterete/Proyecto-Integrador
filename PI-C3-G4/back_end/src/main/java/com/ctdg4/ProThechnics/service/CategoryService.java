@@ -12,6 +12,7 @@ import java.util.Optional;
 public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
+
     public Category saveCategory(Category category) {
         return categoryRepository.save(category);
     }
@@ -19,16 +20,20 @@ public class CategoryService {
     public void updateCategory(Category category) {
         categoryRepository.save(category);
     }
-    public void deleteCategory(Long category_id){
+
+    public void deleteCategory(Long category_id) {
         categoryRepository.deleteById(category_id);
     }
+
     public List<Category> listAllCategories() {
         return categoryRepository.findAll();
     }
-    public Optional<Category> findCategoryById(Long category_id){
+
+    public Optional<Category> findCategoryById(Long category_id) {
         return categoryRepository.findById(category_id);
     }
-    public List<Category> findCategoryByTitleLike(String title){
+
+    public List<Category> findCategoryByTitleLike(String title) {
         return categoryRepository.findByTitleLike('%' + title + '%');
     }
 }

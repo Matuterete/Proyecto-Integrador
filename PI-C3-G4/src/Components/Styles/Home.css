@@ -2,6 +2,7 @@
     padding-top: 10vh;
     width: 100%;
     padding-bottom: 10vh;
+    background: linear-gradient(to bottom, #b7cfff, #b8e3e5);
 }
 
 .buscador {
@@ -9,6 +10,7 @@
     flex-wrap: wrap;
     justify-content: center;
     padding-top: 80px;
+    border-radius: 20px;
   }
 
 .buscador-input {
@@ -20,7 +22,7 @@
     border-bottom: solid 2px #3f0707;
     padding: 10px 10px 10px 30px;
     outline: none;
-    background-color: #c5c9cd;
+    background-color: #efefef;
     border-radius: 40px;
   }
 
@@ -57,7 +59,7 @@
 .cardGrid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr); 
-  grid-template-rows: repeat(6, 1fr); 
+  grid-template-rows: repeat(3, 1fr); 
   gap: 20px; 
 }
 
