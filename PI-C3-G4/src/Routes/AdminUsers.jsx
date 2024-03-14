@@ -5,7 +5,7 @@ import UserEditForm from '../Components/UserEditForm';
 import UserAddForm from '../Components/UserAddForm'
 import Pagination from '../Components/Pagination';
 import { useNavigate } from 'react-router-dom';
-import "../Components/styles/AdminUsers.css";
+import "../Components/Styles/AdminUsers.css";
 
 function AdminUsers() {
   const [users, setUsers] = useState([]);
