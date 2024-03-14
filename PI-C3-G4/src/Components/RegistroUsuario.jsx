@@ -1,9 +1,10 @@
-import React, { useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import '../Components/Styles/Home.css';
 import { useNavigate } from 'react-router-dom';
 import '../Components/Styles/RegistroUsuario.css';
 import registroUsuario from '../assets/imagen-Usuario.png';
+import EmailConfirmation from '../Components/EmailConfirmation'
 
 import emailjs from '@emailjs/browser';
 
@@ -14,6 +15,7 @@ function RegistroUsuario() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
+  const [mostrarDespuesDeGuardar, setMostrarDespuesDeGuardar] = useState(false)
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -46,88 +48,110 @@ function RegistroUsuario() {
   };
 
   const form = useRef();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // send email
-   
+  
+  const enviarCorreo = () => {
     emailjs
       .sendForm('service_9nydvzd', 'template_vf09e5z', form.current, {
         publicKey: '_tQw4BNfAWBkcyhJO',
       })
       .then(
         () => {
-          console.log('SUCCESS!');
+          console.log('¡ÉXITO!');
         },
         (error) => {
-          console.log('FAILED...', error.text);
-        },
+          console.log('FALLÓ...', error.text);
+        }
       );
-    
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    enviarCorreo();
+
 
     if (password == password2) {
       // Aquí podrías enviar los datos a un servidor o hacer cualquier otra acción con ellos
-      axios.post('http://prothechnics.us.to:8080/auth/register', {
-        isActive: true,
-        name,
-        lastName,
-        email,
-        password
-      })
-        .then(response => {
-          alert(`El usuario ${response.data.name} ha quedado registrado correctamente.`)
-          navigate("/emailRegister");
-        })
-        .catch(error => {
-          console.error(error);
-          alert('Hubo un error al intentar registrar el usuario');
-        });
-    }
-    else {
-      alert('Las contraseñas no coinciden');
-    }
+      // axios.post('http://prothechnics.us.to:8080/auth/register', {
+      //   isActive: true,
+      //   name,
+      //   lastName,
+      //   email,
+      //   password
+      // })
+      //   .then(response => {
+          // alert(`El usuario ${response.data.name} ha quedado registrado correctamente.`)
+          setMostrarDespuesDeGuardar(true);
+        // })
+    //     .catch(error => {
+    //       console.error(error);
+    //       alert('Hubo un error al intentar registrar el usuario');
+    //     });
+    // }
+    // else {
+    //   alert('Las contraseñas no coinciden');
+    // }
 
     //  navigate("/emailRegister");
   };
+}
+
+
 
   return (
     <div className="form container">
-     <h1 className='title'>Formulario de Registro de Usuarios</h1>
-     <div className='container-img'>
-     <img src={registroUsuario} alt="logo registro de usuario" height= "100px" width= "100px" />
-     </div>
-      <form ref={form} onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Nombre:
-            <input type="text" name="name" value={name} onChange={handleNameChange} />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>Apellido:
-            <input type="text" name="lastName" value={lastName} onChange={handleLastNameChange} />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>Correo electrónico:
-            <input type="email" name="email" value={email} onChange={handleEmailChange} />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>Contraseña:
-            <input type="password" name="password" value={password} onChange={handlePasswordChange} />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>Repita contraseña:
-            <input type="password" name="password2" value={password2} onChange={handlePassword2Change} />
-          </label>
-        </div>
-        <div className = "boton"><button  className='button buttonSecundary' type="submit">Guardar Usuario</button></div>
-      </form>
+      <h1 className='title'>Formulario de Registro de Usuarios</h1>
+      <div className='container-img'>
+        <img src={registroUsuario} alt="logo registro de usuario" height="100px" width="100px" />
+      </div>
+      {mostrarDespuesDeGuardar ? (
+    
+      <div> 
+           <h1>Confirma tu correo</h1>
+        <p>Hemos enviado un mensaje de confirmación a tu dirección de correo electrónico.</p>
+        <p>Por favor, revisa tu bandeja de entrada para confirmar tu registro. Si no encuentras el mensaje de confirmación en tu bandeja de entrada, te sugerimos revisar en la carpeta de correo no deseado (spam).</p>
+       
+        <button type="submit" className='button buttonSecundary' onClick={ enviarCorreo}>Reenviar correo</button>
+        </div>     
+      ) : (
+
+
+        <form ref={form} onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Nombre:
+              <input type="text" name="name" value={name} onChange={handleNameChange} />
+            </label>
+          </div>
+          <div className="form-group">
+            <label>Apellido:
+              <input type="text" name="lastName" value={lastName} onChange={handleLastNameChange} />
+            </label>
+          </div>
+          <div className="form-group">
+            <label>Correo electrónico:
+              <input type="email" name="email" value={email} onChange={handleEmailChange} />
+            </label>
+          </div>
+          <div className="form-group">
+            <label>Contraseña:
+              <input type="password" name="password" value={password} onChange={handlePasswordChange} />
+            </label>
+          </div>
+          <div className="form-group">
+            <label>Repita contraseña:
+              <input type="password" name="password2" value={password2} onChange={handlePassword2Change} />
+            </label>
+          </div>
+          <div className="boton"><button className='button buttonSecundary' type="submit">Guardar Usuario</button></div>
+        </form>
+
+      )}
+
     </div>
   );
 }
 
 
 export default RegistroUsuario;
+
+
+  //  <EmailConfirmation emailform={email} nameform={name} handleSubmit={handleSubmit} />
