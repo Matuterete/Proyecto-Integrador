@@ -75,30 +75,29 @@ function RegistroUsuario() {
     setFormData(formData);
 
     if (password == password2) {
-      // Aquí podrías enviar los datos a un servidor o hacer cualquier otra acción con ellos
-      // axios.post('http://prothechnics.us.to:8080/auth/register', {
-      //   isActive: true,
-      //   name,
-      //   lastName,
-      //   email,
-      //   password
-      // })
-      //   .then(response => {
+     
+      axios.post('http://prothechnics.us.to:8080/auth/register', {
+        isActive: true,
+        name,
+        lastName,
+        email,
+        password
+      })
+        .then(response => {
       // alert(`El usuario ${response.data.name} ha quedado registrado correctamente.`)
       setMostrarDespuesDeGuardar(false);
       enviarCorreo();
-      // })
-      //     .catch(error => {
-      //       console.error(error);
-      //       alert('Hubo un error al intentar registrar el usuario');
-      //     });
-      // }
-      // else {
-      //   alert('Las contraseñas no coinciden');
-      // }
+      })
+          .catch(error => {
+            console.error(error);
+            alert('Hubo un error al intentar registrar el usuario');
+          });
+      }
+      else {
+        alert('Las contraseñas no coinciden');
+      }
 
       //  navigate("/emailRegister");
-    };
   }
 
 
@@ -160,17 +159,3 @@ function RegistroUsuario() {
 
 export default RegistroUsuario;
 
-
-{/* <div>
-          <h1>Confirma tu correo</h1>
-          <p>Hemos enviado un mensaje de confirmación a tu dirección de correo electrónico.</p>
-          <p>Por favor, revisa tu bandeja de entrada para confirmar tu registro. Si no encuentras el mensaje de confirmación en tu bandeja de entrada, te sugerimos revisar en la carpeta de correo no deseado (spam).</p>
-          <form ref={form} onSubmit={enviarCorreo}>
-            <input type="text" name="name" defaultValue={formData.name} style={{ display: 'none' }} />
-            <input type="email" name="email" defaultValue={formData.email} style={{ display: 'none' }} />
-            <button type="submit" className='button buttonSecundary'>Reenviar correo</button>
-          </form>
-        
-        </div> */}
-
-// //  <EmailConfirmation emailform={email} nameform={name} handleSubmit={handleSubmit} />
