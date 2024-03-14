@@ -68,15 +68,15 @@ function RegistroUsuario() {
 
     if (password == password2) {
       // Aquí podrías enviar los datos a un servidor o hacer cualquier otra acción con ellos
-      axios.post('http://prothechnics.us.to:8080/users/add', {
-        isActive: true,
+      axios.post('http://prothechnics.us.to:8080/auth/register', {
         name,
         lastName,
-        email,
-        password
+        password,
+        email
       })
         .then(response => {
-          alert(`El usuario ${response.data.name} ha quedado registrado correctamente.`)
+          alert(`El usuario ha quedado registrado correctamente.`);
+          console.log(response.data.token)
           navigate("/login");
         })
         .catch(error => {

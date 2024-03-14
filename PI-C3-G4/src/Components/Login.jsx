@@ -19,21 +19,16 @@ function Login() {
     });
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setUsuario({
-      ...usuario,
-      imagen: file
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.get(`http://prothechnics.us.to:8080/users/find/${usuario.correo}/${usuario.contrasena}`)
+    axios.post('http://prothechnics.us.to:8080/auth/login',
+    {
+      email: usuario.correo,
+      password: usuario.contrasena
+    })
     .then(response => {
       console.log(response.data);
       localStorage.setItem('usuarioLogueado', JSON.stringify(response.data))
-      alert(`Bienvenido usuario: ${response.data.name}`)
       navigate("/home");
       window.location.reload(); 
     })
