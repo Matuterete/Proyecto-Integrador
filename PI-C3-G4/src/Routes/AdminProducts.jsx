@@ -89,7 +89,7 @@ function AdminProducts() {
       {showProductList && (
         <div>
           <div className='add-button'>
-            <button className='form-button form-button-blue' onClick={handleAddProduct}>Agregar Producto</button>
+            <button className='button buttonSecundary' onClick={handleAddProduct}>Agregar Producto</button>
           </div>
           <ProductList
               products={currentProducts}

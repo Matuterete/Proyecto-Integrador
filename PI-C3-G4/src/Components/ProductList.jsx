@@ -20,8 +20,8 @@ function ProductList({ products, onEdit, onDelete }) {
           <p>Id: {product.id}</p>
           <h3>{product.name}</h3>
           <div>
-            <button className='form-button form-button-green' onClick={() => onEdit(product)}>Modificar</button>
-            <button className='form-button form-button-red' onClick={() => onDelete(product.id)}>Eliminar</button>
+            <button className='button buttonPrimary' onClick={() => onEdit(product)}>Modificar</button>
+            <button className='button buttonTerciary' onClick={() => onDelete(product.id)}>Eliminar</button>
           </div>
         </div>
       ))}

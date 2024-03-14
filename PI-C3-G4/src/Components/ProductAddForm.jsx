@@ -120,10 +120,10 @@ function ProductAddForm({ onAdd, onCancel }) {
         </label>
       </div>
       <div className='form-group'>
-        <button type="submit" className="submit-button">Agregar Producto</button>
+        <button type="submit" className="button submit-button buttonSecundary">Agregar Producto</button>
       </div>
       <div className='form-group'>
-        <button type='button' className="cancel-button" onClick={onCancel}>Cancelar</button>
+        <button type='button' className="button cancel-button buttonTerciary" onClick={onCancel}>Cancelar</button>
       </div>
     </form>
   );
