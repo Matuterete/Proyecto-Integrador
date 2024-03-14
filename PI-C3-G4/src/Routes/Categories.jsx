@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import requestToAPI from '../services/requestToAPI';
 import '../Components/styles/Categories.css';
 
 const Categories = () => {
@@ -9,8 +9,8 @@ const Categories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://prothechnics.us.to:8080/categories/find/all');
-        setCategories(response.data);
+        const response = await requestToAPI('http://prothechnics.us.to:8080/categories/find/all', 'GET');
+        setCategories(response);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }

@@ -14,12 +14,12 @@ function AdminProducts() {
   const [showProductList, setShowProductList] = useState(true);
   const [showProductAddForm, setShowProductAddForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
-  const [usuarioLogueado] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
+  // const [usuarioLogueado] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
 
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (usuarioLogueado) {
+    // if (usuarioLogueado) {
       axios.get('http://prothechnics.us.to:8080/products/find/all')
       .then(response => {
         setProducts(response.data);
@@ -27,10 +27,10 @@ function AdminProducts() {
       .catch(error => {
         console.error(error);
       });
-    }
-    else {
-      navigate("/home");
-    }
+    // }
+    // else {
+    //   navigate("/home");
+    // }
   }, []);
 
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -89,7 +89,7 @@ function AdminProducts() {
       {showProductList && (
         <div>
           <div className='add-button'>
-            <button className='form-button form-button-blue' onClick={handleAddProduct}>Agregar Producto</button>
+            <button className='button buttonSecundary' onClick={handleAddProduct}>Agregar Producto</button>
           </div>
           <ProductList
               products={currentProducts}

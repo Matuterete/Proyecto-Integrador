@@ -117,9 +117,9 @@ function UserEditForm({ user, onSave, onCancel }) {
           Rol:
           <select value={selectedRole} onChange={handleRoleChange}>
             <option value="">Seleccione el rol</option>
-            <option key="1" value="1">Role 1</option>
-            <option key="2" value="2">Role 2</option>
-            <option key="3" value="3">Role 3</option>
+            <option key="1" value="1">USER</option>
+            <option key="2" value="2">ADMIN</option>
+            <option key="3" value="3">SUPERADMIN</option>
           </select>
         </label>
       </div>

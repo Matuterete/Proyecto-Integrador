@@ -38,30 +38,6 @@
     cursor: pointer;
   }
 
-  .form-button-green {
-    background-color: #4caf50;
-  }
-
-  .form-button-red {
-    background-color: #d53449;
-  }
-
-  .form-button-blue {
-    background-color: #542ecf;
-  }
-  
-  .form-button-green:hover {
-    background-color: #62a666;
-  }
-
-  .form-button-red:hover {
-    background-color: #bd5c64;
-  }
-  
-  .form-button-blue:hover {
-    background-color: #6d72af;
-  }
-
   .title {
     font-size: 25pt;
     text-align: center;
@@ -108,29 +84,11 @@
   }
 
   .form-group button.submit-button {
-    background-color: #4caf50;
-    color: #fff;
     padding: 10px;
-    border: none;
-    border-radius: 5px;
     width: 100%;
-    cursor: pointer;
-  }
-  
-  .form-group button.submit-button:hover {
-    background-color: #45a049;
   }
 
   .form-group button.cancel-button {
-    background-color: #d53449;
-    color: #fff;
     padding: 10px;
-    border: none;
-    border-radius: 5px;
     width: 100%;
-    cursor: pointer;
-  }
-  
-  .form-group button.cancel-button:hover {
-    background-color: #bd5c64;
   }

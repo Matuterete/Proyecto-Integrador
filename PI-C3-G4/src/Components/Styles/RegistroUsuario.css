@@ -21,10 +21,6 @@ form {
 
 }
 
-.boton {
-cursor: pointer;
-}
-
 .form h2 {
   text-align: center;
   color: #333;
@@ -45,19 +41,9 @@ cursor: pointer;
 }
 
 .form button {
-  background-color: #4caf50;
-  color: #fff;
   padding: 10px;
-  border: none;
-  border-radius: 5px;
   width: 100%;
-  cursor: pointer;
 }
-
-.form button:hover {
-  background-color: #45a049;
-}
-
 
 
 
