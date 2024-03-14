@@ -44,28 +44,20 @@ main {
   cursor: pointer;
   margin: 5px;
 }
-.buttonPrimary{
+.buttonDark{
   background-color: #122E4F;
   color: white;
 }
-.buttonPrimary:hover{
+.buttonDark:hover{
   background-color: #4073AF;
 }
-.buttonSecundary{
-  background-color: #4073AF;
-  color: white;
-}
-.buttonSecundary:hover{
-  background-color: #5095e4;
-}
-.buttonTerciary{
+.buttonLight{
   background-color: #DBE2EF;
   color: #122E4F;
 }
-.buttonTerciary:hover{
+.buttonLight:hover{
   background-color: #c1c8d3;
 }
-
 
 .navbar {
   background-color: #fafafa;

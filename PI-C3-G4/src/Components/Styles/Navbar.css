@@ -40,8 +40,17 @@
   width: 300px;
 }
 
+.btn-theme {
+  background-color: #4073AF;
+  padding: 8px;
+}
+
 .btn-cerrar {
   background-color: #ffffff;
+}
+
+.btn-theme img {
+  border-radius: 0px;
 }
 
 .navbar a {
@@ -127,13 +136,13 @@
 
   #mobile-menu {
     display: none;
-    position: fixed;
-    background-color: #F9F7F7;
-
-    min-width: 30%;
-    right: 0%;
-    padding: 15px;
-
+    width: 100%;
+    max-width: 20%;
+    position: absolute;
+    top: 100%;
+    left: 80%;
+    background-color: #122E4F;
+    border: 1% solid #ccc;
   }
 
   #mobile-menu.active {
@@ -143,7 +152,7 @@
   .mobile-menu-items {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: center;
   }
 
   .mobile-menu-items a {

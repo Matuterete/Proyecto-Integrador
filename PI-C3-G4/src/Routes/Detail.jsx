@@ -82,8 +82,8 @@ const Detail = () => {
                         </div>
 
 
-                        <button className='button buttonPrimary'>Alquilar ahora</button>
-                        <button className='button buttonTerciary'>Agregar al Carrito</button>
+                        <button className='button buttonDark'>Alquilar ahora</button>
+                        <button className='button buttonLight'>Agregar al Carrito</button>
 
                         <img className='paymentMethods' src="\src\assets\medios de pago.png"/>
                     </div>

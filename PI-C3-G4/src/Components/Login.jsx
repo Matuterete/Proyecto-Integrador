@@ -57,7 +57,7 @@ function Login() {
             <input type="password" name="contrasena" value={usuario.contrasena} onChange={handleChange} />
           </label>
         </div>
-        <button type="submit" className='button buttonSecundary'>Ingresar</button>
+        <button type="submit">Ingresar</button>
       </form>
     </div>
   );

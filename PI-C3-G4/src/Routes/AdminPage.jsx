@@ -25,14 +25,12 @@ const AdminPage = () => {
         <div className='Menu'>
           <h2>Menú</h2>
           <div className='ButtonContainer'>
-
             {!isMobile && (
               <>
-                <Link to="/adminFeatures"><button className='button buttonPrimary'>Admin Features</button></Link>
-                <Link to="/adminProducts"><button className='button buttonTerciary'>Admin Products</button></Link>
+                <Link to="/adminFeatures" className='Button'>Admin Features</Link>
+                <Link to="/adminProducts" className='Button'>Admin Products</Link>
               </>
-            )} 
-
+            )}
           </div>
         </div>
         {isMobile && <p>Esta página no está disponible en dispositivos móviles.</p>}

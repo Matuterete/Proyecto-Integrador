@@ -201,7 +201,7 @@ const AdminFeatures = () => {
                 <div>
                     <div>
                         <button
-                            className='addFeatureButton button buttonPrimary'
+                            className='addFeatureButton button buttonDark'
                             onClick={toggleFormulario}
                         >añadir Caracteristica</button>
                     </div>
@@ -231,7 +231,7 @@ const AdminFeatures = () => {
                                 </div>
                             }
 
-                            <button className='addFeatureButton button buttonSecundary' type="button" onClick={handleChangeSend}>Enviar</button>
+                            <button className='addFeatureButton button buttonLight' type="button" onClick={handleChangeSend}>Enviar</button>
                         </div>
                     )}
 
@@ -244,12 +244,12 @@ const AdminFeatures = () => {
                                     <p>ID {objeto.id} - {objeto.title}</p>
 
                                     <div>
-                                        <button className='button buttonTerciary'
+                                        <button className='button buttonLight'
                                             onClick={() => handleClickDelete(objeto.id)}>
                                             Eliminar
                                         </button>
                                         <button
-                                            className='button buttonPrimary'
+                                            className='button buttonDark'
                                             onClick={() => handleInput(objeto)}>
                                             Editar
                                         </button>
