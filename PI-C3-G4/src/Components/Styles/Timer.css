@@ -1,0 +1,9 @@
+.timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .element {
+    padding: 16px; /* Ajusta el valor según tu necesidad */
+    font-size: 24px
+  }
