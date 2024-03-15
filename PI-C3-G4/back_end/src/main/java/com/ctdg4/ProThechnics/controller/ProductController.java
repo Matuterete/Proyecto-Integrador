@@ -104,8 +104,6 @@ public class ProductController {
             throw new ResourceNotFoundException("No products found with Category ID: " + categoryId);
         }
     }
-
-
     @Operation(summary = "Find random products", description = "Retrieves a random selection of products")
     @ApiResponse(responseCode = "200", description = "List of random products",
             content = @Content(schema = @Schema(implementation = ProductDTO.class)))
@@ -164,14 +162,5 @@ public class ProductController {
             return ResponseEntity.status(404).body(e.getMessage());
         }
     }
-//    @PutMapping("/update/{productId}")
-//    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody Product updatedProduct) {
-//        try {
-//            productService.updateProduct(productId, updatedProduct);
-//            return ResponseEntity.ok("Product updated successfully: " + productId + " - " + updatedProduct.getName());
-//        } catch (ResourceNotFoundException e) {
-//            return ResponseEntity.status(404).body(e.getMessage());
-//        }
-//    }
 }
 

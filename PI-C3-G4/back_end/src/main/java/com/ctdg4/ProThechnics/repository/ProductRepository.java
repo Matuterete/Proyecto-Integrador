@@ -12,8 +12,4 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByNameLike(String name);
 
     List<Product> findByCategoryId(Long categoryId);
-
-//    @Query("SELECT p FROM Product p JOIN p.Category c JOIN p.ProductImage pi WHERE p.product_active = true AND i.is_primary = true ORDER BY p.product_id ASC")
-//    List<Object[]> findActiveProductsWithPrimaryImageUrl();
-
 }
