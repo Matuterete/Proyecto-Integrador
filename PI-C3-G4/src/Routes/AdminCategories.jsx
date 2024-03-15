@@ -126,19 +126,20 @@ const AdminCategories = () => {
     return (
         <div>
             <h1>Administrar Categorías</h1>
+            <div>
+                <input type="text" value={newCategoryName} onChange={(e) => setNewCategoryName(e.target.value)} />
+                <button onClick={addCategory}>Agregar</button>
+            </div>
             <ul>
                 {categories.map(category => (
                     <li key={category.id}>
+                    <img src={category.url} alt={category.title} />
                         {category.title}
                         <button onClick={() => deleteCategory(category.id)}>Eliminar</button>
                         <button onClick={() => updateCategory(category.id, category.title)}>Editar</button>
                     </li>
                 ))}
             </ul>
-            <div>
-                <input type="text" value={newCategoryName} onChange={(e) => setNewCategoryName(e.target.value)} />
-                <button onClick={addCategory}>Agregar</button>
-            </div>
             {editingCategoryId && (
                 <div>
                     <input type="text" value={editingCategoryName} onChange={(e) => setEditingCategoryName(e.target.value)} />
