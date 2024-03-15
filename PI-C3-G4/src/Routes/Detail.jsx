@@ -15,7 +15,7 @@ const Detail = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const url = `https://prothechnics.us.to:8080/products/find/id/${id}`;
+                const url = `http://prothechnics.us.to:8080/products/find/id/${id}`;
                 const method = 'GET';
                 const data = null;
                 const headers = {};

@@ -9,7 +9,7 @@ const Categories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await requestToAPI('https://prothechnics.us.to:8080/categories/find/all', 'GET');
+        const response = await requestToAPI('http://prothechnics.us.to:8080/categories/find/all', 'GET');
         setCategories(response);
       } catch (error) {
         console.error('Error fetching categories:', error);

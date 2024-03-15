@@ -11,7 +11,7 @@ function UserAddForm({ onAdd, onCancel }) {
   const [selectedRole, setSelectedRole] = useState('');
 
   useEffect(() => {
-    axios.get('https://prothechnics.us.to:8080/roles/find/all')
+    axios.get('http://prothechnics.us.to:8080/roles/find/all')
       .then(response => {
         setRoles(response.data);
       })
@@ -47,7 +47,7 @@ function UserAddForm({ onAdd, onCancel }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post('https://prothechnics.us.to:8080/users/add', {
+    axios.post('http://prothechnics.us.to:8080/users/add', {
       isActive,
       name,
       lastName,

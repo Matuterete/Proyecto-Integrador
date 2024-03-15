@@ -132,7 +132,7 @@ function RegistroUsuario() {
     }
     else {
       // Aquí podrías enviar los datos a un servidor o hacer cualquier otra acción con ellos
-      axios.post('https://prothechnics.us.to:8080/auth/register', {
+      axios.post('http://prothechnics.us.to:8080/auth/register', {
         name,
         lastName,
         password,

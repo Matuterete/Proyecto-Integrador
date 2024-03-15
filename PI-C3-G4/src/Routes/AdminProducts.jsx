@@ -20,7 +20,7 @@ function AdminProducts() {
 
   useEffect(() => {
     // if (usuarioLogueado) {
-      axios.get('https://prothechnics.us.to:8080/products/find/all')
+      axios.get('http://prothechnics.us.to:8080/products/find/all')
       .then(response => {
         setProducts(response.data);
       })
@@ -71,7 +71,7 @@ function AdminProducts() {
     const confirmDelete = window.confirm('¿Estás seguro que deseas eliminar este producto?');
 
     if (confirmDelete) {
-      axios.delete(`https://prothechnics.us.to:8080/products/delete/id/${productId}`)
+      axios.delete(`http://prothechnics.us.to:8080/products/delete/id/${productId}`)
         .then(() => {
           setProducts(products.filter(product => product.id !== productId));
           alert('Producto eliminado correctamente');

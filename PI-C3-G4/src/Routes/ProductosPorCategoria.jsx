@@ -9,7 +9,7 @@ const ProductosPorCategoria = () => {
   useEffect(() => {
     const fetchProductosPorCategoria = async () => {
       try {
-        const response = await axios.get(`https://prothechnics.us.to:8080/products/find/category/${categoryId}`);
+        const response = await axios.get(`http://prothechnics.us.to:8080/products/find/category/${categoryId}`);
         setProductos(response.data);
       } catch (error) {
         console.error('Error fetching products by category:', error);
