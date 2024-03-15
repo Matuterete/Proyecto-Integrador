@@ -2,23 +2,30 @@
     font-size: 2em;
   }
   
-  .container {
-    color: black;
+  .containerEmailRegister {
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
   }
-  
-  .container h1 {
-    padding-block: 50px;
-    font-size: 1.5rem;
-  }
-  
+
   .container2 {
+    color: black;
+    margin-top: 100px;
+    margin-bottom: 40px;
     align-items: center;
     background: #fff;
     padding: 35px;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(2, 20, 123, 0.3);
     box-sizing: border-box;
+    margin-left: 20px;
+    margin-right: 20px;
+    max-width: 36rem;
   }
+  
+
   
   .boton {
   cursor: pointer;

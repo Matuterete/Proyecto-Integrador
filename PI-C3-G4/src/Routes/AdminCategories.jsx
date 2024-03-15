@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import requestToAPI from '../services/requestToAPI';
 
 const AdminCategories = () => {
@@ -27,59 +28,118 @@ const AdminCategories = () => {
     }, [editingCategoryId]);
 
     const addCategory = () => {
-        axios.post('http://prothechnics.us.to:8080/categories/add', { title: newCategoryName })
-            .then(response => {
-                setCategories([...categories, response.data]);
-                setNewCategoryName('');
-            })
-            .catch(error => {
-                console.error('Error adding category:', error);
-            });
+        Swal.fire({
+            title: 'Agregar Categoría',
+            input: 'text',
+            inputPlaceholder: 'Nombre de la categoría',
+            showCancelButton: true,
+            confirmButtonText: 'Agregar',
+            cancelButtonText: 'Cancelar',
+            showLoaderOnConfirm: true,
+            preConfirm: (newCategoryName) => {
+                if (!newCategoryName) {
+                    Swal.showValidationMessage('Por favor ingresa un nombre de categoría');
+                }
+                return newCategoryName;
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post('http://prothechnics.us.to:8080/categories/add', { title: result.value, description: '', url: '' })
+                    .then(response => {
+                        setCategories([...categories, response.data]);
+                        Swal.fire('¡Agregado!', 'La categoría ha sido agregada correctamente.', 'success');
+                    })
+                    .catch(error => {
+                        console.error('Error adding category:', error);
+                        Swal.fire('Error', 'Hubo un problema al agregar la categoría.', 'error');
+                    });
+            }
+        });
     };
 
-    const updateCategory = () => {
-        axios.put(`http://prothechnics.us.to:8080/categories/update/${editingCategoryId}`, { title: editingCategoryName })
-            .then(response => {
-                const updatedCategories = categories.map(category =>
-                    category.id === editingCategoryId ? { ...category, title: editingCategoryName } : category
-                );
-                setCategories(updatedCategories);
-                setEditingCategoryId(null);
-                setEditingCategoryName('');
-            })
-            .catch(error => {
-                console.error('Error updating category:', error);
-            });
+    const updateCategory = (categoryId, categoryName) => {
+        Swal.fire({
+            title: 'Editar Categoría',
+            input: 'text',
+            inputValue: categoryName,
+            inputPlaceholder: 'Nuevo nombre de la categoría',
+            showCancelButton: true,
+            confirmButtonText: 'Guardar',
+            cancelButtonText: 'Cancelar',
+            showLoaderOnConfirm: true,
+            preConfirm: (newCategoryName) => {
+                if (!newCategoryName) {
+                    Swal.showValidationMessage('Por favor ingresa un nombre de categoría');
+                }
+                return newCategoryName;
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.put(`http://prothechnics.us.to:8080/categories/update`, { id: categoryId, title: result.value, description: '', url: '' })
+                    .then(response => {
+                        const updatedCategories = categories.map(category =>
+                            category.id === categoryId ? { ...category, title: result.value } : category
+                        );
+                        setCategories(updatedCategories);
+                        Swal.fire('¡Editado!', 'La categoría ha sido actualizada correctamente.', 'success');
+                    })
+                    .catch(error => {
+                        console.error('Error updating category:', error);
+                        Swal.fire('Error', 'Hubo un problema al actualizar la categoría.', 'error');
+                    })
+                    .finally(() => {
+                        setEditingCategoryId(null);
+                        setEditingCategoryName('');
+                    });
+            }
+        });
     };
 
     const deleteCategory = (categoryId) => {
-        axios.delete(`http://prothechnics.us.to:8080/categories/delete/id/${categoryId}`)
-            .then(() => {
-                const updatedCategories = categories.filter(category => category.id !== categoryId);
-                setCategories(updatedCategories);
-            })
-            .catch(error => {
-                console.error('Error deleting category:', error);
-            });
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Una vez eliminada, no podrás recuperar esta categoría',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://prothechnics.us.to:8080/categories/delete/id/${categoryId}`)
+                    .then(() => {
+                        const updatedCategories = categories.filter(category => category.id !== categoryId);
+                        setCategories(updatedCategories);
+                        Swal.fire('¡Eliminada!', 'La categoría ha sido eliminada correctamente.', 'success');
+                    })
+                    .catch(error => {
+                        console.error('Error deleting category:', error);
+                        Swal.fire('Error', 'Hubo un problema al eliminar la categoría.', 'error');
+                    });
+            }
+        });
     };
 
     return (
         <div>
             <h1>Administrar Categorías</h1>
-            <ul>
-                {categories.map(category => (
-                    <li key={category.id}>
-                       <img src={category.url} alt={category.title} /> 
-                        {category.title}
-                        <button onClick={() => deleteCategory(category.id)}>Eliminar</button>
-                        <button onClick={() => { setEditingCategoryId(category.id); setEditingCategoryName(category.title); }}>Editar</button>
-                    </li>
-                ))}
-            </ul>
             <div>
                 <input type="text" value={newCategoryName} onChange={(e) => setNewCategoryName(e.target.value)} />
                 <button onClick={addCategory}>Agregar</button>
             </div>
+            <ul>
+                {categories.map(category => (
+                    <li key={category.id}>
+                    <img src={category.url} alt={category.title} />
+                        {category.title}
+                        <button onClick={() => deleteCategory(category.id)}>Eliminar</button>
+                        <button onClick={() => updateCategory(category.id, category.title)}>Editar</button>
+                    </li>
+                ))}
+            </ul>
             {editingCategoryId && (
                 <div>
                     <input type="text" value={editingCategoryName} onChange={(e) => setEditingCategoryName(e.target.value)} />
