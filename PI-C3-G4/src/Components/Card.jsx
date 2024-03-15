@@ -16,7 +16,7 @@ const Card = (product) => {
             
             <i className="fa fa-heart" />
                 <div>
-                    <img src={`/src/assets/products/ID ${product.product.id}.1.jpeg`} alt="" />
+                    <img src={product.product.images[0].url} alt="" />
                 </div>
                 
                 <h2 className='name'>{product.product.name}</h2>
