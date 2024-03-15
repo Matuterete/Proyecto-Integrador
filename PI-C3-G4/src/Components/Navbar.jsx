@@ -6,7 +6,7 @@ import Usuario from '../assets/usuario.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from '../Utils/Context.jsx';
 import { TOGGLE_THEME } from '../Reducers/Reducer.jsx';
-import './Styles/Navbar.css';
+import './styles/Navbar.css';
 
 import styled from 'styled-components';
 

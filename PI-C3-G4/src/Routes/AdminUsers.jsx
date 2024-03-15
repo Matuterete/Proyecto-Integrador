@@ -5,7 +5,7 @@ import UserEditForm from '../Components/UserEditForm';
 import UserAddForm from '../Components/UserAddForm'
 import Pagination from '../Components/Pagination';
 import { useNavigate } from 'react-router-dom';
-import "../Components/Styles/AdminUsers.css";
+import "../Components/styles/AdminUsers.css";
 
 function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -20,7 +20,7 @@ function AdminUsers() {
 
   useEffect(() => {
     // if (usuarioLogueado) {
-      axios.get('http://prothechnics.us.to:8080/users/find/all')
+      axios.get('https://prothechnics.us.to:8080/users/find/all')
       .then(response => {
         setUsers(response.data);
       })
@@ -71,7 +71,7 @@ function AdminUsers() {
     const confirmDelete = window.confirm('¿Estás seguro que deseas eliminar este usuario?');
 
     if (confirmDelete) {
-      axios.delete(`http://prothechnics.us.to:8080/users/delete/id/${userId}`)
+      axios.delete(`https://prothechnics.us.to:8080/users/delete/id/${userId}`)
         .then(() => {
           setUsers(users.filter(user => user.id !== userId));
           alert('Usuario eliminado correctamente');

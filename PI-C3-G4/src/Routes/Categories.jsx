@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import requestToAPI from '../services/requestToAPI';
-import '../Components/Styles/Categories.css';
+import '../Components/styles/Categories.css';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -9,7 +9,7 @@ const Categories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await requestToAPI('http://prothechnics.us.to:8080/categories/find/all', 'GET');
+        const response = await requestToAPI('https://prothechnics.us.to:8080/categories/find/all', 'GET');
         setCategories(response);
       } catch (error) {
         console.error('Error fetching categories:', error);

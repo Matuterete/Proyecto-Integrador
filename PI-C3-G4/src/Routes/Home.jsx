@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../Components/Card';
-import '../Components/Styles/Home.css'
+import '../Components/styles/Home.css'
 import { useContext } from '../Utils/Context';
 import requestToAPI from '../services/requestToAPI';
 
@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const url = 'http://prothechnics.us.to:8080/products/find/random/6';
+        const url = 'https://prothechnics.us.to:8080/products/find/random/6';
         const method = 'GET';
         const data = null;
         const headers = {};

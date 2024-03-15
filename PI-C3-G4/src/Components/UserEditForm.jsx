@@ -12,7 +12,7 @@ function UserEditForm({ user, onSave, onCancel }) {
   const [selectedRole, setSelectedRole] = useState('');
 
   useEffect(() => {
-    axios.get('http://prothechnics.us.to:8080/roles/find/all')
+    axios.get('https://prothechnics.us.to:8080/roles/find/all')
       .then(response => {
         setRoles(response.data);
       })
@@ -48,7 +48,7 @@ function UserEditForm({ user, onSave, onCancel }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`http://prothechnics.us.to:8080/users/update/role`, {
+    axios.put(`https://prothechnics.us.to:8080/users/update/role`, {
       id,
       isActive,
       name,

@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Components/Styles/Card.css'
+import '../Components/styles/Card.css'
 import { Link } from 'react-router-dom'
 import FavButton from './FavButton';
 

@@ -5,7 +5,7 @@ import facebook from '../assets/ico-facebook.png'
 import insta from '../assets/ico-instagram.png'
 import whap from '../assets/ico-whatsapp.png'
 import tiktok from '../assets/ico-tiktok.png'
-import '../Components/Styles/Footer.css';
+import '../Components/styles/Footer.css';
 
 const Footer = () => {
   const { state } = useContext()

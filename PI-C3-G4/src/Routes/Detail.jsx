@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import requestToAPI from '../services/requestToAPI';
-import '../Components/Styles/Detail.css'
+import '../Components/styles/Detail.css'
 
 const Detail = () => {
 
@@ -15,7 +15,7 @@ const Detail = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const url = `http://prothechnics.us.to:8080/products/find/id/${id}`;
+                const url = `https://prothechnics.us.to:8080/products/find/id/${id}`;
                 const method = 'GET';
                 const data = null;
                 const headers = {};

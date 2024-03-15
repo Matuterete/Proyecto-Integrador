@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../Components/Styles/Home.css';
+import '../Components/styles/Home.css';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -21,7 +21,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://prothechnics.us.to:8080/auth/login',
+    axios.post('https://prothechnics.us.to:8080/auth/login',
     {
       email: usuario.correo,
       password: usuario.contrasena

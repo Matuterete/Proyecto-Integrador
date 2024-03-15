@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import '../Components/Styles/Home.css';
+import '../Components/styles/Home.css';
 import { useNavigate } from 'react-router-dom';
-import '../Components/Styles/RegistroUsuario.css';
+import '../Components/styles/RegistroUsuario.css';
 import registroUsuario from '../assets/imagen-Usuario.png';
 import EmailConfirmation from '../Components/EmailConfirmation'
 import Swal from 'sweetalert2';
@@ -132,7 +132,7 @@ function RegistroUsuario() {
     }
     else {
       // Aquí podrías enviar los datos a un servidor o hacer cualquier otra acción con ellos
-      axios.post('http://prothechnics.us.to:8080/auth/register', {
+      axios.post('https://prothechnics.us.to:8080/auth/register', {
         name,
         lastName,
         password,
