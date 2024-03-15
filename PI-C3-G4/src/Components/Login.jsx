@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../Components/styles/Home.css';
+import '../Components/Styles/Home.css';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -19,21 +19,16 @@ function Login() {
     });
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setUsuario({
-      ...usuario,
-      imagen: file
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.get(`http://prothechnics.us.to:8080/users/find/${usuario.correo}/${usuario.contrasena}`)
+    axios.post('http://prothechnics.us.to:8080/auth/login',
+    {
+      email: usuario.correo,
+      password: usuario.contrasena
+    })
     .then(response => {
       console.log(response.data);
       localStorage.setItem('usuarioLogueado', JSON.stringify(response.data))
-      alert(`Bienvenido usuario: ${response.data.name}`)
       navigate("/home");
       window.location.reload(); 
     })
@@ -57,7 +52,7 @@ function Login() {
             <input type="password" name="contrasena" value={usuario.contrasena} onChange={handleChange} />
           </label>
         </div>
-        <button type="submit">Ingresar</button>
+        <button type="submit" className='button buttonSecundary'>Ingresar</button>
       </form>
     </div>
   );

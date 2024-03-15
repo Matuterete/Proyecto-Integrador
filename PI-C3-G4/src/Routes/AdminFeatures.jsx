@@ -201,7 +201,7 @@ const AdminFeatures = () => {
                 <div>
                     <div>
                         <button
-                            className='addFeatureButton'
+                            className='addFeatureButton button buttonPrimary'
                             onClick={toggleFormulario}
                         >añadir Caracteristica</button>
                     </div>
@@ -231,7 +231,7 @@ const AdminFeatures = () => {
                                 </div>
                             }
 
-                            <button className='addFeatureButton' type="button" onClick={handleChangeSend}>Enviar</button>
+                            <button className='addFeatureButton button buttonSecundary' type="button" onClick={handleChangeSend}>Enviar</button>
                         </div>
                     )}
 
@@ -242,27 +242,28 @@ const AdminFeatures = () => {
                                 <li>
                                     <div className='divSVG'><img src={objeto.url} /></div>
                                     <p>ID {objeto.id} - {objeto.title}</p>
+
+                                    <div>
+                                        <button className='button buttonTerciary'
+                                            onClick={() => handleClickDelete(objeto.id)}>
+                                            Eliminar
+                                        </button>
+                                        <button
+                                            className='button buttonPrimary'
+                                            onClick={() => handleInput(objeto)}>
+                                            Editar
+                                        </button>
+                                    </div>
                                 </li>
-
-                                <button
-                                    className='editFeature buttonFeature'
-                                    onClick={() => handleInput(objeto)}>
-                                    Editar
-                                </button>
-
-                                <button className='deletefeature buttonFeature'
-                                    onClick={() => handleClickDelete(objeto.id)}>
-                                    Eliminar
-                                </button>
                             </div>
                         ))}
                     </ul>
                 </div>
             </div>)
-            :
-            (<div className="loader-container">
-                <div className="loader"></div>
-            </div>)}
+                :
+                (<div className="loader-container">
+                    <div className="loader"></div>
+                </div>)}
         </>
     )
 }

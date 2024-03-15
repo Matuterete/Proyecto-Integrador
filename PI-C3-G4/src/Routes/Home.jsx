@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../Components/Card';
-import '../Components/styles/Home.css'
+import '../Components/Styles/Home.css'
 import { useContext } from '../Utils/Context';
 import requestToAPI from '../services/requestToAPI';
 

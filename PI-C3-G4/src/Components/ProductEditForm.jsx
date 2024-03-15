@@ -125,10 +125,10 @@ function ProductEditForm({ product, onSave, onCancel }) {
         </label>
       </div>
       <div className='form-group'>
-        <button type="submit" className="submit-button">Guardar Cambios</button>
+        <button type="submit" className="button buttonSecundary submit-button">Guardar Cambios</button>
       </div>
       <div className='form-group'>
-        <button type="button" className="cancel-button" onClick={onCancel}>Cancelar</button>
+        <button type="button" className="button buttonTerciary cancel-button" onClick={onCancel}>Cancelar</button>
       </div>
 
     </form>

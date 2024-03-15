@@ -5,7 +5,7 @@ import UserEditForm from '../Components/UserEditForm';
 import UserAddForm from '../Components/UserAddForm'
 import Pagination from '../Components/Pagination';
 import { useNavigate } from 'react-router-dom';
-import "../Components/styles/AdminUsers.css";
+import "../Components/Styles/AdminUsers.css";
 
 function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -14,12 +14,12 @@ function AdminUsers() {
   const [showUserList, setShowUserList] = useState(true);
   const [showUserAddForm, setShowUserAddForm] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
-  const [usuarioLogueado] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
+  // const [usuarioLogueado] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
 
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (usuarioLogueado) {
+    // if (usuarioLogueado) {
       axios.get('http://prothechnics.us.to:8080/users/find/all')
       .then(response => {
         setUsers(response.data);
@@ -27,10 +27,10 @@ function AdminUsers() {
       .catch(error => {
         console.error(error);
       });
-    }
-    else {
-      navigate("/home");
-    }
+    // }
+    // else {
+    //   navigate("/home");
+    // }
   }, []);
 
   const indexOfLastUser = currentPage * usersPerPage;

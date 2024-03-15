@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from '../Utils/Context.jsx';
 import { TOGGLE_THEME } from '../Reducers/Reducer.jsx';
 import './Styles/Navbar.css';
+
 import styled from 'styled-components';
 
 // Estilos para el menú hamburguesa
@@ -153,8 +154,8 @@ const Navbar = () => {
           {
             !usuarioLogueado &&
             <div>
-              <button className='btn-login' onClick={Login}>Iniciar Sesión</button>
-              <button className='btn-registro' onClick={RegistroUsuario}>Registrarse</button>
+              <button className='button buttonPrimary' onClick={Login}>Iniciar Sesión</button>
+              <button className='button buttonTerciary' onClick={RegistroUsuario}>Registrarse</button>
             </div>
           }
           {
@@ -179,7 +180,7 @@ const Navbar = () => {
               </HamburgerMenuWrapper>
             </div>
           }
-          <button className='btn-theme' onClick={handleTheme}>
+          <button className='button buttonSecundary' onClick={handleTheme}>
             <img src={state.theme === 'light' ? Moon : Sun} width='25px' alt="Theme"></img>
           </button>
         </div>
