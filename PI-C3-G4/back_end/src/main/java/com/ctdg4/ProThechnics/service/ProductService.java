@@ -173,6 +173,14 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    //DTO for Category search
+    public List<ProductDTO> findProductByCategoryIdWithEverything(Long categoryId) {
+        List<Product> products = productRepository.findByCategoryId(categoryId);
+        return products.stream()
+                .map(this::mapToDTOOnlyWithPrimaryImages)
+                .collect(Collectors.toList());
+    }
+
     //DTO Mappers
     public ProductDTO mapToDTO(Product product) {
         return modelMapper.map(product, ProductDTO.class);

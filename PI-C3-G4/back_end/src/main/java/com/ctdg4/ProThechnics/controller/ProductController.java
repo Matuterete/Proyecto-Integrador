@@ -88,6 +88,22 @@ public class ProductController {
         }
     }
 
+    @Operation(summary = "Find products by category", description = "Retrieves products that match the given category title")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of products",
+                    content = @Content(schema = @Schema(implementation = ProductDTO.class))),
+            @ApiResponse(responseCode = "404", description = "No products found with the given category title")
+    })
+    @GetMapping("/find/category/{categoryId}")
+    public ResponseEntity<List<ProductDTO>> findProductByCategoryIdDTO(@PathVariable Long categoryId) throws ResourceNotFoundException {
+        List<ProductDTO> productDTOs = productService.findProductByCategoryIdWithEverything(categoryId);
+
+        if (!productDTOs.isEmpty()) {
+            return ResponseEntity.ok(productDTOs);
+        } else {
+            throw new ResourceNotFoundException("No products found with Category ID: " + categoryId);
+        }
+    }
     @Operation(summary = "Find random products", description = "Retrieves a random selection of products")
     @ApiResponse(responseCode = "200", description = "List of random products",
             content = @Content(schema = @Schema(implementation = ProductDTO.class)))
