@@ -45,7 +45,15 @@ form {
   width: 100%;
 }
 
+.mi-lista {
+  list-style-type: none; /* Elimina los marcadores de la lista */
+  padding: 0; /* Elimina el espacio interno predeterminado */
+}
 
+.mi-lista li {
+  margin-bottom: 10px; /* Espacio entre elementos de la lista */
+  color: #333; /* Color del texto de los elementos de la lista */
+}
 
 
 
