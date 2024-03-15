@@ -1,6 +1,13 @@
+.header {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  z-index: 9999;
+}
+
 .navbar {
   display: flex;
-  position:fixed;
+  position: fixed;
   justify-content: space-between;
   align-items: center;
   text-align: center;
@@ -8,11 +15,10 @@
   color: var(--color-text);
   width: 100vw;
   height: auto;
-  z-index: 9999;
 }
 
 .buttons {
-  display: flex; 
+  display: flex;
   align-items: center;
   padding-right: 15px;
 }
@@ -22,36 +28,31 @@
   width: auto;
 }
 
-.navbar-logo{
-  height: auto;
+.navbar-logo {
   padding-left: 60px;
 }
 
-.btn-theme {
-  background-color: #4073AF;
-  padding: 8px;
+.navbar-logo:hover {
+  transform: scale(1.02);
+}
+
+.navbar-logo img {
+  width: 300px;
 }
 
 .btn-cerrar {
   background-color: #ffffff;
 }
 
-.btn-theme img {
-  border-radius: 0px;
-}
-
-.btn-login {
-  white-space: nowrap;
-}
-
 .navbar a {
   text-decoration: none;
-  color: black;
+  color: #213547;
+  font-weight: bold;
   transition: color 0.3s ease;
 }
 
 .navbar a:hover {
-  color: var(--color-accent);
+  color: #5bacf4;
 }
 
 .navbar ul {
@@ -64,19 +65,8 @@
 
 .navbar li:not(:last-child) {
   align-items: center;
-  margin-right: 40px; 
+  margin-right: 40px;
 }
-
-.btn-login {
-  background-color: #122E4F;
-  color: white;
-}
-
-.btn-registro {
-  background-color: #4073AF;
-  color: white;
-}
-
 
 .menu {
   display: flex;
@@ -84,76 +74,79 @@
 }
 
 
-  @media (min-width: 761px) {
-    nav#mobile {
-      display: none;
-    }
+@media (min-width: 761px) {
+  nav#mobile {
+    display: none;
   }
+}
 
 
 @media (max-width: 760px) {
 
   .desktop-nav {
-      display: none;
-  }
-
-  .navbar button{
     display: none;
   }
 
-  .navbar ul{  
-  display: none;
-}
+  .navbar button {
+    display: none;
+  }
+
+  .navbar ul {
+    display: none;
+  }
+
   .navbar {
     width: 100vw;
     height: auto;
   }
-    .navbar-logo {
-        width: 70vw;
-        height: auto; 
-        padding-left: 8%;
-    }
-    .navbar img{
-      width: 75vw;
-      
-    }
+
+  .navbar-logo {
+    display: flex;
+    width: 70vw;
+    height: auto;
+    padding-left: 0;
+  }
+
+  .navbar img {
+    width: 75vw;
+    max-width: 300px;
+  }
 
   .mobile-nav {
-      display: block;
+    display: block;
   }
 
   #menu-toggle {
     color: black;
-      display: block;
-      background: none;
-      border: none;
-      font-size: 2rem;
-      cursor: pointer;
+    display: block;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
   }
 
   #mobile-menu {
     display: none;
-    width: 100%;
-    max-width: 20%; 
-    position: absolute;
-    top: 100%;
-    left: 80%;
-    background-color: #122E4F;
-    border: 1% solid #ccc;
-}
+    position: fixed;
+    background-color: #F9F7F7;
 
-#mobile-menu.active {
-    display: block; 
-}
-  
-.mobile-menu-items {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    min-width: 30%;
+    right: 0%;
+    padding: 15px;
 
-.mobile-menu-items a {
-  margin-bottom: 10px;
-}
-}
+  }
 
+  #mobile-menu.active {
+    display: block;
+  }
+
+  .mobile-menu-items {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .mobile-menu-items a {
+    margin-bottom: 10px;
+  }
+}

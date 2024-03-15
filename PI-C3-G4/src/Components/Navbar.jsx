@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from '../Utils/Context.jsx';
 import { TOGGLE_THEME } from '../Reducers/Reducer.jsx';
 import './Styles/Navbar.css';
+
 import styled from 'styled-components';
 
 // Estilos para el menú hamburguesa
@@ -34,6 +35,8 @@ const MenuContainer = styled.div`
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   overflow: hidden;
+  width: 20vw;
+  color: black;
   display: ${(props) => (props.isOpen ? 'block' : 'none')};
 `;
 
@@ -61,17 +64,20 @@ const Avatar = styled.img`
 
 const Navbar = () => {
   const { state, dispatch } = useContext();
-  const [ isMobileMenuOpen, setMobileMenuOpen ] = useState(false);
-  const [ usuarioLogueado ] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
-  const [ isDropdownOpen, setDropdownOpen ] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [usuarioLogueado] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const routesSinUsuario = [
     { path: '/home', name: 'Home' },
-    { path: '/Products', name: 'Productos' },
+    { path: '/Categories', name: 'Categorias' },
   ]
 
   const routesConUsuario = [
-    { path: '/administracion', name: 'Admin Productos' },
+    { path: '/adminProducts', name: 'Administrar productos' },
+    { path: '/adminFeatures', name: 'Administrar caracteristicas' },
+    { path: '/adminCategories', name: 'Administrar categorias' },
+    { path: '/adminUsers', name: 'Administrar usuarios' },
   ]
 
   let navigate = useNavigate();
@@ -148,8 +154,8 @@ const Navbar = () => {
           {
             !usuarioLogueado &&
             <div>
-              <button className='btn-login' onClick={Login}>Iniciar Sesión</button>
-              <button className='btn-registro' onClick={RegistroUsuario}>Registrarse</button>
+              <button className='button buttonPrimary' onClick={Login}>Iniciar Sesión</button>
+              <button className='button buttonTerciary' onClick={RegistroUsuario}>Registrarse</button>
             </div>
           }
           {
@@ -162,7 +168,7 @@ const Navbar = () => {
                 <MenuContainer isOpen={isDropdownOpen}>
                   <AvatarContainer>
                     <Avatar src={Usuario} alt="Avatar" />
-                    <span>{usuarioLogueado.nombre}</span>
+                    <span>{usuarioLogueado.name}</span>
                   </AvatarContainer>
                   <MenuItem>
                     Perfil
@@ -174,11 +180,21 @@ const Navbar = () => {
               </HamburgerMenuWrapper>
             </div>
           }
-          <button className='btn-theme' onClick={handleTheme}>
+          <button className='button buttonSecundary' onClick={handleTheme}>
             <img src={state.theme === 'light' ? Moon : Sun} width='25px' alt="Theme"></img>
           </button>
         </div>
       </nav>
+
+      {/* 
+      <div className='sugerencia'>
+        <button>home</button>
+        <button>categorias</button>
+        <button>otra cosa</button>
+        <button>otra cosa mas</button>
+      </div>
+      */}
+
     </section>
   );
 };

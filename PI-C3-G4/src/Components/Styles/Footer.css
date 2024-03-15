@@ -1,6 +1,4 @@
 .footer {
-  position: absolute;
-  bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -9,6 +7,7 @@
   color: var(--color-text);
   padding: 0;
   width: 100vw;
+  margin-top: auto;
 }
 
 .footer-logo {
@@ -23,6 +22,7 @@
   display: inline-block;
   justify-content: space-between;
   align-items: center;
+  text-align: center;
 }
 
 .footer-iconos img {
@@ -41,9 +41,8 @@
     align-items: center;
     justify-content: space-between;
     text-align: center;
-    width: 100%;
+    width: 100vw;
     height: auto;
-    margin-top: 100vh;
   }
   .footer-logo{
     padding: 0;

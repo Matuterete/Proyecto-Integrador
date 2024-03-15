@@ -1,24 +1,33 @@
 import React from 'react'
-import './styles/Card.css'
+import '../Components/Styles/Card.css'
 import { Link } from 'react-router-dom'
+import FavButton from './FavButton';
+
 
 const Card = (product) => {
-
+    
+  
     return (
-
-        <Link to={'/detail/' + product.product.id}>
+      
+        <div className='h2card'>
+        <Link to={'/detail/' + product.product.id} className='h2card'>
 
             <div className='card'>
+            
+            <i className="fa fa-heart" />
                 <div>
                     <img src={`/src/assets/products/ID ${product.product.id}.1.jpeg`} alt="" />
                 </div>
+                
+                <h2 className='name'>{product.product.name}</h2>
+                <p className='price'>USD: {product.product.price}</p>
 
-                <h2>{product.product.name}</h2>
-                <h2>{product.product.descripcion}</h2>
-                <h2>USD: {product.product.price}</h2>
             </div>
-
+                 
         </Link>
+        <FavButton productId={product.product.id} />
+        </div>
+        
     )
 }
 
