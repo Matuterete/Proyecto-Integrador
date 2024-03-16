@@ -12,8 +12,6 @@ import AdminProducts from './Routes/AdminProducts';
 import AdminUsers from './Routes/AdminUsers';
 import AdminFeatures from './Routes/AdminFeatures';
 import AdminPage from './Routes/AdminPage';
-import Categories from './Routes/Categories';
-import ProductosPorCategoria from './Routes/ProductosPorCategoria';
 import AdminCategories from './Routes/AdminCategories';
 import './App.css';
 
@@ -36,8 +34,6 @@ function App() {
           <Route path='/adminProducts' element={<AdminProducts />} /> 
           <Route path='/adminFeatures' element={<AdminFeatures />} />
           <Route path='/adminCategories' element={<AdminCategories />} />
-          <Route path='/categories' element={<Categories />} />
-          <Route path="/categories/:categoryId" element={<ProductosPorCategoria />} />
           <Route path='*' element={() => <h1>Not Found</h1>} />
         </Routes>
       </div>

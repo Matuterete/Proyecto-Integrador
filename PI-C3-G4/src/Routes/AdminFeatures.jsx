@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-//import '../Components/styles/AdminFeatures.css'
+import '../Components/styles/AdminFeatures.css'
 import requestToAPI from '../services/requestToAPI';
 import Swal from 'sweetalert2';
 
