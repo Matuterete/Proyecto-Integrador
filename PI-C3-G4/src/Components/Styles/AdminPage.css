@@ -1,0 +1,36 @@
+.bodyPage {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .adminMenu {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 150px;
+    flex-grow: 1; 
+}
+  
+  .TitleAdminP {
+    display: block;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .Menu {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+  }
+  
+  .Menu h2 {
+    font-size: 1.5rem;
+  }
+  
+  .ButtonContainer {
+    margin-top: 10px;
+  }
+  
+  .Button:last-child {
+    margin-right: 0;
+  }

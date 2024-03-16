@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`products` (
   CONSTRAINT `fk_products_categories`
     FOREIGN KEY (`category_id`)
     REFERENCES `ProThechnics`.`categories` (`category_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -73,8 +73,8 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`product_images` (
   CONSTRAINT `fk_image_products`
     FOREIGN KEY (`product_id`)
     REFERENCES `ProThechnics`.`products` (`product_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -102,17 +102,17 @@ DROP TABLE IF EXISTS `ProThechnics`.`roles` ;
 
 CREATE TABLE IF NOT EXISTS `ProThechnics`.`roles` (
   `role_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(50) NULL,
-  `user_id` INT NOT NULL,
+  `role` tinyint(3) NOT NULL DEFAULT 1,
+  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`role_id`),
-  UNIQUE INDEX `role_id_UNIQUE` (`role_id` ASC),
-  INDEX `fk_roles_users1_idx` (`user_id` ASC),
-  CONSTRAINT `fk_roles_users1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `ProThechnics`.`users` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  UNIQUE KEY `role_id_UNIQUE` (`role_id`),
+  KEY `fk_roles_users1_idx` (`user_id`),
+  CONSTRAINT `fk_roles_users1` 
+  FOREIGN KEY (`user_id`) 
+  REFERENCES `users` (`user_id`) 
+  ON DELETE NO ACTION 
+  ON UPDATE NO ACTION) 
+ENGINE=InnoDB;
 
 
 -- -----------------------------------------------------
@@ -146,16 +146,251 @@ CREATE TABLE IF NOT EXISTS `ProThechnics`.`products_features` (
   CONSTRAINT `fk_products_has_features_products1`
     FOREIGN KEY (`product_id`)
     REFERENCES `ProThechnics`.`products` (`product_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_products_has_features_features1`
     FOREIGN KEY (`feature_id`)
     REFERENCES `ProThechnics`.`features` (`feature_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `ProThechnics`.`fact_alquiler definition`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `ProThechnics`.`fact_alquiler` ;
+
+CREATE TABLE `fact_alquiler` (
+  `fact_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `fecha_alquiler` datetime NOT NULL,
+  `fecha_inicial` date NOT NULL,
+  `fecha_final` date NOT NULL,
+  `dias_totales` int(11) NOT NULL,
+  `precio_unitario` float DEFAULT NULL,
+  `total` float DEFAULT NULL,
+  PRIMARY KEY (`fact_id`,`product_id`,`user_id`),
+  KEY `Facts_products_FK` (`product_id`),
+  KEY `Facts_users_FK` (`user_id`),
+  CONSTRAINT `Facts_products_FK` 
+  FOREIGN KEY (`product_id`) 
+  REFERENCES `products` (`product_id`) 
+  ON DELETE CASCADE 
+  ON UPDATE CASCADE,
+  CONSTRAINT `Facts_users_FK` 
+  FOREIGN KEY (`user_id`) 
+  REFERENCES `users` (`user_id`) 
+  ON DELETE CASCADE 
+  ON UPDATE CASCADE
+) 
+ENGINE=InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+-- -----------------------------------------------------
+-- Procedure `ProThechnics`.`actualizar_rol`
+-- -----------------------------------------------------
+
+DROP PROCEDURE IF EXISTS `ProThechnics`.`actualizar_rol`;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ProThechnics`.`actualizar_rol`(
+    role tinyint(3),
+    user_id int
+    )
+BEGIN
+
+   	DECLARE usuario_activo tinyint;
+    DECLARE usuario_admin binary;
+
+		SELECT user_active
+        INTO usuario_activo
+        FROM ProThechnics.users
+        WHERE ProThechnics.users.user_id = user_id
+        LIMIT 1;
+
+        IF usuario_activo = 1 THEN 
+           UPDATE ProThechnics.roles
+            SET admin = role
+            WHERE ProThechnics.roles.user_id = user_id;		       
+			ELSE
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Usuario Desactivado';				
+              	
+		END IF;
+        END;
+       
+       
+-- -----------------------------------------------------
+-- Procedure `ProThechnics`.`agregar_usuario`
+-- -----------------------------------------------------
+
+DROP PROCEDURE IF EXISTS `ProThechnics`.`agregar_usuario`;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ProThechnics`.`agregar_usuario`(
+ -- por defecto el usuario ingresa activo 
+   name varchar (50),
+   last_name varchar (50),
+   email varchar(100),
+   password varchar(255)
+    )
+BEGIN
+
+   	DECLARE validar_email varchar(100);
+	DECLARE userid int;
+
+		SELECT email
+        INTO validar_email
+        FROM ProThechnics.users
+        WHERE ProThechnics.users.email = email
+        LIMIT 1;
+      
+        IF validar_email = email THEN              
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Usuario ya exite';				
+                             
+                ELSE  
+         INSERT INTO ProThechnics.users (
+                user_active,
+                name,
+                last_name,
+                email,
+                password
+            )
+            VALUES (
+                1,
+                name,
+                last_name,
+                email,
+                password
+			); 
+            
+           
+
+			SELECT user_id
+			INTO userid
+			FROM ProThechnics.users
+			WHERE ProThechnics.users.email = email
+			LIMIT 1;
+
+	 INSERT INTO ProThechnics.roles (
+					role,
+					user_id
+				)
+				VALUES (
+					1, -- todos los usuarios no son administradores por defecto
+					userid               
+				);               
+                
+	 SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Usuario Agregado exitosamente';			
+		END IF;
+  END;
+
+-- -----------------------------------------------------
+-- Procedure `ProThechnics`.`insertar_alquiler`
+-- -----------------------------------------------------
+
+DROP PROCEDURE IF EXISTS `ProThechnics`.`insertar_alquiler`;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ProThechnics`.`insertar_alquiler`(
+    product_id int,
+    user_id int,
+    fecha_inicial DATE,
+    fecha_final DATE
+)
+BEGIN
+
+    DECLARE dias int;
+    DECLARE Total DECIMAL(10,2);
+    DECLARE fecha_alquiler DATETIME;
+    DECLARE precio_unitario DECIMAL(10,2);
+    DECLARE stock_actual INT;
+	DECLARE usuario_activo tinyint;
+
+
+        SELECT price
+        INTO precio_unitario
+        FROM ProThechnics.products
+        WHERE ProThechnics.products.product_id = product_id
+        LIMIT 1;
+
+        SELECT stock
+        INTO stock_actual
+        FROM ProThechnics.products
+        WHERE ProThechnics.products.product_id = product_id
+        LIMIT 1;
+        
+		SELECT user_active
+        INTO usuario_activo
+        FROM ProThechnics.users
+        WHERE ProThechnics.users.user_id = user_id
+        LIMIT 1;
+
+        SET fecha_alquiler = NOW();
+        SET dias = ProThechnics.fn_calcular_dias(fecha_inicial, fecha_final);
+        SET Total = ProThechnics.fn_calcular_total(precio_unitario, dias);
+
+        IF usuario_activo = 0 THEN              
+             SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Usuario Desactivado';				
+                ELSEIF  stock_actual > 0 THEN                
+            SET stock_actual = stock_actual - 1;
+            INSERT INTO ProThechnics.fact_alquiler (
+                product_id,
+                user_id,
+                fecha_alquiler,
+                fecha_inicial,
+                fecha_final,
+                dias_totales,
+                precio_unitario,
+                total
+            )
+            VALUES (
+                product_id,
+                user_id,
+                fecha_alquiler,
+                fecha_inicial,
+                fecha_final,
+                dias,
+                precio_unitario,
+                Total
+            );
+
+            UPDATE ProThechnics.products
+            SET stock = stock_actual
+            WHERE ProThechnics.products.product_id = product_id;				
+                  
+                ELSE                
+					SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No hay stock';
+		END IF;
+        END;
+        
+       
+-- -----------------------------------------------------
+-- Function `ProThechnics`.`fn_calcular_dias`
+-- -----------------------------------------------------
+
+DROP FUNCTION IF EXISTS `ProThechnics`.`fn_calcular_dias`;
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `ProThechnics`.`fn_calcular_dias`(fecha_inicial DATE, fecha_final DATE) RETURNS int(11)
+BEGIN
+DECLARE resultado INT;
+  SET resultado = DATEDIFF(fecha_final, fecha_inicial);
+  RETURN resultado;
+RETURN 1;
+END;
+
+-- -----------------------------------------------------
+-- Function `ProThechnics`.`fn_calcular_dias`
+-- -----------------------------------------------------
+
+DROP FUNCTION IF EXISTS `ProThechnics`.`fn_calcular_dias`;
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `ProThechnics`.`fn_calcular_total`(valor_unitario DECIMAL(10,2), dias int) RETURNS int(11)
+BEGIN
+DECLARE resultado INT;
+  SET resultado = valor_unitario*dias;
+  RETURN resultado;
+RETURN 1;
+END;

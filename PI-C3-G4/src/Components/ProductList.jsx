@@ -8,7 +8,7 @@ function ProductList({ products, onEdit, onDelete }) {
   };
 
   return (
-    <div>
+    <div className="container">
       {selectedProduct && (
         <div>
           <p>Id: {selectedProduct.id}</p>
@@ -16,11 +16,13 @@ function ProductList({ products, onEdit, onDelete }) {
         </div>
       )}
       {products.map(product => (
-        <div key={product.id}>
+        <div key={product.id} className="list-item">
           <p>Id: {product.id}</p>
           <h3>{product.name}</h3>
-          <button onClick={() => onEdit(product)}>Modificar</button>
-          <button onClick={() => onDelete(product.id)}>Eliminar</button>
+          <div>
+            <button className='button buttonPrimary' onClick={() => onEdit(product)}>Modificar</button>
+            <button className='button buttonTerciary' onClick={() => onDelete(product.id)}>Eliminar</button>
+          </div>
         </div>
       ))}
     </div>

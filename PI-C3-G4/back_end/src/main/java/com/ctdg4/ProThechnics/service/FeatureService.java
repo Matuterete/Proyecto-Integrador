@@ -1,6 +1,5 @@
 package com.ctdg4.ProThechnics.service;
 
-import com.ctdg4.ProThechnics.entity.Category;
 import com.ctdg4.ProThechnics.entity.Feature;
 import com.ctdg4.ProThechnics.repository.FeatureRepository;
 import org.springframework.beans.factory.annotation.Autowired;

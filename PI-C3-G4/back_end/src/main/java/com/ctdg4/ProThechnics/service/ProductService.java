@@ -10,9 +10,7 @@ import com.ctdg4.ProThechnics.entity.Product;
 import com.ctdg4.ProThechnics.entity.ProductFeature;
 import com.ctdg4.ProThechnics.entity.ProductImage;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
-import com.ctdg4.ProThechnics.repository.ProductFeatureRepository;
-import com.ctdg4.ProThechnics.repository.ProductImageRepository;
-import com.ctdg4.ProThechnics.repository.ProductRepository;
+import com.ctdg4.ProThechnics.repository.*;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,10 @@ import java.util.stream.Collectors;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private FeatureRepository featureRepository;
 
     @Autowired
     private ProductImageRepository productImageRepository;
@@ -42,9 +44,55 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-//    public void updateProduct(Product product) {
-//        productRepository.save(product);
-//    }
+    public Product updateProduct(Product product) throws ResourceNotFoundException {
+
+        Product existingProduct = productRepository.findById(product.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + product.getId()));
+
+        existingProduct.setIsActive(product.getIsActive());
+        existingProduct.setName(product.getName());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setStock(product.getStock());
+        
+        if (product.getCategory() != null) {
+
+            existingProduct.setCategory(product.getCategory());
+        }
+
+//
+//        List<Feature> existingFeatures = product.getFeatures();
+//        if (existingFeatures != null) {
+//            for (Feature existingFeature : existingFeatures) {
+//                Optional<Feature> optionalFeature = featureRepository.findById(existingFeature.getId());
+//                if (optionalFeature.isPresent()) {
+//                    existingFeature.setProductFeatures(optionalFeature.get().getProductFeatures());
+//                }
+//
+//                List<ProductFeature> productFeaturesToUpdateOrDelete = existingFeature.getFeatures();
+//                if (productFeaturesToUpdateOrDelete != null) {
+//                    for (ProductFeature productFeature : productFeaturesToUpdateOrDelete) {
+//                        // Verificar si la asociación existe en la base de datos
+//                        Optional<ProductFeature> optionalProductFeature = productFeatureRepository.findById(productFeature.getId());
+//                        if (optionalProductFeature.isPresent()) {
+//                            // La asociación existe, actualizarla si es necesario
+//                            ProductFeature dbProductFeature = optionalProductFeature.get();
+//                            dbProductFeature.setFeatureValue(productFeature.getFeatureValue());
+//                            // Actualizar otros campos según sea necesario
+//
+//                            // Guardar la asociación actualizada
+//                            productFeatureRepository.save(dbProductFeature);
+//                        } else {
+//                            // La asociación no existe en la base de datos, eliminarla
+//                            existingFeature.getProductFeatures().remove(productFeature);
+//                            productFeatureRepository.delete(productFeature);
+//                        }
+//                    }
+//                }
+//            }
+
+        return productRepository.save(existingProduct);
+    }
 
     public void deleteProduct(Long product_id) {
         productRepository.deleteById(product_id);
@@ -67,6 +115,7 @@ public class ProductService {
     }
 
     private ProductDTO mapToDTOOnlyWithPrimaryImages(Product product) {
+
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
         CategoryDTO categoryDTO = mapToDTO(product.getCategory());
         productDTO.setCategory(categoryDTO);
@@ -124,6 +173,14 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    //DTO for Category search
+    public List<ProductDTO> findProductByCategoryIdWithEverything(Long categoryId) {
+        List<Product> products = productRepository.findByCategoryId(categoryId);
+        return products.stream()
+                .map(this::mapToDTOOnlyWithPrimaryImages)
+                .collect(Collectors.toList());
+    }
+
     //DTO Mappers
     public ProductDTO mapToDTO(Product product) {
         return modelMapper.map(product, ProductDTO.class);
@@ -143,18 +200,18 @@ public class ProductService {
 
 
     @Transactional
-    public void updateProduct(Long productId, Product updatedProduct) throws ResourceNotFoundException {
+    public void updateProduct(Long productId, Product product) throws ResourceNotFoundException {
         Product existingProduct = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + productId));
 
-        // Update fields of existingProduct with the values from updatedProduct
-        existingProduct.setName(updatedProduct.getName());
-        existingProduct.setDescription(updatedProduct.getDescription());
-        existingProduct.setPrice(updatedProduct.getPrice());
-        existingProduct.setStock(updatedProduct.getStock());
-        existingProduct.setCategory(updatedProduct.getCategory());
-        existingProduct.setImages(updatedProduct.getImages());
-        existingProduct.setFeatures(updatedProduct.getFeatures());
+        // Update fields of existingProduct with the values from product
+        existingProduct.setName(product.getName());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setStock(product.getStock());
+        existingProduct.setCategory(product.getCategory());
+        existingProduct.setImages(product.getImages());
+        existingProduct.setFeatures(product.getFeatures());
 
         // Save the updated product
         productRepository.save(existingProduct);

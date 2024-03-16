@@ -16,4 +16,9 @@ public class GlobalException {
     public ResponseEntity<String> handleDuplicateProductException(DuplicateException dpe){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(dpe.getMessage());
     }
+
+    @ExceptionHandler({BadCredentialsException.class})
+    public ResponseEntity<String> handleBadCredentialsException(BadCredentialsException bce){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(bce.getMessage());
+    }
 }

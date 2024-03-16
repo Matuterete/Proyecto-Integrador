@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import "../Components/styles/Home.css";
-import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import '../Components/styles/Home.css';
+import { useNavigate } from 'react-router-dom';
 
 
 function Login() {
@@ -18,37 +19,27 @@ function Login() {
     });
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setUsuario({
-      ...usuario,
-      imagen: file
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://prothechnics.us.to:8080/auth/login',
+    {
+      email: usuario.correo,
+      password: usuario.contrasena
+    })
+    .then(response => {
+      console.log(response.data);
+      localStorage.setItem('usuarioLogueado', JSON.stringify(response.data))
+      navigate("/home");
+      window.location.reload(); 
+    })
+    .catch(error => {
+      console.error(error);
+      alert(`El usuario ${usuario.correo} no se encuentra registrado en el sistema`)
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(usuario);
-    var usuarioList = JSON.parse(localStorage.getItem('usuarios'))
-    if (!usuarioList) {
-      alert(`El usuario ${usuario.correo} no se encuentra registrado en el sistema`)
-    }
-    else {
-      const usuarioEncontrado = usuarioList.find((elemento) => elemento.correo == usuario.correo && elemento.contrasena == usuario.contrasena);
-      if (!usuarioEncontrado) {
-        alert(`El usuario ${usuario.correo} no se encuentra registrado en el sistema`)
-      }
-      else {
-        localStorage.setItem('usuarioLogueado', JSON.stringify(usuarioEncontrado))
-        alert(`Bienvenido usuario ${usuarioEncontrado.nombre}`)
-        navigate("/home");
-        window.location.reload(); 
-      }
-    }
-  };
-
   return (
-    <div className="Form">
+    <div className="form">
       <h1>Iniciar Sesión</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -61,7 +52,7 @@ function Login() {
             <input type="password" name="contrasena" value={usuario.contrasena} onChange={handleChange} />
           </label>
         </div>
-        <button type="submit">Ingresar</button>
+        <button type="submit" className='button buttonSecundary'>Ingresar</button>
       </form>
     </div>
   );
