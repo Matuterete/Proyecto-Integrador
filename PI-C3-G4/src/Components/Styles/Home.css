@@ -27,6 +27,8 @@
 
 .categories {
   text-align: center;
+  background-color: #efefef;
+  color: black;
 }
 
 .categories-container {
