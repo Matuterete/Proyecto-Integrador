@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../Components/styles/Home.css';
 import { useNavigate } from 'react-router-dom';
-
+import '../Components/styles/Login.css';
 
 function Login() {
   const [usuario, setUsuario] = useState({
@@ -52,7 +51,7 @@ function Login() {
             <input type="password" name="contrasena" value={usuario.contrasena} onChange={handleChange} />
           </label>
         </div>
-        <button type="submit" className='button buttonSecundary'>Ingresar</button>
+        <button type="submit" className='button buttonPrimary buttonRight'>Ingresar</button>
       </form>
     </div>
   );

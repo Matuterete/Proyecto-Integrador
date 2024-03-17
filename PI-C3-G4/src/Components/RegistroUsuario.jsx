@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import '../Components/styles/Home.css';
 import { useNavigate } from 'react-router-dom';
-import '../Components/styles/RegistroUsuario.css';
 import registroUsuario from '../assets/imagen-Usuario.png';
+import '../Components/styles/RegistroUsuario.css'
 import EmailConfirmation from '../Components/EmailConfirmation'
 import Swal from 'sweetalert2';
 
@@ -200,7 +199,7 @@ function RegistroUsuario() {
             <input type="password" name="password2" value={password2} onChange={handlePassword2Change} required />
           </label>
         </div>
-        <div className="boton"><button className='button buttonSecundary' type="submit">Guardar Usuario</button></div>
+        <div className="boton"><button className='button buttonPrimary buttonRight' type="submit">Guardar Usuario</button></div>
 
         {mostrarDespuesDeGuardar ? (<div></div>
         ) : (
@@ -208,7 +207,7 @@ function RegistroUsuario() {
             <h1>Confirma tu correo</h1>
             <p>Hemos enviado un mensaje de confirmación a tu dirección de correo electrónico.</p>
             <Timer />
-            <button type="submit" className='button buttonSecundary'>Reenviar correo</button>
+            <button type="submit" className='button buttonPrimary buttonRight'>Reenviar correo</button>
           </div>
         )}
       </form>
