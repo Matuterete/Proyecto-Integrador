@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import registroUsuario from '../assets/imagen-Usuario.png';
 import '../Components/styles/RegistroUsuario.css'
+import IconButton from '../Components/IconButton';
 import EmailConfirmation from '../Components/EmailConfirmation'
 import Swal from 'sweetalert2';
 
@@ -165,7 +166,7 @@ function RegistroUsuario() {
   }
   
   return (
-    <div className="form container">
+    <div className="form">
       <h1 className='title'>Formulario de Registro de Usuarios</h1>
       <div className='container-img'>
         <img src={registroUsuario} alt="logo registro de usuario" height="100px" width="100px" />
@@ -199,7 +200,7 @@ function RegistroUsuario() {
             <input type="password" name="password2" value={password2} onChange={handlePassword2Change} required />
           </label>
         </div>
-        <div className="boton"><button className='button buttonPrimary buttonRight' type="submit">Guardar Usuario</button></div>
+        <IconButton className='button buttonPrimary buttonRight'>Guardar Usuario</IconButton>
 
         {mostrarDespuesDeGuardar ? (<div></div>
         ) : (

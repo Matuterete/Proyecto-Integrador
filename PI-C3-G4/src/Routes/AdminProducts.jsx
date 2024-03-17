@@ -5,7 +5,8 @@ import ProductEditForm from '../Components/ProductEditForm';
 import ProductAddForm from '../Components/ProductAddForm'
 import Pagination from '../Components/Pagination';
 import { useNavigate } from 'react-router-dom';
-//import "../Components/styles/AdminProducts.css";
+import "../Components/styles/AdminProducts.css";
+import IconButton from '../Components/IconButton';
 
 function AdminProducts() {
   const [products, setProducts] = useState([]);
@@ -85,11 +86,11 @@ function AdminProducts() {
 
   return (
     <div>
-      <h2 className='title'>Administrar Productos</h2>
+      <h2 className='container-title'>Administrar Productos</h2>
       {showProductList && (
         <div>
-          <div className='add-button'>
-            <button className='button buttonSecundary' onClick={handleAddProduct}>Agregar Producto</button>
+          <div className='container-add-button'>
+            <IconButton className='button buttonPrimary' onClick={handleAddProduct} icon="plus">Agregar Producto</IconButton>
           </div>
           <ProductList
               products={currentProducts}
