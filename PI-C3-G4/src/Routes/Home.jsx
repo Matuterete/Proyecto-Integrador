@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../Components/Card';
 import requestToAPI from '../services/requestToAPI';
+import '../Components/styles/Home.css';
 
 const Home = () => {
   const [categorias, setCategorias] = useState([]);
