@@ -4,7 +4,8 @@ import { Link, useParams } from 'react-router-dom'
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import requestToAPI from '../services/requestToAPI';
-import '../Components/styles/Detail.css'
+import '../Components/Styles/Detail.css'
+import { useContext } from '../Utils/Context';
 
 const Detail = () => {
 
@@ -53,6 +54,8 @@ const Detail = () => {
         },
     ];
 
+    const { state } = useContext();
+
     return (
         <div className='body'>
             {resposeData ? (
@@ -72,7 +75,7 @@ const Detail = () => {
                             showFullscreenButton={false}
                         />
                     </div>
-                    <div className='pay'>
+                    <div className={`pay ${state.theme} pagina`}>
 
                         <Link to={'/home'}><img className='backArrowDetail' src="\src\assets\back.png"/> </Link>
 

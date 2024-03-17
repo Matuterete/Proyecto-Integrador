@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import '../Components/styles/Home.css';
+import '../Components/Styles/Home.css';
 import { useNavigate } from 'react-router-dom';
-import '../Components/styles/RegistroUsuario.css';
+import '../Components/Styles/RegistroUsuario.css';
 import registroUsuario from '../assets/imagen-Usuario.png';
 import EmailConfirmation from '../Components/EmailConfirmation'
 import Swal from 'sweetalert2';

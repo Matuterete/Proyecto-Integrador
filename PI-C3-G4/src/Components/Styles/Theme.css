@@ -7,3 +7,11 @@
     background-color: #333333;
     color: #ffffff;
   }
+
+  .pay.light {
+    background-color: #F9F7F7; /* Color de fondo claro */
+  }
+  
+  .pay.dark {
+    background-color: #1F1F1F; /* Color de fondo oscuro */
+  }
