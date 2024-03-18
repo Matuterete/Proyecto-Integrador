@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserList from '../Components/UserList';
 import UserEditForm from '../Components/UserEditForm';
-import UserAddForm from '../Components/UserAddForm'
 import Pagination from '../Components/Pagination';
 import { useNavigate } from 'react-router-dom';
-//import "../Components/styles/AdminUsers.css";
+import Swal from 'sweetalert2';
+import "../Components/styles/AdminUsers.css";
 
 function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -20,7 +20,7 @@ function AdminUsers() {
 
   useEffect(() => {
     // if (usuarioLogueado) {
-      axios.get('http://prothechnics.us.to:8080/users/find/all')
+    axios.get('http://prothechnics.us.to:8080/users/find/all')
       .then(response => {
         setUsers(response.data);
       })
@@ -68,33 +68,50 @@ function AdminUsers() {
   };
 
   const handleDeleteUser = (userId) => {
-    const confirmDelete = window.confirm('¿Estás seguro que deseas eliminar este usuario?');
-
-    if (confirmDelete) {
-      axios.delete(`http://prothechnics.us.to:8080/users/delete/id/${userId}`)
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Una vez eliminado, no podrás recuperar este usuario',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminarlo',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Aquí puedes realizar la acción de eliminación
+        axios.delete(`http://prothechnics.us.to:8080/users/delete/id/${userId}`)
         .then(() => {
           setUsers(users.filter(user => user.id !== userId));
-          alert('Usuario eliminado correctamente');
+          Swal.fire(
+            '¡Eliminado!',
+            'El elemento ha sido eliminado.',
+            'success'
+          );
         })
         .catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error inesperado',
+            text: 'Hubo un error al intentar eliminar el usuario',
+            showConfirmButton: false,
+            timer: 2000 // Cerrar automáticamente después de 2 segundos
+          });
           console.error(error);
-          alert('Hubo un error al intentar eliminar el usuario');
         });
-    }
+      }
+    });
   };
 
   return (
     <div>
-      <h2 className='title'>Administrar Usuarios</h2>
+      <h2 className='container-title'>Administrar Usuarios</h2>
       {showUserList && (
         <div>
-          <div className='add-button'>
-            <button className='form-button form-button-blue' onClick={handleAddUser}>Agregar Usuario</button>
-          </div>
           <UserList
-              users={currentUsers}
-              onEdit={handleEditUser}
-              onDelete={handleDeleteUser} />
+            users={currentUsers}
+            onEdit={handleEditUser}
+            onDelete={handleDeleteUser} />
           <Pagination
             usersPerPage={usersPerPage}
             totalUsers={users.length}
@@ -102,10 +119,10 @@ function AdminUsers() {
             currentPage={currentPage} />
         </div>
       )}
-      {showUserAddForm && 
+      {showUserAddForm &&
         <UserAddForm onAdd={handleSaveUser} onCancel={handleCancelUser} />
       }
-      {editingUser && 
+      {editingUser &&
         <UserEditForm user={editingUser} onSave={handleSaveEdit} onCancel={handleCancelUser} />
       }
     </div>

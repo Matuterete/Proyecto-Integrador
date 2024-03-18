@@ -25,9 +25,14 @@ const IconButton = ({ onClick, children, className, icon }) => {
       }, []);
     
     return (
-        <button onClick={onClick} className={'customButton ' + className}>
+        <button type='button' onClick={onClick} className={'customButton ' + className}>
             {children}
-            <FontAwesomeIcon className='customButton-icon' icon={faIcon} />
+            {faIcon ? (
+                <FontAwesomeIcon className='customButton-icon' icon={faIcon} />
+            ) :
+            (
+                <div/>
+            )}
         </button>
     );
 }

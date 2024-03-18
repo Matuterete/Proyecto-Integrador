@@ -73,17 +73,26 @@ main {
   background-color: #c1c8d3;
 }
 
-.buttonRight {
-  float: right;
-  margin-top: 20px;
+.buttonBig {
+  height: 50px;
+  font-size: 1em;
+  margin-top: 10px;
 }
+
+.buttonCenter {
+  text-align: center;
+}
+
 
 /* ========== FORMULARIO GENERICO ========== */
 
 .form {
   padding-top: 60px;
-  padding-bottom: 60px;
   min-height: 36.4vw;
+}
+
+form[style*="height: less800px"] {
+  padding-bottom: 60px; /* Agrega padding solo si la altura es menor a 800px */
 }
 
 .form h1 {
@@ -116,15 +125,25 @@ main {
 }
 
 .form-group textarea {
-  width: 100%;
+  width: 94%;
   padding: 8px;
-  box-sizing: border-box;
+  padding-left: 20px;
+  border: none;
+  background-color: #F1F1F2;
+  border-radius: 12px;
+  color: #A7A7AB;
+  font-size: 18px;
 }
 
 .form-group select {
-  width: 100%;
+  width: 99%;
   padding: 8px;
-  box-sizing: border-box;
+  border: none;
+  background-color: #F1F1F2;
+  border-radius: 12px;
+  color: #A7A7AB;
+  height: 40px;
+  font-size: 18px;
 }
 
 /* ========== LISTA GENERICA ========== */
@@ -159,6 +178,14 @@ main {
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ccc;
+}
+
+.list-item p {
+  color: black;
+}
+
+.list-item h4 {
+  color: black;
 }
 
 .list-item button {

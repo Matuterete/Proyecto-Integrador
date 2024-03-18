@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function UserEditForm({ user, onSave, onCancel }) {
   const [id] = useState(user.id);
@@ -7,9 +8,7 @@ function UserEditForm({ user, onSave, onCancel }) {
   const [name, setName] = useState(user.name);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
-  const [password, setPassword] = useState(user.password);
-  const [roles, setRoles] = useState([]);
-  const [selectedRole, setSelectedRole] = useState('');
+  const [selectedRole, setSelectedRole] = useState(user.role);
 
   useEffect(() => {
     axios.get('http://prothechnics.us.to:8080/roles/find/all')
@@ -37,10 +36,6 @@ function UserEditForm({ user, onSave, onCancel }) {
     setEmail(e.target.value);
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
   const handleRoleChange = (e) => {
     setSelectedRole(e.target.value);
   };
@@ -48,16 +43,13 @@ function UserEditForm({ user, onSave, onCancel }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`http://prothechnics.us.to:8080/users/update/role`, {
+    axios.put(`http://prothechnics.us.to:8080/users/update`, {
       id,
       isActive,
       name,
       lastName,
       email,
-      password,
-      /*role: {
-        id: selectedRole
-      }*/
+      role: selectedRole
     })
       .then(() => {
         onSave({
@@ -66,16 +58,23 @@ function UserEditForm({ user, onSave, onCancel }) {
           name,
           lastName,
           email,
-          password,
-          /*role: {
-            id: selectedRole
-          }*/
+          role: selectedRole
         });
-        alert('Usuario actualizado correctamente');
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuario actualizado correctamente',
+          showConfirmButton: false,
+          timer: 2000 // Cerrar automáticamente después de 2 segundos
+        });
       })
       .catch(error => {
-        console.error(error);
-        alert('Hubo un error al intentar actualizar el usuario');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error inesperado',
+          text: 'Hubo un error al intentar actualizar el usuario',
+          showConfirmButton: false,
+          timer: 2000 // Cerrar automáticamente después de 2 segundos
+        });
       });
   };
 
@@ -108,26 +107,19 @@ function UserEditForm({ user, onSave, onCancel }) {
       </div>
       <div className='form-group'>
         <label>
-          Contraseña:
-          <input type="text" value={password} onChange={handlePasswordChange} required />
-        </label>
-      </div>
-      <div className='form-group'>
-        <label>
           Rol:
           <select value={selectedRole} onChange={handleRoleChange}>
             <option value="">Seleccione el rol</option>
-            <option key="1" value="1">USER</option>
-            <option key="2" value="2">ADMIN</option>
-            <option key="3" value="3">SUPERADMIN</option>
+            <option key="1" value="USER">USER</option>
+            <option key="2" value="ADMIN">ADMIN</option>
+            <option key="3" value="SUPERADMIN">SUPERADMIN</option>
           </select>
         </label>
       </div>
-      <div className='form-group'>
-        <button type="submit" className="submit-button">Guardar Cambios</button>
-      </div>
-      <div className='form-group'>
-        <button type="button" className="cancel-button" onClick={onCancel}>Cancelar</button>
+      <div className='form-group buttonCenter'>
+        <button type='submit' className='button buttonPrimary buttonBig'>Guardar Cambios</button>
+        &nbsp;&nbsp;&nbsp;
+        <button type='button' className='button buttonTerciary buttonBig' onClick={onCancel}>Cancelar</button>
       </div>
     </form>
   );

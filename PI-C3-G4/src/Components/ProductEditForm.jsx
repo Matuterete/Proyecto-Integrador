@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 function ProductEditForm({ product, onSave, onCancel }) {
@@ -71,11 +72,21 @@ function ProductEditForm({ product, onSave, onCancel }) {
             id: selectedCategory
           }
         });
-        alert('Producto actualizado correctamente');
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto actualizado correctamente',
+          showConfirmButton: false,
+          timer: 2000 // Cerrar automáticamente después de 2 segundos
+        });
       })
       .catch(error => {
         console.error(error);
-        alert('Hubo un error al intentar actualizar el producto');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error inesperado',
+          text: 'Hubo un error al intentar actualizar el usuario',
+          showConfirmButton: true
+        });
       });
   };
 
@@ -91,7 +102,7 @@ function ProductEditForm({ product, onSave, onCancel }) {
       <div className='form-group'>
         <label>
           Descripción:
-          <textarea value={description} onChange={handleDescriptionChange} />
+          <textarea rows="5" value={description} onChange={handleDescriptionChange} />
         </label>
       </div>
       <div className='form-group'>
@@ -124,13 +135,11 @@ function ProductEditForm({ product, onSave, onCancel }) {
           </select>
         </label>
       </div>
-      <div className='form-group'>
-        <button type="submit" className="button buttonSecundary submit-button">Guardar Cambios</button>
+      <div className='form-group buttonCenter'>
+        <button type='submit' className='button buttonPrimary buttonBig'>Guardar Cambios</button>
+        &nbsp;&nbsp;&nbsp;
+        <button type='button' className='button buttonTerciary buttonBig' onClick={onCancel}>Cancelar</button>
       </div>
-      <div className='form-group'>
-        <button type="button" className="button buttonTerciary cancel-button" onClick={onCancel}>Cancelar</button>
-      </div>
-
     </form>
   );
 }

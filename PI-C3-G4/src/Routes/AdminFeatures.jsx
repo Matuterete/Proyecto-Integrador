@@ -1,7 +1,7 @@
-
 import React, { useEffect, useState } from 'react'
 import '../Components/styles/AdminFeatures.css'
 import requestToAPI from '../services/requestToAPI';
+import IconButton from '../Components/IconButton';
 import Swal from 'sweetalert2';
 
 const AdminFeatures = () => {
@@ -199,11 +199,8 @@ const AdminFeatures = () => {
                     <h2>Administrar caracteristicas</h2>
                 </div>
                 <div>
-                    <div>
-                        <button
-                            className='addFeatureButton button buttonPrimary'
-                            onClick={toggleFormulario}
-                        >añadir Caracteristica</button>
+                    <div className='addFeatureButton'>
+                        <IconButton className='button buttonPrimary buttonBig' onClick={toggleFormulario} icon="plus">Añadir Caracteristica</IconButton>
                     </div>
 
                     {mostrarFormulario && (
@@ -237,22 +234,17 @@ const AdminFeatures = () => {
 
                     <ul className='adminFeactures'>
                         {responseData.map((objeto, index) => (
+
                             <div className='divLi' key={objeto.id}>
 
-                                <li>
+                                <li className="list-item">
                                     <div className='divSVG'><img src={objeto.url} /></div>
                                     <p>ID {objeto.id} - {objeto.title}</p>
 
                                     <div>
-                                        <button className='button buttonTerciary'
-                                            onClick={() => handleClickDelete(objeto.id)}>
-                                            Eliminar
-                                        </button>
-                                        <button
-                                            className='button buttonPrimary'
-                                            onClick={() => handleInput(objeto)}>
-                                            Editar
-                                        </button>
+                                        <IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>
+                                        <IconButton className='button buttonPrimary' onClick={() => handleInput(objeto)} icon="pencil">Modificar</IconButton>
+                                        <IconButton className='button buttonTerciary' onClick={() => handleClickDelete(objeto.id)} icon="minus">Eliminar</IconButton>
                                     </div>
                                 </li>
                             </div>

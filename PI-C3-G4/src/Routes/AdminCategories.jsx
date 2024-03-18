@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import IconButton from '../Components/IconButton';
 import Swal from 'sweetalert2';
 import requestToAPI from '../services/requestToAPI';
 
@@ -124,19 +125,26 @@ const AdminCategories = () => {
     };
 
     return (
-        <div>
-            <h1>Administrar Categorías</h1>
+        <div className='bodyFeatures'>
+            <div className='titleFeatures'>
+                <h2>Administrar Categorías</h2>
+            </div>
             <div>
                 <input type="text" value={newCategoryName} onChange={(e) => setNewCategoryName(e.target.value)} />
-                <button onClick={addCategory}>Agregar</button>
+                <div className='addFeatureButton'>
+                    <IconButton className='button buttonPrimary buttonBig' onClick={addCategory} icon="plus">Añadir Caracteristica</IconButton>
+                </div>
             </div>
             <ul>
                 {categories.map(category => (
-                    <li key={category.id}>
-                    <img src={category.url} alt={category.title} />
+                    <li key={category.id} className="list-item">
+                        <img src={category.url} alt={category.title} />
                         {category.title}
-                        <button onClick={() => deleteCategory(category.id)}>Eliminar</button>
-                        <button onClick={() => updateCategory(category.id, category.title)}>Editar</button>
+                        <div>
+                            <IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>
+                            <IconButton className='button buttonPrimary' onClick={() => updateCategory(category.id, category.title)} icon="pencil">Modificar</IconButton>
+                            <IconButton className='button buttonTerciary' onClick={() => deleteCategory(category.id)} icon="minus">Eliminar</IconButton>
+                        </div>
                     </li>
                 ))}
             </ul>

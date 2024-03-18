@@ -7,6 +7,7 @@ import Pagination from '../Components/Pagination';
 import { useNavigate } from 'react-router-dom';
 import "../Components/styles/AdminProducts.css";
 import IconButton from '../Components/IconButton';
+import Swal from 'sweetalert2';
 
 function AdminProducts() {
   const [products, setProducts] = useState([]);
@@ -69,19 +70,38 @@ function AdminProducts() {
   };
 
   const handleDeleteProduct = (productId) => {
-    const confirmDelete = window.confirm('¿Estás seguro que deseas eliminar este producto?');
-
-    if (confirmDelete) {
-      axios.delete(`http://prothechnics.us.to:8080/products/delete/id/${productId}`)
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Una vez eliminado, no podrás recuperar este producto',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminarlo',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Aquí puedes realizar la acción de eliminación
+        axios.delete(`http://prothechnics.us.to:8080/products/delete/id/${productId}`)
         .then(() => {
           setProducts(products.filter(product => product.id !== productId));
-          alert('Producto eliminado correctamente');
+          Swal.fire(
+            '¡Eliminado!',
+            'Producto eliminado correctamente',
+            'success'
+          );
         })
         .catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error inesperado',
+            text: 'Hubo un error al intentar eliminar el producto',
+            showConfirmButton: true
+          });
           console.error(error);
-          alert('Hubo un error al intentar eliminar el producto');
         });
-    }
+      }
+    });
   };
 
   return (
@@ -90,7 +110,7 @@ function AdminProducts() {
       {showProductList && (
         <div>
           <div className='container-add-button'>
-            <IconButton className='button buttonPrimary' onClick={handleAddProduct} icon="plus">Agregar Producto</IconButton>
+            <IconButton className='button buttonPrimary buttonBig' onClick={handleAddProduct} icon="plus">Agregar Producto</IconButton>
           </div>
           <ProductList
               products={currentProducts}
