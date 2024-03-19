@@ -1,3 +1,4 @@
+/*
 package com.ctdg4.ProThechnics.controller;
 
 import com.ctdg4.ProThechnics.service.AmazonClient;
@@ -44,3 +45,4 @@ public class BucketS3Controller {
         return this.amazonClient.deleteFileFromS3Bucket(fileUrl);
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.ctdg4.ProThechnics.service;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Service
 public class AmazonClient {
+
     @Autowired
     private Environment env;
     private AmazonS3 s3client;
@@ -105,3 +107,4 @@ public class AmazonClient {
                 .withCannedAcl(CannedAccessControlList.PublicRead));
     }
 }
+*/
