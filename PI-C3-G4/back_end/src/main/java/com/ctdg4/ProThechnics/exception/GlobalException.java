@@ -21,4 +21,14 @@ public class GlobalException {
     public ResponseEntity<String> handleBadCredentialsException(BadCredentialsException bce){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(bce.getMessage());
     }
+
+    @ExceptionHandler({UsernameNotFoundException.class})
+    public ResponseEntity<String> handleUsernameNotFoundException(UsernameNotFoundException unfe){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+    }
+
+    @ExceptionHandler({DisabledException.class})
+    public ResponseEntity<String> handleDisabledException(DisabledException de){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(de.getMessage());
+    }
 }

@@ -2,6 +2,7 @@ package com.ctdg4.ProThechnics.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +40,10 @@ public class User implements UserDetails {
     private String password;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserRole userRole;
+    @OneToMany(mappedBy = "user")
+//    @Schema(hidden = true)
+    private List<UserFav> fav;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

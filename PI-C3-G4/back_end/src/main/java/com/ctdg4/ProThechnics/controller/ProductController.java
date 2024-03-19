@@ -2,6 +2,7 @@ package com.ctdg4.ProThechnics.controller;
 
 import com.ctdg4.ProThechnics.dto.ProductDTO;
 import com.ctdg4.ProThechnics.entity.Product;
+import com.ctdg4.ProThechnics.entity.ProductImage;
 import com.ctdg4.ProThechnics.exception.DuplicateException;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.service.ProductService;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("api/products")
 @Tags(value = { @Tag(name = "Products") })
 @CrossOrigin(origins = "*")
 public class ProductController {
@@ -41,12 +42,12 @@ public class ProductController {
             @ApiResponse(responseCode = "409", description = "Product with the same name already exists")
     })
     @PostMapping("/add")
-    public ResponseEntity<Product> registerProduct(@RequestBody Product product) throws DuplicateException, ResourceNotFoundException {
+    public ResponseEntity<Product> registerProduct(@RequestBody Product product, List<ProductImage> images) throws DuplicateException, ResourceNotFoundException {
         List<ProductDTO> existingProduct = productService.findProductByNameWithEverything(product.getName());
         if (!existingProduct.isEmpty()) {
             throw new DuplicateException("Product with name: '" + product.getName() + "' already exists.");
         }
-        return ResponseEntity.ok(productService.saveProduct(product));
+        return ResponseEntity.ok(productService.saveProduct(product, images));
     }
 
     @Operation(summary = "Find all products", description = "Retrieves a list of all products")

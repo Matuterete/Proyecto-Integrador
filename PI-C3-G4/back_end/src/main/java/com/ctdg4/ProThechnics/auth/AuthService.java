@@ -6,7 +6,9 @@ import com.ctdg4.ProThechnics.entity.User;
 import com.ctdg4.ProThechnics.entity.UserRole;
 import com.ctdg4.ProThechnics.entity.UserRoleId;
 import com.ctdg4.ProThechnics.exception.BadCredentialsException;
+import com.ctdg4.ProThechnics.exception.DisabledException;
 import com.ctdg4.ProThechnics.exception.DuplicateException;
+import com.ctdg4.ProThechnics.exception.UsernameNotFoundException;
 import com.ctdg4.ProThechnics.jwt.JwtService;
 import com.ctdg4.ProThechnics.repository.RoleRepository;
 import com.ctdg4.ProThechnics.repository.UserRepository;
@@ -41,14 +43,15 @@ public class AuthService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public AuthResponse login(LoginRequest request) throws BadCredentialsException {
+    public AuthResponse login(LoginRequest request) throws BadCredentialsException{
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid credentials");
+            throw new BadCredentialsException(e.getMessage());
         }
 
         UserDetails user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+
         String token = jwtService.getToken(user);
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 

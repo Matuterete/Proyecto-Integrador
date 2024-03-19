@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
 import java.util.Optional;
 @RestController
-@RequestMapping("/products/images")
+@RequestMapping("api/products/images")
 @CrossOrigin(origins = "*")
 @Tags(value = { @Tag(name = "Products Images") })
 public class ProductImageController {

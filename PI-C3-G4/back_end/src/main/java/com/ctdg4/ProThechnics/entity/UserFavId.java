@@ -8,11 +8,12 @@ import java.io.Serializable;
 
 @Embeddable
 @Data
-public class ProductFeatureId implements Serializable {
+public class UserFavId implements Serializable {
+
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "product_id")
     private Long productId;
 
-    @Column(name = "feature_id")
-    private Long featureId;
 }

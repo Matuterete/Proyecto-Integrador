@@ -16,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,10 +41,29 @@ public class ProductService {
     private ModelMapper modelMapper;
 
     // Products
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
-    }
+//    public Product saveProduct(Product product) {
+//        Product savedProduct = productRepository.save(product);
+//        Category category = categoryRepository.findById(savedProduct.getCategory().getId())
+//                .orElseThrow(() -> new RuntimeException("Category not found"));
+//        savedProduct.setCategory(category);
+//        return savedProduct;
+//    }
 
+    public Product saveProduct(Product product, List<ProductImage> images) {
+        Product savedProduct = productRepository.save(product);
+        Category category = categoryRepository.findById(savedProduct.getCategory().getId())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+        savedProduct.setCategory(category);
+//
+//        List<ProductImage> savedImages = new ArrayList<>();
+//        for (ProductImage image : images) {
+//            image.setProduct(savedProduct);
+//            savedImages.add(productImageRepository.save(image));
+//        }
+//        savedProduct.setImages(savedImages);
+
+        return savedProduct;
+    }
     public Product updateProduct(Product product) throws ResourceNotFoundException {
 
         Product existingProduct = productRepository.findById(product.getId())

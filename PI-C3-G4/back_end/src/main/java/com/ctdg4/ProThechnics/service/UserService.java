@@ -1,10 +1,13 @@
 package com.ctdg4.ProThechnics.service;
 
 import com.ctdg4.ProThechnics.dto.UserDTO;
+import com.ctdg4.ProThechnics.dto.UserFavDTO;
+import com.ctdg4.ProThechnics.dto.UserFullDTO;
 import com.ctdg4.ProThechnics.entity.Role;
 import com.ctdg4.ProThechnics.entity.User;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.repository.RoleRepository;
+import com.ctdg4.ProThechnics.repository.UserFavRepository;
 import com.ctdg4.ProThechnics.repository.UserRepository;
 import com.ctdg4.ProThechnics.repository.UserRoleRepository;
 import jakarta.transaction.Transactional;
@@ -25,6 +28,8 @@ public class UserService {
     private UserRoleRepository userRoleRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private UserFavRepository userFavRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -55,7 +60,14 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    //DTO Mappers
+    public void addFavorite(Long userId, Long productId) {
+        userFavRepository.addFavorite(userId, productId);
+    }
+
+    public void removeFavorite(Long userId, Long productId) {
+        userFavRepository.removeFavorite(userId, productId);
+    }
+    //DTOs
 
     public List<UserDTO> listAllUsersDTO() {
         List<User> users = userRepository.findAll();
@@ -64,14 +76,29 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<UserDTO> findUserByIdDTO(Long user_id) {
+    public Optional<UserFullDTO> findUserByIdDTO(Long user_id) {
         Optional<User> userOptional = userRepository.findById(user_id);
-        return userOptional.map(user -> modelMapper.map(user, UserDTO.class));
+//        return userOptional.map(user -> modelMapper.map(user, UserDTO.class));
+        return userOptional.map(this::convertToDto);
     }
 
-    public Optional<UserDTO> findUserByEmailDTO(String email) {
+    public Optional<UserFullDTO> findUserByEmailDTO(String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
-        return userOptional.map(user -> modelMapper.map(user, UserDTO.class));
+//        return userOptional.map(user -> modelMapper.map(user, UserDTO.class));
+          return userOptional.map(this::convertToDto);
+    }
+
+    private UserFullDTO convertToDto(User user) {
+        UserFullDTO userFullDTO = modelMapper.map(user, UserFullDTO.class);
+        List<UserFavDTO> favoritesDto = user.getFav().stream()
+                .map(fav -> {
+                    UserFavDTO favDto = new UserFavDTO();
+                    favDto.setProductId(fav.getProduct().getId());
+                    return favDto;
+                })
+                .collect(Collectors.toList());
+        userFullDTO.setFavorites(favoritesDto);
+        return userFullDTO;
     }
 
     @Transactional

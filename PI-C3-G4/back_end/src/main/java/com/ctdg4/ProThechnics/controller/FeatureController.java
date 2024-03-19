@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/features")
+@RequestMapping("api/features")
 @CrossOrigin(origins = "*")
 @Tags(value = { @Tag(name = "Features") })
 public class FeatureController {

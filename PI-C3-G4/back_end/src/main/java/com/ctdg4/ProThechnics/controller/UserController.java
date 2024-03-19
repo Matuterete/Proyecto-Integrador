@@ -1,37 +1,36 @@
 package com.ctdg4.ProThechnics.controller;
 
 import com.ctdg4.ProThechnics.dto.UserDTO;
+import com.ctdg4.ProThechnics.dto.UserFullDTO;
 import com.ctdg4.ProThechnics.entity.User;
-import com.ctdg4.ProThechnics.exception.DuplicateException;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.service.UserRoleService;
 import com.ctdg4.ProThechnics.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("api/users")
 @CrossOrigin(origins = "*")
-@Tags(value = { @Tag(name = "Users") })
+@Tags(value = {@Tag(name = "Users")})
 public class UserController {
-    
+
     @Autowired
     private UserService userService;
     @Autowired
     private UserRoleService userRoleService;
-    
+
     @Operation(summary = "List all users", description = "Retrieve a list of all registered users")
     @ApiResponse(responseCode = "200", description = "List of users retrieved successfully")
     @GetMapping("/find/all")
@@ -45,8 +44,8 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found")
     })
     @GetMapping("/find/id/{id}")
-    public ResponseEntity<Optional<UserDTO>> findUserByIdDTO(@PathVariable Long id) throws ResourceNotFoundException {
-        Optional<UserDTO> userSearched = userService.findUserByIdDTO(id);
+    public ResponseEntity<Optional<UserFullDTO>> findUserByIdDTO(@PathVariable Long id) throws ResourceNotFoundException {
+        Optional<UserFullDTO> userSearched = userService.findUserByIdDTO(id);
         if (userSearched.isPresent()) {
             return ResponseEntity.ok(userSearched);
         } else {
@@ -60,8 +59,8 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found")
     })
     @GetMapping("/find/email/{email}")
-    public ResponseEntity<Optional<UserDTO>> findUserByEmailDTO(@PathVariable String email) throws ResourceNotFoundException {
-        Optional<UserDTO> userSearched = userService.findUserByEmailDTO(email);
+    public ResponseEntity<Optional<UserFullDTO>> findUserByEmailDTO(@PathVariable String email) throws ResourceNotFoundException {
+        Optional<UserFullDTO> userSearched = userService.findUserByEmailDTO(email);
         if (userSearched.isPresent()) {
             return ResponseEntity.ok(userSearched);
         } else {
@@ -94,9 +93,44 @@ public class UserController {
     public ResponseEntity<String> updateUserDTO(@RequestBody UserDTO userDTO) throws ResourceNotFoundException {
         try {
             UserDTO updatedUserDTO = userService.updateUserDTO(userDTO);
-            return ResponseEntity.ok("User: " + updatedUserDTO.getEmail() + " updated successfully" );
+            return ResponseEntity.ok("User: " + updatedUserDTO.getEmail() + " updated successfully");
         } catch (ResourceNotFoundException e) {
             throw new ResourceNotFoundException(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Add product to user's favorites")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product added to favorites successfully"),
+            @ApiResponse(responseCode = "404", description = "User or product not found")
+    })
+    @PostMapping("/{userId}/favorites/{productId}")
+    public ResponseEntity<String> addFavorite(@Parameter(description = "User ID") @PathVariable Long userId,
+                                              @Parameter(description = "Product ID") @PathVariable Long productId) {
+        try {
+            userService.addFavorite(userId, productId);
+            return ResponseEntity.ok("Product added to favorites successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Failed to add product to favorites. " + e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Remove product from user's favorites")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product removed from favorites successfully"),
+            @ApiResponse(responseCode = "404", description = "User or product not found")
+    })
+    @DeleteMapping("/{userId}/favorites/{productId}")
+    public ResponseEntity<String> removeFavorite(
+            @Parameter(description = "User ID") @PathVariable Long userId,
+            @Parameter(description = "Product ID") @PathVariable Long productId) {
+        try {
+            userService.removeFavorite(userId, productId);
+            return ResponseEntity.ok("Product removed from favorites successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Failed to remove product from favorites. " + e.getMessage());
         }
     }
 }
