@@ -20,7 +20,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://prothechnics.us.to:8080/auth/login',
+    axios.post('http://prothechnics.us.to:8080/api/auth/login',
       {
         email: usuario.correo,
         password: usuario.contrasena

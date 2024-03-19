@@ -13,7 +13,7 @@ function ProductEditForm({ product, onSave, onCancel }) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    axios.get('http://prothechnics.us.to:8080/categories/find/all')
+    axios.get('http://prothechnics.us.to:8080/api/categories/find/all')
       .then(response => {
         setCategories(response.data);
       })
@@ -49,7 +49,7 @@ function ProductEditForm({ product, onSave, onCancel }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`http://prothechnics.us.to:8080/products/update`, {
+    axios.put(`http://prothechnics.us.to:8080/api/products/update`, {
       id,
       name,
       description,

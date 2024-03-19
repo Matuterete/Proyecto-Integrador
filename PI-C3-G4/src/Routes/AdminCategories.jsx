@@ -13,7 +13,7 @@ const AdminCategories = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const url = 'http://prothechnics.us.to:8080/categories/find/all';
+                const url = 'categories/find/all';
                 const method = 'GET';
                 const data = null;
                 const headers = {};
@@ -46,7 +46,7 @@ const AdminCategories = () => {
             allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('http://prothechnics.us.to:8080/categories/add', { title: result.value, description: '', url: '' })
+                axios.post('http://prothechnics.us.to:8080/api/categories/add', { title: result.value, description: '', url: '' })
                     .then(response => {
                         setCategories([...categories, response.data]);
                         Swal.fire('¡Agregado!', 'La categoría ha sido agregada correctamente.', 'success');
@@ -78,7 +78,7 @@ const AdminCategories = () => {
             allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.put(`http://prothechnics.us.to:8080/categories/update`, { id: categoryId, title: result.value, description: '', url: '' })
+                axios.put(`http://prothechnics.us.to:8080/api/categories/update`, { id: categoryId, title: result.value, description: '', url: '' })
                     .then(response => {
                         const updatedCategories = categories.map(category =>
                             category.id === categoryId ? { ...category, title: result.value } : category
@@ -110,7 +110,7 @@ const AdminCategories = () => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://prothechnics.us.to:8080/categories/delete/id/${categoryId}`)
+                axios.delete(`http://prothechnics.us.to:8080/api/categories/delete/id/${categoryId}`)
                     .then(() => {
                         const updatedCategories = categories.filter(category => category.id !== categoryId);
                         setCategories(updatedCategories);

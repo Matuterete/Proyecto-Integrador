@@ -12,7 +12,7 @@ function ProductAddForm({ onAdd, onCancel }) {
   const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
-    axios.get('http://prothechnics.us.to:8080/categories/find/all')
+    axios.get('http://prothechnics.us.to:8080/api/categories/find/all')
       .then(response => {
         setCategories(response.data);
       })
@@ -48,7 +48,7 @@ function ProductAddForm({ onAdd, onCancel }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post('http://prothechnics.us.to:8080/products/add', {
+    axios.post('http://prothechnics.us.to:8080/api/products/add', {
       name,
       description,
       price,

@@ -18,7 +18,7 @@ const Home = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const categoriasResponse = await requestToAPI('http://prothechnics.us.to:8080/categories/find/all', 'GET');
+        const categoriasResponse = await requestToAPI('categories/find/all', 'GET');
         setCategorias(categoriasResponse);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -30,7 +30,7 @@ const Home = () => {
   useEffect(() => {
     async function fetchRandomProducts() {
       try {
-        const productosResponse = await requestToAPI('http://prothechnics.us.to:8080/products/find/random/6', 'GET');
+        const productosResponse = await requestToAPI('products/find/random/6', 'GET');
         setProductosRecomendados(productosResponse);
       } catch (error) {
         console.error('Error fetching random products:', error);
@@ -47,7 +47,7 @@ const Home = () => {
     } else {
       try {
         setCategoriaSeleccionada(categoryTitle);
-        const response = await requestToAPI(`http://prothechnics.us.to:8080/products/find/category/${categoryId}`, 'GET');
+        const response = await requestToAPI(`products/find/category/${categoryId}`, 'GET');
         console.log("Respuesta de la API:", response); // Agrega este console.log
         if (Array.isArray(response)) {
           setProductosPorCategoria(response);

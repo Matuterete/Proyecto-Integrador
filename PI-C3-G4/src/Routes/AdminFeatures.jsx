@@ -25,7 +25,7 @@ const AdminFeatures = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const url = 'http://prothechnics.us.to:8080/features/find/all';
+                const url = 'features/find/all';
                 const method = 'GET';
                 const data = null;
                 const headers = {}
@@ -78,7 +78,7 @@ const AdminFeatures = () => {
                 // Aquí puedes realizar la lógica de edición
                 setDataRequest({
                     ...dataRequest,
-                    url: 'http://prothechnics.us.to:8080/features/update',
+                    url: 'features/update',
                     method: 'PUT',
                     data: {
                         id: feature.id,
@@ -137,7 +137,7 @@ const AdminFeatures = () => {
 
             setDataRequest({
                 ...dataRequest,
-                url: 'http://prothechnics.us.to:8080/features/add',
+                url: 'features/add',
                 method: 'POST',
                 data: {
                     id: '',
@@ -176,7 +176,7 @@ const AdminFeatures = () => {
                 // Aquí puedes realizar la acción de eliminación
                 setDataRequest({
                     ...dataRequest,
-                    url: `http://prothechnics.us.to:8080/features/delete/id/${key}`,
+                    url: `features/delete/id/${key}`,
                     method: 'DELETE',
                     data: {},
                     headers: {}

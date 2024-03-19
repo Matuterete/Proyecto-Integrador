@@ -11,7 +11,7 @@ function UserEditForm({ user, onSave, onCancel }) {
   const [selectedRole, setSelectedRole] = useState(user.role);
 
   useEffect(() => {
-    axios.get('http://prothechnics.us.to:8080/roles/find/all')
+    axios.get('http://prothechnics.us.to:8080/api/roles/find/all')
       .then(response => {
         setRoles(response.data);
       })
@@ -43,7 +43,7 @@ function UserEditForm({ user, onSave, onCancel }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`http://prothechnics.us.to:8080/users/update`, {
+    axios.put(`http://prothechnics.us.to:8080/api/users/update`, {
       id,
       isActive,
       name,

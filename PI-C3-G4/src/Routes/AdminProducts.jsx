@@ -22,7 +22,7 @@ function AdminProducts() {
 
   useEffect(() => {
     // if (usuarioLogueado) {
-      axios.get('http://prothechnics.us.to:8080/products/find/all')
+      axios.get('http://prothechnics.us.to:8080/api/products/find/all')
       .then(response => {
         setProducts(response.data);
       })
@@ -82,7 +82,7 @@ function AdminProducts() {
     }).then((result) => {
       if (result.isConfirmed) {
         // Aquí puedes realizar la acción de eliminación
-        axios.delete(`http://prothechnics.us.to:8080/products/delete/id/${productId}`)
+        axios.delete(`http://prothechnics.us.to:8080/api/products/delete/id/${productId}`)
         .then(() => {
           setProducts(products.filter(product => product.id !== productId));
           Swal.fire(
