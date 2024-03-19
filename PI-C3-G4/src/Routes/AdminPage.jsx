@@ -27,10 +27,10 @@ const AdminPage = () => {
           <div className='ButtonContainer'>
             {!isMobile && (
               <>
-                <Link to="/adminFeatures"><button className='button buttonPrimary'>Admin Features</button></Link>
                 <Link to="/adminProducts"><button className='button buttonPrimary'>Admin Products</button></Link>
-                <Link to="/adminUsers"><button className='button buttonPrimary'>Admin Users</button></Link>
+                <Link to="/adminFeatures"><button className='button buttonPrimary'>Admin Features</button></Link>
                 <Link to="/adminCategories"><button className='button buttonPrimary'>Admin Categories</button></Link>
+                <Link to="/adminUsers"><button className='button buttonPrimary'>Admin Users</button></Link>
               </>
             )}
           </div>

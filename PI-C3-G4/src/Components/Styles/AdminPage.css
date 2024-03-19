@@ -1,6 +1,8 @@
 .bodyPage {
     display: flex;
     flex-direction: column;
+    padding-top: 60px;
+    min-height: 36.4vw;
   }
   
   .adminMenu {

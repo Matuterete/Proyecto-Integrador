@@ -1,4 +1,5 @@
 import React from 'react';
+import IconButton from '../Components/IconButton';
 
 function ProductList({ products, onEdit, onDelete }) {
   const [selectedProduct, setSelectedProduct] = React.useState(null);
@@ -8,7 +9,7 @@ function ProductList({ products, onEdit, onDelete }) {
   };
 
   return (
-    <div className="container">
+    <div className="container-list">
       {selectedProduct && (
         <div>
           <p>Id: {selectedProduct.id}</p>
@@ -18,10 +19,11 @@ function ProductList({ products, onEdit, onDelete }) {
       {products.map(product => (
         <div key={product.id} className="list-item">
           <p>Id: {product.id}</p>
-          <h3>{product.name}</h3>
+          <h4>{product.name}</h4>
           <div>
-            <button className='button buttonPrimary' onClick={() => onEdit(product)}>Modificar</button>
-            <button className='button buttonTerciary' onClick={() => onDelete(product.id)}>Eliminar</button>
+            <IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>
+            <IconButton className='button buttonPrimary' onClick={() => onEdit(product)} icon="pencil">Modificar</IconButton>
+            <IconButton className='button buttonTerciary' onClick={() => onDelete(product.id)} icon="minus">Eliminar</IconButton>
           </div>
         </div>
       ))}

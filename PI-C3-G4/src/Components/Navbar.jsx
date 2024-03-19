@@ -51,7 +51,7 @@ const Navbar = () => {
 
 
           <button className='button buttonSecundary' onClick={handleTheme}>
-            <img src={state.theme === 'light' ? Moon : Sun} width='25px' alt="Theme"></img>
+            <img src={state.theme === 'light' ? Moon : Sun} width='20px' alt="Theme"></img>
           </button>
         </div>
       </nav>

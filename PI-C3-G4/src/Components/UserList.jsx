@@ -1,4 +1,5 @@
 import React from 'react';
+import IconButton from '../Components/IconButton';
 
 function UserList({ users, onEdit, onDelete }) {
   const [selectedUser, setSelectedUser] = React.useState(null);
@@ -8,7 +9,7 @@ function UserList({ users, onEdit, onDelete }) {
   };
 
   return (
-    <div className="container">
+    <div className="container-list">
       {selectedUser && (
         <div>
           <p>Id: {selectedUser.id}</p>
@@ -18,10 +19,11 @@ function UserList({ users, onEdit, onDelete }) {
       {users.map(user => (
         <div key={user.id} className="list-item">
           <p>Id: {user.id}</p>
-          <h3>{user.name} {user.lastName}</h3>
+          <h4>{user.name} {user.lastName}</h4>
           <div>
-            <button className='form-button form-button-green' onClick={() => onEdit(user)}>Modificar</button>
-            <button className='form-button form-button-red' onClick={() => onDelete(user.id)}>Eliminar</button>
+            <IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>
+            <IconButton className='button buttonPrimary' onClick={() => onEdit(user)} icon="pencil">Modificar</IconButton>
+            <IconButton className='button buttonTerciary' onClick={() => onDelete(user.id)} icon="minus">Eliminar</IconButton>
           </div>
         </div>
       ))}

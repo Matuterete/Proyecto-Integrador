@@ -1,5 +1,4 @@
 import React from 'react'
-import { useContext } from '../Utils/Context.jsx';
 import Logo from '../assets/Logo-2.png';
 import facebook from '../assets/ico-facebook.png'
 import insta from '../assets/ico-instagram.png'
@@ -8,8 +7,6 @@ import tiktok from '../assets/ico-tiktok.png'
 import '../Components/styles/Footer.css';
 
 const Footer = () => {
-  const { state } = useContext()
-
   return (
     <footer className='footer'>
       

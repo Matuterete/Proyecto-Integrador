@@ -1,12 +1,10 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import '../Components/styles/Home.css';
 import { useNavigate } from 'react-router-dom';
-import '../Components/styles/RegistroUsuario.css';
 import registroUsuario from '../assets/imagen-Usuario.png';
+import '../Components/styles/RegistroUsuario.css'
 import EmailConfirmation from '../Components/EmailConfirmation'
 import Swal from 'sweetalert2';
-
 import emailjs from '@emailjs/browser';
 import Timer from './Timer';
 
@@ -75,7 +73,7 @@ function RegistroUsuario() {
     const formData = { name, lastName, email, password };
     setFormData(formData);
 
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+.])[A-Za-z\d.!@#$%^&*()_+]{6,}$/;
     const expReg = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
     const esEmailValido = expReg.test(email)
     if (name.length < 3) {
@@ -83,8 +81,7 @@ function RegistroUsuario() {
           icon: 'error',
           title: 'Nombre incorrecto',
           text: 'El nombre debe ser mayor a 2 caracteres',
-          showConfirmButton: false,
-          timer: 2000 // Cerrar automáticamente después de 2 segundos
+          showConfirmButton: true
       });
     }
     else if (lastName.length < 3) {
@@ -92,17 +89,15 @@ function RegistroUsuario() {
           icon: 'error',
           title: 'Apellido incorrecto',
           text: 'El apellido debe ser mayor a 2 caracteres',
-          showConfirmButton: false,
-          timer: 2000 // Cerrar automáticamente después de 2 segundos
+          showConfirmButton: true
       });
     }
     else if (!esEmailValido) {
       Swal.fire({
           icon: 'error',
           title: 'Email incorrecto',
-          text: 'El correo electrónico no tiene el formato correcto',
-          showConfirmButton: false,
-          timer: 2000 // Cerrar automáticamente después de 2 segundos
+          text: 'El correo electrónico no tiene el formato correcto, un formato válido es por ejemplo user@mail.com',
+          showConfirmButton: true
       });
     }
     else if (!passwordRegex.test(password)) {
@@ -111,12 +106,11 @@ function RegistroUsuario() {
           title: 'Contraseña incorrecta',
           html: `
             La contraseña debe cumplir las siguientes condiciones:
-            <ul className="mi-lista">
-              <li>Tener al menos 6 caracteres</li>
-              <li>Contener al menos una letra mayúscula</li>
-              <li>Contener al menos un número</li>
-              <li>Contener al menos un símbolo</li>
-            </ul>
+            <br> <br>
+            <div>Tener al menos 6 caracteres</div>
+            <div>Contener al menos una letra mayúscula</div>
+            <div>Contener al menos un número</div>
+            <div>Contener al menos un símbolo: ! @ # $ % ^ & * ( ) _ + .</div>
           `,
           showConfirmButton: true
       });
@@ -126,8 +120,7 @@ function RegistroUsuario() {
           icon: 'warning',
           title: 'Contraseñas incorrectas',
           text: 'Las contraseñas no coinciden',
-          showConfirmButton: false,
-          timer: 2000 // Cerrar automáticamente después de 1.5 segundos
+          showConfirmButton: true
       });
     }
     else {
@@ -166,15 +159,13 @@ function RegistroUsuario() {
   }
   
   return (
-    <div className="form container">
+    <div className="form">
       <h1 className='title'>Formulario de Registro de Usuarios</h1>
       <div className='container-img'>
         <img src={registroUsuario} alt="logo registro de usuario" height="100px" width="100px" />
       </div>
 
       <form ref={form} onSubmit={handleSubmit}>
-
-
         <div className="form-group">
           <label>Nombre:
             <input type="text" name="name" value={name} onChange={handleNameChange} required />
@@ -200,15 +191,16 @@ function RegistroUsuario() {
             <input type="password" name="password2" value={password2} onChange={handlePassword2Change} required />
           </label>
         </div>
-        <div className="boton"><button className='button buttonSecundary' type="submit">Guardar Usuario</button></div>
-
+        <div className="form-group buttonCenter">
+          <button type='submit' className='button buttonPrimary buttonBig'>Guardar Usuario</button>
+        </div>
         {mostrarDespuesDeGuardar ? (<div></div>
         ) : (
           <div>
             <h1>Confirma tu correo</h1>
             <p>Hemos enviado un mensaje de confirmación a tu dirección de correo electrónico.</p>
             <Timer />
-            <button type="submit" className='button buttonSecundary'>Reenviar correo</button>
+            <button type="submit" className='button buttonPrimary buttonBig'>Reenviar correo</button>
           </div>
         )}
       </form>

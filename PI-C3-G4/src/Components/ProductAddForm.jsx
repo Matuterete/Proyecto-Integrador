@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 function ProductAddForm({ onAdd, onCancel }) {
@@ -59,17 +60,27 @@ function ProductAddForm({ onAdd, onCancel }) {
     })
       .then(response => {
         onAdd(response.data);
-        alert('Producto agregado correctamente');
         setName('');
         setDescription('');
         setPrice('');
         setIsActive(true);
         setStock('');
         setSelectedCategory('');
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto agregado correctamente',
+          showConfirmButton: false,
+          timer: 2000 // Cerrar automáticamente después de 2 segundos
+        });
       })
       .catch(error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error inesperado',
+          text: 'Hubo un error al intentar agregar el producto',
+          showConfirmButton: true
+        });
         console.error(error);
-        alert('Hubo un error al intentar agregar el producto');
       });
   };
 
@@ -85,7 +96,7 @@ function ProductAddForm({ onAdd, onCancel }) {
       <div className='form-group'>
         <label>
           Descripción:
-          <textarea value={description} onChange={handleDescriptionChange} required />
+          <textarea rows="5" value={description} onChange={handleDescriptionChange} required />
         </label>
       </div>
       <div className='form-group'>
@@ -119,11 +130,10 @@ function ProductAddForm({ onAdd, onCancel }) {
           </select>
         </label>
       </div>
-      <div className='form-group'>
-        <button type="submit" className="button submit-button buttonSecundary">Agregar Producto</button>
-      </div>
-      <div className='form-group'>
-        <button type='button' className="button cancel-button buttonTerciary" onClick={onCancel}>Cancelar</button>
+      <div className='form-group buttonCenter'>
+        <button type='submit' className='button buttonPrimary buttonBig'>Agregar Producto</button>
+        &nbsp;&nbsp;&nbsp;
+        <button type='button' className='button buttonTerciary buttonBig' onClick={onCancel}>Cancelar</button>
       </div>
     </form>
   );
