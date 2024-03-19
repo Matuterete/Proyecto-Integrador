@@ -8,7 +8,9 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,25 +18,30 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class AmazonClient {
+    @Autowired
+    private Environment env;
     private AmazonS3 s3client;
     @Value("${amazonProperties.endpointUrl}")
     private String endpointUrl;
     @Value("${amazonProperties.bucketName}")
     private String bucketName;
-    @Value("${amazonProperties.accessKey}")
-    private String accessKey;
-    @Value("${amazonProperties.secretKey}")
-    private String secretKey;
+
+//    @Value("${amazonProperties.accessKey}")
+//    private String accessKey;
+//    @Value("${amazonProperties.secretKey}")
+//    private String secretKey;
 
     @PostConstruct
 
     private void initializeAmazon() {
-        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+        AWSCredentials credentials = new BasicAWSCredentials(
+                env.getProperty("AWS_ACCESS_KEY_ID"),
+                env.getProperty("AWS_SECRET_ACCESS_KEY")
+        );
         this.s3client = new AmazonS3Client(credentials);
     }
 
@@ -70,6 +77,7 @@ public class AmazonClient {
         }
         return fileUrls;
     }
+
     public String deleteFileFromS3Bucket(String fileUrl) {
         String[] parts = fileUrl.split("/");
         String folder = parts[parts.length - 2];
@@ -89,7 +97,7 @@ public class AmazonClient {
     }
 
     private String generateFileName(MultipartFile multiPart) {
-        return multiPart.getOriginalFilename();
+        return multiPart.getOriginalFilename().replace(" ", "_");
     }
 
     private void uploadFileTos3bucket(String fileName, File file) {
