@@ -132,7 +132,7 @@ const AdminCategories = () => {
             <div>
                 <input type="text" value={newCategoryName} onChange={(e) => setNewCategoryName(e.target.value)} />
                 <div className='addFeatureButton'>
-                    <IconButton className='button buttonPrimary buttonBig' onClick={addCategory} icon="plus">Añadir Caracteristica</IconButton>
+                    <IconButton className='button buttonPrimary buttonBig' onClick={addCategory} icon="plus">Agregar Categoría</IconButton>
                 </div>
             </div>
             <ul>

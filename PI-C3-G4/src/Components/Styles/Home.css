@@ -57,6 +57,12 @@
   margin-top: 5px;
 }
 
+.categoria:hover {
+  
+  transform: scale(1.1); 
+}
+
+
 .cardTitle {
   display: flex;
   justify-content: space-between;
