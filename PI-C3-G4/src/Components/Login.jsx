@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 function Login() {
+
   const [usuario, setUsuario] = useState({
     correo: '',
     contrasena: ''
@@ -26,10 +27,8 @@ function Login() {
         password: usuario.contrasena
       })
       .then(response => {
-        console.log(response.data);
-        localStorage.setItem('usuarioLogueado', JSON.stringify(response.data))
+        sessionStorage.setItem('userData', JSON.stringify(response.data))
         navigate("/home");
-        window.location.reload();
       })
       .catch(error => {
         console.error(error);
