@@ -27,6 +27,7 @@ const Navbar = () => {
 
 
   const [sessionData, setSessionData] = useState(null);
+  const [userLogo, setUserLogo] = useState()
 
   useEffect(() => {
     const getSessionData = async () => {
@@ -37,9 +38,14 @@ const Navbar = () => {
         console.error('Error retrieving session data:', error);
       }
     };
-
     getSessionData();
   }, []);
+
+  useEffect(() => {
+    sessionData && (
+      setUserLogo(sessionData.user.name[0] + sessionData.user.lastName[0])
+    )
+  }, [sessionData])
 
   const handleLogout = () => {
     // Utilizar SweetAlert2 para confirmar la acción de cerrar sesión
@@ -57,6 +63,7 @@ const Navbar = () => {
         sessionStorage.removeItem('userData');
         setSessionData(null);
         Swal.fire('Sesión cerrada', '', 'success');
+        window.location.reload();
       }
     });
   };
@@ -85,7 +92,10 @@ const Navbar = () => {
         <div className='buttons'>
 
           {sessionData ? (
-          <button className='button buttonPrimary' onClick={handleLogout}>Cerrar Sesion</button>
+            <div className='user'>
+              <button className='button'>{userLogo}</button>
+              <button className='button buttonPrimary' onClick={handleLogout}>Cerrar Sesion</button>
+            </div>
             )
             :
             (<div>

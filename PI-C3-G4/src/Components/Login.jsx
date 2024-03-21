@@ -28,7 +28,16 @@ function Login() {
       })
       .then(response => {
         sessionStorage.setItem('userData', JSON.stringify(response.data))
-        navigate("/home");
+        
+        
+
+        if(response.data.user.role === 'ADMIN'){
+          navigate("/administracion")
+        }else{
+          navigate("/home");
+        }
+        window.location.reload();
+        
       })
       .catch(error => {
         console.error(error);
