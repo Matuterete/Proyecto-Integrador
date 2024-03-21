@@ -22,7 +22,7 @@ function UserList({ users, onEdit, onDelete }) {
           <h4>{user.name} {user.lastName}</h4>
           <div>
             <IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>
-            <IconButton className='button buttonPrimary' onClick={() => onEdit(user)} icon="pencil">Modificar</IconButton>
+            <IconButton className='button buttonPrimary' onClick={() => onEdit(user)} icon="pencil">Editar</IconButton>
             <IconButton className='button buttonTerciary' onClick={() => onDelete(user.id)} icon="minus">Eliminar</IconButton>
           </div>
         </div>

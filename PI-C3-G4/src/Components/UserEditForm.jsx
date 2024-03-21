@@ -10,15 +10,15 @@ function UserEditForm({ user, onSave, onCancel }) {
   const [email, setEmail] = useState(user.email);
   const [selectedRole, setSelectedRole] = useState(user.role);
 
-  useEffect(() => {
-    axios.get('http://prothechnics.us.to:8080/api/roles/find/all')
-      .then(response => {
-        setRoles(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('http://prothechnics.us.to:8080/api/roles/find/all')
+  //     .then(response => {
+  //       setRoles(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+  // }, []);
 
   const handleIsActiveChange = (e) => {
     setIsActive(e.target.checked);

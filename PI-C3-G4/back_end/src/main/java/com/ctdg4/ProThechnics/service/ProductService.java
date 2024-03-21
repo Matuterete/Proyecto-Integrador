@@ -49,19 +49,11 @@ public class ProductService {
 //        return savedProduct;
 //    }
 
-    public Product saveProduct(Product product, List<ProductImage> images) {
+    public Product saveProduct(Product product) {
         Product savedProduct = productRepository.save(product);
         Category category = categoryRepository.findById(savedProduct.getCategory().getId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
         savedProduct.setCategory(category);
-//
-//        List<ProductImage> savedImages = new ArrayList<>();
-//        for (ProductImage image : images) {
-//            image.setProduct(savedProduct);
-//            savedImages.add(productImageRepository.save(image));
-//        }
-//        savedProduct.setImages(savedImages);
-
         return savedProduct;
     }
     public Product updateProduct(Product product) throws ResourceNotFoundException {

@@ -49,7 +49,7 @@ function ProductEditForm({ product, onSave, onCancel }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`http://prothechnics.us.to:8080/api/products/update`, {
+    axios.put(`http://localhost:8080/api/products/update`, {
       id,
       name,
       description,

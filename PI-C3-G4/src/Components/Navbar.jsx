@@ -38,7 +38,7 @@ const Navbar = () => {
           <div id="mobile-menu" className={isMobileMenuOpen ? 'active' : ''}>
             <div className="mobile-menu-items">
               <Link to="/login">Iniciar sesión</Link>
-              <Link to="/registroUsuario">Registrarse</Link>
+              <Link to="/registroUsuario">Crear Cuenta</Link>
             </div>
           </div>
         </nav>
@@ -46,7 +46,7 @@ const Navbar = () => {
         <div className='buttons'>
           <div>
           <Link to="/login" className='button buttonPrimary'>Iniciar Sesión</Link>
-          <Link to="/registroUsuario" className='button buttonTerciary'>Registrarse</Link>
+          <Link to="/registroUsuario" className='button buttonTerciary'>Crear Cuenta</Link>
           </div>
 
 

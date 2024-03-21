@@ -42,12 +42,12 @@ public class ProductController {
             @ApiResponse(responseCode = "409", description = "Product with the same name already exists")
     })
     @PostMapping("/add")
-    public ResponseEntity<Product> registerProduct(@RequestBody Product product, List<ProductImage> images) throws DuplicateException, ResourceNotFoundException {
+    public ResponseEntity<Product> registerProduct(@RequestBody Product product) throws DuplicateException {
         List<ProductDTO> existingProduct = productService.findProductByNameWithEverything(product.getName());
         if (!existingProduct.isEmpty()) {
             throw new DuplicateException("Product with name: '" + product.getName() + "' already exists.");
         }
-        return ResponseEntity.ok(productService.saveProduct(product, images));
+        return ResponseEntity.ok(productService.saveProduct(product));
     }
 
     @Operation(summary = "Find all products", description = "Retrieves a list of all products")

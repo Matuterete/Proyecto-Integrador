@@ -200,7 +200,7 @@ const AdminFeatures = () => {
                 </div>
                 <div>
                     <div className='addFeatureButton'>
-                        <IconButton className='button buttonPrimary buttonBig' onClick={toggleFormulario} icon="plus">Añadir Caracteristica</IconButton>
+                        <IconButton className='button buttonPrimary buttonBig' onClick={toggleFormulario} icon="plus">Añadir Nueva</IconButton>
                     </div>
 
                     {mostrarFormulario && (
@@ -243,7 +243,7 @@ const AdminFeatures = () => {
 
                                     <div>
                                         <IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>
-                                        <IconButton className='button buttonPrimary' onClick={() => handleInput(objeto)} icon="pencil">Modificar</IconButton>
+                                        <IconButton className='button buttonPrimary' onClick={() => handleInput(objeto)} icon="pencil">Editar</IconButton>
                                         <IconButton className='button buttonTerciary' onClick={() => handleClickDelete(objeto.id)} icon="minus">Eliminar</IconButton>
                                     </div>
                                 </li>
