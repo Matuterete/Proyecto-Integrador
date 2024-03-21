@@ -4,25 +4,14 @@
   padding-bottom: 10vh;
 }
 
-.buscador {
+.buscador-calendar-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding-top: 80px;
-  border-radius: 20px;
+  align-items: center; 
 }
 
-.buscador-input {
-  background: url(https://cdn0.iconfinder.com/data/icons/slim-square-icons-basics/100/basics-19-32.png) no-repeat 0px 5px;
-  background-size: 24px;
-  width: 50%;
-  height: 20%;
-  border: solid 1px rgba(0, 0, 0, 0.362);
-  border-bottom: solid 2px #3f0707;
-  padding: 10px 10px 10px 30px;
-  outline: none;
-  background-color: #efefef;
-  border-radius: 40px;
+.buscador {
+  flex: 1; 
+  margin-right: 20px; 
 }
 
 .categories {
