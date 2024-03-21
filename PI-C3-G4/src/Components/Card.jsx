@@ -13,14 +13,15 @@ const Card = (product) => {
 
         <div className='h2card'>
             <div className='card'>
-                <FavButton productId={product.product.id} setLikedProducts={setLikedProducts} />
+                <FavButton productId={product.product.id} setLikedProducts={setLikedProducts} />                
                 <Link to={'/detail/' + product.product.id} className='h2card'>
                     <div>
                         <img src={product.product.images[0].url} alt="" />
                     </div>
                     <h2 className='name'>{product.product.name}</h2>
-                    <p className='price'>USD: {product.product.price}</p>
+                    <p className='price'>USD: {product.product.price}</p>                    
                 </Link>
+                <SharedSocial url={'detail/' + product.product.id} image={product.product.images[0].url} nombre ={product.product.name}  />
             </div>
 
             

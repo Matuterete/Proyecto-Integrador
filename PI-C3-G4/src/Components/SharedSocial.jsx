@@ -54,8 +54,6 @@ class SharedSocial extends React.Component {
               'messenger',
               'facebook',
               'twitter',
-              'blogger',
-              'digg'
             ],
             padding: 10,          // padding within buttons (INTEGER)
             radius: 4,            // the corner radius on each button (INTEGER)
@@ -65,8 +63,11 @@ class SharedSocial extends React.Component {
             // Parametros por defecto, se debe tener una URL publica valida para que funcionen las redes sociales (facebook, instagram, ETC)
 
             /*URL concatenada para enviar mensaje por wsp. no funciona para las demas redes sociales por la forma del encabezado y la url local*/
-            url: typeof window !== "undefined" ? 'Hola te quiero compartir este producto - '+` ${nombre} ` + 'http://localhost:5173/'+ `${url}` : undefined,    
-           // url: 'www.google.com', // (defaults to current url)
+
+           // url: typeof window !== "undefined" ? 'Hola te quiero compartir este producto - '+` ${nombre} ` + 'http://localhost:5173/'+ `${url}` : undefined,    
+            
+            url: `${url}`,
+           //url url: 'www.google.com', // (defaults to current url)
             image: `${image}`,  // (defaults to og:image or twitter:image)
             description: 'custom text',       // (defaults to og:description or twitter:description)
             title: 'custom title',            // (defaults to og:title or twitter:title)
