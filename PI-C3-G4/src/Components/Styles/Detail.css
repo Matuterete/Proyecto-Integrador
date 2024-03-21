@@ -1,126 +1,140 @@
 .gallery {
-    width: 60vw;
-    margin: 30px;
-    padding: 10px;
+  margin-right: 1rem;
+  padding: 10px;
 }
 
 .product_description {
-    width: 50vw;
-    margin: 30px;
+  width: 55%;
 }
 
+.product_description p {
+  text-align: justify;
+}
 .technicalData {
-    margin: 30px;
+  margin: 30px;
 }
 
 .info {
-    display: flex;
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: auto;
+}
+.caracteristicas {
+  padding: 0;
+  width: 40%;
 }
 
 .galleryAndPay {
-    display: flex;
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: auto;
 }
 
 .pay {
-    display: flex;
-    flex-direction: column;
-    width: 50;
-    padding: 20px;
-    background-color: white;
+  display: flex;
+  flex-direction: column;
+  width: 50;
+  padding: 20px;
+  background-color: white;
 }
 
 .priceDetail {
-    color: black;
+  color: black;
 }
 
 .pay button {
-    margin: 5px;
+  margin: 5px;
 }
 
 .priceDetail {
-    display: flex;
+  display: flex;
 }
 
 .priceDetail h2 {
-    margin: 0px;
-    padding-right: 10px;
+  margin: 0px;
+  padding-right: 10px;
 }
 
 .priceDetail p {
-    margin: 0px;
-    padding-top: 10px;
+  margin: 0px;
+  padding-top: 10px;
 }
 
 .feactures li {
-    display: flex;
-    align-items: center;
-    background-color: #DBE2EF;
-    margin: 5px;
-    padding-right: 8px;
-    border-radius: 8px;
+  display: flex;
+  align-items: center;
+  background-color: #dbe2ef;
+  margin: 5px;
+  padding-right: 8px;
+  border-radius: 8px;
 }
 
 .feactures div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 100%;
-    margin: 3px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 100%;
+  margin: 3px 10px;
 }
 
 .feactures li p {
-    margin: 2px 0px;
+  margin: 2px 0px;
 }
-.backArrowDetail{
-    width: 50px;
-    margin-bottom: 20px;
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+.backArrowDetail {
+  width: 50px;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 760px) {
-    .bodyDetail {
-        width: 100%;
-        margin: 2px;
-    }
+  .bodyDetail {
+    width: 100%;
+    margin: 2px;
+  }
 
-    .galleryAndPay {
-        flex-direction: column;
-    }
+  .galleryAndPay {
+    flex-direction: column;
+  }
 
-    .gallery {
-        width: 90%;
-        margin: 5px;
-    }
+  .gallery {
+    width: 90%;
+    margin: 5px;
+  }
 
-    .image-gallery-slide img {
-        max-width: 100%;
-        height: auto;
-    }
+  .image-gallery-slide img {
+    max-width: 100%;
+    height: auto;
+  }
 
-    .product_description {
-        width: 90%;
-        margin: 10px;
-    }
+  .product_description {
+    width: 90%;
+    margin: 10px;
+  }
 
-    .pay {
-        margin-top: 10px;
-        margin: 2px
-    }
+  .pay {
+    margin-top: 10px;
+    margin: 2px;
+  }
 
-    .info {
-        display: flex;
-        flex-direction: column;
-    }
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .feactures {
-        margin: 20px;
-        padding: 0;
-    }
+  .feactures {
+    margin: 20px;
+    padding: 0;
+  }
 
-    .paymentMethods {
-        width: 70%;
-    }
-
+  .paymentMethods {
+    width: 70%;
+  }
 }

@@ -5,6 +5,7 @@ import com.ctdg4.ProThechnics.entity.Product;
 import com.ctdg4.ProThechnics.entity.ProductImage;
 import com.ctdg4.ProThechnics.exception.DuplicateException;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
+import com.ctdg4.ProThechnics.service.ProductImageService;
 import com.ctdg4.ProThechnics.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     private ProductService productService;
+    private ProductImageService productImageService;
     private Set<Long> lastReturnedProductIds = new HashSet<>();
 
     @Autowired
@@ -49,6 +51,17 @@ public class ProductController {
         }
         return ResponseEntity.ok(productService.saveProduct(product));
     }
+
+//    @Operation(summary = "Register a new product image", description = "Registers a new product image in the system")
+//    @ApiResponse(responseCode = "200", description = "Product image registered successfully",
+//            content = @Content(schema = @Schema(implementation = ProductImage.class)))
+//    @PostMapping("/images/add")
+//    public ResponseEntity<List<ProductImage>> registerProductImages(@RequestBody List<ProductImage> productImages) {
+//        List<ProductImage> savedImages = productImages.stream()
+//                .map(productImageService::saveProductImage)
+//                .collect(Collectors.toList());
+//        return ResponseEntity.ok(savedImages);
+//    }
 
     @Operation(summary = "Find all products", description = "Retrieves a list of all products")
     @ApiResponse(responseCode = "200", description = "List of products",

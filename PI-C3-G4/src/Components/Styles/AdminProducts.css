@@ -22,3 +22,7 @@
   content: "\f055"; /* Código Unicode del ícono (en este caso, es el ícono de una flecha hacia la derecha) */
   margin-right: 10px; /* Espacio entre el ícono y el texto */
 }
+
+.feature{
+  display: flex;
+}
