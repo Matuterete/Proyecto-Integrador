@@ -4,7 +4,7 @@ import facebook from '../assets/ico-facebook.png'
 import insta from '../assets/ico-instagram.png'
 import whap from '../assets/ico-whatsapp.png'
 import tiktok from '../assets/ico-tiktok.png'
-import '../Components/styles/Footer.css';
+import '../Components/Styles/Footer.css';
 
 const Footer = () => {
   return (

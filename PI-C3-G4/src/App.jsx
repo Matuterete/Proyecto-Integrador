@@ -13,6 +13,7 @@ import AdminUsers from './Routes/AdminUsers';
 import AdminFeatures from './Routes/AdminFeatures';
 import AdminPage from './Routes/AdminPage';
 import AdminCategories from './Routes/AdminCategories';
+import FavoriteList from './Routes/FavoriteList';
 import './App.css';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path='/adminProducts' element={<AdminProducts />} /> 
           <Route path='/adminFeatures' element={<AdminFeatures />} />
           <Route path='/adminCategories' element={<AdminCategories />} />
+          <Route path='/FavoriteList' element={<FavoriteList />} />
           <Route path='*' element={() => <h1>Not Found</h1>} />
         </Routes>
       </div>

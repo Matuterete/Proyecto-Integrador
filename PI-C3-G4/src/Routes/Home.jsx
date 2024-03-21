@@ -5,7 +5,7 @@ import requestToAPI from '../services/requestToAPI';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import '../Components/styles/Home.css';
+import '../Components/Styles/Home.css';
 
 const Home = () => {
   const [categorias, setCategorias] = useState([]);

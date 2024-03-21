@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '../Components/styles/AdminPage.css';
+import '../Components/Styles/AdminPage.css';
 
 const AdminPage = () => {
   const [isMobile, setIsMobile] = useState(false);

@@ -19,6 +19,7 @@ const FavButton = ({ productId, setLikedProducts }) => {
     setLikedProducts((prevLikedProducts) => {
       const newLikedProducts = [...prevLikedProducts];
       newLikedProducts[productId - 1] = !newLikedProducts[productId - 1];
+      console.log("Productos marcados como favoritos:", newLikedProducts);
       localStorage.setItem('likedProducts', JSON.stringify(newLikedProducts));
       return newLikedProducts;
     });
