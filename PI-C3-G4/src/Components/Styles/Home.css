@@ -109,8 +109,17 @@
   border: solid 4px black;
 }
 
-.productos-container .fav-button {
+.productos-container .fav-button-div {
   display: none;
+}
+
+.fav-button-div {
+  text-align: left;
+}
+
+.fav-button {
+  border-radius: 8px 0px 0px 0px;
+  cursor: pointer;
 }
 
 .producto {

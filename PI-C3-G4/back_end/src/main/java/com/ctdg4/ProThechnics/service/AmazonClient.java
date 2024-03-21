@@ -1,4 +1,3 @@
-/*
 package com.ctdg4.ProThechnics.service;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -32,13 +31,7 @@ public class AmazonClient {
     @Value("${amazonProperties.bucketName}")
     private String bucketName;
 
-//    @Value("${amazonProperties.accessKey}")
-//    private String accessKey;
-//    @Value("${amazonProperties.secretKey}")
-//    private String secretKey;
-
     @PostConstruct
-
     private void initializeAmazon() {
         AWSCredentials credentials = new BasicAWSCredentials(
                 env.getProperty("AWS_ACCESS_KEY_ID"),
@@ -107,4 +100,3 @@ public class AmazonClient {
                 .withCannedAcl(CannedAccessControlList.PublicRead));
     }
 }
-*/
