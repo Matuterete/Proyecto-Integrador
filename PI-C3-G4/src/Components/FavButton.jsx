@@ -25,9 +25,9 @@ const FavButton = ({ productId, setLikedProducts }) => {
   };
  
   return (
-    <div className="fav-button">
+    <div className="fav-button-div">
         <button onClick={handleLikeClick}
-        data-id={productId}>
+        data-id={productId} className='fav-button'>
           {isLiked ? '❤️' : '🤍'}
         </button>
       </div>
