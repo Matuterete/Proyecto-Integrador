@@ -21,16 +21,16 @@ const AdminPage = () => {
   return (
     <div className='bodyPage'>
       <div className='adminMenu'>
-        <h1 className='TitleAdminP'>Administración General</h1>
+        <h1 className='TitleAdminP'>Menú de Administración General</h1>
         <div className='Menu'>
-          <h2>Menú</h2>
+          <h2>Elige la opción</h2>
           <div className='ButtonContainer'>
             {!isMobile && (
               <>
-                <Link to="/adminProducts"><button className='button buttonPrimary'>Admin Products</button></Link>
-                <Link to="/adminFeatures"><button className='button buttonPrimary'>Admin Features</button></Link>
-                <Link to="/adminCategories"><button className='button buttonPrimary'>Admin Categories</button></Link>
-                <Link to="/adminUsers"><button className='button buttonPrimary'>Admin Users</button></Link>
+                <Link to="/adminProducts"><button className='button buttonPrimary'>Productos</button></Link>
+                <Link to="/adminCategories"><button className='button buttonPrimary'>Categorías</button></Link>
+                <Link to="/adminFeatures"><button className='button buttonPrimary'>Características</button></Link>
+                <Link to="/adminUsers"><button className='button buttonPrimary'>Usuarios</button></Link>
               </>
             )}
           </div>

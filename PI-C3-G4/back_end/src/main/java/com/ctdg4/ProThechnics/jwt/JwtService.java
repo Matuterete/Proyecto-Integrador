@@ -18,7 +18,6 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-//    private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private static final String SECRET_KEY = "o1Yy4KLHItag5Ncd4PnsDgy5vKQWbBLKfN32polQynb4ssla4lPIKLXS+JD1wHPBK5q2Se4uMts=";
     public String getToken(UserDetails user) {
         return getToken(new HashMap<>(), user);

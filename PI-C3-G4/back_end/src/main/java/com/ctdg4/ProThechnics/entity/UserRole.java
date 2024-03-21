@@ -20,4 +20,11 @@ public class UserRole {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @Override
+    public String toString() {
+        return "UserRole{" +
+                "id=" + id +
+                ", role=" + role +
+                '}';
+    }
 }

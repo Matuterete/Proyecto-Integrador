@@ -83,7 +83,7 @@ const Navbar = () => {
 
             <div className="mobile-menu-items">
               <Link to="/login">Iniciar sesión</Link>
-              <Link to="/registroUsuario">Registrarse</Link>
+              <Link to="/registroUsuario">Crear Cuenta</Link>
             </div>
 
           </div>
@@ -100,7 +100,7 @@ const Navbar = () => {
             :
             (<div>
               <Link to="/login" className='button buttonPrimary'>Iniciar Sesión</Link>
-              <Link to="/registroUsuario" className='button buttonTerciary'>Registrarse</Link>
+              <Link to="/registroUsuario" className='button buttonTerciary'>Crear Cuenta</Link>
             </div>)}
 
 

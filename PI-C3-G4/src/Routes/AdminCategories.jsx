@@ -142,7 +142,7 @@ const AdminCategories = () => {
                         {category.title}
                         <div>
                             <IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>
-                            <IconButton className='button buttonPrimary' onClick={() => updateCategory(category.id, category.title)} icon="pencil">Modificar</IconButton>
+                            <IconButton className='button buttonPrimary' onClick={() => updateCategory(category.id, category.title)} icon="pencil">Editar</IconButton>
                             <IconButton className='button buttonTerciary' onClick={() => deleteCategory(category.id)} icon="minus">Eliminar</IconButton>
                         </div>
                     </li>

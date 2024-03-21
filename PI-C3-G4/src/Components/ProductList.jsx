@@ -22,7 +22,7 @@ function ProductList({ products, onEdit, onDelete }) {
           <h4>{product.name}</h4>
           <div>
             <IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>
-            <IconButton className='button buttonPrimary' onClick={() => onEdit(product)} icon="pencil">Modificar</IconButton>
+            <IconButton className='button buttonPrimary' onClick={() => onEdit(product)} icon="pencil">Editar</IconButton>
             <IconButton className='button buttonTerciary' onClick={() => onDelete(product.id)} icon="minus">Eliminar</IconButton>
           </div>
         </div>
