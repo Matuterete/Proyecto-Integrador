@@ -3,7 +3,7 @@ import '../Components/styles/Card.css'
 import { Link } from 'react-router-dom'
 import FavButton from './FavButton';
 import { useState } from 'react';
-
+import SharedSocial from './SharedSocial';
 
 const Card = (product) => {
   
@@ -14,7 +14,7 @@ const Card = (product) => {
         <div className='h2card'>
 
         <Link to={'/detail/' + product.product.id} className='h2card'>
-
+        
             <div className='card'>
             
             <i className="fa fa-heart" />
@@ -24,11 +24,12 @@ const Card = (product) => {
                 
                 <h2 className='name'>{product.product.name}</h2>
                 <p className='price'>USD: {product.product.price}</p>
-
+                
             </div>
 
         </Link>
         <FavButton productId={product.product.id} setLikedProducts={setLikedProducts}  />  
+        <SharedSocial url={'detail/' + product.product.id} image={product.product.images[0].url} nombre ={product.product.name}  />
         </div>
         
     )
