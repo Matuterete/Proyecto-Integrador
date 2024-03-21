@@ -5,7 +5,7 @@ const TOGGLE_THEME = "TOGGLE_THEME";
 
 const initialState = {
   theme: "light",
-  data:[]
+  userData: []
 };
 
 const reducer = (state, action) => {

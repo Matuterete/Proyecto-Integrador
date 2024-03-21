@@ -49,6 +49,9 @@
 .navbar-logo img {
   width: 300px;
 }
+.user p{
+  color: black;
+}
 
 @media (min-width: 761px) {
   nav#mobile {
