@@ -1,46 +1,58 @@
 package com.ctdg4.ProThechnics.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
-@Data
+
+@Builder
 @Entity
-@Table(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = {"email"})})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @Column(name = "user_id")
+    private Long id;
     @Column(name = "user_active", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isActive = true;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private String name;
-    @Column (nullable = false)
-    private String last_name;
-    @Column (nullable = false, unique = true)
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+    @Column(nullable = false)
     private String email;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private String password;
-    @JoinColumn(name = "user_id")
-    @Column
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserRole userRole;
+    @OneToMany(mappedBy = "user")
+//    @Schema(hidden = true)
+    private Set<UserFav> fav;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(userRole.name());
-        return Collections.singletonList(grantedAuthority);
+        if (userRole != null && userRole.getRole() != null) {
+            return List.of(new SimpleGrantedAuthority(userRole.getRole().getRole()));
+        } else {
+            return Collections.emptyList();
+        }
     }
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
     @Override
     public String getUsername() {
         return email;
@@ -63,7 +75,23 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActive;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", isActive=" + isActive +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, isActive, name, lastName, email, password);
+    }
 }

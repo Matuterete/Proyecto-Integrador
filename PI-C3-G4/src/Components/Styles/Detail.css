@@ -1,98 +1,172 @@
-.bodyDetail{
-background-color:rgb(105, 105, 105);
-margin: 50px;
-}
-.gallery{
-    width: 60vw;
-    margin: 30px;
-    padding: 10px;
+.gallery {
+  margin-right: 1rem;
+  padding: 10px;
 }
 
-.product_description{
-    width: 50vw;
-    margin: 30px;
+.product_description {
+  width: 55%;
 }
-.technicalData{
-margin: 30px;
+
+.product_description p {
+  text-align: justify;
 }
-.info{
-    display: flex;
+.technicalData {
+  margin: 30px;
 }
-.galleryAndPay{
-    display: flex;
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: auto;
+  margin-bottom: 5rem;
 }
-.pay{
-    display: flex;
-    flex-direction: column;
-    width:50;
-    padding: 20px;
-    background-color: white;
+.caracteristicas {
+  padding: 0;
+  width: 40%;
 }
-.price{
-    color: black;
+
+.galleryAndPay {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: auto;
 }
-.pay button{
-    margin: 5px;
+
+.pay {
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 0.5rem); /* Restar el margen entre los calendarios */
+  padding: 20px;
+  background-color: white;
+  margin-right: 1.5rem; /* Espacio adicional a la derecha */
+  overflow: hidden; /* Ocultar el contenido que exceda el tamaño de la clase */
 }
-.price{
-    display: flex;
+
+.priceDetail {
+  color: black;
 }
-.price h2{
-    margin: 0px;
-    padding-right: 10px;
+
+.pay button {
+  margin: 5px;
 }
-.price p{
-    margin: 0px;
-    padding-top: 10px;
+
+.priceDetail {
+  display: flex;
 }
-.feactures li{
-    display: flex;
-    background-color: #707b86;
-    margin: 5px;
-    border-radius: 5px;
+
+.priceDetail h2 {
+  margin: 0px;
+  padding-right: 10px;
 }
-.feactures div{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    background-color: rgb(255, 255, 255);
-    border-radius:100%;
-    margin: 3px 10px;
+
+.priceDetail p {
+  margin: 0px;
+  padding-top: 10px;
 }
-.feactures li p{
-    margin: 2px 0px;
+
+.features li {
+  display: flex;
+  align-items: center;
+  background-color: #dbe2ef;
+  margin: 5px;
+  padding-right: 8px;
+  border-radius: 8px;
+
+}
+
+.features div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  background-color: rgb(255, 255, 255);
+  border-radius: 100%;
+  margin: 3px 10px;
+}
+
+.features li p {
+  margin: 0.5rem 0;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+.backArrowDetail {
+  width: 50px;
+  margin-bottom: 20px;
+}
+
+.calendars {
+  display: flex;
+  position: relative;
+  max-width: 100%;
+}
+
+.calendars > * {
+  flex: 1;
+  max-width: 50%;
+}
+
+.calendar-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.rbc-btn-group button {
+  padding: 0.25rem 0.5rem; /* Ajustar el padding para reducir el tamaño */
+  font-size: 0.75rem; /* Ajustar el tamaño de la fuente */
+}
+
+.calendar-container > .calendars:first-child {
+  margin-right: 1rem; 
+  z-index: 2; 
 }
 
 @media (max-width: 760px) {
-    .bodyDetail {
-        width: 100%;
-        margin: 2px; 
-    }
-  
-    .galleryAndPay {
-      flex-direction: column; 
-    }
-  
-    .gallery {
-      width: 90%; 
-      margin:5px; 
-    }
-  
-    .image-gallery-slide img {
-        max-width: 100%; 
-        height: auto; 
-      }
-
-    .product_description {
-      width: 90%; 
-      margin: 10px; 
-    }
-  
-    .pay {
-      width: 90%;  
-      margin-top: 10px;
-      margin:2px 
-    }
+  .bodyDetail {
+    width: 100%;
+    margin: 2px;
   }
+
+  .galleryAndPay {
+    flex-direction: column;
+  }
+
+  .gallery {
+    width: 90%;
+    margin: 5px;
+  }
+
+  .image-gallery-slide img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .product_description {
+    width: 90%;
+    margin: 10px;
+  }
+
+  .pay {
+    margin-top: 10px;
+    margin: 2px;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .features {
+    margin: 20px;
+    padding: 0;
+  }
+
+  .paymentMethods {
+    width: 70%;
+  }
+}

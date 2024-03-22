@@ -1,18 +1,20 @@
 package com.ctdg4.ProThechnics.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Data
 @Entity
 @Table(name = "product_images")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_image_id")
-    private Long imageId;
+    private Long id;
     @Column
     private String title;
     @Column(nullable = false)
@@ -21,9 +23,8 @@ public class ProductImage {
     private Boolean isPrimary;
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @JsonIgnore
     private Product product;
-
+    @JsonIgnore
     public boolean isPrimary() {
         return isPrimary;
     }

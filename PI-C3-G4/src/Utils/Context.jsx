@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { userHook } from '../Reducers/Reducer';
-import axios from 'axios';
 
 const Context = createContext();
 

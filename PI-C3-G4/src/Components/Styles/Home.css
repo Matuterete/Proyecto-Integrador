@@ -1,54 +1,116 @@
 .body {
-    padding-top: 10vh;
-    width: 100%;
-    padding-bottom: 10vh;
+  padding-top: 10vh;
+  width: 100%;
+  /* padding-bottom: 10vh; */
 }
 
-.buscador {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding-top: 80px;
-    border-radius: 20px;
-  }
+.Search-Calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: 20px auto; 
+}
 
-.buscador-input {
-    background: url(https://cdn0.iconfinder.com/data/icons/slim-square-icons-basics/100/basics-19-32.png) no-repeat 0px 5px;
-    background-size: 24px;
-    width: 50%;
-    height: 20%;
-    border: solid 1px rgba(0, 0, 0, 0.362);
-    border-bottom: solid 2px #3f0707;
-    padding: 10px 10px 10px 30px;
-    outline: none;
-    background-color: #c5c9cd;
-    border-radius: 40px;
-  }
+.search-container .Select {
+  flex: 1; 
+}
 
-.Categories{
+.search-container { 
+  display: flex;
+  gap: 20px;
+} */
+
+
+
+.buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.Button-calendario {
+  font-size: medium;
+  font-family: 'Poppins';
+  background-color: #122E4F;
+  color: white;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  height: 40px;
+}
+
+.Button-calendario:hover {
+  background-color: #4073AF;
+}
+
+.calendars-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.Calendars {
+  flex: 1; 
+}
+
+
+.categories {
   text-align: center;
+  background-color: #efefef;
+  color: black;
+  margin: 10vh 0vh 10vh 0;
 }
+
+.categories-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 5vh;
+}
+
+.categoria {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.categoria img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.categoria p {
+  margin-top: 5px;
+}
+
+.categoria:hover {
+  
+  transform: scale(1.1); 
+}
+
 
 .cardTitle {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0px;
-    margin-left: 90px;
-    padding-top: 20px;
-    font-size: 24px;
-    font-weight: bolder;
-   
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0px;
+  margin-left: 90px;
+  padding-top: 20px;
+  font-size: 24px;
+  font-weight: bolder;
 }
 
 .cardGrid-1 {
-    margin-top: 7vh;
-    margin-bottom: 5vh;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  margin-top: 7vh;
+  margin-bottom: 5vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.Container{
+.Container {
   display: flex;
   justify-content: center;
   text-align: center;
@@ -57,15 +119,72 @@
 
 .cardGrid-2 {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  grid-template-rows: repeat(6, 1fr); 
-  gap: 20px; 
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 20px;
 }
 
+.productos-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 10vh;
+}
+
+.slick-slider {
+  background-color: transparent;
+  margin-bottom: 10vh;
+  border: solid 4px black;
+}
+
+.productos-container .fav-button-div {
+  display: none;
+}
+
+.fav-button-div {
+  text-align: left;
+}
+
+.fav-button {
+  border-radius: 8px 0px 0px 0px;
+  cursor: pointer;
+}
+
+.producto {
+  flex: 0 0 auto;
+  margin-right: 10px;
+  width: 100%;
+  max-width: calc(25% - 10px); 
+}
+
+.card-wrapper {
+  padding: 0 10px;
+  flex: 0 0 auto;
+  width: 25%; 
+}
+.pagination-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 @media (max-width: 760px) {
+  .slick-slide .producto {
+    width: 90% !important;
+    margin: 0 auto 20px !important;
+    max-width: 90% !important; 
+  }
+
   .cardGrid-2 {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
-}
+  }
 
+  .card-wrapper {
+    width: 90%; 
+    margin: 0 auto 20px; 
+  }
+  
 }

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import "../Components/styles/Home.css";
-import { useNavigate } from "react-router-dom";
-
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import requestToAPI from "../services/requestToAPI";
 
 function Login() {
+
   const [usuario, setUsuario] = useState({
     correo: '',
     contrasena: ''
@@ -18,37 +20,37 @@ function Login() {
     });
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setUsuario({
-      ...usuario,
-      imagen: file
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(usuario);
-    var usuarioList = JSON.parse(localStorage.getItem('usuarios'))
-    if (!usuarioList) {
-      alert(`El usuario ${usuario.correo} no se encuentra registrado en el sistema`)
-    }
-    else {
-      const usuarioEncontrado = usuarioList.find((elemento) => elemento.correo == usuario.correo && elemento.contrasena == usuario.contrasena);
-      if (!usuarioEncontrado) {
-        alert(`El usuario ${usuario.correo} no se encuentra registrado en el sistema`)
-      }
-      else {
-        localStorage.setItem('usuarioLogueado', JSON.stringify(usuarioEncontrado))
-        alert(`Bienvenido usuario ${usuarioEncontrado.nombre}`)
+  
+    try {
+      const response = await requestToAPI('auth/login', 'POST', {
+        email: usuario.correo,
+        password: usuario.contrasena
+      });
+  
+      sessionStorage.setItem('userData', JSON.stringify(response));
+  
+      if (response.user.role === 'ADMIN' || response.user.role === 'SUPERADMIN') {
+        navigate("/administracion");
+      } else {
         navigate("/home");
-        window.location.reload(); 
       }
+      window.location.reload();
+  
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Usuario incorrecto',
+        text: `Los datos son incorrectos o el usuario ${usuario.correo} no se encuentra registrado en el sistema`,
+        showConfirmButton: true
+      });
     }
   };
 
   return (
-    <div className="Form">
+    <div className="form">
       <h1>Iniciar Sesión</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -61,7 +63,9 @@ function Login() {
             <input type="password" name="contrasena" value={usuario.contrasena} onChange={handleChange} />
           </label>
         </div>
-        <button type="submit">Ingresar</button>
+        <div className="form-group buttonCenter">
+          <button type="submit" className='button buttonPrimary buttonBig'>Ingresar</button>
+        </div>
       </form>
     </div>
   );

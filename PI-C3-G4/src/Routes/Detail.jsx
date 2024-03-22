@@ -1,118 +1,165 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import "../Components/styles/Detail.css"
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import requestToAPI from '../services/requestToAPI';
+import requestToAPI from "../services/requestToAPI";
+import Rating from "../Components/Rating";
+import Calendar from "../Components/Calendar";
+import "../Components/styles/Detail.css";
 
 const Detail = () => {
+  const [product, setProduct] = useState(null);
+  const { id } = useParams();
+  const [storedRating, setStoredRating] = useState();
+  const [showCalendars, setShowCalendars] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+ 
+  useEffect(() => {
+    async function fetchProduct() {
+      try {
+        const url = `products/find/id/${id}`;
+        const method = "GET";
+        const data = null;
+        const headers = {};
 
-    const [resposeData, setResponseData] = useState()
-    const { id } = useParams()
+        const response = await requestToAPI(url, method, data, headers);
+        setProduct(response);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    }
+    fetchProduct();
 
+    const storedRating = parseInt(localStorage.getItem(`product_${id}_rating`));
+    if (!isNaN(storedRating) && storedRating >= 0) {
+      setStoredRating(storedRating);
+    }
+  }, [id]);
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const url = `http://prothechnics.us.to:8080/products/find/id/${id}`;
-                const method = 'GET';
-                const data = null;
-                const headers = {};
-                setResponseData(await requestToAPI(url, method, data, headers))
-            } catch (error) {
-                // Manejo de errores
-                console.error('Error fetching data:', error);
-            }
-        }
-        fetchData();
-    }, [])
+  return (
+    <div className="body">
+      {product ? (
+        <div className="bodyDetail">
+          <div className="galleryAndPay">
+            <div className="gallery">
+              <h2>{product.name}</h2>
 
+              <div>
+                {[1, 2, 3, 4, 5].map((value) => (
+                  <span
+                    key={value}
+                    style={{
+                      color: storedRating >= value ? "gold" : "black",
+                    }}
+                  >
+                    &#9733;
+                  </span>
+                ))}
+              </div>
 
+              <ImageGallery
+                items={product.images.map((image, index) => ({
+                  original: image.url,
+                  thumbnail: image.url,
+                  originalAlt: `${product.name} ${index + 1}`,
+                  thumbnailAlt: `${product.name} ${index + 1}`,
+                }))}
+                autoPlay={false}
+                showPlayButton={false}
+                showBullets={false}
+                thumbnailPosition="right"
+                showNav={false}
+                showFullscreenButton={false}
+              />
+            </div>
+            <div className="pay">
+              <Link to={"/home"}>
+                <img className="backArrowDetail" src="\src\assets\back.png" />
+              </Link>
 
-    const images = [
-        {
-            original: `/src/assets/products/ID ${id}.1.jpeg`,
-            thumbnail: `/src/assets/products/ID ${id}.1.jpeg`,
-        },
-        {
-            original: `/src/assets/products/ID ${id}.2.jpeg`,
-            thumbnail: `/src/assets/products/ID ${id}.2.jpeg`,
-        },
-        {
-            original: `/src/assets/products/ID ${id}.3.jpeg`,
-            thumbnail: `/src/assets/products/ID ${id}.3.jpeg`,
-        },
-        {
-            original: `/src/assets/products/ID ${id}.4.jpeg`,
-            thumbnail: `/src/assets/products/ID ${id}.4.jpeg`,
-        },
-        {
-            original: `/src/assets/products/ID ${id}.5.jpeg`,
-            thumbnail: `/src/assets/products/ID ${id}.5.jpeg`,
-        },
-    ];
-
-    return (
-        resposeData ? (<div className='bodyDetail body'>
-
-            <div className='galleryAndPay'>
-
-                <div className='gallery'>
-                    <h2>{resposeData.name}</h2>
-
-                    <ImageGallery items={images}
-                        autoPlay={false}
-                        showPlayButton={false}
-                        showBullets={false}
-                        thumbnailPosition='right'
-                        showNav={false}
-                        showFullscreenButton={false}
+              <div className="calendar-container">
+                <button
+                  className="button buttonTerciary"
+                  onClick={() => setShowCalendars(!showCalendars)}
+                >
+                  Ver fechas disponibles
+                </button>
+                {showCalendars && (
+                  <div className="calendars">
+                    <Calendar
+                      onSelectSlot={(slotInfo) => {
+                        setStartDate(slotInfo.start);
+                        setEndDate(null);
+                        setShowButtons(false);
+                      }}
                     />
-                </div>
-                <div className='pay'>
 
-                    <Link to={'/home'}> <img src="\src\assets\back.png" alt="" srcset="" /> </Link>
+                    <Calendar
+                      onSelectSlot={(slotInfo) => {
+                        setEndDate(slotInfo.start);
+                        setShowButtons(true);
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
 
-                    <div className='price'>
-                        <h2>USD: {resposeData.price}</h2>
-                        <p>Por dos dias</p>
+              <div className="priceDetail">
+                <h2>USD: {product.price}</h2>
+                <p>Por dos días</p>
+              </div>
+
+              <button
+                disabled={!startDate || !endDate}
+                className="button buttonPrimary"
+              >
+                Alquilar ahora
+              </button>
+              <button
+                disabled={!startDate || !endDate}
+                className="button buttonTerciary"
+              >
+                Agregar al Carrito
+              </button>
+
+              <img
+                className="paymentMethods"
+                src="\src\assets\medios de pago.png"
+              />
+            </div>
+          </div>
+
+          <div className="info">
+            <div className="product_description">
+              <h2>Descripción</h2>
+              <p>{product.description}</p>
+            </div>
+
+            <div className="caracteristicas">
+              <h2>Características</h2>
+              <ul className="features">
+                {product.features.map((feature, index) => (
+                  <li key={index}>
+                    <div>
+                      <img src={feature.url} alt="" />
                     </div>
-
-
-                    <button className='btn-login'>Alquilar ahora</button>
-                    <button className='btn-registro'>Agregar al Carrito</button>
-
-                    <img src="\src\assets\medios de pago.png" alt="" />
-                </div>
+                    <p>
+                      {feature.title}: {feature.featureValue}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </div>
+          </div>
+        </div>
+      ) : (
+        <div className="loader-container">
+          <div className="loader"></div>
+        </div>
+      )}
+    </div>
+  );
+};
 
-            <div className='info'>
-                <div className='product_description'>
-                    <h2>Descripción</h2>
-                    <p>{resposeData.description}</p>
-                </div>
-
-                <div>
-                    <h2>Caracteristicas</h2>
-                    <ul className='feactures'>
-                        {resposeData.features.map((objeto, index) => (
-                            <li key={index}>
-                                <div><img src={objeto.url} alt=""/></div>
-                                <p>{objeto.title}: {objeto.featureValue}</p>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
-
-
-        </div>)
-
-            :
-
-            (<div>... cargando</div>)
-
-    )
-}
-
-export default Detail 
+export default Detail;

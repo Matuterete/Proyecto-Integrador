@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sun from '../assets/Sun.svg';
 import Moon from '../assets/Moon.svg';
 import Logo from '../assets/Logo.png';
@@ -7,110 +7,77 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from '../Utils/Context.jsx';
 import { TOGGLE_THEME } from '../Reducers/Reducer.jsx';
 import './styles/Navbar.css';
-import styled from 'styled-components';
-
-// Estilos para el menú hamburguesa
-const HamburgerMenuWrapper = styled.div`
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-`;
-
-const HamburgerIcon = styled.div`
-  width: 30px;
-  height: 0px;
-  background-color: #333;
-  margin: 6px 0;
-  transition: 0.4s;
-  margin-top: 10px;
-  margin-right: 10px;
-`;
-
-const MenuContainer = styled.div`
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: #f9f9f9;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-  display: ${(props) => (props.isOpen ? 'block' : 'none')};
-`;
-
-const MenuItem = styled.div`
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  cursor: pointer;
-  &:hover {
-    background-color: #ddd;
-  }
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px;
-`;
-
-const Avatar = styled.img`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin-right: 10px;
-`;
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
   const { state, dispatch } = useContext();
-  const [ isMobileMenuOpen, setMobileMenuOpen ] = useState(false);
-  const [ usuarioLogueado ] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
-  const [ isDropdownOpen, setDropdownOpen ] = useState(false);
-
-  const routesSinUsuario = [
-    { path: '/home', name: 'Home' },
-    { path: '/Products', name: 'Productos' },
-  ]
-
-  const routesConUsuario = [
-    { path: '/administracion', name: 'Admin Productos' },
-  ]
-
-  let navigate = useNavigate();
-  const RegistroUsuario = () => {
-    let path = '/registroUsuario';
-    navigate(path);
-  }
-  const Login = () => {
-    let path = '/login';
-    navigate(path);
-  }
-  const Registrar = () => {
-    let path = '/FormRegistrar';
-    navigate(path);
-  }
-
-  //se agregan las formas para autenticar 
-
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
   const handleTheme = () => {
     dispatch({ type: TOGGLE_THEME });
   }
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   }
-  const cerrarSesion = () => {
-    localStorage.removeItem('usuarioLogueado')
-    navigate('/login');
-    window.location.reload();
-  }
-
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
+
+
+
+  const [sessionData, setSessionData] = useState(null);
+  const [userLogo, setUserLogo] = useState()
+
+  useEffect(() => {
+    const getSessionData = async () => {
+      try {
+        const data = await sessionStorage.getItem('userData');
+        setSessionData(JSON.parse(data));
+      } catch (error) {
+        console.error('Error retrieving session data:', error);
+      }
+    };
+    getSessionData();
+  }, []);
+
+  useEffect(() => {
+    sessionData && (
+      setUserLogo(sessionData.user.name[0] + sessionData.user.lastName[0])
+    )
+  }, [sessionData])
+
+  const handleLogout = () => {
+    // Utilizar SweetAlert2 para confirmar la acción de cerrar sesión
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Quieres cerrar sesión?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, cerrar sesión'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Eliminar datos de sesión al confirmar
+        sessionStorage.removeItem('userData');
+        setSessionData(null);
+        Swal.fire('Sesión cerrada', '', 'success');
+        window.location.reload();
+      }
+    });
+  };
+
+  const handleReload = ()=>{
+    navigate('/');
+    window.location.reload();
+  }
 
   return (
     <section className='header'>
       <nav className='navbar'>
         <div className='navbar-logo'>
-          <Link to={routesSinUsuario[0].path}>
+          <Link onClick={handleReload}>
             <img src={Logo} alt="Logo"></img>
           </Link>
         </div>
@@ -118,67 +85,46 @@ const Navbar = () => {
         <nav id='mobile'>
           <button id="menu-toggle" onClick={toggleMobileMenu}>☰</button>
           <div id="mobile-menu" className={isMobileMenuOpen ? 'active' : ''}>
+
             <div className="mobile-menu-items">
-              {routesSinUsuario.map((route, index) => (<a key={index} href={route.path}>{route.name}</a>))}
+              <Link to="/login">Iniciar sesión</Link>
+              <Link to="/registroUsuario">Crear Cuenta</Link>
             </div>
+
           </div>
         </nav>
-        {
-          !usuarioLogueado &&
-          <ul className='menu'>
-            {routesSinUsuario.map((route, index) => (
-              <li key={index}>
-                <Link to={route.path}>{route.name}</Link>
-              </li>
-            ))}
-          </ul>
-        }
-        {
-          usuarioLogueado &&
-          <ul className='menu'>
-            {routesConUsuario.map((route, index) => (
-              <li key={index}>
-                <Link to={route.path}>{route.name}</Link>
-              </li>
-            ))}
-          </ul>
-        }
 
         <div className='buttons'>
-          {
-            !usuarioLogueado &&
-            <div>
-              <button className='btn-login' onClick={Login}>Iniciar Sesión</button>
-              <button className='btn-registro' onClick={RegistroUsuario}>Registrarse</button>
+
+          {sessionData ? (
+
+
+
+            <div className='user'>
+              <div className='name'>
+              <span>{sessionData.user.name}</span>
+              <span>{sessionData.user.lastName}</span>
+              </div>              
+              <Link to="/userprofile"><button className='button user-logo'>{userLogo}</button></Link> 
+              {sessionData.user.role==="ADMIN" || sessionData.user.role==="SUPERADMIN"? <Link to="/administracion"><button className='button buttonTerciary'>Admin Page</button></Link> :""}
+              
+              <button className='button buttonPrimary' onClick={handleLogout}>Cerrar Sesion</button>
             </div>
-          }
-          {
-            usuarioLogueado &&
-            <div>
-              <HamburgerMenuWrapper>
-                <HamburgerIcon onClick={toggleDropdown}>
-                  <img src={Usuario} width='45px' alt="Cerrar sesión"></img>
-                </HamburgerIcon>
-                <MenuContainer isOpen={isDropdownOpen}>
-                  <AvatarContainer>
-                    <Avatar src={Usuario} alt="Avatar" />
-                    <span>{usuarioLogueado.nombre}</span>
-                  </AvatarContainer>
-                  <MenuItem>
-                    Perfil
-                  </MenuItem>
-                  <MenuItem onClick={cerrarSesion}>
-                    Cerrar sesión
-                  </MenuItem>
-                </MenuContainer>
-              </HamburgerMenuWrapper>
-            </div>
-          }
-          <button className='btn-theme' onClick={handleTheme}>
-            <img src={state.theme === 'light' ? Moon : Sun} width='25px' alt="Theme"></img>
+          )
+            :
+            (<div>
+              <Link to="/login" className='button buttonPrimary'>Iniciar Sesión</Link>
+              <Link to="/registroUsuario" className='button buttonTerciary'>Crear Cuenta</Link>
+            </div>)}
+
+
+
+          <button className='button buttonSecundary' onClick={handleTheme}>
+            <img src={state.theme === 'light' ? Moon : Sun} width='20px' alt="Theme"></img>
           </button>
         </div>
       </nav>
+
     </section>
   );
 };

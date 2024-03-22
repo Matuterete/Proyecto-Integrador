@@ -1,16 +1,21 @@
 .footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   text-align: center;
   background-color: #122E4F;
   color: var(--color-text);
   padding: 0;
-  width: 100%;
-  height: auto;}
+  width: 100vw;
+  margin-top: auto;
+}
 
 .footer-logo {
-  padding-left: 60px;
+  
+}
+
+.footer-logo img {
+  width: 300px;
 }
 
 .footer-copyright {
@@ -21,6 +26,7 @@
   display: inline-block;
   justify-content: space-between;
   align-items: center;
+  text-align: center;
 }
 
 .footer-iconos img {
@@ -33,15 +39,26 @@
   font-weight: bold;
 }
 
+.btn-terminos {
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.swal2-icon-question {
+  width: 60em;
+}
+
+
 @media (max-width: 760px) {
   .footer{
     display: block;
     align-items: center;
     justify-content: space-between;
     text-align: center;
-    width: 100%;
+    width: 100vw;
     height: auto;
-    margin-top: 100vh;
   }
   .footer-logo{
     padding: 0;

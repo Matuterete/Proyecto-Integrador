@@ -3,6 +3,8 @@ import com.ctdg4.ProThechnics.entity.Feature;
 import com.ctdg4.ProThechnics.exception.DuplicateException;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.service.FeatureService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +18,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/features")
+@RequestMapping("api/features")
 @CrossOrigin(origins = "*")
+@Tags(value = { @Tag(name = "Features") })
 public class FeatureController {
     private FeatureService featureService;
 
@@ -85,12 +88,12 @@ public class FeatureController {
     })
     @PutMapping("/update")
     public ResponseEntity<String> updateFeature(@RequestBody Feature feature) throws ResourceNotFoundException {
-        Optional<Feature> featureSearched = featureService.findFeatureById(feature.getFeatureId());
+        Optional<Feature> featureSearched = featureService.findFeatureById(feature.getId());
         if (featureSearched.isPresent()) {
             featureService.updateFeature(feature);
-            return ResponseEntity.ok("Feature updated successfully: " + feature.getFeatureId() + " - " + feature.getTitle());
+            return ResponseEntity.ok("Feature updated successfully: " + feature.getId() + " - " + feature.getTitle());
         } else {
-            throw new ResourceNotFoundException(String.format("Feature: %d - %s not found. Feature update failed. Please verify the Feature exists and try again.", feature.getFeatureId(), feature.getTitle()));
+            throw new ResourceNotFoundException(String.format("Feature: %d - %s not found. Feature update failed. Please verify the Feature exists and try again.", feature.getId(), feature.getTitle()));
 
         }
     }

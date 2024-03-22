@@ -3,11 +3,13 @@ package com.ctdg4.ProThechnics.controller;
 import com.ctdg4.ProThechnics.entity.ProductImage;
 import com.ctdg4.ProThechnics.service.ProductImageService;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,9 +17,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+
 @RestController
-@RequestMapping("/products/images")
+@RequestMapping("api/products/images")
 @CrossOrigin(origins = "*")
+@Tags(value = { @Tag(name = "Products Images") })
 public class ProductImageController {
     private ProductImageService productImageService;
 
@@ -25,6 +31,17 @@ public class ProductImageController {
     public ProductImageController(ProductImageService productImageService) {
         this.productImageService = productImageService;
     }
+    @Operation(summary = "Register multiple new product images", description = "Registers multiple new product images in the system")
+    @ApiResponse(responseCode = "200", description = "Product images registered successfully",
+            content = @Content(schema = @Schema(implementation = ProductImage.class)))
+    @PostMapping("/multiple/add")
+    public ResponseEntity<List<ProductImage>> registerProductImages(@RequestBody List<ProductImage> productImages) {
+        List<ProductImage> savedImages = productImages.stream()
+                .map(productImageService::saveProductImage)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(savedImages);
+    }
+
     @Operation(summary = "Register a new product image", description = "Registers a new product image in the system")
     @ApiResponse(responseCode = "200", description = "Product image registered successfully",
             content = @Content(schema = @Schema(implementation = ProductImage.class)))
@@ -80,12 +97,12 @@ public class ProductImageController {
     })
     @PutMapping("/update")
     public ResponseEntity<String> updateProductImage(@RequestBody ProductImage productImage) throws ResourceNotFoundException {
-        Optional<ProductImage> productImageSearched = productImageService.findProductImageById(productImage.getImageId());
+        Optional<ProductImage> productImageSearched = productImageService.findProductImageById(productImage.getId());
         if (productImageSearched.isPresent()) {
             productImageService.updateProductImage(productImage);
-            return ResponseEntity.ok("Product Image updated successfully: " + productImage.getImageId() + " - " + productImage.getTitle());
+            return ResponseEntity.ok("Product Image updated successfully: " + productImage.getId() + " - " + productImage.getTitle());
         } else {
-            throw new ResourceNotFoundException(String.format("Product Image: %d - %s not found. Product Image update failed. Please verify the product Image exists and try again.", productImage.getImageId(), productImage.getTitle()));
+            throw new ResourceNotFoundException(String.format("Product Image: %d - %s not found. Product Image update failed. Please verify the product Image exists and try again.", productImage.getId(), productImage.getTitle()));
 
         }
     }
