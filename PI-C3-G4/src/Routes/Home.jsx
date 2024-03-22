@@ -4,7 +4,7 @@ import Card from "../Components/Card";
 import Pagination from '../Components/Pagination'; 
 import Calendar from "../Components/Calendar.jsx";
 import Buscador from "../Components/Buscador.jsx";
-import requestToAPI from "../services/requestToApi";
+import requestToAPI from "../services/requestToAPI";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -21,6 +21,7 @@ const Home = () => {
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [submitRequest, setSubmitRequest] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(6); 
 
@@ -83,6 +84,10 @@ const Home = () => {
     navigate(`/detail/${product.id}`, { state: { product } });
   };
 
+  const handleProductoSelect = (product) => {
+    setSelectedProduct(product);
+  };
+
   const [sliderSettings, setSliderSettings] = useState({
     dots: true,
     infinite: false,
@@ -117,16 +122,34 @@ const Home = () => {
     };
   }, [productosPorCategoria.length]);
 
+  const handleAvailabilityCheck = async () => {
+    try {
+      const isAvailable = true;
+      if (isAvailable) {
+        if (selectedProduct && selectedProduct.id) {
+          const productId = selectedProduct.id;
+          navigate(`/detail/${productId}`);
+        } else {
+          console.log("No se ha seleccionado un producto válido.");
+        }
+      } else {
+        console.log(
+          "Lo siento, el producto no está disponible en las fechas elegidas."
+        );
+      }
+    } catch (error) {
+      console.error("Error al verificar la disponibilidad:", error);
+    }
+  };
+
   const handleSearchResults = (results) => {
     setSearchResults(results);
   };
 
-  const handleStartDateSelect = (date) => {
-    setSelectedStartDate(date);
-  };
+  const [showCalendars, setShowCalendars] = useState(false);
 
-  const handleEndDateSelect = (date) => {
-    setSelectedEndDate(date);
+  const handleToggleCalendars = () => {
+    setShowCalendars(!showCalendars);
   };
 
  
@@ -139,24 +162,60 @@ const Home = () => {
 
   return (
     <div className="body">
-      
       <div className="Search-Calendar">
-        <div className="results-container">
-          <Buscador onSearch={handleSearchResults} />
-          {searchResults.map((result) => (
+        <h1>¿Querés consultar la disponibilidad de un producto?</h1>
+        <p>Seleccioná el producto que estés buscando, elegí una fecha de inicio y devolución del producto y realizá tu búsqueda</p>
+        <div className="search-container">
+          <Buscador
+            onSearch={handleSearchResults}
+            onSelectProduct={handleProductoSelect}
+          />
+          <button
+            className="Button-calendario"
+            onClick={handleToggleCalendars}
+          >
+            {showCalendars ? "Ocultar calendarios" : "Mostrar calendarios"}
+          </button>
+        </div>
+        {Array.isArray(searchResults) &&
+          searchResults.map((result) => (
             <div key={result.id}>{result.name}</div>
           ))}
-        </div>
+        {showCalendars && (
+          <>
+            <div className="calendars-container">
+              <div className="Calendars">
+                <h2>Calendario de inicio</h2>
+                <Calendar
+                  selectedDates={selectedStartDate}
+                  onSelectDates={setSelectedStartDate}
+                />
+              </div>
+              <div className="Calendars">
+                <h2>Calendario de fin</h2>
+                <Calendar
+                  selectedDates={selectedEndDate}
+                  onSelectDates={setSelectedEndDate}
+                />
+              </div>
+            </div>
+          </>
+        )}
 
-        <div>
-          <h2>Calendario de inicio</h2>
-          <Calendar selectedDates={selectedStartDate} onSelectDates={handleStartDateSelect} />
-        </div>
-        <div>
-          <h2>Calendario de fin</h2>
-          <Calendar selectedDates={selectedEndDate} onSelectDates={handleEndDateSelect} />
-        </div>
-        
+        {selectedProduct &&
+          selectedStartDate &&
+          selectedEndDate &&
+          !submitRequest && (
+            <button
+              className="Button-calendario"
+              onClick={() => {
+                setSubmitRequest(true);
+                handleAvailabilityCheck();
+              }}
+            >
+              Consultar Disponibilidad
+            </button>
+          )}
       </div>
 
       <div className="categories">

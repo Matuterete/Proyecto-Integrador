@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
-import requestToAPI from '../services/requestToApi';
+import requestToAPI from '../services/requestToAPI';
+import '../Components/styles/Buscador.css'
 
-const Buscador = ({ onSearch }) => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
+const Buscador = ({ onSearch, onSelectProduct }) => {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -13,7 +14,7 @@ const Buscador = ({ onSearch }) => {
         const method = 'GET';
         const response = await requestToAPI(endpoint, method);
         const options = response.map(product => ({
-          value: product.name,
+          value: product.id, 
           label: product.name
         }));
         setProducts(options);
@@ -25,21 +26,21 @@ const Buscador = ({ onSearch }) => {
   }, []);
 
   const handleProductChange = async (selectedOption) => {
-    setSelectedProduct(selectedOption);
-
     try {
-      const name = selectedOption.value;
-      const endpoint = `products/find/name/${name}`;
+      setSelectedProduct(selectedOption); 
+      const productId = selectedOption.value;
+      const endpoint = `products/find/id/${productId}`;
       const method = 'GET';
       const response = await requestToAPI(endpoint, method);
-      onSearch(response); 
+      onSearch(response);
+      onSelectProduct(response, productId);
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div className="search-container">
+    <div className="search">
       <Select
         options={products}
         value={selectedProduct}

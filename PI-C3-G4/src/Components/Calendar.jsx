@@ -1,52 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar as BigCalendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import '../Components/styles/selected-date.css'
+import React, { useState, useEffect } from "react";
+import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
+import "moment/locale/es";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import "../Components/styles/Calendar.css";
+
+moment.locale("es");
 
 const localizer = momentLocalizer(moment);
 
-const Calendar = ({ onSelectDates }) => { 
-  const [selectedDates, setSelectedDates] = useState([]); 
+const Calendar = ({ onSelectDates }) => {
+  const today = new Date(); 
+
+  const [selectedDates, setSelectedDates] = useState([]);
 
   const handleDateSelect = (slotInfo) => {
     const newDate = slotInfo.start;
-    const updatedDates = [...selectedDates]; 
+    const updatedDates = [...selectedDates];
 
-    if (selectedDates.some((date) => moment(date).isSame(newDate, 'day'))) {
-      
+    
+    if (moment(newDate).isBefore(today)) {
+      return;
+    }
+
+    if (selectedDates.some((date) => moment(date).isSame(newDate, "day"))) {
       updatedDates.splice(updatedDates.indexOf(newDate), 1);
     } else {
-      
       updatedDates.push(newDate);
     }
 
     setSelectedDates(updatedDates);
-    onSelectDates(updatedDates); 
+    onSelectDates(updatedDates);
   };
 
   const eventStyleGetter = (event, start, end, isSelected) => {
     let style = {
-      backgroundColor: isSelected ? 'lightblue' : 'transparent',
-      borderRadius: '0px',
-      border: 'none',
+      backgroundColor: isSelected ? "lightblue" : "transparent",
+      borderRadius: "0px",
+      border: "none",
     };
     return style;
   };
 
   const myFormats = {
     dayFormat: (date, culture, localizer) =>
-      localizer.format(date, 'dd', culture),
+      localizer.format(date, "dd", culture),
   };
 
   const dayPropGetter = (date) => {
     return {
       className: selectedDates.some((selectedDate) =>
-        moment(selectedDate).isSame(date, 'day')
+        moment(selectedDate).isSame(date, "day")
       )
-        ? 'selected-date'
-        : '',
-      onClick: () => handleDateSelect(date),
+        ? "selected-date"
+        : "",
+      style: {
+        opacity: moment(date).isBefore(today) ? 0.5 : 1,
+        cursor: moment(date).isBefore(today) ? "not-allowed" : "default",
+        color: moment(date).isBefore(today) ? "gray" : "inherit",
+      },
     };
   };
 
@@ -62,9 +74,9 @@ const Calendar = ({ onSelectDates }) => {
       views={{
         month: true,
       }}
-      style={{ height: 500, width: 500 }}
       eventPropGetter={eventStyleGetter}
       dayPropGetter={dayPropGetter}
+      minDate={today}
     />
   );
 };

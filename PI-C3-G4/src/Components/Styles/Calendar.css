@@ -1,0 +1,43 @@
+.rbc-calendar {
+    width: 300px;
+    height: 400px;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    position: relative; 
+    z-index: 1; 
+  }
+.rbc-button-link{
+    cursor:default;
+    color: #122E4F;
+}
+
+.rbc-toolbar-label{
+    color:#122E4F;
+}
+  .rbc-header {
+    background-color: #122E4F;
+    font-family: 'Poppins';
+    color: white;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .rbc-day-bg {
+    background-color: #f8f8f8;
+  }
+  
+  .rbc-today {
+    background-color: #6ab7db;
+  }
+  
+  .selected-date {
+    background-color: rgb(53, 112, 238);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .rbc-event-label {
+    white-space: nowrap;
+  }
+
