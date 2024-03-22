@@ -4,11 +4,7 @@ import com.ctdg4.ProThechnics.dto.CategoryDTO;
 import com.ctdg4.ProThechnics.dto.FeatureDTO;
 import com.ctdg4.ProThechnics.dto.ProductDTO;
 import com.ctdg4.ProThechnics.dto.ProductImageDTO;
-import com.ctdg4.ProThechnics.entity.Category;
-import com.ctdg4.ProThechnics.entity.Feature;
-import com.ctdg4.ProThechnics.entity.Product;
-import com.ctdg4.ProThechnics.entity.ProductFeature;
-import com.ctdg4.ProThechnics.entity.ProductImage;
+import com.ctdg4.ProThechnics.entity.*;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.repository.*;
 import jakarta.transaction.Transactional;
@@ -16,7 +12,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,6 +51,7 @@ public class ProductService {
         savedProduct.setCategory(category);
         return savedProduct;
     }
+
     public Product updateProduct(Product product) throws ResourceNotFoundException {
 
         Product existingProduct = productRepository.findById(product.getId())
@@ -66,7 +62,7 @@ public class ProductService {
         existingProduct.setDescription(product.getDescription());
         existingProduct.setPrice(product.getPrice());
         existingProduct.setStock(product.getStock());
-        
+
         if (product.getCategory() != null) {
 
             existingProduct.setCategory(product.getCategory());
@@ -116,6 +112,18 @@ public class ProductService {
 
     public Optional<Product> findProductById(Long product_id) {
         return productRepository.findById(product_id);
+    }
+
+    public void addFeature(Long productId, Long featureId, String featureValue) {
+        productFeatureRepository.addFeature(productId, featureId, featureValue);
+    }
+
+    public void removeFeature(Long productId, Long featureId) {
+        productFeatureRepository.removeFeature(productId, featureId);
+    }
+
+    public void updateFeatureValue(Long productId, Long featureId, String featureValue) {
+        productFeatureRepository.updateFeatureValue(productId, featureId, featureValue);
     }
 
     //DTO for Listing All
@@ -197,12 +205,15 @@ public class ProductService {
     public ProductDTO mapToDTO(Product product) {
         return modelMapper.map(product, ProductDTO.class);
     }
+
     public FeatureDTO mapToDTO(Feature feature) {
         return modelMapper.map(feature, FeatureDTO.class);
     }
+
     public ProductImageDTO mapToDTO(ProductImage productImage) {
         return modelMapper.map(productImage, ProductImageDTO.class);
     }
+
     public CategoryDTO mapToDTO(Category category) {
         if (category == null) {
             return new CategoryDTO();
@@ -229,7 +240,7 @@ public class ProductService {
         productRepository.save(existingProduct);
     }
 }
-    //////////////////////////////// TODO DTO COMENTADO //////////////////////////////////////////
+//////////////////////////////// TODO DTO COMENTADO //////////////////////////////////////////
 /*
 
     // Product + Images DTOs

@@ -1,13 +1,14 @@
 package com.ctdg4.ProThechnics.controller;
 
 import com.ctdg4.ProThechnics.dto.ProductDTO;
+import com.ctdg4.ProThechnics.entity.FeatureProductRequest;
 import com.ctdg4.ProThechnics.entity.Product;
-import com.ctdg4.ProThechnics.entity.ProductImage;
 import com.ctdg4.ProThechnics.exception.DuplicateException;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.service.ProductImageService;
 import com.ctdg4.ProThechnics.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +54,60 @@ public class ProductController {
         return ResponseEntity.ok(productService.saveProduct(product));
     }
 
+    @PostMapping("/{productId}/features/{featureId}")
+    public ResponseEntity<String> addFeature(
+            @Parameter(description = "Product ID") @PathVariable Long productId,
+            @Parameter(description = "Feature ID") @PathVariable Long featureId,
+            @RequestBody Map<String, String> requestBody) {
+        String featureValue = requestBody.get("featureValue");
+        try {
+            productService.addFeature(productId, featureId, featureValue);
+            return ResponseEntity.ok("Feature added to Product successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to add feature to product. " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/features")
+    public ResponseEntity<String> addFeatureValues(@RequestBody List<FeatureProductRequest> featureProductAdd) {
+        try {
+            for (FeatureProductRequest add : featureProductAdd) {
+                productService.addFeature(add.getProductId(), add.getFeatureId(), add.getFeatureValue());
+            }
+            return ResponseEntity.ok("Features added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to add features. " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{productId}/features/{featureId}")
+    public ResponseEntity<String> updateFeatureValue(
+            @PathVariable Long productId,
+            @PathVariable Long featureId,
+            @RequestBody Map<String, String> requestBody) {
+        String featureValue = requestBody.get("featureValue");
+        try {
+            productService.updateFeatureValue(productId, featureId, featureValue);
+            return ResponseEntity.ok("FeatureValue updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to update featureValue. " + e.getMessage());
+        }
+    }
+    @DeleteMapping("/{productId}/features/{featureId}")
+    public ResponseEntity<String> removeFeature(
+            @Parameter(description = "Product ID") @PathVariable Long productId,
+            @Parameter(description = "Feature ID") @PathVariable Long featureId) {
+        try {
+            productService.removeFeature(productId, featureId);
+            return ResponseEntity.ok("Feature removed from Product successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Failed to remove feature from product. " + e.getMessage());
+        }
+    }
 //    @Operation(summary = "Register a new product image", description = "Registers a new product image in the system")
 //    @ApiResponse(responseCode = "200", description = "Product image registered successfully",
 //            content = @Content(schema = @Schema(implementation = ProductImage.class)))

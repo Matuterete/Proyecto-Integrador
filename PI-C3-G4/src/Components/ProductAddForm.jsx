@@ -1,34 +1,32 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import requestToAPI from "../services/requestToAPI";
+import { NavLink } from "react-router-dom";
 
 function ProductAddForm({ onAdd, onCancel }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [isActive, setIsActive] = useState(true);
+  const [price, setPrice] = useState("");
+  // const [isActive, setIsActive] = useState(true);
   const [stock, setStock] = useState(1);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [features, setFeatures] = useState([]);
-  const [selectedFeature, setSelectedFeature] = useState("");
   const [primaryImage, setPrimaryImage] = useState(null);
   const [additionalImages, setAdditionalImages] = useState([]);
+  const [features, setFeatures] = useState([]);
+  const [featuresData, setFeaturesData] = useState({
+    selectedFeatures: [],
+    featureValues: [],
+  });
 
   useEffect(() => {
-    requestToAPI("categories/find/all", "GET")
-      .then((response) => {
-        setCategories(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
-  useEffect(() => {
-    requestToAPI("features/find/all", "GET")
-      .then((response) => {
-        setFeatures(response);
+    Promise.all([
+      requestToAPI("categories/find/all", "GET"),
+      requestToAPI("features/find/all", "GET"),
+    ])
+      .then(([categoriesResponse, featuresResponse]) => {
+        setCategories(categoriesResponse);
+        setFeatures(featuresResponse);
       })
       .catch((error) => {
         console.error(error);
@@ -49,9 +47,9 @@ function ProductAddForm({ onAdd, onCancel }) {
     setPrice(e.target.value);
   };
 
-  const handleIsActiveChange = (e) => {
-    setIsActive(e.target.checked);
-  };
+  // const handleIsActiveChange = (e) => {
+  //   setIsActive(e.target.checked);
+  // };
 
   const handleStockChange = (e) => {
     setStock(e.target.value);
@@ -61,8 +59,45 @@ function ProductAddForm({ onAdd, onCancel }) {
     setSelectedCategory(e.target.value);
   };
 
-  const handleFeatureChange = (e) => {
-    setSelectedFeature(e.target.value);
+  const handleFeatureChange = (index, e) => {
+    setFeaturesData((prevData) => ({
+      ...prevData,
+      selectedFeatures: [
+        ...prevData.selectedFeatures.slice(0, index),
+        e.target.value,
+        ...prevData.selectedFeatures.slice(index + 1),
+      ],
+    }));
+  };
+
+  const handleFeatureValueChange = (index, e) => {
+    setFeaturesData((prevData) => ({
+      ...prevData,
+      featureValues: { ...prevData.featureValues, [index]: e.target.value },
+    }));
+  };
+
+  const handleAddFeature = () => {
+    setFeaturesData((prevData) => ({
+      ...prevData,
+      selectedFeatures: [...prevData.selectedFeatures, ""],
+    }));
+  };
+
+  const handleRemoveFeature = (index) => {
+    setFeaturesData((prevData) => {
+      const newSelectedFeatures = [...prevData.selectedFeatures];
+      newSelectedFeatures.splice(index, 1);
+
+      const featureIdToRemove = features[index].id;
+      const { [featureIdToRemove]: removedValue, ...rest } =
+        prevData.featureValues;
+
+      return {
+        selectedFeatures: newSelectedFeatures,
+        featureValues: rest,
+      };
+    });
   };
 
   const handlePrimaryImageChange = (e) => {
@@ -118,11 +153,24 @@ function ProductAddForm({ onAdd, onCancel }) {
     return imageData;
   };
 
+  const buildFeatureData = () => {
+    const { selectedFeatures, featureValues } = featuresData;
+    const featureData = selectedFeatures.map((featureId) => ({
+      featureId,
+      featureValue: featureValues[featureId] || "",
+    }));
+    return featureData;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     let productId;
     let bucketS3Response;
+
+    const featureData = buildFeatureData();
+
+    console.log(featureData);
 
     try {
       //1 - Se guarda primero el producto
@@ -130,7 +178,7 @@ function ProductAddForm({ onAdd, onCancel }) {
         name,
         description,
         price,
-        isActive,
+        // isActive,
         stock,
         category: {
           id: selectedCategory,
@@ -159,7 +207,7 @@ function ProductAddForm({ onAdd, onCancel }) {
       // 3 - Se asocian las URLs de S3 a el producto en la Base de Datos
 
       const imageUrls = bucketS3Response;
-      console.log(imageUrls);
+
       let primaryImageUrl = "";
       let additionalImageUrls = [];
 
@@ -188,17 +236,32 @@ function ProductAddForm({ onAdd, onCancel }) {
 
       await requestToAPI(endpoint, "POST", imageData);
 
+      // 4 - Se guardan las características del producto
+      const featureRequests = featureData.map((feature, index) => ({
+        productId,
+        featureId: parseInt(featuresData.selectedFeatures[index]),
+        featureValue: feature.featureValue,
+      }));
+
+      console.log(JSON.stringify(featureRequests));
+
+      await requestToAPI("products/features", "POST", featureRequests);
+
       // Se limpia el Formulario si todo salio bien
       setName("");
       setDescription("");
-      setPrice(0);
-      setIsActive(true);
+      setPrice("");
+      // setIsActive(true);
       setStock(1);
       setSelectedCategory("");
       setPrimaryImage(null);
       setAdditionalImages([]);
       document.getElementById("primaryImageInput").value = null;
       document.getElementById("additionalImagesInput").value = null;
+      setFeaturesData({
+        selectedFeatures: [],
+        featureValues: [],
+      });
 
       Swal.fire({
         icon: "success",
@@ -286,7 +349,7 @@ function ProductAddForm({ onAdd, onCancel }) {
           />
         </label>
       </div>
-      <div className="form-group">
+      {/* <div className="form-group">
         <label>
           Activo:
           <input
@@ -295,7 +358,7 @@ function ProductAddForm({ onAdd, onCancel }) {
             onChange={handleIsActiveChange}
           />
         </label>
-      </div>
+      </div> */}
       <div className="form-group">
         <label>
           Stock:
@@ -347,38 +410,64 @@ function ProductAddForm({ onAdd, onCancel }) {
           </label>
         </div>
       </div>
-      <div className="form-group feature">
-        <div className="form-group">
-          <label>
-            Características:
-            <select value={selectedFeature} onChange={handleFeatureChange}>
-              <option value="">Selecciona una característica</option>
-              {features.map((feature) => (
-                <option key={feature.id} value={feature.id}>
-                  {feature.title}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Valor:
-            <input type="text" />
-          </label>
-        </div>
+      <div className="form-group">
+        {featuresData.selectedFeatures?.map((selectedFeature, index) => (
+          <div key={index} className="feature-inputs">
+            <div className="form-group">
+              <label>
+                Característica {index + 1}:
+                <select
+                  value={selectedFeature}
+                  onChange={(e) => handleFeatureChange(index, e)}
+                >
+                  <option value="">Selecciona una característica</option>
+                  {features.map((feature) => (
+                    <option key={feature.id} value={feature.id}>
+                      {feature.title}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <div className="form-group">
+              <label>
+                Valor:
+                <input
+                  type="text"
+                  value={featuresData.featureValues[selectedFeature] || ""}
+                  onChange={(e) => handleFeatureValueChange(selectedFeature, e)}
+                />
+              </label>
+            </div>
+            {index > 0 && (
+              <button
+                className="button"
+                type="button"
+                onClick={() => handleRemoveFeature(index)}
+              >
+                Eliminar
+              </button>
+            )}
+          </div>
+        ))}
+        <button className="button" type="button" onClick={handleAddFeature}>
+          Agregar Característica
+        </button>
       </div>
       <div className="form-group buttonCenter">
         <button type="submit" className="button buttonPrimary buttonBig">
           Agregar Producto
         </button>
         &nbsp;&nbsp;&nbsp;
-        <button
+        {/* <button
           type="button"
           className="button buttonTerciary buttonBig"
           onClick={onCancel}
-        >
-          Cancelar
+        > */}
+        <button type="button" className="button buttonTerciary buttonBig">
+          <NavLink to="/adminProducts" onClick={onCancel}>
+            Cancelar
+          </NavLink>
         </button>
       </div>
     </form>
