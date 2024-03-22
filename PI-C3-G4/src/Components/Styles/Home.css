@@ -125,6 +125,11 @@
   flex: 0 0 auto;
   width: 25%; 
 }
+.center{
+  display: flex;
+  justify-content: center; /* Centrado horizontal */
+  align-items: center; 
+}
 
 @media (max-width: 760px) {
   .slick-slide .producto {
@@ -143,3 +148,4 @@
     margin: 0 auto 20px; 
   }
 }
+

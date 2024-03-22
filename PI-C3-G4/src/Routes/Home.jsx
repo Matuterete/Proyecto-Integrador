@@ -6,6 +6,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import '../Components/Styles/Home.css';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [categorias, setCategorias] = useState([]);
@@ -68,7 +69,7 @@ const Home = () => {
 
   const [sliderSettings, setSliderSettings] = useState({
     dots: true,
-    infinite: false, 
+    infinite: false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4
@@ -87,14 +88,14 @@ const Home = () => {
         setSliderSettings({
           ...sliderSettings,
           slidesToShow: slidesToShow,
-          slidesToScroll: 1 
+          slidesToScroll: 1
         });
       }
     };
-  
+
     handleResize();
     window.addEventListener('resize', handleResize);
-  
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -102,10 +103,12 @@ const Home = () => {
 
   return (
     <div className='body'>
+      <div className='center'>
+        <Link to="/FavoriteList" className='button buttonPrimary'>Ver Lista de favoritos</Link>
+      </div>
       <div className="buscador">
         <input className="buscador-input" type="search" placeholder="Buscador" />
       </div>
-
       <div className="categories">
         <h1>Categorías</h1>
         <div className="categories-container">
@@ -123,7 +126,7 @@ const Home = () => {
           <h1>{categoriaSeleccionada}</h1>
           <Slider {...sliderSettings}>
             {productosPorCategoria.map(producto => {
-              console.log("Productos por categoría:", productosPorCategoria); 
+              console.log("Productos por categoría:", productosPorCategoria);
               return (
                 <div key={producto.id} className="producto" onClick={() => handleProductoClick(producto)}>
                   <div className="card-wrapper">
