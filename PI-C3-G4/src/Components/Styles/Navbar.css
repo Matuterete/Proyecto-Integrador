@@ -20,6 +20,7 @@
 .buttons {
   display: flex;
   align-items: flex-start;
+  align-items: center;
 }
 
 .buttons button {
@@ -48,6 +49,11 @@
 
 .navbar-logo img {
   width: 300px;
+}
+
+.user{
+  display: flex;
+  align-items: center;
 }
 .user p{
   color: black;

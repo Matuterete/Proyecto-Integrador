@@ -92,11 +92,17 @@ const Navbar = () => {
         <div className='buttons'>
 
           {sessionData ? (
+
+
+
             <div className='user'>
-              <button className='button'>{userLogo}</button>
+              <p>{sessionData.user.name}</p>
+              <Link to="/userprofile"><button className='button'>{userLogo}</button></Link> 
+              {sessionData.user.role==="ADMIN"? <Link to="/administracion"><button className='button buttonTerciary'>Admin Page</button></Link> :""}
+              
               <button className='button buttonPrimary' onClick={handleLogout}>Cerrar Sesion</button>
             </div>
-            )
+          )
             :
             (<div>
               <Link to="/login" className='button buttonPrimary'>Iniciar Sesión</Link>
