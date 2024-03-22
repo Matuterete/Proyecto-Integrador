@@ -27,6 +27,22 @@ function Login() {
       const response = await requestToAPI('auth/login', 'POST', {
         email: usuario.correo,
         password: usuario.contrasena
+      })
+      .then(response => {
+        console.log(response.data);
+        localStorage.setItem('userId', response.data.user.id);
+        localStorage.setItem('usuarioLogueado', JSON.stringify(response.data))
+        navigate("/home");
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Usuario incorrecto',
+          text: `Los datos son incorrectos o el usuario ${usuario.correo} no se encuentra registrado en el sistema`,
+          showConfirmButton: true
+        });
       });
   
       sessionStorage.setItem('userData', JSON.stringify(response));

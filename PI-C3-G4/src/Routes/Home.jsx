@@ -9,6 +9,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../Components/styles/Home.css";
+import { Link } from 'react-router-dom';
+
 
 const Home = () => {
   const [categorias, setCategorias] = useState([]);
@@ -165,6 +167,7 @@ const Home = () => {
 
   return (
     <div className="body">
+
       <div className="Search-Calendar">
         <h1>¿Querés consultar la disponibilidad de un producto?</h1>
         <p>
@@ -221,6 +224,10 @@ const Home = () => {
           )}
       </div>
 
+      <div className='center'>
+        <Link to="/FavoriteList" className='button buttonPrimary'>Ver Lista de favoritos</Link>
+      </div>
+      
       <div className="categories">
         <h1>Categorías</h1>
         <div className="categories-container">
