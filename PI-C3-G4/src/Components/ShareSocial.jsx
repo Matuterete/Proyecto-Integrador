@@ -13,7 +13,7 @@ import {InlineShareButtons} from 'sharethis-reactjs';
               'digg'
  */
 
-class SharedSocial extends React.Component {
+class ShareSocial extends React.Component {
  
 // Get the URL and title of the current page dynamically
 
@@ -64,21 +64,19 @@ class SharedSocial extends React.Component {
 
             /*URL concatenada para enviar mensaje por wsp. no funciona para las demas redes sociales por la forma del encabezado y la url local*/
 
-           // url: typeof window !== "undefined" ? 'Hola te quiero compartir este producto - '+` ${nombre} ` + 'http://localhost:5173/'+ `${url}` : undefined,    
+            /*Para Whastapp comentariar la linea 72 y quitar el comentario de la 69.*/
+
+           //url: typeof window !== "undefined" ? 'Hola te quiero compartir este producto - '+` ${nombre} ` + 'http://localhost:5173/'+ `${url}` : undefined,    
             
-            //url: `${url}`,
-            url: `${image}`, //url de la imagen, para probar el encabezado
+           // url: `${url}`,
+           url: `${image}`, //url de la imagen, para probar el encabezado
            //url url: 'www.google.com', // (defaults to current url)
-            image: `${image}`,  // (defaults to og:image or twitter:image)
-            description: 'custom text',       // (defaults to og:description or twitter:description)
-            title: 'custom title',            // (defaults to og:title or twitter:title)
-            message: 'custom email text',     // (only for email sharing)
-            subject: 'custom email subject',  // (only for email sharing)
-            username: 'custom twitter handle', // (only for twitter sharing)
-
-
-      
-
+           // image: `${image}`,  // (defaults to og:image or twitter:image)
+           // description: 'custom text',       // (defaults to og:description or twitter:description)
+           // title: 'custom title',            // (defaults to og:title or twitter:title)
+           // message: 'custom email text',     // (only for email sharing)
+           // subject: 'custom email subject',  // (only for email sharing)
+           // username: 'custom twitter handle', // (only for twitter sharing)
 
           }}
         />
@@ -92,4 +90,4 @@ class SharedSocial extends React.Component {
 
  
 // export
-export default SharedSocial;
+export default ShareSocial;
