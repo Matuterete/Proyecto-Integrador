@@ -22,6 +22,7 @@ const Card = (product) => {
                     <p className='price'>USD: {product.product.price}</p>                    
                 </Link>
                 <SharedSocial url={'detail/' + product.product.id} image={product.product.images[0].url} nombre ={product.product.name}  />
+                
             </div>
 
             

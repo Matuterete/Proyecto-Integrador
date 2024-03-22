@@ -66,7 +66,8 @@ class SharedSocial extends React.Component {
 
            // url: typeof window !== "undefined" ? 'Hola te quiero compartir este producto - '+` ${nombre} ` + 'http://localhost:5173/'+ `${url}` : undefined,    
             
-            url: `${url}`,
+            //url: `${url}`,
+            url: `${image}`, //url de la imagen, para probar el encabezado
            //url url: 'www.google.com', // (defaults to current url)
             image: `${image}`,  // (defaults to og:image or twitter:image)
             description: 'custom text',       // (defaults to og:description or twitter:description)
