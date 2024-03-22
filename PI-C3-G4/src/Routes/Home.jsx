@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "../Components/Card";
-import Pagination from '../Components/Pagination'; 
+import Pagination from "../Components/Pagination";
 import Calendar from "../Components/Calendar.jsx";
 import Buscador from "../Components/Buscador.jsx";
 import requestToAPI from "../services/requestToAPI";
@@ -23,7 +23,13 @@ const Home = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [submitRequest, setSubmitRequest] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(6); 
+  const [productsPerPage] = useState(6);
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = productosRecomendados.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const navigate = useNavigate();
 
@@ -44,8 +50,11 @@ const Home = () => {
 
   useEffect(() => {
     async function fetchRandomProducts() {
-      try {       
-         const productosResponse = await requestToAPI('products/find/random/10', 'GET');
+      try {
+        const productosResponse = await requestToAPI(
+          "products/find/random/10",
+          "GET"
+        );
         setProductosRecomendados(productosResponse);
       } catch (error) {
         console.error("Error fetching random products:", error);
@@ -152,28 +161,22 @@ const Home = () => {
     setShowCalendars(!showCalendars);
   };
 
- 
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = productosRecomendados.slice(indexOfFirstProduct, indexOfLastProduct);
-
-
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="body">
       <div className="Search-Calendar">
         <h1>¿Querés consultar la disponibilidad de un producto?</h1>
-        <p>Seleccioná el producto que estés buscando, elegí una fecha de inicio y devolución del producto y realizá tu búsqueda</p>
+        <p>
+          Seleccioná el producto que estés buscando, elegí una fecha de inicio y
+          devolución del producto y realizá tu búsqueda
+        </p>
         <div className="search-container">
           <Buscador
             onSearch={handleSearchResults}
             onSelectProduct={handleProductoSelect}
           />
-          <button
-            className="Button-calendario"
-            onClick={handleToggleCalendars}
-          >
+          <button className="Button-calendario" onClick={handleToggleCalendars}>
             {showCalendars ? "Ocultar calendarios" : "Mostrar calendarios"}
           </button>
         </div>
@@ -258,7 +261,6 @@ const Home = () => {
 
       <div className="Container">
         <div>
-
           <p className="cardTitle-2">Recomendados</p>
           <div className="cardGrid-2">
             {productosRecomendados.length === 0 &&
@@ -267,17 +269,11 @@ const Home = () => {
                 <div className="loader"></div>
               </div>
             ) : (
-              productosRecomendados.map((product) => (
+              currentProducts.map((product) => (
                 <Card product={product} key={product.id} />
               ))
             )}
           </div>
-
-          <p className='cardTitle-2'>Recomendados</p>
-          <div className='cardGrid-2'>
-            {currentProducts.map(product => <Card product={product} key={product.id} />)}
-          </div>
-
           <Pagination
             productsPerPage={productsPerPage}
             totalProducts={productosRecomendados.length}

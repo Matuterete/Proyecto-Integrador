@@ -36,9 +36,11 @@
 .pay {
   display: flex;
   flex-direction: column;
-  width: 50;
+  width: calc(50% - 0.5rem); /* Restar el margen entre los calendarios */
   padding: 20px;
   background-color: white;
+  margin-right: 1.5rem; /* Espacio adicional a la derecha */
+  overflow: hidden; /* Ocultar el contenido que exceda el tamaño de la clase */
 }
 
 .priceDetail {
@@ -97,6 +99,32 @@ ul {
   margin-bottom: 20px;
 }
 
+.calendars {
+  display: flex;
+  position: relative;
+  max-width: 100%;
+}
+
+.calendars > * {
+  flex: 1;
+  max-width: 50%;
+}
+
+.calendar-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.rbc-btn-group button {
+  padding: 0.25rem 0.5rem; /* Ajustar el padding para reducir el tamaño */
+  font-size: 0.75rem; /* Ajustar el tamaño de la fuente */
+}
+
+.calendar-container > .calendars:first-child {
+  margin-right: 1rem; 
+  z-index: 2; 
+}
 
 @media (max-width: 760px) {
   .bodyDetail {
