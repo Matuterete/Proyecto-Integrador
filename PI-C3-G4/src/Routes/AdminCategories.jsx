@@ -141,7 +141,7 @@ const AdminCategories = () => {
                         <img src={category.url} alt={category.title} />
                         {category.title}
                         <div>
-                            <IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>
+                            {/* {<IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>} */}
                             <IconButton className='button buttonPrimary' onClick={() => updateCategory(category.id, category.title)} icon="pencil">Editar</IconButton>
                             <IconButton className='button buttonTerciary' onClick={() => deleteCategory(category.id)} icon="minus">Eliminar</IconButton>
                         </div>

@@ -22,7 +22,6 @@ function App() {
   const { state } = useContext();
 
   const [sessionData, setSessionData] = useState(sessionStorage.getItem('userData') || '');
-  console.log(sessionData)
 
   return (
     <BrowserRouter>

@@ -3,7 +3,7 @@ import Sun from '../assets/Sun.svg';
 import Moon from '../assets/Moon.svg';
 import Logo from '../assets/Logo.png';
 import Usuario from '../assets/usuario.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from '../Utils/Context.jsx';
 import { TOGGLE_THEME } from '../Reducers/Reducer.jsx';
 import './styles/Navbar.css';
@@ -13,7 +13,7 @@ const Navbar = () => {
   const { state, dispatch } = useContext();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-
+  const navigate = useNavigate();
   const handleTheme = () => {
     dispatch({ type: TOGGLE_THEME });
   }
@@ -68,11 +68,16 @@ const Navbar = () => {
     });
   };
 
+  const handleReload = ()=>{
+    navigate('/');
+    window.location.reload();
+  }
+
   return (
     <section className='header'>
       <nav className='navbar'>
         <div className='navbar-logo'>
-          <Link to="/home">
+          <Link onClick={handleReload}>
             <img src={Logo} alt="Logo"></img>
           </Link>
         </div>
