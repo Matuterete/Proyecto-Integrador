@@ -1,0 +1,33 @@
+.bodyUserProfile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.user-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    background-color: #F9F7F7;
+    width: 70vw;
+  }
+  
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 16px;
+  }
+  
+  .user-info {
+    flex-grow: 1;
+  }
+  
+  .user-info h2 {
+    margin: 0;
+  }
+  
+  .user-info p {
+    margin: 4px 0;
+  }

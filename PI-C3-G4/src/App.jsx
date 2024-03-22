@@ -16,12 +16,12 @@ import AdminCategories from './Routes/AdminCategories';
 import './App.css';
 import ProtectedRoute from './Utils/ProtectedRoute';
 import { useEffect, useState } from 'react';
+import UserProfile from './Routes/UserProfile';
 
 function App() {
   const { state } = useContext();
 
   const [sessionData, setSessionData] = useState(sessionStorage.getItem('userData') || '');
-  console.log(sessionData)
 
   return (
     <BrowserRouter>
@@ -36,6 +36,7 @@ function App() {
           <Route path="/detail/:id" element={<Detail />} />
           <Route path='/registroUsuario' element={<RegistroUsuario />} />
           <Route path='/emailRegister' element={<EmailRegister />} />
+          <Route path='/userprofile' element={<UserProfile />} />
 
           <Route element={<ProtectedRoute canActive={sessionData.includes('ADMIN')} />}>
             <Route path='/administracion' element={<AdminPage />} />

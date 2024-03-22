@@ -242,7 +242,7 @@ const AdminFeatures = () => {
                                     <p>ID {objeto.id} - {objeto.title}</p>
 
                                     <div>
-                                        <IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>
+                                        {/* {<IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>} */}
                                         <IconButton className='button buttonPrimary' onClick={() => handleInput(objeto)} icon="pencil">Editar</IconButton>
                                         <IconButton className='button buttonTerciary' onClick={() => handleClickDelete(objeto.id)} icon="minus">Eliminar</IconButton>
                                     </div>
