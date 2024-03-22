@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "../Components/Card";
+import Pagination from '../Components/Pagination'; 
 import Calendar from "../Components/Calendar.jsx";
-import moment from "moment";
 import Buscador from "../Components/Buscador.jsx";
 import requestToAPI from "../services/requestToApi";
 import Slider from "react-slick";
@@ -21,6 +21,9 @@ const Home = () => {
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(6); 
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,11 +43,8 @@ const Home = () => {
 
   useEffect(() => {
     async function fetchRandomProducts() {
-      try {
-        const productosResponse = await requestToAPI(
-          "products/find/random/6",
-          "GET"
-        );
+      try {       
+         const productosResponse = await requestToAPI('products/find/random/10', 'GET');
         setProductosRecomendados(productosResponse);
       } catch (error) {
         console.error("Error fetching random products:", error);
@@ -93,7 +93,7 @@ const Home = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 768) {
+      if (window.innerWidth <= 968) {
         setSliderSettings({
           ...sliderSettings,
           slidesToShow: 1,
@@ -128,6 +128,14 @@ const Home = () => {
   const handleEndDateSelect = (date) => {
     setSelectedEndDate(date);
   };
+
+ 
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = productosRecomendados.slice(indexOfFirstProduct, indexOfLastProduct);
+
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="body">
@@ -191,6 +199,7 @@ const Home = () => {
 
       <div className="Container">
         <div>
+
           <p className="cardTitle-2">Recomendados</p>
           <div className="cardGrid-2">
             {productosRecomendados.length === 0 &&
@@ -204,6 +213,18 @@ const Home = () => {
               ))
             )}
           </div>
+
+          <p className='cardTitle-2'>Recomendados</p>
+          <div className='cardGrid-2'>
+            {currentProducts.map(product => <Card product={product} key={product.id} />)}
+          </div>
+
+          <Pagination
+            productsPerPage={productsPerPage}
+            totalProducts={productosRecomendados.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 .footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   text-align: center;
   background-color: #122E4F;
@@ -11,7 +11,11 @@
 }
 
 .footer-logo {
-  padding-left: 60px;
+  
+}
+
+.footer-logo img {
+  width: 300px;
 }
 
 .footer-copyright {

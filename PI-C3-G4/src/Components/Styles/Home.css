@@ -1,7 +1,7 @@
 .body {
   padding-top: 10vh;
   width: 100%;
-  padding-bottom: 10vh;
+  /* padding-bottom: 10vh; */
 }
 
 .buscador-calendar-container {
@@ -26,7 +26,7 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
-  margin: 10vh;
+  margin: 5vh;
 }
 
 .categoria {
@@ -123,6 +123,11 @@
   flex: 0 0 auto;
   width: 25%; 
 }
+.pagination-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 @media (max-width: 760px) {
   .slick-slide .producto {
@@ -140,4 +145,5 @@
     width: 90%; 
     margin: 0 auto 20px; 
   }
+  
 }
