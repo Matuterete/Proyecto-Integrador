@@ -101,9 +101,12 @@ const Navbar = () => {
 
 
             <div className='user'>
-              <p>{sessionData.user.name}</p>
-              <Link to="/userprofile"><button className='button'>{userLogo}</button></Link> 
-              {sessionData.user.role==="ADMIN"? <Link to="/administracion"><button className='button buttonTerciary'>Admin Page</button></Link> :""}
+              <div className='name'>
+              <span>{sessionData.user.name}</span>
+              <span>{sessionData.user.lastName}</span>
+              </div>              
+              <Link to="/userprofile"><button className='button user-logo'>{userLogo}</button></Link> 
+              {sessionData.user.role==="ADMIN" || sessionData.user.role==="SUPERADMIN"? <Link to="/administracion"><button className='button buttonTerciary'>Admin Page</button></Link> :""}
               
               <button className='button buttonPrimary' onClick={handleLogout}>Cerrar Sesion</button>
             </div>

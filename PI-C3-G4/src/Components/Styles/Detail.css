@@ -19,6 +19,7 @@
   justify-content: space-between;
   width: 60%;
   margin: auto;
+  margin-bottom: 5rem;
 }
 .caracteristicas {
   padding: 0;
@@ -62,27 +63,29 @@
   padding-top: 10px;
 }
 
-.feactures li {
+.features li {
   display: flex;
   align-items: center;
   background-color: #dbe2ef;
   margin: 5px;
   padding-right: 8px;
   border-radius: 8px;
+
 }
 
-.feactures div {
+.features div {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
+  width: 2.2rem;
+  height: 2.2rem;
   background-color: rgb(255, 255, 255);
   border-radius: 100%;
   margin: 3px 10px;
 }
 
-.feactures li p {
-  margin: 2px 0px;
+.features li p {
+  margin: 0.5rem 0;
 }
 
 ul {
@@ -93,6 +96,7 @@ ul {
   width: 50px;
   margin-bottom: 20px;
 }
+
 
 @media (max-width: 760px) {
   .bodyDetail {
@@ -129,7 +133,7 @@ ul {
     flex-direction: column;
   }
 
-  .feactures {
+  .features {
     margin: 20px;
     padding: 0;
   }

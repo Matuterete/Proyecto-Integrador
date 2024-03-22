@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import registroUsuario from "../assets/imagen-Usuario.png";
 import "../Components/styles/RegistroUsuario.css";
@@ -74,7 +73,7 @@ function RegistroUsuario() {
       );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = { name, lastName, email, password };
@@ -128,45 +127,42 @@ function RegistroUsuario() {
         showConfirmButton: true,
       });
     } else {
-      // Aquí podrías enviar los datos a un servidor o hacer cualquier otra acción con ellos
-      requestToAPI("auth/register", "POST", {
-        name,
-        lastName,
-        password,
-        email,
-      })
-        .then((response) => {
-          Swal.fire({
-            icon: "success",
-            title: "El usuario ha quedado registrado correctamente",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          console.log(response.data.token);
-
-          setMostrarDespuesDeGuardar(false);
-          enviarCorreo();
-
-          navigate("/login");
-        })
-        .catch((error) => {
-          if (error.response && error.response.status === 409) {
-            Swal.fire({
-              icon: "error",
-              title: "Usuario existente",
-              text: "El correo ingresado ya esta registrado",
-              showConfirmButton: true,
-            });
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Error inesperado",
-              text: "Ocurrio un error al intentar registrar el usuario",
-              showConfirmButton: true,
-            });
-          }
+      try {
+        const response = await requestToAPI("auth/register", "POST", {
+          name,
+          lastName,
+          password,
+          email,
         });
-      //  navigate("/emailRegister");
+        Swal.fire({
+          icon: "success",
+          title: "El usuario ha quedado registrado correctamente",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        setMostrarDespuesDeGuardar(false);
+        enviarCorreo();
+
+        navigate("/login");
+      } catch (error) {
+        console.error(error);
+        if (error.response && error.response.status === 409) {
+          Swal.fire({
+            icon: "error",
+            title: "Usuario existente",
+            text: "El correo ingresado ya está registrado",
+            showConfirmButton: true,
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error inesperado",
+            text: "Ocurrió un error al intentar registrar el usuario",
+            showConfirmButton: true,
+          });
+        }
+      }
     }
   };
 
