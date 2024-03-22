@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import requestToAPI from '../services/requestToAPI';
 
 function ProductEditForm({ product, onSave, onCancel }) {
   const [id] = useState(product.id);
@@ -13,13 +14,16 @@ function ProductEditForm({ product, onSave, onCancel }) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    axios.get('http://prothechnics.us.to:8080/categories/find/all')
-      .then(response => {
-        setCategories(response.data);
-      })
-      .catch(error => {
+    async function fetchCategories() {
+      try {
+        const response = await requestToAPI('categories/find/all', 'GET');
+        setCategories(response);
+      } catch (error) {
         console.error(error);
-      });
+      }
+    }
+  
+    fetchCategories();
   }, []);
 
   const handleNameChange = (e) => {
@@ -49,7 +53,7 @@ function ProductEditForm({ product, onSave, onCancel }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`http://prothechnics.us.to:8080/products/update`, {
+    requestToAPI(`products/update`, 'PUT', {
       id,
       name,
       description,

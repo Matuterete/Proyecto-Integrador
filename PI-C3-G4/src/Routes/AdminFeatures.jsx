@@ -4,6 +4,7 @@ import requestToAPI from '../services/requestToAPI';
 import IconButton from '../Components/IconButton';
 import Swal from 'sweetalert2';
 
+
 const AdminFeatures = () => {
 
     const [responseData, setResponseData] = useState()
@@ -25,7 +26,7 @@ const AdminFeatures = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const url = 'http://prothechnics.us.to:8080/features/find/all';
+                const url = 'features/find/all';
                 const method = 'GET';
                 const data = null;
                 const headers = {}
@@ -78,7 +79,7 @@ const AdminFeatures = () => {
                 // Aquí puedes realizar la lógica de edición
                 setDataRequest({
                     ...dataRequest,
-                    url: 'http://prothechnics.us.to:8080/features/update',
+                    url: 'features/update',
                     method: 'PUT',
                     data: {
                         id: feature.id,
@@ -137,7 +138,7 @@ const AdminFeatures = () => {
 
             setDataRequest({
                 ...dataRequest,
-                url: 'http://prothechnics.us.to:8080/features/add',
+                url: 'features/add',
                 method: 'POST',
                 data: {
                     id: '',
@@ -176,7 +177,7 @@ const AdminFeatures = () => {
                 // Aquí puedes realizar la acción de eliminación
                 setDataRequest({
                     ...dataRequest,
-                    url: `http://prothechnics.us.to:8080/features/delete/id/${key}`,
+                    url: `features/delete/id/${key}`,
                     method: 'DELETE',
                     data: {},
                     headers: {}
@@ -200,7 +201,7 @@ const AdminFeatures = () => {
                 </div>
                 <div>
                     <div className='addFeatureButton'>
-                        <IconButton className='button buttonPrimary buttonBig' onClick={toggleFormulario} icon="plus">Añadir Caracteristica</IconButton>
+                        <IconButton className='button buttonPrimary buttonBig' onClick={toggleFormulario} icon="plus">Añadir Nueva</IconButton>
                     </div>
 
                     {mostrarFormulario && (
@@ -242,8 +243,8 @@ const AdminFeatures = () => {
                                     <p>ID {objeto.id} - {objeto.title}</p>
 
                                     <div>
-                                        <IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>
-                                        <IconButton className='button buttonPrimary' onClick={() => handleInput(objeto)} icon="pencil">Modificar</IconButton>
+                                        {/* {<IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>} */}
+                                        <IconButton className='button buttonPrimary' onClick={() => handleInput(objeto)} icon="pencil">Editar</IconButton>
                                         <IconButton className='button buttonTerciary' onClick={() => handleClickDelete(objeto.id)} icon="minus">Eliminar</IconButton>
                                     </div>
                                 </li>

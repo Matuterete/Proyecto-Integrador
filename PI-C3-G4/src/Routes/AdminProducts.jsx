@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
 import ProductList from '../Components/ProductList';
 import ProductEditForm from '../Components/ProductEditForm';
 import ProductAddForm from '../Components/ProductAddForm'
@@ -8,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import "../Components/styles/AdminProducts.css";
 import IconButton from '../Components/IconButton';
 import Swal from 'sweetalert2';
+import requestToAPI from '../services/requestToAPI';
 
 function AdminProducts() {
   const [products, setProducts] = useState([]);
@@ -21,18 +21,13 @@ function AdminProducts() {
   let navigate = useNavigate();
 
   useEffect(() => {
-    // if (usuarioLogueado) {
-      axios.get('http://prothechnics.us.to:8080/products/find/all')
+    requestToAPI('products/find/all', 'GET')
       .then(response => {
-        setProducts(response.data);
+        setProducts(response);
       })
       .catch(error => {
         console.error(error);
       });
-    // }
-    // else {
-    //   navigate("/home");
-    // }
   }, []);
 
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -81,8 +76,7 @@ function AdminProducts() {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        // Aquí puedes realizar la acción de eliminación
-        axios.delete(`http://prothechnics.us.to:8080/products/delete/id/${productId}`)
+        requestToAPI(`products/delete/id/${productId}`, 'DELETE')
         .then(() => {
           setProducts(products.filter(product => product.id !== productId));
           Swal.fire(

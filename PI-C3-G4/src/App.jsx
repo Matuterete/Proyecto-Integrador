@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
 import { useContext } from './Utils/Context';
 import Navbar from './Components/Navbar';
 import Home from './Routes/Home';
@@ -14,31 +14,42 @@ import AdminFeatures from './Routes/AdminFeatures';
 import AdminPage from './Routes/AdminPage';
 import AdminCategories from './Routes/AdminCategories';
 import './App.css';
+import ProtectedRoute from './Utils/ProtectedRoute';
+import { useEffect, useState } from 'react';
+import UserProfile from './Routes/UserProfile';
 
 function App() {
   const { state } = useContext();
+
+  const [sessionData, setSessionData] = useState(sessionStorage.getItem('userData') || '');
+
   return (
-    <Router>
+    <BrowserRouter>
       <div className={`${state.theme} pagina`}>
         <Navbar />
+
         <Routes>
+          <Route path='*' element={() => <h1>Not Found</h1>} />
           <Route path='/' element={<Home />} />
           <Route path='/home' element={<Home />} />
           <Route path='/login' element={<Login />} />
-          <Route path="/detail/:id" element={<Detail/>}/>     
-          <Route path='/FormLogin' element={<Login />} />
+          <Route path="/detail/:id" element={<Detail />} />
           <Route path='/registroUsuario' element={<RegistroUsuario />} />
           <Route path='/emailRegister' element={<EmailRegister />} />
-          <Route path='/administracion' element={<AdminPage />} />
-          <Route path='/adminUsers' element={<AdminUsers />} /> 
-          <Route path='/adminProducts' element={<AdminProducts />} /> 
-          <Route path='/adminFeatures' element={<AdminFeatures />} />
-          <Route path='/adminCategories' element={<AdminCategories />} />
-          <Route path='*' element={() => <h1>Not Found</h1>} />
+          <Route path='/userprofile' element={<UserProfile />} />
+
+          <Route element={<ProtectedRoute canActive={sessionData.includes('ADMIN')} />}>
+            <Route path='/administracion' element={<AdminPage />} />
+            <Route path='/adminUsers' element={<AdminUsers />} />
+            <Route path='/adminProducts' element={<AdminProducts />} />
+            <Route path='/adminFeatures' element={<AdminFeatures />} />
+            <Route path='/adminCategories' element={<AdminCategories />} />
+          </Route>
+
         </Routes>
       </div>
       <Footer></Footer>
-    </Router>
+    </BrowserRouter>
   );
 }
 

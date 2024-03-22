@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "products")
+@Schema(hidden = true)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,4 +39,7 @@ public class Product {
     @ManyToMany(cascade = CascadeType.ALL)
     @Schema(hidden = true)
     private List<Feature> features;
+    @OneToMany(mappedBy = "product")
+    @Schema(hidden = true)
+    private List<UserFav> fav;
 }

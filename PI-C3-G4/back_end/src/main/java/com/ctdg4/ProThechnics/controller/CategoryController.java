@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
 import java.util.Optional;
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("api/categories")
 @CrossOrigin(origins = "*")
 @Tags(value = { @Tag(name = "Categories") })
 public class CategoryController {

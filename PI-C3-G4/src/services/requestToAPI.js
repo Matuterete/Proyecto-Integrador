@@ -1,18 +1,15 @@
 import axios from 'axios';
 
-async function requestToAPI(url, method, data = null, headers = {}) {
-  try {
-    const response = await axios({
-      method: method,
-      url: url,
-      data: data,
-      headers: headers
-    });
-    return response.data;
-  } catch (error) {
-    // Manejo de errores
-    throw error;
-  }
+async function requestToAPI(endpoint, method, data = null, headers = {}) {
+  // const url = `http://localhost:8080/api/${endpoint}`;
+  const url = `http://prothechnics.us.to:8080/api/${endpoint}`;
+  const response = await axios({
+    method: method,
+    url: url,
+    data: data,
+    headers: headers
+  });
+  return response.data;
 }
 
 export default requestToAPI;

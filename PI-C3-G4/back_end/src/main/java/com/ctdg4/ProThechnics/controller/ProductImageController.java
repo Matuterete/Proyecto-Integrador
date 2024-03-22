@@ -3,6 +3,7 @@ package com.ctdg4.ProThechnics.controller;
 import com.ctdg4.ProThechnics.entity.ProductImage;
 import com.ctdg4.ProThechnics.service.ProductImageService;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+
 @RestController
-@RequestMapping("/products/images")
+@RequestMapping("api/products/images")
 @CrossOrigin(origins = "*")
 @Tags(value = { @Tag(name = "Products Images") })
 public class ProductImageController {
@@ -27,6 +31,17 @@ public class ProductImageController {
     public ProductImageController(ProductImageService productImageService) {
         this.productImageService = productImageService;
     }
+    @Operation(summary = "Register multiple new product images", description = "Registers multiple new product images in the system")
+    @ApiResponse(responseCode = "200", description = "Product images registered successfully",
+            content = @Content(schema = @Schema(implementation = ProductImage.class)))
+    @PostMapping("/multiple/add")
+    public ResponseEntity<List<ProductImage>> registerProductImages(@RequestBody List<ProductImage> productImages) {
+        List<ProductImage> savedImages = productImages.stream()
+                .map(productImageService::saveProductImage)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(savedImages);
+    }
+
     @Operation(summary = "Register a new product image", description = "Registers a new product image in the system")
     @ApiResponse(responseCode = "200", description = "Product image registered successfully",
             content = @Content(schema = @Schema(implementation = ProductImage.class)))

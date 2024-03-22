@@ -20,7 +20,7 @@ function AdminUsers() {
 
   useEffect(() => {
     // if (usuarioLogueado) {
-    axios.get('http://prothechnics.us.to:8080/users/find/all')
+    axios.get('http://prothechnics.us.to:8080/api/users/find/all')
       .then(response => {
         setUsers(response.data);
       })
@@ -80,7 +80,7 @@ function AdminUsers() {
     }).then((result) => {
       if (result.isConfirmed) {
         // Aquí puedes realizar la acción de eliminación
-        axios.delete(`http://prothechnics.us.to:8080/users/delete/id/${userId}`)
+        axios.delete(`http://prothechnics.us.to:8080/api/users/delete/id/${userId}`)
         .then(() => {
           setUsers(users.filter(user => user.id !== userId));
           Swal.fire(

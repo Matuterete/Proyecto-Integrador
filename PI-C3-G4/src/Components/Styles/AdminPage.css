@@ -23,6 +23,8 @@
     margin-top: 20px;
     border-top: 1px solid #ccc;
     padding-top: 20px;
+    display: flex;
+    flex-direction: column;
   }
   
   .Menu h2 {
@@ -31,8 +33,11 @@
   
   .ButtonContainer {
     margin-top: 10px;
+    display: flex;
+    align-self: center;
+    gap: 2rem;
   }
-  
+
   .Button:last-child {
     margin-right: 0;
   }

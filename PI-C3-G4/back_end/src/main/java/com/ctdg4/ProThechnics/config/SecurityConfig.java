@@ -25,11 +25,31 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .cors(cors -> cors.disable())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authRequests ->
                         authRequests
-                                .requestMatchers("/**").permitAll()
-                                .requestMatchers("/auth/**").permitAll()
+                                  .requestMatchers("/**").permitAll()
+//                                //Endpoints authentication
+//                                .requestMatchers("/api/products/**").permitAll()
+//                                .requestMatchers("/api/features/**").permitAll()
+//                                .requestMatchers("/api/categories/**").permitAll()
+//                                .requestMatchers("/api/auth/**").permitAll()
+//                                .requestMatchers("/api/storage/**").hasAnyRole("ADMIN","SUPERADMIN")
+//                                .requestMatchers("/api/users/**").hasAnyRole("ADMIN","SUPERADMIN")
+//
+//                                //URLs authentication
+//                                .requestMatchers("/home").permitAll()
+//                                .requestMatchers("/login").permitAll()
+//                                .requestMatchers("/detail*").permitAll()
+//                                .requestMatchers("/FormLogin").permitAll()
+//                                .requestMatchers("/registroUsuario").permitAll()
+//                                .requestMatchers("/emailRegister").permitAll()
+//                                .requestMatchers("/adminUsers*").hasRole("SUPERADMIN")
+//                                .requestMatchers("/administracion").hasAnyRole("ADMIN","SUPERADMIN")
+//                                .requestMatchers("/adminProducts").hasAnyRole("ADMIN","SUPERADMIN")
+//                                .requestMatchers("/adminFeatures").hasAnyRole("ADMIN","SUPERADMIN")
+//                                .requestMatchers("/adminCategories").hasAnyRole("ADMIN","SUPERADMIN")
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager ->

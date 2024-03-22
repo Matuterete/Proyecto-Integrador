@@ -1,7 +1,9 @@
 package com.ctdg4.ProThechnics.auth;
 
 import com.ctdg4.ProThechnics.exception.BadCredentialsException;
+import com.ctdg4.ProThechnics.exception.DisabledException;
 import com.ctdg4.ProThechnics.exception.DuplicateException;
+import com.ctdg4.ProThechnics.exception.UsernameNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/auth")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @Tags(value = {@Tag(name = "Authentication")})
@@ -26,10 +28,10 @@ public class AuthController {
     @Operation(summary = "User login", description = "Authenticate a user with their credentials")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User authenticated successfully"),
-            @ApiResponse(responseCode = "401", description = "Invalid credentials", content = @Content(schema = @Schema(hidden = true)))
+            @ApiResponse(responseCode = "401", description = "Bad credentials / User is disabled", content = @Content(schema = @Schema(hidden = true)))
     })
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) throws BadCredentialsException {
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) throws BadCredentialsException, UsernameNotFoundException, DisabledException {
         return ResponseEntity.ok(authService.login(request));
     }
 

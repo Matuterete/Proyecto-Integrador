@@ -1,29 +1,37 @@
-import React, { useState, useRef } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import registroUsuario from '../assets/imagen-Usuario.png';
-import '../Components/styles/RegistroUsuario.css'
-import EmailConfirmation from '../Components/EmailConfirmation'
-import Swal from 'sweetalert2';
-import emailjs from '@emailjs/browser';
-import Timer from './Timer';
-
+import { useState, useRef } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import registroUsuario from "../assets/imagen-Usuario.png";
+import "../Components/styles/RegistroUsuario.css";
+import EmailConfirmation from "../Components/EmailConfirmation";
+import Swal from "sweetalert2";
+import emailjs from "@emailjs/browser";
+import Timer from "./Timer";
+import requestToAPI from "../services/requestToAPI";
 
 function RegistroUsuario() {
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [password2, setPassword2] = useState('');
-  const [mostrarDespuesDeGuardar, setMostrarDespuesDeGuardar] = useState(true)
-  const [formData, setFormData] = useState({})
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [mostrarDespuesDeGuardar, setMostrarDespuesDeGuardar] = useState(true);
+  const [formData, setFormData] = useState({});
 
   const handleNameChange = (e) => {
-    setName(e.target.value);
+    const value = e.target.value;
+    const normalizedValue = value
+      .replace(/\s+/g, " ")
+      .replace(/[^a-zA-Z\s]/g, "");
+    setName(normalizedValue);
   };
 
   const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
+    const value = e.target.value;
+    const normalizedValue = value
+      .replace(/\s+/g, " ")
+      .replace(/[^a-zA-Z\s]/g, "");
+    setLastName(normalizedValue);
   };
 
   const handleEmailChange = (e) => {
@@ -44,25 +52,24 @@ function RegistroUsuario() {
     const file = e.target.files[0];
     setUsuario({
       ...usuario,
-      imagen: file
+      imagen: file,
     });
   };
 
   const form = useRef();
 
   const enviarCorreo = () => {
-
     emailjs
-      .sendForm('service_ip36kkm', 'template_npdyv08', form.current, {
-        publicKey: 'mTXpE_At67OgrjMJD',
-        ...formData
+      .sendForm("service_ip36kkm", "template_npdyv08", form.current, {
+        publicKey: "mTXpE_At67OgrjMJD",
+        ...formData,
       })
       .then(
         () => {
-          console.log('¡ÉXITO!');
+          console.log("¡ÉXITO!");
         },
         (error) => {
-          console.log('FALLÓ...', error.text);
+          console.log("FALLÓ...", error.text);
         }
       );
   };
@@ -73,38 +80,37 @@ function RegistroUsuario() {
     const formData = { name, lastName, email, password };
     setFormData(formData);
 
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+.])[A-Za-z\d.!@#$%^&*()_+]{6,}$/;
-    const expReg = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
-    const esEmailValido = expReg.test(email)
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+.])[A-Za-z\d.!@#$%^&*()_+]{6,}$/;
+    const expReg =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
+    const esEmailValido = expReg.test(email);
     if (name.length < 3) {
       Swal.fire({
-          icon: 'error',
-          title: 'Nombre incorrecto',
-          text: 'El nombre debe ser mayor a 2 caracteres',
-          showConfirmButton: true
+        icon: "error",
+        title: "Nombre incorrecto",
+        text: "El nombre debe ser mayor a 2 caracteres",
+        showConfirmButton: true,
       });
-    }
-    else if (lastName.length < 3) {
+    } else if (lastName.length < 3) {
       Swal.fire({
-          icon: 'error',
-          title: 'Apellido incorrecto',
-          text: 'El apellido debe ser mayor a 2 caracteres',
-          showConfirmButton: true
+        icon: "error",
+        title: "Apellido incorrecto",
+        text: "El apellido debe ser mayor a 2 caracteres",
+        showConfirmButton: true,
       });
-    }
-    else if (!esEmailValido) {
+    } else if (!esEmailValido) {
       Swal.fire({
-          icon: 'error',
-          title: 'Email incorrecto',
-          text: 'El correo electrónico no tiene el formato correcto, un formato válido es por ejemplo user@mail.com',
-          showConfirmButton: true
+        icon: "error",
+        title: "Email incorrecto",
+        text: "El correo electrónico no tiene el formato correcto, un formato válido es por ejemplo user@mail.com",
+        showConfirmButton: true,
       });
-    }
-    else if (!passwordRegex.test(password)) {
+    } else if (!passwordRegex.test(password)) {
       Swal.fire({
-          icon: 'error',
-          title: 'Contraseña incorrecta',
-          html: `
+        icon: "error",
+        title: "Contraseña incorrecta",
+        html: `
             La contraseña debe cumplir las siguientes condiciones:
             <br> <br>
             <div>Tener al menos 6 caracteres</div>
@@ -112,105 +118,157 @@ function RegistroUsuario() {
             <div>Contener al menos un número</div>
             <div>Contener al menos un símbolo: ! @ # $ % ^ & * ( ) _ + .</div>
           `,
-          showConfirmButton: true
+        showConfirmButton: true,
       });
-    }
-    else if (password != password2) {
+    } else if (password != password2) {
       Swal.fire({
-          icon: 'warning',
-          title: 'Contraseñas incorrectas',
-          text: 'Las contraseñas no coinciden',
-          showConfirmButton: true
+        icon: "warning",
+        title: "Contraseñas incorrectas",
+        text: "Las contraseñas no coinciden",
+        showConfirmButton: true,
       });
-    }
-    else {
+    } else {
       // Aquí podrías enviar los datos a un servidor o hacer cualquier otra acción con ellos
-      axios.post('http://prothechnics.us.to:8080/auth/register', {
+      requestToAPI("auth/register", "POST", {
         name,
         lastName,
         password,
-        email
+        email,
       })
-        .then(response => {
+        .then((response) => {
           Swal.fire({
-              icon: 'success',
-              title: 'El usuario ha quedado registrado correctamente',
-              showConfirmButton: false,
-              timer: 1500 // Cerrar automáticamente después de 1.5 segundos
+            icon: "success",
+            title: "El usuario ha quedado registrado correctamente",
+            showConfirmButton: false,
+            timer: 1500,
           });
-          console.log(response.data.token)
+          console.log(response.data.token);
 
           setMostrarDespuesDeGuardar(false);
           enviarCorreo();
 
           navigate("/login");
         })
-        .catch(error => {
-          console.error(error);
-          Swal.fire({
-              icon: 'error',
-              title: 'Error!',
-              text: 'Ocurrio un error al intentar registrar el usuario',
-              showConfirmButton: true
-          });
+        .catch((error) => {
+          if (error.response && error.response.status === 409) {
+            Swal.fire({
+              icon: "error",
+              title: "Usuario existente",
+              text: "El correo ingresado ya esta registrado",
+              showConfirmButton: true,
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Error inesperado",
+              text: "Ocurrio un error al intentar registrar el usuario",
+              showConfirmButton: true,
+            });
+          }
         });
-    }
       //  navigate("/emailRegister");
-  }
-  
+    }
+  };
+
   return (
     <div className="form">
-      <h1 className='title'>Formulario de Registro de Usuarios</h1>
-      <div className='container-img'>
-        <img src={registroUsuario} alt="logo registro de usuario" height="100px" width="100px" />
+      <h1 className="title">Formulario de Registro de Usuarios</h1>
+      <div className="container-img">
+        <img
+          src={registroUsuario}
+          alt="logo registro de usuario"
+          height="100px"
+          width="100px"
+        />
       </div>
 
       <form ref={form} onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Nombre:
-            <input type="text" name="name" value={name} onChange={handleNameChange} required />
+          <label>
+            Nombre:
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={handleNameChange}
+              required
+            />
           </label>
         </div>
         <div className="form-group">
-          <label>Apellido:
-            <input type="text" name="lastName" value={lastName} onChange={handleLastNameChange} required />
+          <label>
+            Apellido:
+            <input
+              type="text"
+              name="lastName"
+              value={lastName}
+              onChange={handleLastNameChange}
+              required
+            />
           </label>
         </div>
         <div className="form-group">
-          <label>Correo electrónico:
-            <input type="email" name="email" value={email} onChange={handleEmailChange} required />
+          <label>
+            Correo electrónico:
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+              autoComplete="email"
+            />
           </label>
         </div>
         <div className="form-group">
-          <label>Contraseña:
-            <input type="password" name="password" value={password} onChange={handlePasswordChange} required />
+          <label>
+            Contraseña:
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={handlePasswordChange}
+              required
+              autoComplete="new-password"
+            />
           </label>
         </div>
         <div className="form-group">
-          <label>Repita contraseña:
-            <input type="password" name="password2" value={password2} onChange={handlePassword2Change} required />
+          <label>
+            Repita contraseña:
+            <input
+              type="password"
+              name="password2"
+              value={password2}
+              onChange={handlePassword2Change}
+              required
+              autoComplete="new-password"
+            />
           </label>
         </div>
         <div className="form-group buttonCenter">
-          <button type='submit' className='button buttonPrimary buttonBig'>Guardar Usuario</button>
+          <button type="submit" className="button buttonPrimary buttonBig">
+            Guardar Usuario
+          </button>
         </div>
-        {mostrarDespuesDeGuardar ? (<div></div>
+        {mostrarDespuesDeGuardar ? (
+          <div></div>
         ) : (
           <div>
             <h1>Confirma tu correo</h1>
-            <p>Hemos enviado un mensaje de confirmación a tu dirección de correo electrónico.</p>
+            <p>
+              Hemos enviado un mensaje de confirmación a tu dirección de correo
+              electrónico.
+            </p>
             <Timer />
-            <button type="submit" className='button buttonPrimary buttonBig'>Reenviar correo</button>
+            <button type="submit" className="button buttonPrimary buttonBig">
+              Reenviar correo
+            </button>
           </div>
         )}
       </form>
-
-
-
     </div>
   );
 }
 
-
 export default RegistroUsuario;
-

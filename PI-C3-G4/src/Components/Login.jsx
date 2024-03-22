@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import requestToAPI from "../services/requestToAPI";
 
 function Login() {
+
   const [usuario, setUsuario] = useState({
     correo: '',
     contrasena: ''
@@ -18,28 +20,33 @@ function Login() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post('http://prothechnics.us.to:8080/auth/login',
-      {
+  
+    try {
+      const response = await requestToAPI('auth/login', 'POST', {
         email: usuario.correo,
         password: usuario.contrasena
-      })
-      .then(response => {
-        console.log(response.data);
-        localStorage.setItem('usuarioLogueado', JSON.stringify(response.data))
-        navigate("/home");
-        window.location.reload();
-      })
-      .catch(error => {
-        console.error(error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Usuario incorrecto',
-          text: `Los datos son incorrectos o el usuario ${usuario.correo} no se encuentra registrado en el sistema`,
-          showConfirmButton: true
-        });
       });
+  
+      sessionStorage.setItem('userData', JSON.stringify(response));
+  
+      if (response.user.role === 'ADMIN' || response.user.role === 'SUPERADMIN') {
+        navigate("/administracion");
+      } else {
+        navigate("/home");
+      }
+      window.location.reload();
+  
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Usuario incorrecto',
+        text: `Los datos son incorrectos o el usuario ${usuario.correo} no se encuentra registrado en el sistema`,
+        showConfirmButton: true
+      });
+    }
   };
 
   return (

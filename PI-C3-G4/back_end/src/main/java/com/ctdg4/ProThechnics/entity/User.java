@@ -2,6 +2,7 @@ package com.ctdg4.ProThechnics.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 
 @Builder
@@ -39,11 +39,18 @@ public class User implements UserDetails {
     private String password;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserRole userRole;
+    @OneToMany(mappedBy = "user")
+//    @Schema(hidden = true)
+    private Set<UserFav> fav;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Role role = userRole.getRole();
-        return List.of(new SimpleGrantedAuthority(role.getRole()));
+        if (userRole != null && userRole.getRole() != null) {
+            return List.of(new SimpleGrantedAuthority(userRole.getRole().getRole()));
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     @Override
@@ -69,5 +76,22 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isActive;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", isActive=" + isActive +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, isActive, name, lastName, email, password);
     }
 }
