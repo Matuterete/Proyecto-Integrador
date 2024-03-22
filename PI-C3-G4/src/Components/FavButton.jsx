@@ -4,31 +4,24 @@ import requestToAPI from '../services/requestToAPI';
 const FavButton = ({ productId, setLikedProducts }) => {
   const [isLiked, setIsLiked] = useState(false);
 
-  
-
-
   const handleLikeClick = async () => {
-    // Cambia el estado de isLiked y actualiza el estado local
+  
     setIsLiked(!isLiked);
     
-
-    // Agrega o elimina el producto de la lista de favoritos en el backend
     try {
       const userId = localStorage.getItem('userId');
 
       if (isLiked) {
-        // Realiza la solicitud al endpoint para eliminar el producto de la lista de favoritos
         await requestToAPI(`users/${userId}/favorites/${productId}`, 'DELETE');
         console.log(`Producto ${productId} eliminado de la lista de favoritos.`);
         
       } else {
-        // Realiza la solicitud al endpoint para agregar el producto a la lista de favoritos
+    
         await requestToAPI(`users/${userId}/favorites/${productId}`, 'POST');
         console.log(`Producto ${productId} agregado a la lista de favoritos.`);
         
       }
 
-      // Actualiza el estado local o realiza otras acciones necesarias después de la actualización
     } catch (error) {
       console.error('Error:', error);
     }
@@ -41,7 +34,6 @@ const FavButton = ({ productId, setLikedProducts }) => {
     })
   };
  
-
 
   return (
     <div className="fav-button">
@@ -56,36 +48,26 @@ const FavButton = ({ productId, setLikedProducts }) => {
 
 export default FavButton;
 
+// //=----logica para almacenar al local storage 
+// const [isLiked, setIsLiked] = useState(false);
 
-//------Logica para agregar los fav al local storage 
+// useEffect(() => {
+
+//   const storedLikedProducts = localStorage.getItem('likedProducts'); 
+//   if (storedLikedProducts) {
+//     const parsedLikedProducts = JSON.parse(storedLikedProducts);
+//     setIsLiked(parsedLikedProducts[productId - 1] || false);
+//     setLikedProducts(parsedLikedProducts);
+//   }
+// }, []);
+
 // const handleLikeClick = () => {
 //   setIsLiked(!isLiked);
-
-
 
 //   setLikedProducts((prevLikedProducts) => {
 //     const newLikedProducts = [...prevLikedProducts];
 //     newLikedProducts[productId - 1] = !newLikedProducts[productId - 1];
-//     console.log("Productos marcados como favoritos:", newLikedProducts);
 //     localStorage.setItem('likedProducts', JSON.stringify(newLikedProducts));
 //     return newLikedProducts;
-
-    
 //   });
 // };
-
-
-
-//------logica pque sirve y se puede probar, pero el corazon no se actualiza 
-
-  // useEffect(() => {
- 
-  //   const storedLikedProducts = localStorage.getItem('likedProducts'); 
-  //   if (storedLikedProducts) {
-  //     const parsedLikedProducts = JSON.parse(storedLikedProducts);
-  //     setIsLiked(parsedLikedProducts[productId - 1] || false);
-  //     setLikedProducts(parsedLikedProducts);
-  //   }
-  //  //localStorage.clear();
-  //   console.log("Contenido del localStorage:", localStorage);
-  // }, []);

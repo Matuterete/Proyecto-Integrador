@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import requestToAPI from '../services/requestToAPI';
 import Card from '../Components/Card';
-import '../Components/Styles/FavoriteList.css'
+import '../Components/styles/FavoriteList.css'
 
 
 const FavoriteList = () => {

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import registroUsuario from '../assets/imagen-Usuario.png';
-import '../Components/Styles/RegistroUsuario.css'
+import '../Components/styles/RegistroUsuario.css'
 import EmailConfirmation from '../Components/EmailConfirmation'
 import Swal from 'sweetalert2';
 import emailjs from '@emailjs/browser';
