@@ -1,20 +1,16 @@
 import React from 'react'
-import '../Components/Styles/Card.css'
 
 
-const FavList= ({ favoriteProducts }) => {
+
+const FavList = ({ product }) => {
 
     return (
-        
-        <ul>
-        {favoriteProducts && favoriteProducts.length > 0 ? 
-            favoriteProducts.map((product, index) => (
-                <li key={index}>{product}</li>
-            )) :
-            <li>No hay productos favoritos</li>
-        }
-    </ul>
-        
+        <div key={product.id}>
+
+            <h2 className='name'>{product.product.name}</h2>
+            <p className='price'>USD: {product.product.price}</p>
+        </div>
+
     )
 }
 
