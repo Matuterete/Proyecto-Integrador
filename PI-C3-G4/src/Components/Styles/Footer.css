@@ -11,7 +11,12 @@
 }
 
 .footer-logo {
-  padding-left: 60px;
+  padding-left: 4rem;
+  
+}
+
+.footer-logo img {
+  width: 300px;
 }
 
 .footer-copyright {

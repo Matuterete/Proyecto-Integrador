@@ -1,4 +1,3 @@
-import React from 'react';
 import "../Components/styles/Pagination.css";
 
 function Pagination({ productsPerPage, totalProducts, paginate, currentPage }) {

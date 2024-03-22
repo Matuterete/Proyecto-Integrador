@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import requestToAPI from '../services/requestToAPI';  
 
 function UserEditForm({ user, onSave, onCancel }) {
   const [id] = useState(user.id);
@@ -9,16 +9,6 @@ function UserEditForm({ user, onSave, onCancel }) {
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
   const [selectedRole, setSelectedRole] = useState(user.role);
-
-  // useEffect(() => {
-  //   axios.get('http://prothechnics.us.to:8080/api/roles/find/all')
-  //     .then(response => {
-  //       setRoles(response.data);
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //     });
-  // }, []);
 
   const handleIsActiveChange = (e) => {
     setIsActive(e.target.checked);
@@ -43,7 +33,7 @@ function UserEditForm({ user, onSave, onCancel }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`http://prothechnics.us.to:8080/api/users/update`, {
+    requestToAPI(`users/update`, 'PUT', {
       id,
       isActive,
       name,

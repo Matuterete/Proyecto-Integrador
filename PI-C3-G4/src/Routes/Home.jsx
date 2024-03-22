@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../Components/Card';
+import Pagination from '../Components/Pagination'; // Importa el componente de paginación
 import requestToAPI from '../services/requestToAPI';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
@@ -13,6 +14,8 @@ const Home = () => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
   const [mostrarProductosPorCategoria, setMostrarProductosPorCategoria] = useState(false);
   const [productosRecomendados, setProductosRecomendados] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // Nuevo estado para el número de página actual
+  const [productsPerPage] = useState(6); // Número de productos por página
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,7 +33,7 @@ const Home = () => {
   useEffect(() => {
     async function fetchRandomProducts() {
       try {
-        const productosResponse = await requestToAPI('products/find/random/6', 'GET');
+        const productosResponse = await requestToAPI('products/find/random/10', 'GET');
         setProductosRecomendados(productosResponse);
       } catch (error) {
         console.error('Error fetching random products:', error);
@@ -76,7 +79,7 @@ const Home = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 768) {
+      if (window.innerWidth <= 968) {
         setSliderSettings({
           ...sliderSettings,
           slidesToShow: 1,
@@ -99,6 +102,14 @@ const Home = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, [productosPorCategoria.length]);
+
+ 
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = productosRecomendados.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  // Cambiar de página
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className='body'>
@@ -140,14 +151,14 @@ const Home = () => {
         <div>
           <p className='cardTitle-2'>Recomendados</p>
           <div className='cardGrid-2'>
-            {productosRecomendados.length === 0 && !mostrarProductosPorCategoria ? (
-              <div className="loader-container">
-                <div className="loader"></div>
-              </div>
-            ) : (
-              productosRecomendados.map(product => <Card product={product} key={product.id} />)
-            )}
+            {currentProducts.map(product => <Card product={product} key={product.id} />)}
           </div>
+          <Pagination
+            productsPerPage={productsPerPage}
+            totalProducts={productosRecomendados.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       </div>
     </div>

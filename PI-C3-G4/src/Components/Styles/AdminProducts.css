@@ -18,11 +18,34 @@
 
 /* Estilos del icono */
 .btn::before {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   content: "\f055"; /* Código Unicode del ícono (en este caso, es el ícono de una flecha hacia la derecha) */
   margin-right: 10px; /* Espacio entre el ícono y el texto */
 }
 
-.feature{
+.flex {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+a {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+.form-group label {
+  width: 100%;
+}
+.eliminar{
+  margin-bottom: 1rem;
+  background-color: #DBE2EF;
+}
+.form-group select {
+  padding-left: 20px;
+  width: 100px;
+}
+.cancel {
+  all: unset;
+  margin-top: 1rem;
 }

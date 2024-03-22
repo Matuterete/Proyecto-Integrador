@@ -162,6 +162,13 @@ function ProductAddForm({ onAdd, onCancel }) {
     return featureData;
   };
 
+  const clearInput = (inputId) => {
+    const input = document.getElementById(inputId);
+    if (input) {
+      input.value = "";
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -169,8 +176,6 @@ function ProductAddForm({ onAdd, onCancel }) {
     let bucketS3Response;
 
     const featureData = buildFeatureData();
-
-    console.log(featureData);
 
     try {
       //1 - Se guarda primero el producto
@@ -385,10 +390,11 @@ function ProductAddForm({ onAdd, onCancel }) {
       </div>
       <div>
         <p>Imágenes (1MB Max)</p>
-        <div className="form-group">
+        <div className="form-group flex">
           <label>
             Portada del Producto:
             <input
+              className="image-load"
               type="file"
               accept="image/*"
               id="primaryImageInput"
@@ -396,11 +402,18 @@ function ProductAddForm({ onAdd, onCancel }) {
               required
             />
           </label>
+          <button
+            className="cancel"
+            onClick={() => clearInput("primaryImageInput")}
+          >
+            ❌
+          </button>
         </div>
-        <div className="form-group">
+        <div className="form-group flex">
           <label>
             Adicionales:
             <input
+              className="image-load"
               type="file"
               accept="image/*"
               multiple
@@ -408,9 +421,15 @@ function ProductAddForm({ onAdd, onCancel }) {
               onChange={handleAdditionalImagesChange}
             />
           </label>
+          <button
+            className="cancel"
+            onClick={() => clearInput("additionalImagesInput")}
+          >
+            ❌
+          </button>
         </div>
       </div>
-      <div className="form-group">
+      <div className="form-group flex2">
         {featuresData.selectedFeatures?.map((selectedFeature, index) => (
           <div key={index} className="feature-inputs">
             <div className="form-group">
@@ -441,7 +460,7 @@ function ProductAddForm({ onAdd, onCancel }) {
             </div>
             {index > 0 && (
               <button
-                className="button"
+                className="button eliminar"
                 type="button"
                 onClick={() => handleRemoveFeature(index)}
               >
@@ -459,15 +478,15 @@ function ProductAddForm({ onAdd, onCancel }) {
           Agregar Producto
         </button>
         &nbsp;&nbsp;&nbsp;
-        {/* <button
+        <button
           type="button"
           className="button buttonTerciary buttonBig"
-          onClick={onCancel}
-        > */}
-        <button type="button" className="button buttonTerciary buttonBig">
-          <NavLink to="/adminProducts" onClick={onCancel}>
-            Cancelar
-          </NavLink>
+          onClick={() => {
+            onCancel();
+            window.location.reload();
+          }}
+        >
+          Cancelar
         </button>
       </div>
     </form>
