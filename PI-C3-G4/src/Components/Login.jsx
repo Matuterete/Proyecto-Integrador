@@ -31,7 +31,7 @@ function Login() {
   
       sessionStorage.setItem('userData', JSON.stringify(response));
   
-      if (response.user.role === 'ADMIN') {
+      if (response.user.role === 'ADMIN' || response.user.role === 'SUPERADMIN') {
         navigate("/administracion");
       } else {
         navigate("/home");
