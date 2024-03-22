@@ -3,14 +3,18 @@ import { Link, useParams } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import requestToAPI from "../services/requestToAPI";
-import Rating from "../Components/Rating"; // Importar el componente Rating
+import Rating from "../Components/Rating";
+import Calendar from "../Components/Calendar";
 import "../Components/styles/Detail.css";
 
 const Detail = () => {
-  const [product, setProduct] = useState(null); // Estado para almacenar los datos del producto
-  const { id } = useParams(); // Obtener el ID del producto de la URL
-  const [storedRating, setStoredRating] = useState(); // Estado para almacenar la calificación del localStorage
-
+  const [product, setProduct] = useState(null);
+  const { id } = useParams();
+  const [storedRating, setStoredRating] = useState();
+  const [showCalendars, setShowCalendars] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+ 
   useEffect(() => {
     async function fetchProduct() {
       try {
@@ -18,21 +22,20 @@ const Detail = () => {
         const method = "GET";
         const data = null;
         const headers = {};
-        // Obtener datos del producto desde la API y almacenar en el estado
+
         const response = await requestToAPI(url, method, data, headers);
         setProduct(response);
       } catch (error) {
         console.error("Error fetching product:", error);
       }
     }
-    fetchProduct(); // Invocar la función fetchProduct
-    // Obtener la calificación almacenada en el localStorage
-    const storedRating = parseInt(localStorage.getItem(`product_${id}_rating`));
-if (!isNaN(storedRating) && storedRating >= 0) {
-  setStoredRating(storedRating);
-}
+    fetchProduct();
 
-  }, [id]); // Ejecutar el efecto cuando el ID del producto cambie
+    const storedRating = parseInt(localStorage.getItem(`product_${id}_rating`));
+    if (!isNaN(storedRating) && storedRating >= 0) {
+      setStoredRating(storedRating);
+    }
+  }, [id]);
 
   return (
     <div className="body">
@@ -43,7 +46,7 @@ if (!isNaN(storedRating) && storedRating >= 0) {
               <h2>{product.name}</h2>
 
               <div>
-                {[1,2,3,4,5].map((value) => (
+                {[1, 2, 3, 4, 5].map((value) => (
                   <span
                     key={value}
                     style={{
@@ -72,16 +75,51 @@ if (!isNaN(storedRating) && storedRating >= 0) {
             </div>
             <div className="pay">
               <Link to={"/home"}>
-                <img className="backArrowDetail" src="\src\assets\back.png" />{" "}
+                <img className="backArrowDetail" src="\src\assets\back.png" />
               </Link>
+
+              <div className="calendar-container">
+                <button
+                  className="button buttonTerciary"
+                  onClick={() => setShowCalendars(!showCalendars)}
+                >
+                  Ver fechas disponibles
+                </button>
+                {showCalendars && (
+                  <div className="calendars">
+                    <Calendar
+                      onSelectSlot={(slotInfo) => {
+                        setStartDate(slotInfo.start);
+                        setEndDate(null);
+                        setShowButtons(false);
+                      }}
+                    />
+
+                    <Calendar
+                      onSelectSlot={(slotInfo) => {
+                        setEndDate(slotInfo.start);
+                        setShowButtons(true);
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
 
               <div className="priceDetail">
                 <h2>USD: {product.price}</h2>
                 <p>Por dos días</p>
               </div>
 
-              <button className="button buttonPrimary">Alquilar ahora</button>
-              <button className="button buttonTerciary">
+              <button
+                disabled={!startDate || !endDate}
+                className="button buttonPrimary"
+              >
+                Alquilar ahora
+              </button>
+              <button
+                disabled={!startDate || !endDate}
+                className="button buttonTerciary"
+              >
                 Agregar al Carrito
               </button>
 

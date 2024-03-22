@@ -4,6 +4,7 @@ import '../Components/styles/AdminPage.css';
 
 const AdminPage = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [sessionData, setSessionData] = useState(null);
 
   useEffect(() => {
     const checkWindowSize = () => {
@@ -18,6 +19,18 @@ const AdminPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const getSessionData = async () => {
+      try {
+        const data = await sessionStorage.getItem('userData');
+        setSessionData(JSON.parse(data));
+      } catch (error) {
+        console.error('Error retrieving session data:', error);
+      }
+    };
+    getSessionData();
+  }, []);
+
   return (
     <div className='bodyPage'>
       <div className='adminMenu'>
@@ -30,7 +43,7 @@ const AdminPage = () => {
                 <Link to="/adminProducts"><button className='button buttonPrimary'>Productos</button></Link>
                 <Link to="/adminCategories"><button className='button buttonPrimary'>Categorías</button></Link>
                 <Link to="/adminFeatures"><button className='button buttonPrimary'>Características</button></Link>
-                <Link to="/adminUsers"><button className='button buttonPrimary'>Usuarios</button></Link>
+                {sessionData && sessionData.user.role === "SUPERADMIN" && <Link to="/adminUsers"><button className='button buttonPrimary'>Usuarios</button></Link>}
               </>
             )}
           </div>

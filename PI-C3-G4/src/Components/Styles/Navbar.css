@@ -26,7 +26,7 @@
 .buttons button {
   margin-right: 30px;
   width: auto;
-  padding: 3px;
+  padding: 0.3rem 0.7rem;
 }
 
 .buttons div {
@@ -58,6 +58,22 @@
 .user p{
   color: black;
 }
+
+.user .name{
+  display: flex;
+  flex-direction: column;
+  /* align-items: baseline; */
+  font-size: smaller;
+  margin-right: 1rem;
+}
+.user-logo{
+  font-weight: bold;
+}
+
+.user-logo:hover{
+  background-color: #d6d0d0;
+}
+
 
 @media (min-width: 761px) {
   nav#mobile {
