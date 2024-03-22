@@ -1,42 +1,66 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import requestToAPI from "../services/requestToAPI";
+import Rating from "../Components/Rating"; // Importar el componente Rating
 import "../Components/styles/Detail.css";
 
 const Detail = () => {
-  const [responseData, setResponseData] = useState();
-  const { id } = useParams();
+  const [product, setProduct] = useState(null); // Estado para almacenar los datos del producto
+  const { id } = useParams(); // Obtener el ID del producto de la URL
+  const [storedRating, setStoredRating] = useState(); // Estado para almacenar la calificación del localStorage
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchProduct() {
       try {
         const url = `products/find/id/${id}`;
         const method = "GET";
         const data = null;
         const headers = {};
-        setResponseData(await requestToAPI(url, method, data, headers));
+        // Obtener datos del producto desde la API y almacenar en el estado
+        const response = await requestToAPI(url, method, data, headers);
+        setProduct(response);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching product:", error);
       }
     }
-    fetchData();
-  }, [id]);
+    fetchProduct(); // Invocar la función fetchProduct
+    // Obtener la calificación almacenada en el localStorage
+    const storedRating = parseInt(localStorage.getItem(`product_${id}_rating`));
+if (!isNaN(storedRating) && storedRating >= 0) {
+  setStoredRating(storedRating);
+}
+
+  }, [id]); // Ejecutar el efecto cuando el ID del producto cambie
 
   return (
     <div className="body">
-      {responseData ? (
-        <div className="bodyDetail ">
+      {product ? (
+        <div className="bodyDetail">
           <div className="galleryAndPay">
             <div className="gallery">
-              <h2>{responseData.name}</h2>
+              <h2>{product.name}</h2>
+
+              <div>
+                {[1,2,3,4,5].map((value) => (
+                  <span
+                    key={value}
+                    style={{
+                      color: storedRating >= value ? "gold" : "black",
+                    }}
+                  >
+                    &#9733;
+                  </span>
+                ))}
+              </div>
+
               <ImageGallery
-                items={responseData.images.map((image, index) => ({
+                items={product.images.map((image, index) => ({
                   original: image.url,
                   thumbnail: image.url,
-                  originalAlt: `${responseData.name} ${index + 1}`,
-                  thumbnailAlt: `${responseData.name} ${index + 1}`,
+                  originalAlt: `${product.name} ${index + 1}`,
+                  thumbnailAlt: `${product.name} ${index + 1}`,
                 }))}
                 autoPlay={false}
                 showPlayButton={false}
@@ -52,8 +76,8 @@ const Detail = () => {
               </Link>
 
               <div className="priceDetail">
-                <h2>USD: {responseData.price}</h2>
-                <p>Por dos dias</p>
+                <h2>USD: {product.price}</h2>
+                <p>Por dos días</p>
               </div>
 
               <button className="button buttonPrimary">Alquilar ahora</button>
@@ -71,19 +95,19 @@ const Detail = () => {
           <div className="info">
             <div className="product_description">
               <h2>Descripción</h2>
-              <p>{responseData.description}</p>
+              <p>{product.description}</p>
             </div>
 
             <div className="caracteristicas">
-              <h2>Caracteristicas</h2>
-              <ul className="feactures">
-                {responseData.features.map((objeto, index) => (
+              <h2>Características</h2>
+              <ul className="features">
+                {product.features.map((feature, index) => (
                   <li key={index}>
                     <div>
-                      <img src={objeto.url} alt="" />
+                      <img src={feature.url} alt="" />
                     </div>
                     <p>
-                      {objeto.title}: {objeto.featureValue}
+                      {feature.title}: {feature.featureValue}
                     </p>
                   </li>
                 ))}
