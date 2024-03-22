@@ -59,23 +59,4 @@ const FavoriteList = () => {
 }
 export default FavoriteList
 
-// //--------Ya renderiza los productos que estan en la lista de fav
-// <div>
-// <h1>Favoritos de {favoriteProducts.name}</h1>
-// <ul>
-//     {productDetails.length > 0 ? (
-//         productDetails.map((product, index) => (
-//             <li key={index}>
-//                 <p>ID: {product.productId}</p>
-//                 <p>Nombre: {product.name}</p>
-//                 <p>Precio: {product.price}</p>
-//                 {/* Otros detalles del producto */}
-//             </li>
-//         ))
-//     ) : (
-//         <li>No hay productos favoritos</li>
-//     )}
-// </ul>
-// </div>
-
 

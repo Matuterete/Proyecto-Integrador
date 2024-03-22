@@ -27,6 +27,7 @@ function Login() {
       })
       .then(response => {
         console.log(response.data);
+        localStorage.setItem('userId', response.data.user.id);
         localStorage.setItem('usuarioLogueado', JSON.stringify(response.data))
         navigate("/home");
         window.location.reload();
