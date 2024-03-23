@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "../Components/Card";
 import Pagination from "../Components/Pagination";
@@ -6,6 +6,7 @@ import Calendar from "../Components/Calendar.jsx";
 import Buscador from "../Components/Buscador.jsx";
 import requestToAPI from "../services/requestToAPI";
 import Slider from "react-slick";
+import { useFavContext } from "../Components/FavContext.jsx";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../Components/styles/Home.css";
@@ -29,6 +30,15 @@ const Home = () => {
   const currentProducts = productosRecomendados.slice(
     indexOfFirstProduct,
     indexOfLastProduct
+  );
+  const {
+    favoriteProducts,
+    loading,
+    fetchFavoriteProducts,
+  } = useFavContext();
+
+  const [userData, setUserData] = useState(
+    JSON.parse(sessionStorage.getItem("userData"))
   );
 
   const navigate = useNavigate();
@@ -204,7 +214,6 @@ const Home = () => {
             </div>
           </>
         )}
-
         {selectedProduct &&
           selectedStartDate &&
           selectedEndDate &&
@@ -236,31 +245,32 @@ const Home = () => {
           ))}
         </div>
       </div>
-
       {mostrarProductosPorCategoria && (
-        <div className="productos-por-categoria">
-          <h1>{categoriaSeleccionada}</h1>
-          <Slider {...sliderSettings}>
-            {productosPorCategoria.map((producto) => {
-              console.log("Productos por categoría:", productosPorCategoria);
-              return (
-                <div
-                  key={producto.id}
-                  className="producto"
-                  onClick={() => handleProductoClick(producto)}
-                >
-                  <div className="card-wrapper">
-                    <Card product={producto} />
-                  </div>
-                </div>
-              );
-            })}
-          </Slider>
-        </div>
-      )}
+  <div className="productos-por-categoria">
+    <h1>{categoriaSeleccionada}</h1>
+    <Slider {...sliderSettings}>
+      {productosPorCategoria.map((producto) => {
+        console.log("Productos por categoría:", productosPorCategoria);
+        return (
+          <div className="producto-wrapper" key={producto.id}>
+            <div
+              className="producto"
+              onClick={() => handleProductoClick(producto)}
+            >
+              <div className="card-wrapper">
+                <Card product={producto} userData={userData} />
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </Slider>
+  </div>
+)}
+)}
 
       <div className="Container">
-        <div>
+        <div className="Box">
           <p className="cardTitle-2">Recomendados</p>
           <div className="cardGrid-2">
             {productosRecomendados.length === 0 &&
@@ -270,7 +280,7 @@ const Home = () => {
               </div>
             ) : (
               currentProducts.map((product) => (
-                <Card product={product} key={product.id} />
+                <Card product={product} key={product.id} userData={userData} />
               ))
             )}
           </div>
