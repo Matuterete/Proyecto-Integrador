@@ -76,12 +76,14 @@ const UserProfile = () => {
           ""
         )}
 
-        <div className="Container">
+        <div className="Container2">
           <div className="Box">
             <p className="cardTitle-2">Productos Favoritos</p>
             <div className="cardGrid-2">
               {loading ? (
-                <p>Loading...</p>
+                <div className="loader-container">
+                  <div className="loader"></div>
+                </div>
               ) : (
                 favoriteProductDetails.map((product, index) => (
                   <Card key={index} product={product} userData={userData} />

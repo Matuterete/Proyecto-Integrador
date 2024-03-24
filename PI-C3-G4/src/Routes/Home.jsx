@@ -36,12 +36,15 @@ const Home = () => {
     loading,
     fetchFavoriteProducts,
   } = useFavContext();
+  const [fetchFavoriteProductsCalled, setFetchFavoriteProductsCalled] = useState(false);
 
   const [userData, setUserData] = useState(
     JSON.parse(sessionStorage.getItem("userData"))
   );
 
   const navigate = useNavigate();
+
+
 
   useEffect(() => {
     async function fetchData() {
@@ -72,6 +75,13 @@ const Home = () => {
     }
     fetchRandomProducts();
   }, []);
+
+  useEffect(() => {
+    if (userData && userData.user && !fetchFavoriteProductsCalled) {
+      fetchFavoriteProducts(userData.user.id);
+      setFetchFavoriteProductsCalled(true);
+    }
+  }, [userData, fetchFavoriteProducts, fetchFavoriteProductsCalled]);
 
   const handleCategoriaClick = async (categoryId, categoryTitle) => {
     if (categoriaSeleccionada === categoryTitle) {
@@ -266,7 +276,6 @@ const Home = () => {
       })}
     </Slider>
   </div>
-)}
 )}
 
       <div className="Container">

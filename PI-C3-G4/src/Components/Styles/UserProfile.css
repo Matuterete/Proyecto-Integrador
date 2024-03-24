@@ -1,16 +1,14 @@
 .bodyUserProfile {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 60%;
 }
 .user-card {
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 16px;
+  padding: 1rem;
   display: flex;
   background-color: #f9f7f7;
+  margin: 0rem 3.4rem 2rem 0.6rem;
 }
 
 .avatar {
@@ -35,5 +33,8 @@
 .userprof {
   display: flex;
   flex-direction: column;
-
+  margin: auto;
+  width: 60%;
+  margin-bottom: 5rem;
 }
+

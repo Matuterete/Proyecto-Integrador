@@ -58,7 +58,7 @@ const Navbar = () => {
         sessionStorage.removeItem("userData");
         setSessionData(null);
         Swal.fire("Sesión cerrada", "", "success").then(() => {
-          navigate("/");
+          handleReload();
         });
       }
     });
