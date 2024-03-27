@@ -4,6 +4,12 @@
   font-weight: 400;
   color: #122E4F;
 }
+.img-background{
+  background-image: url('./assets/fondo_1.png'); /* Ruta de la imagen de fondo */
+  background-size: cover;
+  background-attachment: fixed;
+  color: white;
+}
 
 body {
   margin: 0;
@@ -25,7 +31,7 @@ main {
 }
 
 .navbar {
-  background-color: #fafafa;
+  background-color: #0A1F38;
   color: white;
   padding: 10px 20px;
   position: fixed;

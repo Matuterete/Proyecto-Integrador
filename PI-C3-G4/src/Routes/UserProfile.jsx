@@ -57,7 +57,7 @@ const UserProfile = () => {
   console.log(favoriteProductDetails); //Array vaci
 
   return (
-    <div className="userprof">
+    <div className="userprof img-background">
       <div className="body bodyUserProfile">
         {userData && userData.user ? (
           <div className="user-card">

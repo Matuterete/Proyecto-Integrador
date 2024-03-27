@@ -1,5 +1,15 @@
+.userprof {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  width: 100vw;
+  min-height: 86vh;
+  padding-bottom: 50px;
+}
 .bodyUserProfile {
   display: flex;
+  align-items: center;
   flex-direction: column;
 }
 .user-card {
@@ -7,8 +17,10 @@
   border-radius: 8px;
   padding: 1rem;
   display: flex;
-  background-color: #f9f7f7;
+  align-items: center;
+  background-color: #122E4F;
   margin: 0rem 3.4rem 2rem 0.6rem;
+  width: 70%;
 }
 
 .avatar {
@@ -28,13 +40,5 @@
 
 .user-info p {
   margin: 4px 0;
-}
-
-.userprof {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  width: 60%;
-  margin-bottom: 5rem;
 }
 

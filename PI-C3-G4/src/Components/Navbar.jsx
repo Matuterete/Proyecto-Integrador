@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Sun from "../assets/Sun.svg";
-import Moon from "../assets/Moon.svg";
-import Logo from "../assets/Logo.png";
-import Usuario from "../assets/usuario.svg";
+import Logo from "../assets/Logo-2.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "../Utils/Context.jsx";
-import { TOGGLE_THEME } from "../Reducers/Reducer.jsx";
 import "./styles/Navbar.css";
 import Swal from "sweetalert2";
 
@@ -14,9 +10,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  const handleTheme = () => {
-    dispatch({ type: TOGGLE_THEME });
-  };
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -114,7 +108,7 @@ const Navbar = () => {
               </button>
             </div>
           ) : (
-            <div>
+            <div className="button_login_registro_desktop">
               <Link to="/login" className="button buttonPrimary">
                 Iniciar Sesión
               </Link>
@@ -124,13 +118,6 @@ const Navbar = () => {
             </div>
           )}
 
-          <button className="button buttonSecundary" onClick={handleTheme}>
-            <img
-              src={state.theme === "light" ? Moon : Sun}
-              width="20px"
-              alt="Theme"
-            ></img>
-          </button>
         </div>
       </nav>
     </section>

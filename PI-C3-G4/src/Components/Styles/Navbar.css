@@ -11,7 +11,6 @@
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  background-color: #F9F7F7;
   color: var(--color-text);
   width: 100vw;
   height: auto;
@@ -21,6 +20,9 @@
   display: flex;
   align-items: flex-start;
   align-items: center;
+}
+.button_login_registro_desktop{
+  padding-right: 25px;
 }
 
 .buttons button {
@@ -65,6 +67,7 @@
   /* align-items: baseline; */
   font-size: smaller;
   margin-right: 1rem;
+  color: white;
 }
 .user-logo{
   font-weight: bold;

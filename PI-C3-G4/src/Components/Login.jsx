@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import requestToAPI from "../services/requestToAPI";
+import './Styles/login.css'
 
 function Login() {
 
@@ -50,7 +50,7 @@ function Login() {
   };
 
   return (
-    <div className="form">
+    <div className="form img-background login">
       <h1>Iniciar Sesión</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
