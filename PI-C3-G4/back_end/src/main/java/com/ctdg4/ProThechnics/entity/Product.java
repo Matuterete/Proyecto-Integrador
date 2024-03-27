@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -42,4 +43,6 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @Schema(hidden = true)
     private List<UserFav> fav;
+//    @OneToMany(mappedBy = "product")
+//    private Set<Rental> rental;
 }

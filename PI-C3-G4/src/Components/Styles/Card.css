@@ -85,12 +85,13 @@ justify-content: space-around;
 
 .not-liked-icon{
   color: rgb(255, 255, 255);
-  animation: heartBeat 0.5s ease-in-out;
+}
+.not-liked-icon:active, .liked-icon:active{
+  animation: heartBeat 0.3s ease-in-out;
 }
 
 .liked-icon{
   color: rgb(245, 74, 145);
-  animation: heartBeat2 0.5s ease-in-out;
 }
 
 .Container {
@@ -129,20 +130,3 @@ justify-content: space-around;
   }
 }
 
-@keyframes heartBeat2 {
-  0% {
-    transform: scale(1);
-  }
-  25% {
-    transform: scale(2);
-  }
-  50% {
-    transform: scale(1);
-  }
-  75% {
-    transform: scale(2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}

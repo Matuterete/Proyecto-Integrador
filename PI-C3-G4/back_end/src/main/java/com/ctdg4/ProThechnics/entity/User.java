@@ -23,6 +23,7 @@ import java.util.*;
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = {"email"})})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -40,9 +41,9 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserRole userRole;
     @OneToMany(mappedBy = "user")
-//    @Schema(hidden = true)
     private Set<UserFav> fav;
-
+//    @OneToMany(mappedBy = "user")
+//    private Set<Rental> rental;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
