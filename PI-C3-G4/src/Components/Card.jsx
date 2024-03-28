@@ -3,9 +3,10 @@ import '../Components/styles/Card.css';
 import { Link } from 'react-router-dom';
 import FavButton from './FavButton';
 import Share from './Share';
-import Rating from './Rating';
+import RatingAverage from './RatingAverage';
 
-const Card = ({ product }) => {
+
+const Card = ({ product  }) => {
   const [likedProducts, setLikedProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -22,14 +23,16 @@ const Card = ({ product }) => {
             <img className='image' src={product.images[0].url} alt=""  />
           </div>
           <h2 className='name'>{product.name}</h2>
-          <p className='price'>USD: {product.price}</p>                    
+          <p className='price'>USD: {product.price}</p>   
+           {/* Renderizar la calificación promedio */}
+           <RatingAverage productId={product.id} />                 
         </Link>
-        <div> <Rating productId={product.id} />      </div>       
         <div>
           <Share onClick={() => { openModal(); }} url={'detail/' + product.id} image={product.images[0].url} nombre={product.name} />
         </div>
-      </div>            
-    </div>
+      </div>       
+      </div>        
+
   );
 };
 

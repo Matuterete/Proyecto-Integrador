@@ -3,18 +3,19 @@ import { Link, useParams } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import requestToAPI from "../services/requestToAPI";
-import Rating from "../Components/Rating";
 import Calendar from "../Components/Calendar";
 import "../Components/styles/Detail.css";
+import RatingComponent from '../Components/RatingComponent'; // Asegúrate de tener la ruta correcta hacia el archivo RatingComponent.js
 
 const Detail = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
-  const [storedRating, setStoredRating] = useState();
+  const [storedRating, setStoredRating] = useState(null);
   const [showCalendars, setShowCalendars] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
- 
+  const [rating, setRating] = useState(0);
+
   useEffect(() => {
     async function fetchProduct() {
       try {
@@ -37,6 +38,16 @@ const Detail = () => {
     }
   }, [id]);
 
+  const handleRatingChange = (event) => {
+    setRating(parseInt(event.target.value));
+  };
+
+  const handleSubmitRating = () => {
+    localStorage.setItem(`product_${id}_rating`, rating);
+    setStoredRating(rating);
+    setRating(0); // Reiniciar la variable rating después de enviar la calificación
+  };
+
   return (
     <div className="body">
       {product ? (
@@ -44,21 +55,7 @@ const Detail = () => {
           <div className="galleryAndPay">
             <div className="gallery">
               <h2>{product.name}</h2>
-
-              <div>
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <span
-                    key={value}
-                    style={{
-                      color: storedRating >= value ? "gold" : "black",
-                    }}
-                  >
-                    &#9733;
-                  </span>
-                ))}
-              </div>
-
-              <ImageGallery
+             <ImageGallery
                 items={product.images.map((image, index) => ({
                   original: image.url,
                   thumbnail: image.url,
@@ -150,8 +147,11 @@ const Detail = () => {
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
+              </div>
+              </div>
+              <div className="Rating">
+              <RatingComponent productId={id} />           
+              </div>
         </div>
       ) : (
         <div className="loader-container">
