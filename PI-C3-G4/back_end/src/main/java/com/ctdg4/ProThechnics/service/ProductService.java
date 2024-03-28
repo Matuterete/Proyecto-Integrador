@@ -35,15 +35,6 @@ public class ProductService {
     @Autowired
     private ModelMapper modelMapper;
 
-    // Products
-//    public Product saveProduct(Product product) {
-//        Product savedProduct = productRepository.save(product);
-//        Category category = categoryRepository.findById(savedProduct.getCategory().getId())
-//                .orElseThrow(() -> new RuntimeException("Category not found"));
-//        savedProduct.setCategory(category);
-//        return savedProduct;
-//    }
-
     public Product saveProduct(Product product) {
         Product savedProduct = productRepository.save(product);
         Category category = categoryRepository.findById(savedProduct.getCategory().getId())

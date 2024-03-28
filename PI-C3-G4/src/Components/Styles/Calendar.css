@@ -1,43 +1,68 @@
-.rbc-calendar {
-    width: 300px;
-    height: 400px;
-    background-color: #f8f8f8;
-    border: 1px solid #ccc;
-    position: relative; 
-    z-index: 1; 
-  }
-.rbc-button-link{
-    cursor:default;
-    color: #122E4F;
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
 }
 
-.rbc-toolbar-label{
-    color:#122E4F;
+.calendar-card {
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
-  .rbc-header {
-    background-color: #122E4F;
-    font-family: 'Poppins';
-    color: white;
-    padding: 5px;
-    text-align: center;
-  }
-  
-  .rbc-day-bg {
-    background-color: #f8f8f8;
-  }
-  
-  .rbc-today {
-    background-color: #6ab7db;
-  }
-  
-  .selected-date {
-    background-color: rgb(53, 112, 238);
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+/* Estilos para el selector del año */
+.rdrYearPicker > select {
+  background-color: #122e4f;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 15px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100px;
+  color: white;
+}
+.rdrMonthPicker > select {
+  background-color: #122e4f;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 15px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100px;
+  text-transform: capitalize;
+  color: white;
+}
+.rdrMonthPicker > select:hover {
+  background-color: rgb(58, 108, 183);
+}
+.rdrYearPicker > select:hover {
+  background-color: rgb(58, 108, 183);
+}
 
-  .rbc-event-label {
-    white-space: nowrap;
-  }
+.rdrMonthName {
+  text-transform: capitalize;
+  color: #122e4f;
+  font-size: 1rem;
+  font-weight: bold;
+}
 
+.rdrWeekDays > span {
+  text-transform: capitalize;
+  color: #122e4f;
+  font-weight: bold;
+}
+
+.rdrDayDisabled {
+  cursor: not-allowed; /* Cambiar cursor al pasar sobre fechas deshabilitadas */
+  background-color: rgba(63, 125, 205, 0.164);
+  font-weight: bold;
+}
+.rdrDayDisabled > span {
+  font-weight: bold;
+}
+.rdrMonthAndYearWrapper > button {
+  background-color: #afafaf;
+}
+.rdrMonthAndYearWrapper > button:hover {
+  background-color: rgb(58, 108, 183);
+}

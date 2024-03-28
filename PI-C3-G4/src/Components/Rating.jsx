@@ -22,7 +22,7 @@ const Rating = ({ productId }) => {
             key={value}
             onClick={() => handleRatingChange(value)}
             style={{
-              color: rating >= value ? 'gold' : 'black',
+              color: rating >= value ? 'gold' : 'white',
               cursor: 'pointer',
             }}
           >

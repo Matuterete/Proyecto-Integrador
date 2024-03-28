@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -39,7 +40,13 @@ public class Product {
     @ManyToMany(cascade = CascadeType.ALL)
     @Schema(hidden = true)
     private List<Feature> features;
+    @Column(name = "average_rating")
+    private Double averageRating;
     @OneToMany(mappedBy = "product")
     @Schema(hidden = true)
     private List<UserFav> fav;
+//    @OneToMany(mappedBy = "product")
+//    @Schema(hidden = true)
+//    private List<UserReview> reviews;
+
 }

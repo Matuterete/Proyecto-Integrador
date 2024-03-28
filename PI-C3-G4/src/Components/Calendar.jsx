@@ -1,84 +1,81 @@
 import React, { useState, useEffect } from "react";
-import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import "moment/locale/es";
-import "react-big-calendar/lib/css/react-big-calendar.css";
+import { DateRange } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import "../Components/styles/Calendar.css";
+import es from "date-fns/locale/es";
+import requestToAPI from "../services/requestToAPI";
 
-moment.locale("es");
+function Calendar({ selectedDates, onSelectDates, productId }) {
+  const [reservations, setReservations] = useState([]);
+  const [fechasOcupadas, setFechasOcupadas] = useState([]);
+  const [monthsToShow, setMonthsToShow] = useState(window.innerWidth <= 768 ? 1 : 2);
 
-const localizer = momentLocalizer(moment);
-
-const Calendar = ({ onSelectDates }) => {
-  const today = new Date(); 
-
-  const [selectedDates, setSelectedDates] = useState([]);
-
-  const handleDateSelect = (slotInfo) => {
-    const newDate = slotInfo.start;
-    const updatedDates = [...selectedDates];
-
-    
-    if (moment(newDate).isBefore(today)) {
-      return;
-    }
-
-    if (selectedDates.some((date) => moment(date).isSame(newDate, "day"))) {
-      updatedDates.splice(updatedDates.indexOf(newDate), 1);
-    } else {
-      updatedDates.push(newDate);
-    }
-
-    setSelectedDates(updatedDates);
-    onSelectDates(updatedDates);
-  };
-
-  const eventStyleGetter = (event, start, end, isSelected) => {
-    let style = {
-      backgroundColor: isSelected ? "lightblue" : "transparent",
-      borderRadius: "0px",
-      border: "none",
+  useEffect(() => {
+    const fetchReservations = async () => {
+      try {
+        const response = await requestToAPI(`rentals/find/product/${productId}`, "GET");
+        setReservations(response);
+      } catch (error) {
+        console.error(error);
+      }
     };
-    return style;
+    fetchReservations();
+  }, [productId]);
+
+  useEffect(() => {
+    const disabledDates = [];
+    reservations.forEach((reservation) => {
+      const { dateStart, dateEnd } = reservation;
+      const startDate = new Date(dateStart);
+      const endDate = new Date(dateEnd);
+      let currentDate = startDate;
+      while (currentDate <= endDate) {
+        disabledDates.push(new Date(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+    });
+    setFechasOcupadas(disabledDates);
+  }, [reservations]);
+
+  const handleSelect = (ranges) => {
+    onSelectDates(ranges); // Llama a la función onSelectDates con los rangos seleccionados
   };
 
-  const myFormats = {
-    dayFormat: (date, culture, localizer) =>
-      localizer.format(date, "dd", culture),
-  };
-
-  const dayPropGetter = (date) => {
-    return {
-      className: selectedDates.some((selectedDate) =>
-        moment(selectedDate).isSame(date, "day")
-      )
-        ? "selected-date"
-        : "",
-      style: {
-        opacity: moment(date).isBefore(today) ? 0.5 : 1,
-        cursor: moment(date).isBefore(today) ? "not-allowed" : "default",
-        color: moment(date).isBefore(today) ? "gray" : "inherit",
-      },
+  useEffect(() => {
+    const handleResize = () => {
+      setMonthsToShow(window.innerWidth <= 768 ? 1 : 2);
     };
-  };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
-    <BigCalendar
-      localizer={localizer}
-      events={[]}
-      formats={myFormats}
-      startAccessor="start"
-      endAccessor="end"
-      selectable
-      onSelectSlot={handleDateSelect}
-      views={{
-        month: true,
-      }}
-      eventPropGetter={eventStyleGetter}
-      dayPropGetter={dayPropGetter}
-      minDate={today}
-    />
+    <div className="calendario-container">
+      <div className="calendario-card">
+        <DateRange
+          ranges={[
+            {
+              startDate: selectedDates.startDate || new Date(),
+              endDate: selectedDates.endDate || new Date(),
+              key: "selection",
+            },
+          ]}
+          onChange={handleSelect}
+          rangeColors={["#122e4f"]}
+          disabledDates={fechasOcupadas}
+          showDateDisplay={true}
+          months={monthsToShow}
+          direction="horizontal"
+          locale={es}
+          minDate={new Date()}
+        />
+      </div>
+    </div>
   );
-};
+}
 
 export default Calendar;

@@ -6,6 +6,8 @@ import requestToAPI from "../services/requestToAPI";
 import Rating from "../Components/Rating";
 import Calendar from "../Components/Calendar";
 import "../Components/styles/Detail.css";
+import RatingComponent from '../Components/RatingComponent'; // Asegúrate de tener la ruta correcta hacia el archivo RatingComponent.js
+
 
 const Detail = () => {
   const [product, setProduct] = useState(null);
@@ -14,6 +16,7 @@ const Detail = () => {
   const [showCalendars, setShowCalendars] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [rating, setRating] = useState(0);
  
   useEffect(() => {
     async function fetchProduct() {
@@ -45,18 +48,7 @@ const Detail = () => {
             <div className="gallery">
               <h2>{product.name}</h2>
 
-              <div>
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <span
-                    key={value}
-                    style={{
-                      color: storedRating >= value ? "gold" : "black",
-                    }}
-                  >
-                    &#9733;
-                  </span>
-                ))}
-              </div>
+
 
               <ImageGallery
                 items={product.images.map((image, index) => ({
@@ -92,13 +84,6 @@ const Detail = () => {
                         setStartDate(slotInfo.start);
                         setEndDate(null);
                         setShowButtons(false);
-                      }}
-                    />
-
-                    <Calendar
-                      onSelectSlot={(slotInfo) => {
-                        setEndDate(slotInfo.start);
-                        setShowButtons(true);
                       }}
                     />
                   </div>
@@ -152,6 +137,9 @@ const Detail = () => {
               </ul>
             </div>
           </div>
+          <div className="Rating">
+              <RatingComponent productId={id} />           
+              </div>
         </div>
       ) : (
         <div className="loader-container">
