@@ -8,6 +8,7 @@ import Buscador from "../Components/Buscador.jsx";
 import requestToAPI from "../services/requestToAPI";
 import Slider from "react-slick";
 import { useFavContext } from "../Components/FavContext.jsx";
+import Swal from 'sweetalert2';
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../Components/styles/Home.css";
@@ -136,7 +137,24 @@ const Home = () => {
 
   const handleAvailabilityCheck = async () => {
     try {
-      if (selectedStartDate && selectedEndDate && selectedProduct) {
+      if (!userData) {
+
+        Swal.fire({
+          icon: 'info',
+          title: 'Solo para usuarios del sitio',
+          text: 'Debes iniciar sesión o registrarte para poder realizar esta acción.',
+          showCancelButton: true,
+          confirmButtonText: 'Iniciar sesión',
+          cancelButtonText: 'Registrarse',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate('/login');
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            navigate('/registroUsuario');
+          }
+        });
+      } else if (selectedStartDate && selectedEndDate && selectedProduct) {
+       
         const response = await requestToAPI(
           `rentals/add`,
           "POST",
@@ -144,7 +162,7 @@ const Home = () => {
             "userId": userData.user.id,
             "productId": productId,
             "dateStart": selectedStartDate,
-            "dateEnd": selectedStartDate
+            "dateEnd": selectedEndDate
           }
         );
         if (response.available) {
