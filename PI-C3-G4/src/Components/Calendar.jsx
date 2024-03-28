@@ -27,15 +27,26 @@ function Calendar({ selectedDates, onSelectDates, productId }) {
     const disabledDates = [];
     reservations.forEach((reservation) => {
       const { dateStart, dateEnd } = reservation;
-      const startDate = new Date(dateStart);
-      const endDate = new Date(dateEnd);
-      let currentDate = startDate;
-      while (currentDate <= endDate) {
+      const dateStartLocal = new Date(dateStart);
+      const timestampStartLocal = dateStartLocal.getTime();
+      const offsetStartLocalToGMT0 = dateStartLocal.getTimezoneOffset() * 60000;
+      const timestampStartGMT0 = timestampStartLocal + offsetStartLocalToGMT0;
+      const startDateGMT0 = new Date(timestampStartGMT0);
+
+      const dateEndLocal = new Date(dateEnd);
+      const timestampEndLocal = dateEndLocal.getTime();
+      const offsetEndLocalToGMT0 = dateEndLocal.getTimezoneOffset() * 60000;
+      const timestampEndGMT0 = timestampEndLocal + offsetEndLocalToGMT0;
+      const endDateGMT0 = new Date(timestampEndGMT0);
+
+      let currentDate = startDateGMT0;
+      while (currentDate <= endDateGMT0) {
         disabledDates.push(new Date(currentDate));
         currentDate.setDate(currentDate.getDate() + 1);
       }
     });
     setFechasOcupadas(disabledDates);
+    console.log(disabledDates);
   }, [reservations]);
 
   const handleSelect = (ranges) => {
