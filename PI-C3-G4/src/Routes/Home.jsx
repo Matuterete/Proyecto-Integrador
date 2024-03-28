@@ -8,7 +8,7 @@ import Buscador from "../Components/Buscador.jsx";
 import requestToAPI from "../services/requestToAPI";
 import Slider from "react-slick";
 import { useFavContext } from "../Components/FavContext.jsx";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../Components/styles/Home.css";
@@ -132,9 +132,9 @@ const Home = () => {
   const handleToggleCalendars = () => {
     if (!productId) {
       Swal.fire({
-        icon: 'warning',
-        title: 'Seleccione un producto',
-        text: 'Primero debe seleccionar un producto antes de continuar.',
+        icon: "warning",
+        title: "Seleccione un producto",
+        text: "Primero debe seleccionar un producto antes de continuar.",
       });
     } else {
       setShowCalendars((prevShowCalendars) => !prevShowCalendars);
@@ -146,34 +146,33 @@ const Home = () => {
   const handleAvailabilityCheck = async () => {
     try {
       if (!userData) {
-
         Swal.fire({
-          icon: 'info',
-          title: 'Solo para usuarios del sitio',
-          text: 'Debes iniciar sesión o registrarte para poder realizar esta acción.',
+          icon: "info",
+          title: "Solo para usuarios del sitio",
+          text: "Debes iniciar sesión o registrarte para poder realizar esta acción.",
           showCancelButton: true,
-          confirmButtonText: 'Iniciar sesión',
-          cancelButtonText: 'Registrarse',
+          confirmButtonText: "Iniciar sesión",
+          cancelButtonText: "Registrarse",
         }).then((result) => {
           if (result.isConfirmed) {
-            navigate('/login');
+            navigate("/login");
           } else if (result.dismiss === Swal.DismissReason.cancel) {
-            navigate('/registroUsuario');
+            navigate("/registroUsuario");
           }
         });
       } else if (selectedStartDate && selectedEndDate && selectedProduct) {
-       
-        const response = await requestToAPI(
-          `rentals/add`,
-          "GET",
-          {
-            "userId": userData.user.id,
-            "productId": productId,
-            "dateStart": selectedStartDate,
-            "dateEnd": selectedEndDate
-          }
+        const availabilityResponse = await requestToAPI(
+          `rentals/find/product/${selectedProduct.id}`,
+          "GET"
         );
-        if (response.available) {
+
+        const isProductAvailable = availabilityResponse.some(
+          (rental) =>
+            new Date(rental.dateStart) <= selectedEndDate &&
+            new Date(rental.dateEnd) >= selectedStartDate
+        );
+
+        if (!isProductAvailable) {
           navigate(`/detail/${selectedProduct.id}`);
         } else {
           alert("El producto no está disponible para las fechas seleccionadas");
