@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Card from "../Components/Card";
 import Pagination from "../Components/Pagination";
 import Calendar from "../Components/Calendar.jsx";
+import { IoCalendarOutline } from "react-icons/io5";
 import Buscador from "../Components/Buscador.jsx";
 import requestToAPI from "../services/requestToAPI";
 import Slider from "react-slick";
@@ -19,10 +20,11 @@ const Home = () => {
     useState(false);
   const [productosRecomendados, setProductosRecomendados] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [productId, setProductId] = useState(null);
+  const [showCalendars, setShowCalendars] = useState(false);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [submitRequest, setSubmitRequest] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(6);
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -31,20 +33,15 @@ const Home = () => {
     indexOfFirstProduct,
     indexOfLastProduct
   );
-  const {
-    favoriteProducts,
-    loading,
-    fetchFavoriteProducts,
-  } = useFavContext();
-  const [fetchFavoriteProductsCalled, setFetchFavoriteProductsCalled] = useState(false);
+  const { favoriteProducts, loading, fetchFavoriteProducts } = useFavContext();
+  const [fetchFavoriteProductsCalled, setFetchFavoriteProductsCalled] =
+    useState(false);
 
   const [userData, setUserData] = useState(
     JSON.parse(sessionStorage.getItem("userData"))
   );
 
   const navigate = useNavigate();
-
-
 
   useEffect(() => {
     async function fetchData() {
@@ -113,61 +110,17 @@ const Home = () => {
     navigate(`/detail/${product.id}`, { state: { product } });
   };
 
-  const handleProductoSelect = (product) => {
+  const handleProductoSelect = async (product) => {
+    setProductId(product.id); // Guardar el productId al seleccionar un producto
     setSelectedProduct(product);
-  };
-
-  const [sliderSettings, setSliderSettings] = useState({
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 968) {
-        setSliderSettings({
-          ...sliderSettings,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        });
-      } else {
-        const slidesToShow = productosPorCategoria.length > 1 ? 4 : 1;
-        setSliderSettings({
-          ...sliderSettings,
-          slidesToShow: slidesToShow,
-          slidesToScroll: 1,
-        });
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [productosPorCategoria.length]);
-
-  const handleAvailabilityCheck = async () => {
     try {
-      const isAvailable = true;
-      if (isAvailable) {
-        if (selectedProduct && selectedProduct.id) {
-          const productId = selectedProduct.id;
-          navigate(`/detail/${productId}`);
-        } else {
-          console.log("No se ha seleccionado un producto válido.");
-        }
-      } else {
-        console.log(
-          "Lo siento, el producto no está disponible en las fechas elegidas."
-        );
-      }
+      const url = `rentals/find/product/${product.id}`;
+      const method = "GET";
+      const headers = {};
+      const responseData = await requestToAPI(url, method, null, headers);
+      console.log(responseData);
     } catch (error) {
-      console.error("Error al verificar la disponibilidad:", error);
+      console.error("Error fetching product availability:", error);
     }
   };
 
@@ -175,13 +128,47 @@ const Home = () => {
     setSearchResults(results);
   };
 
-  const [showCalendars, setShowCalendars] = useState(false);
-
   const handleToggleCalendars = () => {
-    setShowCalendars(!showCalendars);
+    setShowCalendars((prevShowCalendars) => !prevShowCalendars);
   };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleAvailabilityCheck = async () => {
+    try {
+      if (selectedStartDate && selectedEndDate && selectedProduct) {
+        const response = await requestToAPI(
+          `rentals/add`,
+          "POST",
+          {
+            "userId": userData.user.id,
+            "productId": productId,
+            "dateStart": selectedStartDate,
+            "dateEnd": selectedStartDate
+          }
+        );
+        if (response.available) {
+          navigate(`/detail/${selectedProduct.id}`);
+        } else {
+          alert("El producto no está disponible para las fechas seleccionadas");
+        }
+      } else {
+        alert("Por favor selecciona un producto y un rango de fechas");
+      }
+    } catch (error) {
+      console.error("Error al verificar la disponibilidad:", error);
+    }
+  };
+
+  const formattedRange =
+    selectedStartDate && selectedEndDate
+      ? `${selectedStartDate.toLocaleDateString()} - ${selectedEndDate.toLocaleDateString()}`
+      : "Seleccionar fecha";
+
+  const handleSelectDates = (ranges) => {
+    setSelectedStartDate(ranges.selection.startDate);
+    setSelectedEndDate(ranges.selection.endDate);
+  };
 
   return (
     <div className="body">
@@ -197,47 +184,32 @@ const Home = () => {
             onSelectProduct={handleProductoSelect}
           />
           <button className="Button-calendario" onClick={handleToggleCalendars}>
-            {showCalendars ? "Ocultar calendarios" : "Mostrar calendarios"}
+            <IoCalendarOutline className="calendar-icon" />
+            {formattedRange}
           </button>
         </div>
-        {Array.isArray(searchResults) &&
-          searchResults.map((result) => (
-            <div key={result.id}>{result.name}</div>
-          ))}
         {showCalendars && (
-          <>
-            <div className="calendars-container">
-              <div className="Calendars">
-                <h2>Calendario de inicio</h2>
-                <Calendar
-                  selectedDates={selectedStartDate}
-                  onSelectDates={setSelectedStartDate}
-                />
-              </div>
-              <div className="Calendars">
-                <h2>Calendario de fin</h2>
-                <Calendar
-                  selectedDates={selectedEndDate}
-                  onSelectDates={setSelectedEndDate}
-                />
-              </div>
-            </div>
-          </>
-        )}
-        {selectedProduct &&
-          selectedStartDate &&
-          selectedEndDate &&
-          !submitRequest && (
-            <button
-              className="Button-calendario"
-              onClick={() => {
-                setSubmitRequest(true);
-                handleAvailabilityCheck();
+          <div className="calendars-container">
+            <Calendar
+              selectedDates={{
+                startDate: selectedStartDate,
+                endDate: selectedEndDate,
               }}
-            >
-              Consultar Disponibilidad
-            </button>
-          )}
+              onSelectDates={handleSelectDates}
+              productId={productId} // Asegúrate de pasar el productId aquí
+            />
+          </div>
+        )}
+        {selectedProduct && selectedStartDate && selectedEndDate && (
+          <button
+            className="Button-calendario"
+            onClick={() => {
+              handleAvailabilityCheck();
+            }}
+          >
+            Consultar Disponibilidad
+          </button>
+        )}
       </div>
 
       <div className="categories">
@@ -256,27 +228,27 @@ const Home = () => {
         </div>
       </div>
       {mostrarProductosPorCategoria && (
-  <div className="productos-por-categoria">
-    <h1>{categoriaSeleccionada}</h1>
-    <Slider {...sliderSettings}>
-      {productosPorCategoria.map((producto) => {
-        console.log("Productos por categoría:", productosPorCategoria);
-        return (
-          <div className="producto-wrapper" key={producto.id}>
-            <div
-              className="producto"
-              onClick={() => handleProductoClick(producto)}
-            >
-              <div className="card-wrapper">
-                <Card product={producto} userData={userData} />
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </Slider>
-  </div>
-)}
+        <div className="productos-por-categoria">
+          <h1>{categoriaSeleccionada}</h1>
+          <Slider {...sliderSettings}>
+            {productosPorCategoria.map((producto) => {
+              console.log("Productos por categoría:", productosPorCategoria);
+              return (
+                <div className="producto-wrapper" key={producto.id}>
+                  <div
+                    className="producto"
+                    onClick={() => handleProductoClick(producto)}
+                  >
+                    <div className="card-wrapper">
+                      <Card product={producto} userData={userData} />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </Slider>
+        </div>
+      )}
 
       <div className="Container">
         <div className="Box">

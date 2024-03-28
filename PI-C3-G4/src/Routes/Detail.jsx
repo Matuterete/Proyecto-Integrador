@@ -86,13 +86,6 @@ const Detail = () => {
                         setShowButtons(false);
                       }}
                     />
-
-                    <Calendar
-                      onSelectSlot={(slotInfo) => {
-                        setEndDate(slotInfo.start);
-                        setShowButtons(true);
-                      }}
-                    />
                   </div>
                 )}
               </div>
