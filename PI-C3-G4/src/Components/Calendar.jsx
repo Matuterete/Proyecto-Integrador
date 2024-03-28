@@ -26,9 +26,9 @@ function Calendar({ selectedDates, onSelectDates, productId }) {
   useEffect(() => {
     const disabledDates = [];
     reservations.forEach((reservation) => {
-      const { date_start, date_end } = reservation;
-      const startDate = new Date(`${date_start}T00:00:00`);
-      const endDate = new Date(`${date_end}T00:00:00`);
+      const { dateStart, dateEnd } = reservation;
+      const startDate = new Date(dateStart);
+      const endDate = new Date(dateEnd);
       let currentDate = startDate;
       while (currentDate <= endDate) {
         disabledDates.push(new Date(currentDate));

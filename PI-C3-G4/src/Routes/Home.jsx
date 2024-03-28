@@ -130,7 +130,15 @@ const Home = () => {
   };
 
   const handleToggleCalendars = () => {
-    setShowCalendars((prevShowCalendars) => !prevShowCalendars);
+    if (!productId) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Seleccione un producto',
+        text: 'Primero debe seleccionar un producto antes de continuar.',
+      });
+    } else {
+      setShowCalendars((prevShowCalendars) => !prevShowCalendars);
+    }
   };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -157,7 +165,7 @@ const Home = () => {
        
         const response = await requestToAPI(
           `rentals/add`,
-          "POST",
+          "GET",
           {
             "userId": userData.user.id,
             "productId": productId,
@@ -214,6 +222,7 @@ const Home = () => {
                 endDate: selectedEndDate,
               }}
               onSelectDates={handleSelectDates}
+              onSelectProduct={handleProductoSelect}
               productId={productId} // Asegúrate de pasar el productId aquí
             />
           </div>
