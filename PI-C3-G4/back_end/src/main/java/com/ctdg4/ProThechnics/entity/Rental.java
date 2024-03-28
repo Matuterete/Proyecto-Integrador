@@ -1,14 +1,10 @@
 package com.ctdg4.ProThechnics.entity;
 
-import com.ctdg4.ProThechnics.util.CustomDateDeserializer;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -20,23 +16,23 @@ public class Rental {
     @Column(name = "rent_id")
     private Long id;
 
-    @Column(name = "product_id")
-    private Long productId;
-
     @Column(name = "user_id")
     private Long userId;
 
-    @Column
-    private Timestamp date_rent;
+    @Column(name = "product_id")
+    private Long productId;
 
-    @Column
-    private Date date_start;
+    @Column(name = "date_rent")
+    private LocalDateTime dateRent;
 
-    @Column
-    private Date date_end;
+    @Column(name = "date_start")
+    private LocalDate dateStart;
 
-    @Column
-    private Long days_total;
+    @Column(name = "date_end")
+    private LocalDate dateEnd;
+
+    @Column(name = "days_total")
+    private Long daysTotal;
 
     @Column
     private Double amount;

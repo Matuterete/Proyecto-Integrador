@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.util.List;
 
 @Repository
 public interface RentalRepository extends JpaRepository<Rental, Long> {
@@ -19,5 +20,9 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
     void addRental(@Param("productId") Long productId, @Param("userId") Long userId,
                    @Param("dateStart") Date dateStart, @Param("dateEnd") Date dateEnd,
                    @Param("daysTotal") Long daysTotal, @Param("amount") Double amount);
+
+    List<Rental> findByProductId(Long productId);
+
+    List<Rental> findByUserId(Long userId);
 
 }

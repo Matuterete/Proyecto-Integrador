@@ -3,11 +3,14 @@ package com.ctdg4.ProThechnics.controller;
 import com.ctdg4.ProThechnics.dto.UserDTO;
 import com.ctdg4.ProThechnics.dto.UserFullDTO;
 import com.ctdg4.ProThechnics.entity.User;
+import com.ctdg4.ProThechnics.entity.UserRating;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.service.UserRoleService;
 import com.ctdg4.ProThechnics.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +34,7 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserRoleService userRoleService;
+
 
     @Operation(summary = "List all users", description = "Retrieve a list of all registered users")
     @ApiResponse(responseCode = "200", description = "List of users retrieved successfully")
@@ -99,6 +104,8 @@ public class UserController {
         }
     }
 
+    //////////////// FAVORITES //////////////////
+
     @Operation(summary = "Add product to user's favorites")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Product added to favorites successfully"),
@@ -132,5 +139,44 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Failed to remove product from favorites. " + e.getMessage());
         }
+    }
+
+    //////////////// RATINGS //////////////////
+    @Operation(summary = "List all users ratings", description = "Retrieve a list of all users ratings")
+    @ApiResponse(responseCode = "200", description = "List of users ratings retrieved successfully",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UserRating.class)))
+    @GetMapping("/ratings/find/all")
+    public ResponseEntity<List<UserRating>> listAllUsersRatings() {
+        return ResponseEntity.ok(userService.listAllUserRating());
+    }
+
+    @Operation(summary = "Find user ratings by user ID", description = "Retrieve user ratings by providing the user ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User ratings found"),
+            @ApiResponse(responseCode = "404", description = "User ratings not found")
+    })
+    @GetMapping("/ratings/find/{userId}")
+    public ResponseEntity<List<UserRating>> findRatingsByUserId(@PathVariable Long userId) throws ResourceNotFoundException {
+        List<UserRating> userRatings = userService.findRatingsByUserId(userId);
+        if (!userRatings.isEmpty()) {
+            return ResponseEntity.ok(userRatings);
+        } else {
+            throw new ResourceNotFoundException("User ratings not found for user with ID: " + userId);
+        }
+    }
+
+    @Operation(summary = "Add user rating", description = "Add a new user rating and/or review")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User rating added successfully",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserRating.class))),
+            @ApiResponse(responseCode = "404", description = "Failed to add user rating")
+    })
+    @PostMapping("/rating/add")
+    public ResponseEntity<UserRating> addUserRating(@RequestBody UserRating userRating) throws ResourceNotFoundException {
+        LocalDate currentDate = LocalDate.now();
+        userRating.setDate(currentDate);
+        return ResponseEntity.ok(userService.addUserRating(userRating));
     }
 }

@@ -1,8 +1,5 @@
 package com.ctdg4.ProThechnics.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,7 +8,7 @@ import lombok.Data;
 @Table(name = "user_fav")
 public class UserFav {
     @EmbeddedId
-    private UserFavId id;
+    private UserProductId id;
 
     @ManyToOne
     @MapsId("userId")

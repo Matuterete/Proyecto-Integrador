@@ -18,4 +18,5 @@ public class ProductDTO {
     private List<ProductImageDTO> images;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<FeatureDTO> features;
+    private Double rating;
 }

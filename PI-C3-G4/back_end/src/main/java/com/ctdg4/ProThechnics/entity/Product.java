@@ -40,9 +40,13 @@ public class Product {
     @ManyToMany(cascade = CascadeType.ALL)
     @Schema(hidden = true)
     private List<Feature> features;
+    @Column(name = "average_rating")
+    private Double averageRating;
     @OneToMany(mappedBy = "product")
     @Schema(hidden = true)
     private List<UserFav> fav;
 //    @OneToMany(mappedBy = "product")
-//    private Set<Rental> rental;
+//    @Schema(hidden = true)
+//    private List<UserReview> reviews;
+
 }

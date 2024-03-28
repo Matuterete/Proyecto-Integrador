@@ -43,7 +43,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<UserFav> fav;
 //    @OneToMany(mappedBy = "user")
-//    private Set<Rental> rental;
+//    private Set<UserReview> reviews;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
