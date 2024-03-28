@@ -44,6 +44,14 @@ const Home = () => {
 
   const navigate = useNavigate();
 
+  const [sliderSettings, setSliderSettings] = useState({
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+  });
+
   useEffect(() => {
     async function fetchData() {
       try {
