@@ -1,10 +1,12 @@
 package com.ctdg4.ProThechnics.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Data
 @Entity
+@Hidden
 @Table(name = "categories")
 public class Category {
     @Id

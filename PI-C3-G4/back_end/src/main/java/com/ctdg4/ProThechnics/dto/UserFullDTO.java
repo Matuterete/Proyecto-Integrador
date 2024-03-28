@@ -1,10 +1,12 @@
 package com.ctdg4.ProThechnics.dto;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@Hidden
 public class UserFullDTO {
     private Long id;
     private Boolean isActive;

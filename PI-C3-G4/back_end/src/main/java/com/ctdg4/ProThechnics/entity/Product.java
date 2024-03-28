@@ -1,5 +1,6 @@
 package com.ctdg4.ProThechnics.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,8 +10,8 @@ import java.util.Set;
 
 @Data
 @Entity
+@Hidden
 @Table(name = "products")
-@Schema(hidden = true)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

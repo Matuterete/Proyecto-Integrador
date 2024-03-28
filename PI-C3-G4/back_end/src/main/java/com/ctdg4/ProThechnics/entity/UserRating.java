@@ -1,5 +1,6 @@
 package com.ctdg4.ProThechnics.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
+@Hidden
 @Table(name = "user_ratings")
 @IdClass(UserProductId.class)
 public class UserRating {

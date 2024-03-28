@@ -156,13 +156,27 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "User ratings found"),
             @ApiResponse(responseCode = "404", description = "User ratings not found")
     })
-    @GetMapping("/ratings/find/{userId}")
+    @GetMapping("/ratings/find/user/{userId}")
     public ResponseEntity<List<UserRating>> findRatingsByUserId(@PathVariable Long userId) throws ResourceNotFoundException {
         List<UserRating> userRatings = userService.findRatingsByUserId(userId);
         if (!userRatings.isEmpty()) {
             return ResponseEntity.ok(userRatings);
         } else {
             throw new ResourceNotFoundException("User ratings not found for user with ID: " + userId);
+        }
+    }
+    @Operation(summary = "Find user ratings by product ID", description = "Retrieve user ratings by providing the product ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User ratings found"),
+            @ApiResponse(responseCode = "404", description = "User ratings not found")
+    })
+    @GetMapping("/ratings/find/product/{productId}")
+    public ResponseEntity<List<UserRating>> findRatingsByProductId(@PathVariable Long productId) throws ResourceNotFoundException {
+        List<UserRating> productRatings = userService.findRatingsByProductId(productId);
+        if (!productRatings.isEmpty()) {
+            return ResponseEntity.ok(productRatings);
+        } else {
+            throw new ResourceNotFoundException("User ratings not found for product with ID: " + productId);
         }
     }
 
