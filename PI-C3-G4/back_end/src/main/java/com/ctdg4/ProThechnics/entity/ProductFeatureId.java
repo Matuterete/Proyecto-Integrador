@@ -1,5 +1,6 @@
 package com.ctdg4.ProThechnics.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Data;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 
 @Embeddable
 @Data
+@Hidden
 public class ProductFeatureId implements Serializable {
 
     @Column(name = "product_id")

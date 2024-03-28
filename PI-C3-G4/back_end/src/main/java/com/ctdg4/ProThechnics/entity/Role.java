@@ -1,5 +1,6 @@
 package com.ctdg4.ProThechnics.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -7,6 +8,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@Hidden
 @Table(name = "roles")
 public class Role {
 

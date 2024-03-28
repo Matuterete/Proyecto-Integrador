@@ -2,11 +2,13 @@ package com.ctdg4.ProThechnics.dto;
 
 import com.ctdg4.ProThechnics.entity.Category;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@Hidden
 public class ProductDTO {
     private Long id;
     private Boolean isActive;

@@ -84,6 +84,10 @@ public class UserService {
         return userRatingRepository.findByUserId(userId);
     }
 
+    public List<UserRating> findRatingsByProductId(Long productId) {
+        return userRatingRepository.findByProductId(productId);
+    }
+
     public UserRating addUserRating(UserRating userRating) throws ResourceNotFoundException {
         userRatingRepository.save(userRating);
         List<UserRating> productRatings = userRatingRepository.findByProductId(userRating.getProductId());
