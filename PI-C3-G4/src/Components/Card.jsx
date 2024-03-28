@@ -8,6 +8,7 @@ import Share from "./Share";
 import Rating from "./Rating";
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import RatingAverage from './RatingAverage';
 
 
 const Card = ({ product, userData }) => {
@@ -75,8 +76,7 @@ const Card = ({ product, userData }) => {
           </div>
           <div className="social">
             <div>
-              {" "}
-              <Rating productId={product.id} />{" "}
+              <RatingAverage productId={product.id} />  
             </div>
             <div>
               <Share

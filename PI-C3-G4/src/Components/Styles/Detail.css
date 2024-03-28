@@ -170,3 +170,11 @@ ul {
     width: 70%;
   }
 }
+.Rating {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: auto;
+  margin-bottom: 5rem;
+}
+
