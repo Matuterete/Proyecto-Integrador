@@ -71,7 +71,7 @@ const Home = () => {
     async function fetchRandomProducts() {
       try {
         const productosResponse = await requestToAPI(
-          "products/find/random/10",
+          "products/find/random/12",
           "GET"
         );
         setProductosRecomendados(productosResponse);
@@ -121,7 +121,7 @@ const Home = () => {
   };
 
   const handleProductoSelect = async (product) => {
-    setProductId(product.id); // Guardar el productId al seleccionar un producto
+    setProductId(product.id); 
     setSelectedProduct(product);
     try {
       const url = `rentals/find/product/${product.id}`;
@@ -231,7 +231,7 @@ const Home = () => {
               }}
               onSelectDates={handleSelectDates}
               onSelectProduct={handleProductoSelect}
-              productId={productId} // Asegúrate de pasar el productId aquí
+              productId={productId} 
             />
           </div>
         )}

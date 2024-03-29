@@ -1,44 +1,122 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import requestToAPI from "../services/requestToAPI";
-import Rating from "../Components/Rating";
+import RatingComponent from "../Components/RatingComponent";
 import Calendar from "../Components/Calendar";
+import Swal from "sweetalert2";
 import "../Components/styles/Detail.css";
-import RatingComponent from '../Components/RatingComponent'; // Asegúrate de tener la ruta correcta hacia el archivo RatingComponent.js
-
 
 const Detail = () => {
-  const [product, setProduct] = useState(null);
   const { id } = useParams();
-  const [storedRating, setStoredRating] = useState();
-  const [showCalendars, setShowCalendars] = useState(false);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [rating, setRating] = useState(0);
- 
+  const [product, setProduct] = useState(null);
+  const [selectedDates, setSelectedDates] = useState({
+    startDate: null,
+    endDate: null,
+  });
+  const [userData, setUserData] = useState(
+    JSON.parse(sessionStorage.getItem("userData"))
+  );
+  const navigate = useNavigate();
+
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const url = `products/find/id/${id}`;
-        const method = "GET";
-        const data = null;
-        const headers = {};
-
-        const response = await requestToAPI(url, method, data, headers);
+        const response = await requestToAPI(`products/find/id/${id}`, "GET");
         setProduct(response);
       } catch (error) {
         console.error("Error fetching product:", error);
       }
     }
     fetchProduct();
-
-    const storedRating = parseInt(localStorage.getItem(`product_${id}_rating`));
-    if (!isNaN(storedRating) && storedRating >= 0) {
-      setStoredRating(storedRating);
-    }
   }, [id]);
+
+  const handleSelectDates = (ranges) => {
+    setSelectedDates({
+      startDate: ranges.selection.startDate,
+      endDate: ranges.selection.endDate,
+    });
+  };
+
+  const calculateDays = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
+  const calculateAmount = (price, startDate, endDate) => {
+    const days = calculateDays(startDate, endDate);
+    return days * price;
+  };
+
+  const handleReservation = async () => {
+    try {
+      if (!userData) {
+        Swal.fire({
+          icon: "info",
+          title: "Solo para usuarios del sitio",
+          text: "Debes iniciar sesión o registrarte para poder realizar esta acción.",
+          showCancelButton: true,
+          confirmButtonText: "Iniciar sesión",
+          cancelButtonText: "Registrarse",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login");
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            navigate("/registroUsuario");
+          }
+        });
+        return;
+      }
+
+      if (!selectedDates.startDate || !selectedDates.endDate) {
+        Swal.fire({
+          icon: "warning",
+          title: "Seleccione un rango de fechas",
+          text: "Debe seleccionar un rango de fechas para poder realizar el alquiler.",
+        });
+        return;
+      }
+
+      const daysTotal = calculateDays(
+        selectedDates.startDate,
+        selectedDates.endDate
+      );
+      const amount = calculateAmount(
+        product.price,
+        selectedDates.startDate,
+        selectedDates.endDate
+      );
+
+      console.log("userData:", userData);
+      const data = {
+        userId: userData.user.id,
+        productId: id,
+        dateStart: selectedDates.startDate.toISOString().split("T")[0],
+        dateEnd: selectedDates.endDate.toISOString().split("T")[0],
+      };
+
+      console.log("Data a enviar al servidor:", data);
+
+      const response = await requestToAPI("rentals/add", "POST", data);
+      console.log("Reserva exitosa:", response);
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        console.error(
+          "Error al realizar la reserva: El producto no está disponible en las fechas seleccionadas"
+        );
+        alert("El producto no está disponible en las fechas seleccionadas");
+      } else {
+        console.error("Error al realizar la reserva:", error);
+        alert(
+          "Ocurrió un error al realizar la reserva. Por favor, inténtelo de nuevo más tarde."
+        );
+      }
+    }
+  };
 
   return (
     <div className="body">
@@ -47,9 +125,6 @@ const Detail = () => {
           <div className="galleryAndPay">
             <div className="gallery">
               <h2>{product.name}</h2>
-
-
-
               <ImageGallery
                 items={product.images.map((image, index) => ({
                   original: image.url,
@@ -65,54 +140,39 @@ const Detail = () => {
                 showFullscreenButton={false}
               />
             </div>
+
             <div className="pay">
               <Link to={"/home"}>
                 <img className="backArrowDetail" src="\src\assets\back.png" />
               </Link>
-
-              <div className="calendar-container">
-                <button
-                  className="button buttonTerciary"
-                  onClick={() => setShowCalendars(!showCalendars)}
-                >
-                  Ver fechas disponibles
-                </button>
-                {showCalendars && (
-                  <div className="calendars">
-                    <Calendar
-                      onSelectSlot={(slotInfo) => {
-                        setStartDate(slotInfo.start);
-                        setEndDate(null);
-                        setShowButtons(false);
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
 
               <div className="priceDetail">
                 <h2>USD: {product.price}</h2>
                 <p>Por dos días</p>
               </div>
 
-              <button
-                disabled={!startDate || !endDate}
-                className="button buttonPrimary"
-              >
-                Alquilar ahora
-              </button>
-              <button
-                disabled={!startDate || !endDate}
-                className="button buttonTerciary"
-              >
-                Agregar al Carrito
-              </button>
-
               <img
                 className="paymentMethods"
                 src="\src\assets\medios de pago.png"
               />
             </div>
+          </div>
+          <div className="calendar-container">
+            
+              <div className="calendars">
+                <Calendar
+                  productId={id}
+                  selectedDates={selectedDates}
+                  onSelectDates={handleSelectDates}
+                />
+              </div>
+            
+            <button
+              className="button buttonPrimary"
+              onClick={handleReservation}
+            >
+              Alquilar ahora
+            </button>
           </div>
 
           <div className="info">
@@ -138,8 +198,8 @@ const Detail = () => {
             </div>
           </div>
           <div className="Rating">
-              <RatingComponent productId={id} />           
-              </div>
+            <RatingComponent productId={id} />
+          </div>
         </div>
       ) : (
         <div className="loader-container">
