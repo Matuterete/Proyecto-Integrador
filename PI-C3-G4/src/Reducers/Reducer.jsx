@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import '../Components/Styles/Theme.css'
+import '../Components/styles/Theme.css'
 
 const TOGGLE_THEME = "TOGGLE_THEME";
 
