@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
-import '../Components/styles/Card.css';
-import { Link } from 'react-router-dom';
-import FavButton from './FavButton';
-import Share from './Share';
+import { useState, useEffect } from "react";
+import "../Components/styles/Card.css";
+import { Link } from "react-router-dom";
+import { useFavContext } from "./FavContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import Share from "./Share";
+import Rating from "./Rating";
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import RatingAverage from './RatingAverage';
 
 
-const Card = ({ product  }) => {
-  const [likedProducts, setLikedProducts] = useState([]);
+const Card = ({ product, userData }) => {
+  const {
+    addFavorite,
+    removeFavorite,
+    favoriteProducts,
+  } = useFavContext();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -58,17 +67,30 @@ const Card = ({ product  }) => {
           <div>
             <img className="image" src={product.images[0].url} alt="" />
           </div>
-          <h2 className='name'>{product.name}</h2>
-          <p className='price'>USD: {product.price}</p>   
-           {/* Renderizar la calificación promedio */}
-           <RatingAverage productId={product.id} />                 
         </Link>
-        <div>
-          <Share onClick={() => { openModal(); }} url={'detail/' + product.id} image={product.images[0].url} nombre={product.name} />
+        <h2 className="name">{product.name}</h2>
+        <div className="card-content">
+          <div className="price-container">
+            <p className="price">{product.price}</p>
+            <p className="currency">USD</p>
+          </div>
+          <div className="social">
+            <div>
+              <RatingAverage productId={product.id} />  
+            </div>
+            <div>
+              <Share
+                onClick={() => {
+                  openModal();
+                }}
+                url={"detail/" + product.id}
+                image={product.images[0].url}
+                nombre={product.name}
+              />
+            </div>
+          </div>
         </div>
-      </div>       
-      </div>        
-
+      </div>
   );
 };
 

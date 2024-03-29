@@ -40,27 +40,3 @@ useEffect(() => {
 };
 
 export default FavButton;
-
-// //=----logica para almacenar al local storage 
-// const [isLiked, setIsLiked] = useState(false);
-
-// useEffect(() => {
-
-//   const storedLikedProducts = localStorage.getItem('likedProducts'); 
-//   if (storedLikedProducts) {
-//     const parsedLikedProducts = JSON.parse(storedLikedProducts);
-//     setIsLiked(parsedLikedProducts[productId - 1] || false);
-//     setLikedProducts(parsedLikedProducts);
-//   }
-// }, []);
-
-// const handleLikeClick = () => {
-//   setIsLiked(!isLiked);
-
-//   setLikedProducts((prevLikedProducts) => {
-//     const newLikedProducts = [...prevLikedProducts];
-//     newLikedProducts[productId - 1] = !newLikedProducts[productId - 1];
-//     localStorage.setItem('likedProducts', JSON.stringify(newLikedProducts));
-//     return newLikedProducts;
-//   });
-// };
