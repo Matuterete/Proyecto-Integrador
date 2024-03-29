@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Embeddable
 @Data
-@Hidden
+
 public class UserProductId implements Serializable {
 
     @Column(name = "user_id")

@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Hidden
+
 @Table(name = "products_features")
 public class ProductFeature {
     @EmbeddedId

@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@Hidden
+
 @Table(name = "roles")
 public class Role {
 

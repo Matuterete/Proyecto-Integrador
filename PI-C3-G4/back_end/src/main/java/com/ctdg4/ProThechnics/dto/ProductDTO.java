@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Hidden
+
 public class ProductDTO {
     private Long id;
     private Boolean isActive;

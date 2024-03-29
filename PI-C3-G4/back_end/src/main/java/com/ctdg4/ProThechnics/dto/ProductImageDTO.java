@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Hidden
+
 public class ProductImageDTO {
     private Long id;
     private String title;

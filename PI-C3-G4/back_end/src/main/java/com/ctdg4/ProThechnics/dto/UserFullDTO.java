@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Hidden
+
 public class UserFullDTO {
     private Long id;
     private Boolean isActive;

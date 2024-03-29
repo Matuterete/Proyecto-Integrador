@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Hidden;
 import lombok.Data;
 
 @Data
-@Hidden
 public class UserDTO {
     private Long id;
     private Boolean isActive;

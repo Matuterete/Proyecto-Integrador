@@ -9,7 +9,7 @@ import lombok.*;
 
 @Data
 @Entity
-@Hidden
+
 @Table(name = "product_images")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ProductImage {

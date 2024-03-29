@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Data
 @Entity
-@Hidden
+
 @Table(name = "user_role")
 public class UserRole {
     @EmbeddedId

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Hidden
+
 @Table(name = "user_fav")
 public class UserFav {
     @EmbeddedId
