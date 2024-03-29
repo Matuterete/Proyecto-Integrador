@@ -249,10 +249,6 @@ const Home = () => {
           </button>
         )}
       </div>
-
-      <div className='center'>
-        <Link to="/FavoriteList" className='button buttonPrimary'>Ver Lista de favoritos</Link>
-      </div>
       
       <div className="categories">
         <h1>Categorías</h1>
