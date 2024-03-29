@@ -170,6 +170,7 @@ ul {
     width: 70%;
   }
 }
+
 .Rating {
   display: flex;
   justify-content: space-between;
@@ -177,4 +178,3 @@ ul {
   margin: auto;
   margin-bottom: 5rem;
 }
-

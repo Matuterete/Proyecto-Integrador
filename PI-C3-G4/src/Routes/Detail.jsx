@@ -3,16 +3,14 @@ import { Link, useParams } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import requestToAPI from "../services/requestToAPI";
-import Rating from "../Components/Rating";
 import Calendar from "../Components/Calendar";
 import "../Components/styles/Detail.css";
 import RatingComponent from '../Components/RatingComponent'; // Asegúrate de tener la ruta correcta hacia el archivo RatingComponent.js
 
-
 const Detail = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
-  const [storedRating, setStoredRating] = useState();
+  const [storedRating, setStoredRating] = useState(null);
   const [showCalendars, setShowCalendars] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -39,6 +37,16 @@ const Detail = () => {
       setStoredRating(storedRating);
     }
   }, [id]);
+
+  const handleRatingChange = (event) => {
+    setRating(parseInt(event.target.value));
+  };
+
+  const handleSubmitRating = () => {
+    localStorage.setItem(`product_${id}_rating`, rating);
+    setStoredRating(rating);
+    setRating(0); // Reiniciar la variable rating después de enviar la calificación
+  };
 
   return (
     <div className="body">
