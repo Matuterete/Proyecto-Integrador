@@ -264,7 +264,7 @@ const Home = () => {
       </div>
       {mostrarProductosPorCategoria && (
         <div className="productos-por-categoria">
-          <h1>{categoriaSeleccionada}</h1>
+          <h1>{categoriaSeleccionada} ({productosPorCategoria.length} productos encontrados)</h1>
           <Slider {...sliderSettings}>
             {productosPorCategoria.map((producto) => {
               console.log("Productos por categoría:", productosPorCategoria);
@@ -278,6 +278,7 @@ const Home = () => {
                       <Card product={producto} userData={userData} />
                     </div>
                   </div>
+                  
                 </div>
               );
             })}
