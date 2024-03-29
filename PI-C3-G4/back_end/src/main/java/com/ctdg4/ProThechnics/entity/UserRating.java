@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@Hidden
+
 @Table(name = "user_ratings")
 @IdClass(UserProductId.class)
 public class UserRating {

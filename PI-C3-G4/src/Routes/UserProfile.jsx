@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "../Components/styles/UserProfile.css";
+import "../Components/Styles/UserProfile.css";
 import { useFavContext, FavProvider } from "../Components/FavContext.jsx";
 import Card from "../Components/Card.jsx";
 import requestToAPI from "../services/requestToAPI";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Rating from 'react-rating';
-import '../Components/styles/RatingComponent.css';
+import '../Components/Styles/RatingComponent.css';
 
 const RatingComponent = ({ productId }) => {
   const [rating, setRating] = useState(0);

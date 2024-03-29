@@ -6,7 +6,7 @@ import Usuario from "../assets/usuario.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "../Utils/Context.jsx";
 import { TOGGLE_THEME } from "../Reducers/Reducer.jsx";
-import "./styles/Navbar.css";
+import "./Styles/Navbar.css";
 import Swal from "sweetalert2";
 
 const Navbar = () => {

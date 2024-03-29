@@ -8,7 +8,7 @@ import lombok.Data;
 import java.io.Serializable;
 @Embeddable
 @Data
-@Hidden
+
 public class UserRoleId implements Serializable {
 
     @Column(name = "user_id")

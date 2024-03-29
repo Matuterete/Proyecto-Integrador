@@ -6,7 +6,7 @@ import requestToAPI from "../services/requestToAPI";
 import RatingComponent from "../Components/RatingComponent";
 import Calendar from "../Components/Calendar";
 import Swal from "sweetalert2";
-import "../Components/styles/Detail.css";
+import "../Components/Styles/Detail.css";
 
 const Detail = () => {
   const { id } = useParams();

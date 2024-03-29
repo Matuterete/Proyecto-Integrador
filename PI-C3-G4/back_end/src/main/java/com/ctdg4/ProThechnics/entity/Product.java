@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Hidden
+
 @Table(name = "products")
 public class Product {
     @Id

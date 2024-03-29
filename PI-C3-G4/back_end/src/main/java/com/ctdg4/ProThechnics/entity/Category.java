@@ -6,7 +6,7 @@ import lombok.*;
 
 @Data
 @Entity
-@Hidden
+
 @Table(name = "categories")
 public class Category {
     @Id

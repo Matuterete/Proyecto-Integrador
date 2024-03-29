@@ -21,7 +21,6 @@ import java.util.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Hidden
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = {"email"})})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements UserDetails {
