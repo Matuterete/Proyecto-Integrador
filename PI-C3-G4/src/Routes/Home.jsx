@@ -97,6 +97,7 @@ const Home = () => {
     } else {
       try {
         setCategoriaSeleccionada(categoryTitle);
+        console.log(categoryId);
         const response = await requestToAPI(
           `products/find/category/${categoryId}`,
           "GET"
