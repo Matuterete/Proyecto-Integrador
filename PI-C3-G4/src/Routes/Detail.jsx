@@ -5,7 +5,7 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import requestToAPI from "../services/requestToAPI";
 import Rating from "../Components/Rating";
 import Calendar from "../Components/Calendar";
-import "../Components/styles/Detail.css";
+import "../Components/Styles/Detail.css";
 import RatingComponent from '../Components/RatingComponent'; // Asegúrate de tener la ruta correcta hacia el archivo RatingComponent.js
 
 

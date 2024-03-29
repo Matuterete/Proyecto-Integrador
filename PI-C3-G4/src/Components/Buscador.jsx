@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import requestToAPI from '../services/requestToAPI';
-import '../Components/styles/Buscador.css'
+import '../Components/Styles/Buscador.css'
 
 const Buscador = ({ onSearch, onSelectProduct }) => {
   const [products, setProducts] = useState([]);

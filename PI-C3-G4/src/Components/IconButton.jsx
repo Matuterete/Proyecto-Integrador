@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import "../Components/styles/IconButton.css";
+import "../Components/Styles/IconButton.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';

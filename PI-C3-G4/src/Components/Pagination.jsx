@@ -1,4 +1,4 @@
-import "../Components/styles/Pagination.css";
+import "../Components/Styles/Pagination.css";
 
 function Pagination({ productsPerPage, totalProducts, paginate, currentPage }) {
   const pageNumbers = [];
