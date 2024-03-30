@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
+import "react-image-gallery/Styles/css/image-gallery.css";
 import requestToAPI from "../services/requestToAPI";
 import RatingComponent from "../Components/RatingComponent";
 import Calendar from "../Components/Calendar";
@@ -99,7 +99,7 @@ const Detail = () => {
         dateEnd: selectedDates.endDate.toISOString().split("T")[0],
       };
 
-      console.log("Data a enviar al servidor:", data);
+      
 
       const response = await requestToAPI("rentals/add", "POST", data);
       console.log("Reserva exitosa:", response);

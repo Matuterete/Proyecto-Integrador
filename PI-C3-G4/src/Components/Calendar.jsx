@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
-import "react-date-range/dist/styles.css";
+import "react-date-range/dist/Styles.css";
 import "react-date-range/dist/theme/default.css";
 import "../Components/Styles/Calendar.css";
 import es from "date-fns/locale/es";
