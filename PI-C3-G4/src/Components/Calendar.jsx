@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
-import "react-date-range/dist/styles.css";
+import "react-date-range/dist/Styles.css";
 import "react-date-range/dist/theme/default.css";
-import "../Components/styles/Calendar.css";
+import "../Components/Styles/Calendar.css";
 import es from "date-fns/locale/es";
 import requestToAPI from "../services/requestToAPI";
 
@@ -50,7 +50,7 @@ function Calendar({ selectedDates, onSelectDates, productId }) {
   }, [reservations]);
 
   const handleSelect = (ranges) => {
-    onSelectDates(ranges); // Llama a la función onSelectDates con los rangos seleccionados
+    onSelectDates(ranges); 
   };
 
   useEffect(() => {
