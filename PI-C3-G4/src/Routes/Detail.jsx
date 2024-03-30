@@ -19,6 +19,7 @@ const Detail = () => {
     JSON.parse(sessionStorage.getItem("userData"))
   );
   const navigate = useNavigate();
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     async function fetchProduct() {
@@ -99,10 +100,14 @@ const Detail = () => {
         dateEnd: selectedDates.endDate.toISOString().split("T")[0],
       };
 
-      
-
       const response = await requestToAPI("rentals/add", "POST", data);
       console.log("Reserva exitosa:", response);
+
+      Swal.fire({
+        icon: "success",
+        title: "Reserva exitosa",
+        text: "Tu reserva se ha realizado con éxito.",
+      });
     } catch (error) {
       if (error.response && error.response.status === 409) {
         console.error(
@@ -158,21 +163,69 @@ const Detail = () => {
             </div>
           </div>
           <div className="calendar-container">
-            
-              <div className="calendars">
-                <Calendar
-                  productId={id}
-                  selectedDates={selectedDates}
-                  onSelectDates={handleSelectDates}
-                />
-              </div>
-            
+            <div className="calendars">
+              <Calendar
+                productId={id}
+                selectedDates={selectedDates}
+                onSelectDates={handleSelectDates}
+              />
+            </div>
+
             <button
               className="button buttonPrimary"
-              onClick={handleReservation}
+              onClick={() => setShowForm(true)}
             >
               Alquilar ahora
             </button>
+            {showForm && (
+              <div className="reservationForm">
+                <h3>Confirma tus datos para realizar la reserva</h3>
+                {selectedDates.startDate && selectedDates.endDate && (
+                  <p>
+                    <strong>Cantidad de días:</strong>{" "}
+                    {calculateDays(
+                      selectedDates.startDate,
+                      selectedDates.endDate
+                    )}
+                  </p>
+                )}
+                {product && (
+                  <div>
+                    <p>
+                      <strong>Producto:</strong> {product.name}
+                    </p>
+                    <p>
+                      <strong>Precio por día:</strong> {product.price}
+                    </p>
+                    {selectedDates.startDate && selectedDates.endDate && (
+                      <p>
+                        <strong>Precio total:</strong>{" "}
+                        {calculateAmount(
+                          product.price,
+                          selectedDates.startDate,
+                          selectedDates.endDate
+                        ).toFixed(2)}
+                      </p>
+                    )}
+                  </div>
+                )}
+                <p>
+                  <strong>Nombre:</strong> {userData.user.name}
+                </p>
+                <p>
+                  <strong>Apellido:</strong> {userData.user.lastName}
+                </p>
+                <p>
+                  <strong>Correo electrónico:</strong> {userData.user.email}
+                </p>
+                <button
+                  className="button buttonPrimary"
+                  onClick={() => handleReservation()}
+                >
+                  Confirmar reserva
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="info">

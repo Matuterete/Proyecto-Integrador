@@ -50,7 +50,7 @@ function Calendar({ selectedDates, onSelectDates, productId }) {
   }, [reservations]);
 
   const handleSelect = (ranges) => {
-    onSelectDates(ranges); // Llama a la función onSelectDates con los rangos seleccionados
+    onSelectDates(ranges); 
   };
 
   useEffect(() => {
