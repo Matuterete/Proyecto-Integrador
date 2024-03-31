@@ -63,23 +63,26 @@ const Card = ({ product, userData }) => {
         )}
       </button>
       <Link to={"/detail/" + product.id} className="h2card">
-        <div>
-          <img className="image" src={product.images[0].url} alt="" />
+        <div className="card-img">
+          <img src={product.images[0].url} alt="" />
         </div>
       </Link>
       <div className="name-card">
         <h2 className="name">{product.name}</h2>
       </div>
+
       <div className="card-content">
-        <div className="price-container">
-          <p className="price">{product.price}</p>
-          <p className="currency">USD</p>
+
+        <div className="">
+          <p className="price">$ {product.price} USD</p>
         </div>
+
         <div className="social">
           <div>
             {" "}
             <Rating productId={product.id} />{" "}
           </div>
+
           <div>
             <Share
               onClick={() => {

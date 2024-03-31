@@ -99,7 +99,7 @@ function AdminProducts() {
   };
 
   return (
-    <div>
+    <div className='img-background'>
       <h2 className='container-title'>Administrar Productos</h2>
       {showProductList && (
         <div>

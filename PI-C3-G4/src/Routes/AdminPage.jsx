@@ -32,18 +32,17 @@ const AdminPage = () => {
   }, []);
 
   return (
-    <div className='bodyPage'>
+    <div className='bodyPage img-background'>
       <div className='adminMenu'>
         <h1 className='TitleAdminP'>Menú de Administración General</h1>
         <div className='Menu'>
-          <h2>Elige la opción</h2>
           <div className='ButtonContainer'>
             {!isMobile && (
               <>
-                <Link to="/adminProducts"><button className='button buttonPrimary'>Productos</button></Link>
-                <Link to="/adminCategories"><button className='button buttonPrimary'>Categorías</button></Link>
-                <Link to="/adminFeatures"><button className='button buttonPrimary'>Características</button></Link>
-                {sessionData && sessionData.user.role === "SUPERADMIN" && <Link to="/adminUsers"><button className='button buttonPrimary'>Usuarios</button></Link>}
+                <Link to="/adminProducts"><button className='button button-sin-borde'>Productos</button></Link>
+                <Link to="/adminCategories"><button className='button button-sin-borde'>Categorías</button></Link>
+                <Link to="/adminFeatures"><button className='button button-sin-borde'>Características</button></Link>
+                {sessionData && sessionData.user.role === "SUPERADMIN" && <Link to="/adminUsers"><button className='button button-sin-borde'>Usuarios</button></Link>}
               </>
             )}
           </div>

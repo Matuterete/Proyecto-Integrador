@@ -1,13 +1,12 @@
 /* Card.css */
 .card {
-  width: 20%;
-  border: 1px solid #ccc;
-  background-color: #DBE2EF;
-  border-radius: 1rem;
+  background-color: #272B32;
+  border-radius: 8px;
   padding: 0;
   margin: 0.5rem;
   display: flex;
   flex-direction: column;
+  color: white;
 }
 .name-card{
   height: 60px;
@@ -15,46 +14,36 @@
 
 .card-content {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #4073AF;
+  flex-direction: column;
   border-end-start-radius: 1rem;
   border-end-end-radius: 1rem;
   padding: 1rem;
 }
 
-.price-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
-  border-radius: 3rem;
-  font-size: x-large;
-  font-weight: bolder;
-  height: 4rem;
-  width: 4rem;
-}
-
 .price {
   margin: 0;
-  color: #1287bd;
+  color: #ffffff;
 }
 
-.currency {
-  margin: 0;
-  font-size: x-small;
-  color: #000;
+.card-img{
+  width: 100%; /* Ancho deseado para el contenedor */
+  height: 0; /* Inicializamos la altura en 0 */
+  padding-top: 100%; /* La altura será igual al 100% del ancho */
+  position: relative; /* Para que los elementos internos se posicionen con respecto al contenedor */
+  overflow: hidden;
 }
-
 .card img {
-  width: 100%;
-  height: auto;
+  width: 100%; /* La imagen ocupará todo el ancho del contenedor */
+    height: 100%; /* La imagen ocupará todo el alto del contenedor */
+    position: absolute; /* La imagen se posiciona absolutamente dentro del contenedor */
+    top: 0; /* Se ajusta a la parte superior del contenedor */
+    left: 0;
 }
 
 .social {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-around;
   align-items: center;
   font-size: larger;
 }
@@ -63,14 +52,15 @@
   font-size: 1.2rem;
   margin-top: 0;
   text-align: center;
-  color: black;
 }
 
 .share-button {
-  background-color: #dbe2ef;
-  border: none;
-  border-radius: 0.5rem;
-  height: 2rem;
+  background-color: transparent;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  border-color: lightgreen;
+  color: lightgreen;
 }
 
 .card:hover {
@@ -87,24 +77,19 @@
   border: none;
   background-color: unset;
   font-size: x-large;
-  margin: 1rem;
+  margin: 4px;
   position: absolute;
+  z-index: 2;
 }
 
 .not-liked-icon {
-  color: rgb(255, 255, 255);
+  color: #3A4047;
   animation: heartBeat 0.5s ease-in-out;
 }
 
 .liked-icon {
-  color: rgb(245, 74, 145);
+  color: #3683D7;
   animation: heartBeat2 0.5s ease-in-out;
-}
-
-.Container {
-  width: 60%;
-  display: flex;
-  margin: auto;
 }
 
 .cardGrid-2 {

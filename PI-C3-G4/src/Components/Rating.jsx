@@ -17,12 +17,13 @@ const Rating = ({ productId }) => {
   return (
     <div>
       <div>
-        {[1,2,3,4,5].map((value) => (
+        {[1, 2, 3, 4, 5].map((value) => (
           <span
+            className='rating'
             key={value}
             onClick={() => handleRatingChange(value)}
             style={{
-              color: rating >= value ? 'gold' : 'white',
+              color: rating >= value ? 'lightgreen' : 'green',
               cursor: 'pointer',
             }}
           >

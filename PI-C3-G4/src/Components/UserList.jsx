@@ -9,24 +9,27 @@ function UserList({ users, onEdit, onDelete }) {
   };
 
   return (
-    <div className="container-list">
-      {selectedUser && (
-        <div>
-          <p>Id: {selectedUser.id}</p>
-          <h3>{selectedUser.name}</h3>
-        </div>
-      )}
-      {users.map(user => (
-        <div key={user.id} className="list-item">
-          <p>Id: {user.id}</p>
-          <h4>{user.name} {user.lastName}</h4>
-          <div>
-            {/* {<IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>} */}
-            <IconButton className='button buttonPrimary' onClick={() => onEdit(user)} icon="pencil">Editar</IconButton>
-            <IconButton className='button buttonTerciary' onClick={() => onDelete(user.id)} icon="minus">Eliminar</IconButton>
+
+    <div className='body-product-list'>
+      <ul className='adminFeactures'>
+        {users.map((objeto, index) => (
+
+          <div className='divLi' key={objeto.id}>
+
+            <li className="list-item">
+              <div className=''><p>ID{objeto.id}</p></div>
+              <p>{objeto.name}</p>
+
+              <div className='box-editar-eliminar'>
+                {/* {<IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>} */}
+                {/* {<IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>} */}
+                <IconButton className='button buttonTerciary' onClick={() => onEdit(objeto)} icon="pencil">Editar</IconButton>
+                <IconButton className='button buttonSecundary' onClick={() => onDelete(objeto.id)} icon="minus">Eliminar</IconButton>
+              </div>
+            </li>
           </div>
-        </div>
-      ))}
+        ))}
+      </ul>
     </div>
   );
 }

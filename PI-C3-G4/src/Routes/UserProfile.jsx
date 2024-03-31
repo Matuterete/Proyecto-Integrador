@@ -79,7 +79,7 @@ const UserProfile = () => {
         <div className="Container2">
           <div className="Box">
             <p className="cardTitle-2">Productos Favoritos</p>
-            <div className="cardGrid-2">
+            <div className="cardGrid-2 favorite-card-box">
               {loading ? (
                 <div className="loader-container">
                   <div className="loader"></div>

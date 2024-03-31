@@ -4,11 +4,9 @@
   font-weight: 400;
   color: #122E4F;
 }
-.img-background{
-  background-image: url('./assets/fondo_1.png'); /* Ruta de la imagen de fondo */
-  background-size: cover;
-  background-attachment: fixed;
-  color: white;
+
+.img-background {
+  background-color: #0D1117;
 }
 
 body {
@@ -30,53 +28,53 @@ main {
   flex: 1;
 }
 
-.navbar {
-  background-color: #0A1F38;
-  color: white;
-  padding: 10px 20px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-}
-
 /* ========== BOTONES GENERICOS ========== */
 
 .button {
+  display: flex;
+  align-items: center;
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid;
   padding: 0.6em 1.2em;
-  font-size: 0.8em;
+  font-size: 1em;
   font-family: inherit;
   cursor: pointer;
   height: 30px;
 }
 
+.button-sin-borde {
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+
 .buttonPrimary {
-  background-color: #122E4F;
+  /* background-color: #145fb5; */
+  background-color: rgba(20, 95, 181, 0.0);
   color: white;
 }
 
 .buttonPrimary:hover {
-  background-color: #4073AF;
+  /* background-color: #4073AF; */
+  box-shadow: 0px 2px 6px rgba(219, 226, 239, 1);
 }
 
 .buttonSecundary {
-  background-color: #4073AF;
+  background-color: #005eca;
   color: white;
 }
 
 .buttonSecundary:hover {
-  background-color: #5095e4;
+  background-color: #207be4;
 }
 
 .buttonTerciary {
-  background-color: #DBE2EF;
-  color: #122E4F;
+  background-color: #1281ff;
+  color: #ffffff;
 }
 
 .buttonTerciary:hover {
-  background-color: #c1c8d3;
+  background-color: #479dff;
 }
 
 .buttonBig {
@@ -89,6 +87,10 @@ main {
   text-align: center;
 }
 
+.swal2-popup {
+  margin: 100px;
+}
+
 
 /* ========== FORMULARIO GENERICO ========== */
 
@@ -98,7 +100,8 @@ main {
 }
 
 form[style*="height: less800px"] {
-  padding-bottom: 60px; /* Agrega padding solo si la altura es menor a 800px */
+  padding-bottom: 60px;
+  /* Agrega padding solo si la altura es menor a 800px */
 }
 
 .form h1 {
@@ -126,7 +129,7 @@ form[style*="height: less800px"] {
   background-color: #F1F1F2;
   border-radius: 12px;
   height: 40px;
-  color: #A7A7AB;
+  color: #000000;
   font-size: 18px;
 }
 
@@ -184,18 +187,83 @@ form[style*="height: less800px"] {
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ccc;
-}
-
-.list-item p {
-  color: black;
-}
-
-.list-item h4 {
-  color: black;
+  color: white;
 }
 
 .list-item button {
   margin-left: 10px;
+}
+
+/* ========== LISTA CRUD ========== */
+
+.box-editar-eliminar {
+  display: flex;
+}
+
+.titleFeatures {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adminFeactures li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #323232;
+  margin: 5px;
+  border-radius: 8px;
+  width: 900PX;
+}
+
+.divSVG {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 100%;
+  margin: 3px 10px;
+}
+
+.divSVG-categoria {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 100%;
+  margin: 0px 10px;
+}
+
+.adminFeactures li p {
+  margin: 2px 0px;
+}
+
+.divLi {
+  display: flex;
+  align-items: center;
+}
+
+.rating{
+  font-size: 24px;
+}
+
+.selected-item-border-green{
+  border-bottom: 3px solid greenyellow;
+}
+
+p{
+  margin: 0;
+}
+
+/* ========== LISTA CRUD PRODUCT ========== */
+.body-product-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (prefers-color-scheme: light) {

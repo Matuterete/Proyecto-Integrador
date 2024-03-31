@@ -166,7 +166,7 @@ const AdminCategories = () => {
   };
 
   return (
-    <div className="bodyFeatures">
+    <div className="bodyCategorias img-background">
       <div className="titleFeatures">
         <h2>Administrar Categorías</h2>
       </div>
@@ -186,31 +186,30 @@ const AdminCategories = () => {
           </IconButton>
         </div>
       </div>
-      <ul>
-        {categories.map((category) => (
-          <li key={category.id} className="list-item">
-            <img src={category.url} alt={category.title} />
-            {category.title}
-            <div>
-              {/* {<IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>} */}
-              <IconButton
-                className="button buttonPrimary"
-                onClick={() => updateCategory(category.id, category.title)}
-                icon="pencil"
-              >
-                Editar
-              </IconButton>
-              <IconButton
-                className="button buttonTerciary"
-                onClick={() => deleteCategory(category.id)}
-                icon="minus"
-              >
-                Eliminar
-              </IconButton>
-            </div>
-          </li>
+
+
+
+      <ul className='adminFeactures'>
+        {categories.map((objeto, index) => (
+
+          <div className='divLi' key={objeto.id}>
+
+            <li className="list-item">
+            <div className='divSVG-categoria'><img src={objeto.url} /></div>
+              <p>{objeto.title}</p>
+
+              <div className='box-editar-eliminar'>
+                <IconButton className="button buttonTerciary" onClick={() => updateCategory(objeto.id, objeto.title)} icon="pencil">Editar</IconButton>
+                <IconButton className="button buttonSecundary" onClick={() => deleteCategory(objeto.id)} icon="minus">Eliminar</IconButton>
+              </div>
+            </li>
+          </div>
         ))}
       </ul>
+
+
+
+
       {editingCategoryId && (
         <div>
           <input

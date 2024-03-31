@@ -167,7 +167,7 @@ function RegistroUsuario() {
   };
 
   return (
-    <div className="form">
+    <div className="form img-background">
       <h1 className="title">Formulario de Registro de Usuarios</h1>
       <div className="container-img">
         <img

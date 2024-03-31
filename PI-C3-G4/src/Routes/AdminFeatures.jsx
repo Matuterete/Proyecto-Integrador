@@ -194,7 +194,7 @@ const AdminFeatures = () => {
 
     return (
         <>
-            {responseData ? (<div className='bodyFeatures'>
+            {responseData ? (<div className='bodyFeatures img-background'>
 
                 <div className='titleFeatures'>
                     <h2>Administrar caracteristicas</h2>
@@ -242,10 +242,10 @@ const AdminFeatures = () => {
                                     <div className='divSVG'><img src={objeto.url} /></div>
                                     <p>ID {objeto.id} - {objeto.title}</p>
 
-                                    <div>
+                                    <div className='box-editar-eliminar'>
                                         {/* {<IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>} */}
-                                        <IconButton className='button buttonPrimary' onClick={() => handleInput(objeto)} icon="pencil">Editar</IconButton>
-                                        <IconButton className='button buttonTerciary' onClick={() => handleClickDelete(objeto.id)} icon="minus">Eliminar</IconButton>
+                                        <IconButton className='button buttonTerciary' onClick={() => handleInput(objeto)} icon="pencil">Editar</IconButton>
+                                        <IconButton className='button buttonSecundary' onClick={() => handleClickDelete(objeto.id)} icon="minus">Eliminar</IconButton>
                                     </div>
                                 </li>
                             </div>

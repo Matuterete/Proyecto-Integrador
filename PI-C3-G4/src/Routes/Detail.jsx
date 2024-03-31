@@ -112,7 +112,7 @@ const Detail = () => {
 
               <button
                 disabled={!startDate || !endDate}
-                className="button buttonPrimary"
+                className="button buttonSecundary"
               >
                 Alquilar ahora
               </button>

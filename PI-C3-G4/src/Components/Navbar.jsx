@@ -88,16 +88,15 @@ const Navbar = () => {
           {sessionData ? (
             <div className="user">
               <div className="name">
-                <span>{sessionData.user.name}</span>
-                <span>{sessionData.user.lastName}</span>
+                <span>{sessionData.user.name} {sessionData.user.lastName}</span>
               </div>
               <Link to="/userprofile">
-                <button className="button user-logo">{userLogo}</button>
+                <button className="user-logo">{userLogo}</button>
               </Link>
               {sessionData.user.role === "ADMIN" ||
               sessionData.user.role === "SUPERADMIN" ? (
                 <Link to="/administracion">
-                  <button className="button buttonTerciary">Admin Page</button>
+                  <button className="button buttonPrimary">Admin Page</button>
                 </Link>
               ) : (
                 ""
@@ -108,13 +107,15 @@ const Navbar = () => {
               </button>
             </div>
           ) : (
-            <div className="button_login_registro_desktop">
+            <div className="button_login_registro_desktop titleFeatures">
+             
+              <Link to="/registroUsuario" className="button button-sin-borde">
+                Crear Cuenta
+              </Link>
               <Link to="/login" className="button buttonPrimary">
                 Iniciar Sesión
               </Link>
-              <Link to="/registroUsuario" className="button buttonTerciary">
-                Crear Cuenta
-              </Link>
+
             </div>
           )}
 

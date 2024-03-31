@@ -184,13 +184,9 @@ const Home = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="body">
+    <div className="body img-background">
       <div className="Search-Calendar">
-        <h1>¿Querés consultar la disponibilidad de un producto?</h1>
-        <p>
-          Seleccioná el producto que estés buscando, elegí una fecha de inicio y
-          devolución del producto y realizá tu búsqueda
-        </p>
+
         <div className="search-container">
           <Buscador
             onSearch={handleSearchResults}
@@ -241,7 +237,7 @@ const Home = () => {
       </div>
 
       <div className="categories">
-        <h1>Categorías</h1>
+
         <div className="categories-container">
           {categorias.map((category) => (
             <div
@@ -250,40 +246,41 @@ const Home = () => {
               onClick={() => handleCategoriaClick(category.id, category.title)}
             >
               <img src={category.url} alt={category.title} />
-              <p>{category.title}</p>
+              <p className={categoriaSeleccionada == category.title? 'selected-item-border-green' : ''}>{category.title}</p>
             </div>
           ))}
         </div>
       </div>
+
       {mostrarProductosPorCategoria && (
-  <div className="productos-por-categoria">
-    <h1>{categoriaSeleccionada}</h1>
-    <Slider {...sliderSettings}>
-      {productosPorCategoria.map((producto) => {
-        console.log("Productos por categoría:", productosPorCategoria);
-        return (
-          <div className="producto-wrapper" key={producto.id}>
-            <div
-              className="producto"
-              onClick={() => handleProductoClick(producto)}
-            >
-              <div className="card-wrapper">
-                <Card product={producto} userData={userData} />
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </Slider>
-  </div>
-)}
+        <div className="productos-por-categoria">
+  
+          <Slider {...sliderSettings}>
+            {productosPorCategoria.map((producto) => {
+              console.log("Productos por categoría:", productosPorCategoria);
+              return (
+                <div className="producto-wrapper" key={producto.id}>
+                  <div
+                    className="producto"
+                    onClick={() => handleProductoClick(producto)}
+                  >
+                    <div className="card-wrapper">
+                      <Card product={producto} userData={userData} />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </Slider>
+        </div>
+      )}
 
       <div className="Container">
         <div className="Box">
           <p className="cardTitle-2">Recomendados</p>
           <div className="cardGrid-2">
             {productosRecomendados.length === 0 &&
-            !mostrarProductosPorCategoria ? (
+              !mostrarProductosPorCategoria ? (
               <div className="loader-container">
                 <div className="loader"></div>
               </div>

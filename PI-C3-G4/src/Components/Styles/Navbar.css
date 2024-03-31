@@ -2,7 +2,7 @@
   display: flex;
   position: fixed;
   flex-direction: column;
-  z-index: 9999;
+  z-index: 999;
 }
 
 .navbar {
@@ -11,9 +11,13 @@
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  color: var(--color-text);
-  width: 100vw;
   height: auto;
+  background-color: #000000;
+  color: white;
+  padding: 20px 20px;
+  width: 100%;
+  top: 0;
+  border-bottom: 1px solid #4073AF;
 }
 
 .buttons {
@@ -70,11 +74,14 @@
   color: white;
 }
 .user-logo{
-  font-weight: bold;
-}
 
-.user-logo:hover{
-  background-color: #d6d0d0;
+  background-color: #3683D7;
+  color: white;
+  height: 45px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 
