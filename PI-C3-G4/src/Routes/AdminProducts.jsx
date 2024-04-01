@@ -4,7 +4,7 @@ import ProductEditForm from '../Components/ProductEditForm';
 import ProductAddForm from '../Components/ProductAddForm'
 import Pagination from '../Components/Pagination';
 import { useNavigate } from 'react-router-dom';
-import "../Components/styles/AdminProducts.css";
+import "../Components/Styles/AdminProducts.css";
 import IconButton from '../Components/IconButton';
 import Swal from 'sweetalert2';
 import requestToAPI from '../services/requestToAPI';

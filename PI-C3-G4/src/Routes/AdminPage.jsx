@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import '../Components/styles/AdminPage.css';
+import '../Components/Styles/AdminPage.css';
 import AdminProducts from './AdminProducts.jsx'
 import AdminCategories from './AdminCategories.jsx'
 import AdminFeatures from './AdminFeatures.jsx';
 import AdminUsers from './AdminUsers.jsx'
+
 
 const AdminPage = () => {
   const [isMobile, setIsMobile] = useState(false);

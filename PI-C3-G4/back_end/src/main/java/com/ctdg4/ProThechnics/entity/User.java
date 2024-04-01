@@ -2,6 +2,7 @@ package com.ctdg4.ProThechnics.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ import java.util.*;
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = {"email"})})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -40,9 +42,9 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserRole userRole;
     @OneToMany(mappedBy = "user")
-//    @Schema(hidden = true)
     private Set<UserFav> fav;
-
+//    @OneToMany(mappedBy = "user")
+//    private Set<UserReview> reviews;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

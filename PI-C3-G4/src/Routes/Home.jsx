@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom";
 import Card from "../Components/Card";
 import Pagination from "../Components/Pagination";
 import Calendar from "../Components/Calendar.jsx";
+import { IoCalendarOutline } from "react-icons/io5";
 import Buscador from "../Components/Buscador.jsx";
 import requestToAPI from "../services/requestToAPI";
 import Slider from "react-slick";
 import { useFavContext } from "../Components/FavContext.jsx";
+import Swal from "sweetalert2";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import "../Components/styles/Home.css";
+import "../Components/Styles/Home.css";
 
 const Home = () => {
   const [categorias, setCategorias] = useState([]);
@@ -19,10 +21,11 @@ const Home = () => {
     useState(false);
   const [productosRecomendados, setProductosRecomendados] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [productId, setProductId] = useState(null);
+  const [showCalendars, setShowCalendars] = useState(false);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [submitRequest, setSubmitRequest] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(6);
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -31,12 +34,9 @@ const Home = () => {
     indexOfFirstProduct,
     indexOfLastProduct
   );
-  const {
-    favoriteProducts,
-    loading,
-    fetchFavoriteProducts,
-  } = useFavContext();
-  const [fetchFavoriteProductsCalled, setFetchFavoriteProductsCalled] = useState(false);
+  const { favoriteProducts, loading, fetchFavoriteProducts } = useFavContext();
+  const [fetchFavoriteProductsCalled, setFetchFavoriteProductsCalled] =
+    useState(false);
 
   const [userData, setUserData] = useState(
     JSON.parse(sessionStorage.getItem("userData"))
@@ -44,7 +44,13 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-
+  const [sliderSettings, setSliderSettings] = useState({
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+  });
 
   useEffect(() => {
     async function fetchData() {
@@ -65,7 +71,7 @@ const Home = () => {
     async function fetchRandomProducts() {
       try {
         const productosResponse = await requestToAPI(
-          "products/find/random/10",
+          "products/find/random/12",
           "GET"
         );
         setProductosRecomendados(productosResponse);
@@ -91,6 +97,7 @@ const Home = () => {
     } else {
       try {
         setCategoriaSeleccionada(categoryTitle);
+        console.log(categoryId);
         const response = await requestToAPI(
           `products/find/category/${categoryId}`,
           "GET"
@@ -113,61 +120,17 @@ const Home = () => {
     navigate(`/detail/${product.id}`, { state: { product } });
   };
 
-  const handleProductoSelect = (product) => {
+  const handleProductoSelect = async (product) => {
+    setProductId(product.id); 
     setSelectedProduct(product);
-  };
-
-  const [sliderSettings, setSliderSettings] = useState({
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 968) {
-        setSliderSettings({
-          ...sliderSettings,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        });
-      } else {
-        const slidesToShow = productosPorCategoria.length > 1 ? 4 : 1;
-        setSliderSettings({
-          ...sliderSettings,
-          slidesToShow: slidesToShow,
-          slidesToScroll: 1,
-        });
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [productosPorCategoria.length]);
-
-  const handleAvailabilityCheck = async () => {
     try {
-      const isAvailable = true;
-      if (isAvailable) {
-        if (selectedProduct && selectedProduct.id) {
-          const productId = selectedProduct.id;
-          navigate(`/detail/${productId}`);
-        } else {
-          console.log("No se ha seleccionado un producto válido.");
-        }
-      } else {
-        console.log(
-          "Lo siento, el producto no está disponible en las fechas elegidas."
-        );
-      }
+      const url = `rentals/find/product/${product.id}`;
+      const method = "GET";
+      const headers = {};
+      const responseData = await requestToAPI(url, method, null, headers);
+      console.log(responseData);
     } catch (error) {
-      console.error("Error al verificar la disponibilidad:", error);
+      console.error("Error fetching product availability:", error);
     }
   };
 
@@ -175,13 +138,71 @@ const Home = () => {
     setSearchResults(results);
   };
 
-  const [showCalendars, setShowCalendars] = useState(false);
-
   const handleToggleCalendars = () => {
-    setShowCalendars(!showCalendars);
+    if (!productId) {
+      Swal.fire({
+        icon: "warning",
+        title: "Seleccione un producto",
+        text: "Primero debe seleccionar un producto antes de continuar.",
+      });
+    } else {
+      setShowCalendars((prevShowCalendars) => !prevShowCalendars);
+    }
   };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleAvailabilityCheck = async () => {
+    try {
+      if (!userData) {
+        Swal.fire({
+          icon: "info",
+          title: "Solo para usuarios del sitio",
+          text: "Debes iniciar sesión o registrarte para poder realizar esta acción.",
+          showCancelButton: true,
+          confirmButtonText: "Iniciar sesión",
+          cancelButtonText: "Registrarse",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login");
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            navigate("/registroUsuario");
+          }
+        });
+      } else if (selectedStartDate && selectedEndDate && selectedProduct) {
+        const availabilityResponse = await requestToAPI(
+          `rentals/find/product/${selectedProduct.id}`,
+          "GET"
+        );
+
+        const isProductAvailable = availabilityResponse.some(
+          (rental) =>
+            new Date(rental.dateStart) <= selectedEndDate &&
+            new Date(rental.dateEnd) >= selectedStartDate
+        );
+
+        if (!isProductAvailable) {
+          navigate(`/detail/${selectedProduct.id}`);
+        } else {
+          alert("El producto no está disponible para las fechas seleccionadas");
+        }
+      } else {
+        alert("Por favor selecciona un producto y un rango de fechas");
+      }
+    } catch (error) {
+      console.error("Error al verificar la disponibilidad:", error);
+    }
+  };
+
+  const formattedRange =
+    selectedStartDate && selectedEndDate
+      ? `${selectedStartDate.toLocaleDateString()} - ${selectedEndDate.toLocaleDateString()}`
+      : "Seleccionar fecha";
+
+  const handleSelectDates = (ranges) => {
+    setSelectedStartDate(ranges.selection.startDate);
+    setSelectedEndDate(ranges.selection.endDate);
+  };
 
   return (
     <div className="body img-background">
@@ -193,47 +214,33 @@ const Home = () => {
             onSelectProduct={handleProductoSelect}
           />
           <button className="Button-calendario" onClick={handleToggleCalendars}>
-            {showCalendars ? "Ocultar calendarios" : "Mostrar calendarios"}
+            <IoCalendarOutline className="calendar-icon" />
+            {formattedRange}
           </button>
         </div>
-        {Array.isArray(searchResults) &&
-          searchResults.map((result) => (
-            <div key={result.id}>{result.name}</div>
-          ))}
         {showCalendars && (
-          <>
-            <div className="calendars-container">
-              <div className="Calendars">
-                <h2>Calendario de inicio</h2>
-                <Calendar
-                  selectedDates={selectedStartDate}
-                  onSelectDates={setSelectedStartDate}
-                />
-              </div>
-              <div className="Calendars">
-                <h2>Calendario de fin</h2>
-                <Calendar
-                  selectedDates={selectedEndDate}
-                  onSelectDates={setSelectedEndDate}
-                />
-              </div>
-            </div>
-          </>
-        )}
-        {selectedProduct &&
-          selectedStartDate &&
-          selectedEndDate &&
-          !submitRequest && (
-            <button
-              className="Button-calendario"
-              onClick={() => {
-                setSubmitRequest(true);
-                handleAvailabilityCheck();
+          <div className="calendars-container">
+            <Calendar
+              selectedDates={{
+                startDate: selectedStartDate,
+                endDate: selectedEndDate,
               }}
-            >
-              Consultar Disponibilidad
-            </button>
-          )}
+              onSelectDates={handleSelectDates}
+              onSelectProduct={handleProductoSelect}
+              productId={productId} 
+            />
+          </div>
+        )}
+        {selectedProduct && selectedStartDate && selectedEndDate && (
+          <button
+            className="Button-calendario"
+            onClick={() => {
+              handleAvailabilityCheck();
+            }}
+          >
+            Consultar Disponibilidad
+          </button>
+        )}
       </div>
 
       <div className="categories">
@@ -254,7 +261,7 @@ const Home = () => {
 
       {mostrarProductosPorCategoria && (
         <div className="productos-por-categoria">
-  
+          <h1>{categoriaSeleccionada} ({productosPorCategoria.length} productos encontrados)</h1>
           <Slider {...sliderSettings}>
             {productosPorCategoria.map((producto) => {
               console.log("Productos por categoría:", productosPorCategoria);
@@ -268,6 +275,7 @@ const Home = () => {
                       <Card product={producto} userData={userData} />
                     </div>
                   </div>
+                  
                 </div>
               );
             })}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../Components/styles/Card.css";
+import "../Components/Styles/Card.css";
 import { Link } from "react-router-dom";
 import { useFavContext } from "./FavContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import Share from "./Share";
 import Rating from "./Rating";
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import RatingAverage from './RatingAverage';
 
 
 const Card = ({ product, userData }) => {
@@ -70,19 +71,15 @@ const Card = ({ product, userData }) => {
       <div className="name-card">
         <h2 className="name">{product.name}</h2>
       </div>
-
       <div className="card-content">
-
-        <div className="">
-          <p className="price">$ {product.price} USD</p>
+        <div className="price-container">
+          <p className="price">{product.price}</p>
+          <p className="currency">USD</p>
         </div>
-
         <div className="social">
           <div>
-            {" "}
-            <Rating productId={product.id} />{" "}
+            <RatingAverage productId={product.id} />
           </div>
-
           <div>
             <Share
               onClick={() => {

@@ -1,15 +1,17 @@
 package com.ctdg4.ProThechnics.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
+
 @Table(name = "products")
-@Schema(hidden = true)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +41,13 @@ public class Product {
     @ManyToMany(cascade = CascadeType.ALL)
     @Schema(hidden = true)
     private List<Feature> features;
+    @Column(name = "average_rating")
+    private Double averageRating;
     @OneToMany(mappedBy = "product")
     @Schema(hidden = true)
     private List<UserFav> fav;
+//    @OneToMany(mappedBy = "product")
+//    @Schema(hidden = true)
+//    private List<UserReview> reviews;
+
 }

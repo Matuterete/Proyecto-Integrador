@@ -1,6 +1,7 @@
 package com.ctdg4.ProThechnics.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -8,8 +9,8 @@ import java.util.List;
 
 @Data
 @Entity
+
 @Table(name = "features")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Feature {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

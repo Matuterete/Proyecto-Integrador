@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/products")
-@Tags(value = { @Tag(name = "Products") })
 @CrossOrigin(origins = "*")
+@Tags(value = { @Tag(name = "Products") })
 public class ProductController {
 
     private ProductService productService;

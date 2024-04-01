@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import registroUsuario from "../assets/imagen-Usuario.png";
-import "../Components/styles/RegistroUsuario.css";
+import "../Components/Styles/RegistroUsuario.css";
 import EmailConfirmation from "../Components/EmailConfirmation";
 import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";

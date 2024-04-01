@@ -2,11 +2,13 @@ package com.ctdg4.ProThechnics.dto;
 
 import com.ctdg4.ProThechnics.entity.Category;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+
 public class ProductDTO {
     private Long id;
     private Boolean isActive;
@@ -18,4 +20,5 @@ public class ProductDTO {
     private List<ProductImageDTO> images;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<FeatureDTO> features;
+    private Double rating;
 }
