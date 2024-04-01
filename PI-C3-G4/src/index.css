@@ -2,7 +2,7 @@
   font-family: 'Poppins', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #122E4F;
+  color: white;
 }
 
 .img-background {
@@ -16,6 +16,10 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+}
+.bodyA{
+  padding-top: 200px;
+  min-height: 68vh;
 }
 
 #root {
@@ -33,19 +37,20 @@ main {
 .button {
   display: flex;
   align-items: center;
-  border-radius: 8px;
   border: 1px solid;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-family: inherit;
   cursor: pointer;
   height: 30px;
+  border-radius: 12px;
 }
 
 .button-sin-borde {
   background-color: transparent;
   border: none;
   color: white;
+  border-radius: 0px;
 }
 
 .buttonPrimary {
@@ -60,21 +65,31 @@ main {
 }
 
 .buttonSecundary {
-  background-color: #005eca;
-  color: white;
+  background-color: #272B32;
+  color: #FF5A51;
+  border-color: #3A4047;
 }
 
 .buttonSecundary:hover {
-  background-color: #207be4;
+  background-color: #252020;
 }
 
 .buttonTerciary {
-  background-color: #1281ff;
+  border: none;
+  background-color: #459F53;
   color: #ffffff;
 }
 
 .buttonTerciary:hover {
-  background-color: #479dff;
+  background-color: #31763c;
+}
+.buttonBlue{
+  background-color: #1F6FEA;
+  color: white;
+  border: none;
+}
+.buttonBlue:hover{
+  background-color: #1752ac;
 }
 
 .buttonBig {
@@ -83,8 +98,8 @@ main {
   margin-top: 10px;
 }
 
-.buttonCenter {
-  text-align: center;
+.selected-item-border-green{
+  border-bottom: 4px solid greenyellow;
 }
 
 .swal2-popup {
@@ -96,12 +111,9 @@ main {
 
 .form {
   padding-top: 60px;
-  min-height: 36.4vw;
-}
-
-form[style*="height: less800px"] {
-  padding-bottom: 60px;
-  /* Agrega padding solo si la altura es menor a 800px */
+  background-color:#3A4047;
+  width: 500px;
+  border-radius: 12px;
 }
 
 .form h1 {
@@ -154,6 +166,10 @@ form[style*="height: less800px"] {
   height: 40px;
   font-size: 18px;
 }
+.buttonFormBox{
+  display: flex;
+  justify-content: center;
+}
 
 /* ========== LISTA GENERICA ========== */
 
@@ -166,15 +182,8 @@ form[style*="height: less800px"] {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.container-title {
-  font-size: 25pt;
-  text-align: center;
-  padding-top: 100px;
-  margin: 0 auto;
-}
-
 .container-add-button {
-  max-width: 840px;
+  width: 900px;
   margin: 0px auto;
   display: flex;
   justify-content: left;
@@ -186,7 +195,6 @@ form[style*="height: less800px"] {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  border-bottom: 1px solid #ccc;
   color: white;
 }
 
@@ -198,12 +206,6 @@ form[style*="height: less800px"] {
 
 .box-editar-eliminar {
   display: flex;
-}
-
-.titleFeatures {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .adminFeactures li {
@@ -227,17 +229,6 @@ form[style*="height: less800px"] {
   margin: 3px 10px;
 }
 
-.divSVG-categoria {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 70px;
-  height: 70px;
-  background-color: rgb(255, 255, 255);
-  border-radius: 100%;
-  margin: 0px 10px;
-}
-
 .adminFeactures li p {
   margin: 2px 0px;
 }
@@ -251,12 +242,24 @@ form[style*="height: less800px"] {
   font-size: 24px;
 }
 
-.selected-item-border-green{
-  border-bottom: 3px solid greenyellow;
-}
-
 p{
   margin: 0;
+}
+.categoria-SVG{
+  width: 20PX;
+}
+.titleAdminUser{
+ width: 900px;
+}
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+.titleAndButtonAdmin{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* ========== LISTA CRUD PRODUCT ========== */
@@ -264,6 +267,7 @@ p{
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 @media (prefers-color-scheme: light) {

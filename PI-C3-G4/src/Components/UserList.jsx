@@ -11,6 +11,9 @@ function UserList({ users, onEdit, onDelete }) {
   return (
 
     <div className='body-product-list'>
+      <div className='titleAdminUser'>
+        <h2>Administrar Usuarios</h2>
+      </div>
       <ul className='adminFeactures'>
         {users.map((objeto, index) => (
 
@@ -21,10 +24,8 @@ function UserList({ users, onEdit, onDelete }) {
               <p>{objeto.name}</p>
 
               <div className='box-editar-eliminar'>
-                {/* {<IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>} */}
-                {/* {<IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>} */}
-                <IconButton className='button buttonTerciary' onClick={() => onEdit(objeto)} icon="pencil">Editar</IconButton>
-                <IconButton className='button buttonSecundary' onClick={() => onDelete(objeto.id)} icon="minus">Eliminar</IconButton>
+                <IconButton className='button buttonTerciary ' onClick={() => onEdit(objeto)} icon="pencil">Editar</IconButton>
+                <IconButton className='button buttonSecundary ' onClick={() => onDelete(objeto.id)} icon="minus">Eliminar</IconButton>
               </div>
             </li>
           </div>

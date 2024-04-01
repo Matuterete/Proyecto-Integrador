@@ -102,7 +102,7 @@ const Navbar = () => {
                 ""
               )}
 
-              <button className="button buttonPrimary" onClick={handleLogout}>
+              <button className="button buttonPrimary buttonBig" onClick={handleLogout}>
                 Cerrar Sesion
               </button>
             </div>

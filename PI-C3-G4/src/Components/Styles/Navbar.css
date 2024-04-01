@@ -27,6 +27,7 @@
 }
 .button_login_registro_desktop{
   padding-right: 25px;
+  display: flex;
 }
 
 .buttons button {
@@ -60,6 +61,7 @@
 .user{
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .user p{
   color: black;

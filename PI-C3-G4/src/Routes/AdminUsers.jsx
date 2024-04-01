@@ -81,33 +81,34 @@ function AdminUsers() {
       if (result.isConfirmed) {
         // Aquí puedes realizar la acción de eliminación
         axios.delete(`http://prothechnics.us.to:8080/api/users/delete/id/${userId}`)
-        .then(() => {
-          setUsers(users.filter(user => user.id !== userId));
-          Swal.fire(
-            '¡Eliminado!',
-            'El elemento ha sido eliminado.',
-            'success'
-          );
-        })
-        .catch(error => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error inesperado',
-            text: 'Hubo un error al intentar eliminar el usuario',
-            showConfirmButton: false,
-            timer: 2000 // Cerrar automáticamente después de 2 segundos
+          .then(() => {
+            setUsers(users.filter(user => user.id !== userId));
+            Swal.fire(
+              '¡Eliminado!',
+              'El elemento ha sido eliminado.',
+              'success'
+            );
+          })
+          .catch(error => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error inesperado',
+              text: 'Hubo un error al intentar eliminar el usuario',
+              showConfirmButton: false,
+              timer: 2000 // Cerrar automáticamente después de 2 segundos
+            });
+            console.error(error);
           });
-          console.error(error);
-        });
       }
     });
   };
 
   return (
     <div className='img-background'>
-      <h2 className='container-title'>Administrar Usuarios</h2>
+      
       {showUserList && (
         <div>
+          
           <UserList
             users={currentUsers}
             onEdit={handleEditUser}

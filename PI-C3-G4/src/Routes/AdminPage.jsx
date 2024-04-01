@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import '../Components/styles/AdminPage.css';
+import AdminProducts from './AdminProducts.jsx'
+import AdminCategories from './AdminCategories.jsx'
+import AdminFeatures from './AdminFeatures.jsx';
+import AdminUsers from './AdminUsers.jsx'
 
 const AdminPage = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [sessionData, setSessionData] = useState(null);
+
+  const [elementSelected, setElementSelected] = useState()
 
   useEffect(() => {
     const checkWindowSize = () => {
@@ -31,6 +36,10 @@ const AdminPage = () => {
     getSessionData();
   }, []);
 
+  const handleButton = (select) => {
+    setElementSelected(select)
+  }
+
   return (
     <div className='bodyPage img-background'>
       <div className='adminMenu'>
@@ -39,16 +48,30 @@ const AdminPage = () => {
           <div className='ButtonContainer'>
             {!isMobile && (
               <>
-                <Link to="/adminProducts"><button className='button button-sin-borde'>Productos</button></Link>
-                <Link to="/adminCategories"><button className='button button-sin-borde'>Categorías</button></Link>
-                <Link to="/adminFeatures"><button className='button button-sin-borde'>Características</button></Link>
-                {sessionData && sessionData.user.role === "SUPERADMIN" && <Link to="/adminUsers"><button className='button button-sin-borde'>Usuarios</button></Link>}
+                <button className={elementSelected == 'productos' ? 'selected-item-border-green button button-sin-borde' : 'button button-sin-borde'} onClick={() => handleButton('productos')}>Productos</button>
+                <button className={elementSelected == 'categorias' ? 'selected-item-border-green button button-sin-borde' : 'button button-sin-borde'} onClick={() => handleButton('categorias')}>Categorías</button>
+                <button className={elementSelected == 'caracteristicas' ? 'selected-item-border-green button button-sin-borde' : 'button button-sin-borde'} onClick={() => handleButton('caracteristicas')}>Características</button>
+                {sessionData && sessionData.user.role === "SUPERADMIN" && <button onClick={() => handleButton('usuarios')} className={elementSelected == 'usuarios' ? 'selected-item-border-green button button-sin-borde' : 'button button-sin-borde'}>Usuarios</button>}
               </>
             )}
           </div>
         </div>
         {isMobile && <p>Esta página no está disponible en dispositivos móviles.</p>}
       </div>
+
+      <div>
+        {elementSelected === 'productos' && <AdminProducts/>}
+      </div>
+      <div>
+        {elementSelected === 'categorias' && <AdminCategories/>}
+      </div>
+      <div>
+        {elementSelected === 'caracteristicas' && <AdminFeatures/>}
+      </div>
+      <div>
+        {elementSelected === 'usuarios' && <AdminUsers/>}
+      </div>
+
     </div>
   );
 };

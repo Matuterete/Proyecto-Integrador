@@ -100,11 +100,11 @@ function AdminProducts() {
 
   return (
     <div className='img-background'>
-      <h2 className='container-title'>Administrar Productos</h2>
       {showProductList && (
-        <div>
-          <div className='container-add-button'>
-            <IconButton className='button buttonPrimary buttonBig' onClick={handleAddProduct} icon="plus">Agregar Producto</IconButton>
+        <div className='titleAndButtonAdmin'>
+          <div className='container-add-button space-between'>
+            <h2>Administrar Productos </h2>
+            <IconButton className='button buttonBlue buttonBig' onClick={handleAddProduct} icon="plus">Agregar Producto</IconButton>
           </div>
           <ProductList
               products={currentProducts}

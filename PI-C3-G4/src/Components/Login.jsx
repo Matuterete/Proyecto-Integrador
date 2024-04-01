@@ -22,22 +22,22 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await requestToAPI('auth/login', 'POST', {
         email: usuario.correo,
         password: usuario.contrasena
       });
-  
+
       sessionStorage.setItem('userData', JSON.stringify(response));
-  
+
       if (response.user.role === 'ADMIN' || response.user.role === 'SUPERADMIN') {
         navigate("/administracion");
       } else {
         navigate("/home");
       }
       window.location.reload();
-  
+
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -50,9 +50,10 @@ function Login() {
   };
 
   return (
-    <div className="form img-background login">
-      <h1>Iniciar Sesión</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="img-background bodyA">
+
+      <form onSubmit={handleSubmit} className='form'>
+        <h1>Iniciar Sesión</h1>
         <div className="form-group">
           <label>Correo electrónico:
             <input type="email" name="correo" value={usuario.correo} onChange={handleChange} />
@@ -63,8 +64,8 @@ function Login() {
             <input type="password" name="contrasena" value={usuario.contrasena} onChange={handleChange} />
           </label>
         </div>
-        <div className="form-group buttonCenter">
-          <button type="submit" className='button buttonPrimary buttonBig'>Ingresar</button>
+        <div className="buttonFormBox">
+          <button type="submit" className='button buttonBlue buttonBig'>Ingresar</button>
         </div>
       </form>
     </div>

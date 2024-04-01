@@ -33,7 +33,7 @@ function App() {
   return (
     <BrowserRouter>
       <FavProvider>
-        <div className={`${state.theme} pagina`}>
+        <div className={`pagina`}>
           <Navbar />
 
           <Routes>
