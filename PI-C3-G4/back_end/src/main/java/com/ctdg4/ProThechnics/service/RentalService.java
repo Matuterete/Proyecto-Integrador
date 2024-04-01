@@ -1,5 +1,6 @@
 package com.ctdg4.ProThechnics.service;
 
+import com.ctdg4.ProThechnics.dto.ProductDTO;
 import com.ctdg4.ProThechnics.dto.ProductRentalDTO;
 import com.ctdg4.ProThechnics.dto.RentalDTO;
 import com.ctdg4.ProThechnics.entity.Product;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,20 +28,9 @@ public class RentalService {
     private ProductRepository productRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private ProductService productService;
 
-    // el que anda con la query
-//    @Transactional
-//    public void addRental(Rental rental) {
-//        Product product = productRepository.findById(rental.getProductId())
-//                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
-//        Double price = product.getPrice();
-//        Double amount = rental.getDays_total() * price;
-//        rental.setAmount(amount);
-//
-//        rentalRepository.addRental(rental.getProductId(), rental.getUserId(),
-//                rental.getDate_start(), rental.getDate_end(),
-//                rental.getDays_total(), rental.getAmount());
-//    }
 
     @Transactional
     public Rental addRental(Rental rental) {
@@ -52,6 +43,16 @@ public class RentalService {
 
         return rentalRepository.save(rental);
     }
+
+    @Transactional
+    public void deleteRental(Long rental_id) {
+        rentalRepository.deleteById(rental_id);
+    }
+
+    public Optional<Rental> findRentalById(Long rental_id) {
+        return rentalRepository.findById(rental_id);
+    }
+
     public Double roundToTwoDecimals(Double value) {
         return BigDecimal.valueOf(value).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
@@ -86,5 +87,25 @@ public class RentalService {
         return rentals.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    public List<ProductDTO> findAvailableProducts(LocalDate dateStart, LocalDate dateEnd) {
+
+        List<Rental> overlappingRentals = rentalRepository.findOverlappingRentals(dateStart, dateEnd);
+
+        List<Product> allProducts = productRepository.findAll();
+
+        List<Product> availableProducts = allProducts.stream()
+                .filter(product -> !isProductReserved(product, overlappingRentals))
+                .collect(Collectors.toList());
+
+        return availableProducts.stream()
+                .map(productService::mapToDTOOnlyWithPrimaryImages)
+                .collect(Collectors.toList());
+    }
+
+    private boolean isProductReserved(Product product, List<Rental> overlappingRentals) {
+        return overlappingRentals.stream()
+                .anyMatch(rental -> rental.getProductId().equals(product.getId()));
     }
 }
