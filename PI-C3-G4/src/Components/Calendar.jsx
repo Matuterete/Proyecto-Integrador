@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
-import "react-date-range/dist/Styles.css";
+import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "../Components/Styles/Calendar.css";
 import es from "date-fns/locale/es";
 import requestToAPI from "../services/requestToAPI";
 
+
 function Calendar({ selectedDates, onSelectDates, productId }) {
   const [reservations, setReservations] = useState([]);
   const [fechasOcupadas, setFechasOcupadas] = useState([]);
-  const [monthsToShow, setMonthsToShow] = useState(window.innerWidth <= 768 ? 1 : 2);
+  const [monthsToShow, setMonthsToShow] = useState(
+    window.innerWidth <= 768 ? 1 : 2
+  );
 
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const response = await requestToAPI(`rentals/find/product/${productId}`, "GET");
+        const response = await requestToAPI(
+          `rentals/find/product/${productId}`,
+          "GET"
+        );
         setReservations(response);
       } catch (error) {
         console.error(error);
@@ -40,7 +46,7 @@ function Calendar({ selectedDates, onSelectDates, productId }) {
       const endDateGMT0 = new Date(timestampEndGMT0);
 
       let currentDate = startDateGMT0;
-      while (currentDate <= endDateGMT0) {
+      while (currentDate < endDateGMT0) {
         disabledDates.push(new Date(currentDate));
         currentDate.setDate(currentDate.getDate() + 1);
       }
@@ -50,7 +56,7 @@ function Calendar({ selectedDates, onSelectDates, productId }) {
   }, [reservations]);
 
   const handleSelect = (ranges) => {
-    onSelectDates(ranges); 
+    onSelectDates(ranges);
   };
 
   useEffect(() => {

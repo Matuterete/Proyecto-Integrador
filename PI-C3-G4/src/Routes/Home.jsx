@@ -207,7 +207,11 @@ const Home = () => {
   return (
     <div className="body img-background">
       <div className="Search-Calendar">
-
+        <h1>¿Querés consultar la DISPONIBILIDAD de un producto?</h1>
+        <p>
+          Seleccioná el producto que estés buscando, elegí una fecha de inicio y
+          devolución del producto y realizá tu búsqueda
+        </p>
         <div className="search-container">
           <Buscador
             onSearch={handleSearchResults}

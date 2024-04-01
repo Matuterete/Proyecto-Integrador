@@ -1,18 +1,13 @@
 version: 0.0
 os: linux
 files:
-  - source: /index.html
-    destination: /var/www/html/
+  - source: /
+    destination: /home/ec2-user/Proyecto-Integrador/PI-C3-G4/
 hooks:
-  BeforeInstall:
-    - location: scripts/install_dependencies
+  AfterInstall:
+    - location: package.json
       timeout: 300
-      runas: root
-    - location: scripts/start_server
-      timeout: 300
-      runas: root
-  ApplicationStop:
-    - location: scripts/stop_server
-      timeout: 300
-      runas: root
-
+      runas: ec2-user
+      commands:
+        - npm install
+        - npm run build

@@ -44,3 +44,12 @@
   margin: 4px 0;
 }
 
+.userprof {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 60%;
+  margin-bottom: 5rem;
+  padding-top: 60px;
+}
+
