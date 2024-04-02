@@ -22,7 +22,8 @@
 
 .price {
   margin: 0;
-  color: #ffffff;
+  color: #909AA5;
+  font-weight: bold;
 }
 
 .card-img{
@@ -43,7 +44,7 @@
 .social {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   font-size: larger;
 }
@@ -52,6 +53,7 @@
   font-size: 1.2rem;
   margin-top: 0;
   text-align: center;
+
 }
 
 .share-button {
@@ -77,19 +79,23 @@
   border: none;
   background-color: unset;
   font-size: x-large;
-  margin: 4px;
+  margin: 0.5rem;
   position: absolute;
-  z-index: 2;
+  /* z-index: 1; */
 }
 
 .not-liked-icon {
   color: #3A4047;
-  animation: heartBeat 0.5s ease-in-out;
+}
+
+.not-liked-icon:hover{
+  color: #3683D7;
+  animation: heartBeat 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: color 0.3s ease-in;
 }
 
 .liked-icon {
   color: #3683D7;
-  animation: heartBeat2 0.5s ease-in-out;
 }
 
 .cardGrid-2 {
@@ -107,19 +113,11 @@
 
 @keyframes heartBeat {
   0% {
-    transform: scale(1);
-  }
-
-  25% {
-    transform: scale(2);
+    transform: scale(0.8);
   }
 
   50% {
-    transform: scale(1);
-  }
-
-  75% {
-    transform: scale(2);
+    transform: scale(1.3);
   }
 
   100% {
@@ -127,24 +125,3 @@
   }
 }
 
-@keyframes heartBeat2 {
-  0% {
-    transform: scale(1);
-  }
-
-  25% {
-    transform: scale(2);
-  }
-
-  50% {
-    transform: scale(1);
-  }
-
-  75% {
-    transform: scale(2);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}

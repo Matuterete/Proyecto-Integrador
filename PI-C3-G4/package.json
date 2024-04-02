@@ -32,6 +32,7 @@
     "react-select": "^5.8.0",
     "react-share": "^5.1.0",
     "react-slick": "^0.30.2",
+    "react-star-ratings": "^2.3.0",
     "react-use": "^17.5.0",
     "sharethis-reactjs": "^1.6.0",
     "slick-carousel": "^1.8.1",

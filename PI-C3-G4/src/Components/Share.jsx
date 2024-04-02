@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShareNodes } from '@fortawesome/free-solid-svg-icons';
-import Modal from 'react-modal'; // Import Modal for pop-up
-import ShareSocial from './ShareSocial'; // Modify to your sharing library
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
+import Modal from "react-modal";
+import ShareSocial from "./ShareSocial"; 
 
-const Share = ({  url, image, nombre }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false); // State to manage modal
+const Share = ({ url, image, nombre, description }) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const navigate = useNavigate();
 
-  // Function to open the modal
   const openModal = () => {
     setModalIsOpen(true);
   };
 
-  // Function to close the modal
   const closeModal = () => {
     setModalIsOpen(false);
   };
 
+  const handleButtonClick = () => {
+    navigate(url);
+  };
   return (
     <div>
       <button className="share-button" onClick={openModal}>
@@ -26,27 +29,36 @@ const Share = ({  url, image, nombre }) => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={{
-          overlay: { backgroundColor: 'rgba(0, 0, 0, 0.75)' },
+          overlay: { backgroundColor: "rgba(0, 0, 0, 0.75)" },
           content: {
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '500px',
-            height: '300px',
-            backgroundColor: '#ffffff',
-            borderRadius: '4px',
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "550px",
+            height: "450px",
+            backgroundColor: "#ffffff",
+            borderRadius: "4px",
+            color: "#333",
+            display: "flex",
           },
         }}
       >
-        <h2>Compartir {nombre} </h2>
-        <img src={image} width="150" height="150" />
-        <br></br>
-        <a href={url}>Ver mas detalles</a>
-        <ShareSocial
-          url={url}
-          image={image}
-          nombre={nombre}
-        />
+        <div className="share-social-modal">
+          <h2>Compartir {nombre}</h2>
+          <div className="product-info">
+            <img src={image} height="180px" />
+            <p>{description}</p>
+          </div>
+          <ShareSocial url={url} image={image} nombre={nombre} />
+          <div className="share-buttons">
+            <button className="go-to-detail-button" onClick={handleButtonClick}>
+              Ver Datalles
+            </button>
+            <button className="close-share" onClick={closeModal}>
+              Cerrar
+            </button>
+          </div>
+        </div>
       </Modal>
     </div>
   );
