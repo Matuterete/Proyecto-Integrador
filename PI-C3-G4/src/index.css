@@ -230,6 +230,9 @@ main {
   margin-left: 10px;
 }
 
+
+/* ========== COMPARTIR EN REDES ========== */
+
 .share-social-modal{
   display: flex;
   flex-direction: column;

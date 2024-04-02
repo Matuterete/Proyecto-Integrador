@@ -7,6 +7,7 @@ import RatingComponent from "../Components/RatingComponent";
 import Calendar from "../Components/Calendar";
 import Swal from "sweetalert2";
 import "../Components/Styles/Detail.css";
+import backButton from '../assets/back.png'
 
 const Detail = () => {
   const { id } = useParams();
@@ -41,7 +42,6 @@ const Detail = () => {
   };
 
   const calculateDays = (startDate, endDate) => {
-    // Convertir las fechas a formato de fecha sin la hora
     const start = new Date(startDate.setHours(0, 0, 0, 0));
     const end = new Date(endDate.setHours(0, 0, 0, 0));
     const diffTime = Math.abs(end - start);
@@ -56,24 +56,6 @@ const Detail = () => {
 
   const handleReservation = async () => {
     try {
-      if (!userData) {
-        Swal.fire({
-          icon: "info",
-          title: "Solo para usuarios del sitio",
-          text: "Debes iniciar sesión o registrarte para poder realizar esta acción.",
-          showCancelButton: true,
-          confirmButtonText: "Iniciar sesión",
-          cancelButtonText: "Registrarse",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate("/login");
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            navigate("/registroUsuario");
-          }
-        });
-        return;
-      }
-
       if (!selectedDates.startDate || !selectedDates.endDate) {
         Swal.fire({
           icon: "warning",
@@ -93,6 +75,8 @@ const Detail = () => {
 
       const response = await requestToAPI("rentals/add", "POST", data);
       console.log("Reserva exitosa:", response);
+
+      setShowForm(false); // Hide the form after successful reservation
 
       Swal.fire({
         icon: "success",
@@ -122,24 +106,38 @@ const Detail = () => {
 
   sessionStorage.setItem("redirectPath", window.location.pathname);
 
-  const [showAlquiler, setShowAlquiler] = useState(false)
+  const [showAlquiler, setShowAlquiler] = useState(false);
   const handleAlquiler = (show) => {
-    setShowAlquiler(show)
-  }
+    if (!userData) {
+      Swal.fire({
+        icon: "info",
+        title: "Solo para usuarios del sitio",
+        text: "Debes iniciar sesión o registrarte para poder realizar esta acción.",
+        showCancelButton: true,
+        confirmButtonText: "Iniciar sesión",
+        cancelButtonText: "Registrarse",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          navigate("/registroUsuario");
+        }
+      });
+      return;
+    }
 
+    setShowAlquiler(show);
+  };
 
   return (
     <div className="img-background">
-
       {product ? (
-
         <div className="bodyDetail">
-
           <div>
             <div className="nameAndBack">
               <h2>{product.name}</h2>
               <Link to={"/home"}>
-                <img className="backArrowDetail" src="\src\assets\back.png" />
+                <img className="backArrowDetail" src={backButton} />
               </Link>
             </div>
 
@@ -158,7 +156,8 @@ const Detail = () => {
                   thumbnailPosition="right"
                   showNav={false}
                   showFullscreenButton={false}
-                  disableThumbnailScroll={true} />
+                  disableThumbnailScroll={true}
+                />
               </div>
 
               <div className="priceAndDescription">
@@ -169,7 +168,8 @@ const Detail = () => {
                 <button
                   className="button buttonBig buttonTerciary"
                   onClick={() => handleAlquiler(true)}
-                >Alquilar Ahora
+                >
+                  Alquilar Ahora
                 </button>
 
                 <div className="">
@@ -180,12 +180,9 @@ const Detail = () => {
             </div>
           </div>
 
-
           <div className="features-container">
-
             <h2>Características</h2>
             <div className="featuresBox">
-
               <ul className="features">
                 {product.features.map((feature, index) => (
                   <li key={index}>
@@ -201,10 +198,8 @@ const Detail = () => {
             </div>
           </div>
 
-
-          {showAlquiler &&
+          {showAlquiler && (
             <div className="calendar-window">
-
               <div className="calendar-container">
                 <h2>Selecciona los días</h2>
 
@@ -216,30 +211,11 @@ const Detail = () => {
                   />
                 </div>
 
-                {showForm == false &&
+                {showForm == false && (
                   <div className="buttonFormBox">
                     <button
                       className="button buttonBig buttonTerciary"
-                      onClick={() => {
-                        if (!userData) {
-                          Swal.fire({
-                            icon: "info",
-                            title: "Solo para usuarios del sitio",
-                            text: "Debes iniciar sesión o registrarte para poder realizar esta acción.",
-                            showCancelButton: true,
-                            confirmButtonText: "Iniciar sesión",
-                            cancelButtonText: "Registrarse",
-                          }).then((result) => {
-                            if (result.isConfirmed) {
-                              navigate("/login");
-                            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                              navigate("/registroUsuario");
-                            }
-                          });
-                        } else {
-                          setShowForm(true);
-                        }
-                      }}
+                      onClick={() => setShowForm(true)}
                     >
                       Reservar
                     </button>
@@ -247,11 +223,11 @@ const Detail = () => {
                     <button
                       className="button buttonBig buttonSecundary"
                       onClick={() => handleAlquiler(false)}
-                    >Cancelar</button>
+                    >
+                      Cancelar
+                    </button>
                   </div>
-
-                }
-
+                )}
 
                 {showForm && (
                   <div className="reservationForm">
@@ -300,30 +276,29 @@ const Detail = () => {
                         className="button buttonBig buttonTerciary"
                         onClick={() => {
                           handleReservation();
-                          handleAlquiler(false);
+                          setShowForm(false);
                         }}
                       >
                         Confirmar Alquiler
                       </button>
                       <button
                         className="button buttonBig buttonSecundary"
-                        onClick={() => handleAlquiler(false)}
-                      >Cancelar</button>
+                        onClick={() => setShowForm(false)}
+                      >
+                        Cancelar
+                      </button>
                     </div>
-
                   </div>
                 )}
               </div>
             </div>
-          }
+          )}
 
           <div className="Rating">
             <RatingComponent productId={id} />
           </div>
         </div>
-
       ) : (
-
         <div className="loader-container">
           <div className="loader"></div>
         </div>
