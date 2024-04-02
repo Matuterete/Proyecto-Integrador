@@ -73,8 +73,7 @@ const Card = ({ product, userData }) => {
       </div>
       <div className="card-content">
         <div className="price-container">
-          <p className="price">{product.price}</p>
-          <p className="currency">USD</p>
+          <p className="price">${product.price} USD</p>
         </div>
         <div className="social">
           <div>

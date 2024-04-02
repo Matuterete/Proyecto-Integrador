@@ -14,6 +14,7 @@ function UserList({ users, onEdit, onDelete }) {
       <div className='titleAdminUser'>
         <h2>Administrar Usuarios</h2>
       </div>
+      
       <ul className='adminFeactures'>
         {users.map((objeto, index) => (
 

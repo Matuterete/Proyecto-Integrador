@@ -96,7 +96,7 @@ const Navbar = () => {
               {sessionData.user.role === "ADMIN" ||
               sessionData.user.role === "SUPERADMIN" ? (
                 <Link to="/administracion">
-                  <button className="button buttonPrimary">Admin Page</button>
+                  <button className="button buttonPrimary buttonBig">Admin Page</button>
                 </Link>
               ) : (
                 ""

@@ -44,7 +44,7 @@ const RatingAverage = ({ productId }) => {
   return (
     <div>
       <div>
-        <span style={{ fontSize: '24px' }}>
+        <span style={{ fontSize: '24px', color:'greenyellow'}}>
         {calculateAverageRating().toFixed(1)} {renderStarRating(calculateAverageRating())}
         </span>
       </div>
