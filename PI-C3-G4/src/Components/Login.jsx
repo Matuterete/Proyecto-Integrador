@@ -1,8 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import requestToAPI from "../services/requestToAPI";
+import './Styles/login.css'
 
 function Login() {
   const [usuario, setUsuario] = useState({
@@ -48,6 +48,7 @@ function Login() {
       }
 
       window.location.reload();
+
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -60,9 +61,10 @@ function Login() {
   };
 
   return (
-    <div className="form">
-      <h1>Iniciar Sesión</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="img-background bodyA">
+
+      <form onSubmit={handleSubmit} className='form'>
+        <h1>Iniciar Sesión</h1>
         <div className="form-group">
           <label>
             Correo electrónico:
@@ -85,10 +87,8 @@ function Login() {
             />
           </label>
         </div>
-        <div className="form-group buttonCenter">
-          <button type="submit" className="button buttonPrimary buttonBig">
-            Ingresar
-          </button>
+        <div className="buttonFormBox">
+          <button type="submit" className='button buttonBlue buttonBig'>Ingresar</button>
         </div>
       </form>
     </div>

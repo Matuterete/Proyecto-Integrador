@@ -93,17 +93,16 @@ function AdminUsers() {
             showConfirmButton: false,
             timer: 2000
           });
-          console.error(error);
-        });
       }
     });
   };
 
   return (
-    <div>
-      <h2 className='container-title'>Administrar Usuarios</h2>
+    <div className='img-background'>
+      
       {showUserList && (
         <div>
+          
           <UserList
             users={currentUsers}
             onEdit={handleEditUser}

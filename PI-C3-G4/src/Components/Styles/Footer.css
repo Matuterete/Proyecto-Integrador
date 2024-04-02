@@ -3,10 +3,10 @@
   justify-content: space-around;
   align-items: center;
   text-align: center;
-  background-color: #122E4F;
-  color: var(--color-text);
+  background-color: #272B32;
   padding: 0;
   width: 100vw;
+  height: 100px;
   margin-top: auto;
 }
 

@@ -45,7 +45,7 @@ const Detail = () => {
     const start = new Date(startDate.setHours(0, 0, 0, 0));
     const end = new Date(endDate.setHours(0, 0, 0, 0));
     const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24) +1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24) + 1);
     return diffDays;
   };
 
@@ -121,8 +121,9 @@ const Detail = () => {
   };
 
   sessionStorage.setItem("redirectPath", window.location.pathname);
+
   return (
-    <div className="body">
+    <div className="body img-background">
       {product ? (
         <div className="bodyDetail">
           <div className="galleryAndPay">
@@ -170,7 +171,7 @@ const Detail = () => {
             </div>
 
             <button
-              className="button buttonPrimary"
+              className="button buttonBlue"
               onClick={() => {
                 if (!userData) {
                   Swal.fire({

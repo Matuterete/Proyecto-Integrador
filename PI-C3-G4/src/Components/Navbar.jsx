@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Sun from "../assets/Sun.svg";
-import Moon from "../assets/Moon.svg";
-import Logo from "../assets/Logo.png";
-import Usuario from "../assets/usuario.svg";
+import Logo from "../assets/Logo-2.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "../Utils/Context.jsx";
-import { TOGGLE_THEME } from "../Reducers/Reducer.jsx";
 import "./Styles/Navbar.css";
 import Swal from "sweetalert2";
 
@@ -14,9 +10,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  const handleTheme = () => {
-    dispatch({ type: TOGGLE_THEME });
-  };
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -94,43 +88,37 @@ const Navbar = () => {
           {sessionData ? (
             <div className="user">
               <div className="name">
-                <span>{sessionData.user.name}</span>
-                <span>{sessionData.user.lastName}</span>
+                <span>{sessionData.user.name} {sessionData.user.lastName}</span>
               </div>
               <Link to="/userprofile">
-                <button className="button user-logo">{userLogo}</button>
+                <button className="user-logo">{userLogo}</button>
               </Link>
               {sessionData.user.role === "ADMIN" ||
               sessionData.user.role === "SUPERADMIN" ? (
                 <Link to="/administracion">
-                  <button className="button buttonTerciary">Admin Page</button>
+                  <button className="button buttonPrimary buttonBig">Admin Page</button>
                 </Link>
               ) : (
                 ""
               )}
 
-              <button className="button buttonPrimary" onClick={handleLogout}>
+              <button className="button buttonPrimary buttonBig" onClick={handleLogout}>
                 Cerrar Sesion
               </button>
             </div>
           ) : (
-            <div>
+            <div className="button_login_registro_desktop titleFeatures">
+             
+              <Link to="/registroUsuario" className="button button-sin-borde">
+                Crear Cuenta
+              </Link>
               <Link to="/login" className="button buttonPrimary">
                 Iniciar Sesión
               </Link>
-              <Link to="/registroUsuario" className="button buttonTerciary">
-                Crear Cuenta
-              </Link>
+
             </div>
           )}
 
-          <button className="button buttonSecundary" onClick={handleTheme}>
-            <img
-              src={state.theme === "light" ? Moon : Sun}
-              width="20px"
-              alt="Theme"
-            ></img>
-          </button>
         </div>
       </nav>
     </section>

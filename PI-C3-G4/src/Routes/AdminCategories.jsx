@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import IconButton from "../Components/IconButton";
 import Swal from "sweetalert2";
 import requestToAPI from "../services/requestToAPI";
@@ -166,51 +165,48 @@ const AdminCategories = () => {
   };
 
   return (
-    <div className="bodyFeatures">
-      <div className="titleFeatures">
-        <h2>Administrar Categorías</h2>
-      </div>
-      <div>
-        <input
+    <div className="bodyCategorias img-background">
+      
+      <div className='container-add-button space-between'>
+
+        <h2>Administar Categorias</h2>
+
+        {/* <input
           type="text"
           value={newCategoryName}
           onChange={(e) => setNewCategoryName(e.target.value)}
-        />
-        <div className="addFeatureButton">
-          <IconButton
-            className="button buttonPrimary buttonBig"
-            onClick={addCategory}
-            icon="plus"
-          >
-            Agregar Categoría
-          </IconButton>
-        </div>
+        /> */}
+
+        <IconButton
+          className="button buttonBlue buttonBig"
+          onClick={addCategory}
+          icon="plus"
+        >
+          Agregar Categoría
+        </IconButton>
       </div>
-      <ul>
-        {categories.map((category) => (
-          <li key={category.id} className="list-item">
-            <img src={category.url} alt={category.title} />
-            {category.title}
-            <div>
-              {/* {<IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>} */}
-              <IconButton
-                className="button buttonPrimary"
-                onClick={() => updateCategory(category.id, category.title)}
-                icon="pencil"
-              >
-                Editar
-              </IconButton>
-              <IconButton
-                className="button buttonTerciary"
-                onClick={() => deleteCategory(category.id)}
-                icon="minus"
-              >
-                Eliminar
-              </IconButton>
-            </div>
-          </li>
+
+      <ul className='adminFeactures'>
+        {categories.map((objeto, index) => (
+
+          <div className='divLi' key={objeto.id}>
+
+            <li className="list-item">
+              <div className='divSVG'><img className="categoria-SVG" src={objeto.url} /></div>
+              <p>{objeto.title}</p>
+
+              <div className='box-editar-eliminar'>
+                <IconButton className="button buttonTerciary " onClick={() => updateCategory(objeto.id, objeto.title)} icon="pencil">Editar</IconButton>
+                <IconButton className="button buttonSecundary " onClick={() => deleteCategory(objeto.id)} icon="minus">Eliminar</IconButton>
+              </div>
+            </li>
+          </div>
         ))}
       </ul>
+
+
+
+
       {editingCategoryId && (
         <div>
           <input

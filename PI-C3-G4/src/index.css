@@ -2,7 +2,11 @@
   font-family: 'Poppins', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #122E4F;
+  color: white;
+}
+
+.img-background {
+  background-color: #0D1117;
 }
 
 body {
@@ -12,6 +16,10 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+}
+.bodyA{
+  padding-top: 200px;
+  min-height: 68vh;
 }
 
 #root {
@@ -24,53 +32,64 @@ main {
   flex: 1;
 }
 
-.navbar {
-  background-color: #fafafa;
-  color: white;
-  padding: 10px 20px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-}
-
 /* ========== BOTONES GENERICOS ========== */
 
 .button {
-  border-radius: 8px;
-  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  border: 1px solid;
   padding: 0.6em 1.2em;
-  font-size: 0.8em;
+  font-size: 1em;
   font-family: inherit;
   cursor: pointer;
   height: 30px;
+  border-radius: 12px;
+}
+
+.button-sin-borde {
+  background-color: transparent;
+  border: none;
+  color: white;
+  border-radius: 0px;
 }
 
 .buttonPrimary {
-  background-color: #122E4F;
+  /* background-color: #145fb5; */
+  background-color: rgba(20, 95, 181, 0.0);
   color: white;
 }
 
 .buttonPrimary:hover {
-  background-color: #4073AF;
+  /* background-color: #4073AF; */
+  box-shadow: 0px 2px 6px rgba(219, 226, 239, 1);
 }
 
 .buttonSecundary {
-  background-color: #4073AF;
-  color: white;
+  background-color: #272B32;
+  color: #FF5A51;
+  border-color: #3A4047;
 }
 
 .buttonSecundary:hover {
-  background-color: #5095e4;
+  background-color: #252020;
 }
 
 .buttonTerciary {
-  background-color: #DBE2EF;
-  color: #122E4F;
+  border: none;
+  background-color: #459F53;
+  color: #ffffff;
 }
 
 .buttonTerciary:hover {
-  background-color: #c1c8d3;
+  background-color: #31763c;
+}
+.buttonBlue{
+  background-color: #1F6FEA;
+  color: white;
+  border: none;
+}
+.buttonBlue:hover{
+  background-color: #1752ac;
 }
 
 .buttonBig {
@@ -79,8 +98,12 @@ main {
   margin-top: 10px;
 }
 
-.buttonCenter {
-  text-align: center;
+.selected-item-border-green{
+  border-bottom: 4px solid greenyellow;
+}
+
+.swal2-popup {
+  margin: 100px;
 }
 
 
@@ -88,11 +111,9 @@ main {
 
 .form {
   padding-top: 60px;
-  min-height: 36.4vw;
-}
-
-form[style*="height: less800px"] {
-  padding-bottom: 60px; /* Agrega padding solo si la altura es menor a 800px */
+  background-color:#3A4047;
+  width: 500px;
+  border-radius: 12px;
 }
 
 .form h1 {
@@ -120,7 +141,7 @@ form[style*="height: less800px"] {
   background-color: #F1F1F2;
   border-radius: 12px;
   height: 40px;
-  color: #A7A7AB;
+  color: #000000;
   font-size: 18px;
 }
 
@@ -145,27 +166,23 @@ form[style*="height: less800px"] {
   height: 40px;
   font-size: 18px;
 }
+.buttonFormBox{
+  display: flex;
+  justify-content: center;
+}
 
 /* ========== LISTA GENERICA ========== */
 
 .container-list {
   max-width: 800px;
   margin: 20px auto;
-  background-color: #fff;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.container-title {
-  font-size: 25pt;
-  text-align: center;
-  padding-top: 100px;
-  margin: 0 auto;
-}
-
 .container-add-button {
-  max-width: 840px;
+  width: 900px;
   margin: 0px auto;
   display: flex;
   justify-content: left;
@@ -177,19 +194,79 @@ form[style*="height: less800px"] {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  border-bottom: 1px solid #ccc;
-}
-
-.list-item p {
-  color: black;
-}
-
-.list-item h4 {
-  color: black;
+  color: white;
 }
 
 .list-item button {
   margin-left: 10px;
+}
+
+/* ========== LISTA CRUD ========== */
+
+.box-editar-eliminar {
+  display: flex;
+}
+
+.adminFeactures li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #323232;
+  margin: 5px;
+  border-radius: 8px;
+  width: 900PX;
+}
+
+.divSVG {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  background-color: rgb(22, 22, 22);
+  border-radius: 100%;
+  margin: 3px 10px;
+}
+
+.adminFeactures li p {
+  margin: 2px 0px;
+}
+
+.divLi {
+  display: flex;
+  align-items: center;
+}
+
+.rating{
+  font-size: 24px;
+}
+
+p{
+  margin: 0;
+}
+.categoria-SVG{
+  width: 20PX;
+}
+.titleAdminUser{
+ width: 900px;
+}
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+.titleAndButtonAdmin{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ========== LISTA CRUD PRODUCT ========== */
+.body-product-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 @media (prefers-color-scheme: light) {

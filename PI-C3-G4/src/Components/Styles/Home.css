@@ -1,7 +1,14 @@
 .body {
   padding-top: 10vh;
+  padding-bottom: 50px;
   width: 100%;
-  /* padding-bottom: 10vh; */
+  color: white;
+}
+.Container {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  margin: auto;
 }
 
 .Search-Calendar {
@@ -51,18 +58,20 @@
 }
 
 .categories {
-  text-align: center;
-  background-color: #efefef;
-  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(255, 255, 255);
   margin: 10vh 0vh 10vh 0;
+  border-bottom: 1px solid #3A4047;
 }
 
 .categories-container {
   display: flex;
-  justify-content: center;
+  justify-content:space-around;
   flex-wrap: wrap;
   gap: 20px;
-  margin: 5vh;
+  width: 60vw;
 }
 
 .categoria {
@@ -82,10 +91,6 @@
   margin-top: 5px;
 }
 
-.categoria:hover {
-  transform: scale(1.1);
-}
-
 .cardGrid-1 {
   margin-top: 7vh;
   margin-bottom: 5vh;
@@ -94,12 +99,12 @@
   justify-content: center;
 }
 
-.cardGrid-2 .card {
-  width: 80%;
+.cardGrid-2 {
+  width: 100%;
 }
 
 .card {
-  width: 60%;
+  width: 100%;
 }
 
 .productos-container {
