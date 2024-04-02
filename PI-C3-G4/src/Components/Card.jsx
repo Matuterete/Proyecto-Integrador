@@ -5,18 +5,12 @@ import { useFavContext } from "./FavContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Share from "./Share";
-import Rating from "./Rating";
-import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
-import RatingAverage from './RatingAverage';
-
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import RatingAverage from "./RatingAverage";
 
 const Card = ({ product, userData }) => {
-  const {
-    addFavorite,
-    removeFavorite,
-    favoriteProducts,
-  } = useFavContext();
+  const { addFavorite, removeFavorite, favoriteProducts } = useFavContext();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -24,25 +18,30 @@ const Card = ({ product, userData }) => {
   const isProductLiked = favoriteProducts.some(
     (favorite) => favorite.productId === product.id
   );
+
   const openModal = () => {
     setModalIsOpen(true);
   };
 
+  const handleShareClick = (event) => {
+    event.stopPropagation();
+    openModal();
+  };
 
   const handleLikeClick = () => {
     if (!userData) {
       Swal.fire({
-        icon: 'info',
-        title: 'Solo para usuarios del sitio',
-        text: 'Debes iniciar sesión o registrarte para poder guardar tus favoritos.',
+        icon: "info",
+        title: "Solo para usuarios del sitio",
+        text: "Debes iniciar sesión o registrarte para poder guardar tus favoritos.",
         showCancelButton: true,
-        confirmButtonText: 'Iniciar sesión',
-        cancelButtonText: 'Registrarse',
+        confirmButtonText: "Iniciar sesión",
+        cancelButtonText: "Registrarse",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate('/login');
+          navigate("/login");
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          navigate('/registroUsuario');
+          navigate("/registroUsuario");
         }
       });
     } else {
@@ -81,9 +80,7 @@ const Card = ({ product, userData }) => {
           </div>
           <div>
             <Share
-              onClick={() => {
-                openModal();
-              }}
+              onClick={handleShareClick}
               url={"detail/" + product.id}
               image={product.images[0].url}
               nombre={product.name}
