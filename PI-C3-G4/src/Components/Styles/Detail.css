@@ -1,78 +1,82 @@
-.gallery {
-  margin-right: 1rem;
-  padding: 10px;
-}
-
-.product_description {
-  width: 55%;
-}
-
-.product_description p {
-  text-align: justify;
-}
-.technicalData {
-  margin: 30px;
-}
-
-.info {
-  display: flex;
-  justify-content: space-between;
-  width: 60%;
+.bodyDetail {
+  padding-top: 200px;
+  width: 70vw;
   margin: auto;
-  margin-bottom: 5rem;
 }
-.caracteristicas {
-  padding: 0;
+
+/* ========= PRIMER SECCION ==========*/
+.backArrowDetail {
+  width: 50px;
+  margin-bottom: 20px;
+}
+
+.nameAndBack {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.galleryAndPrice {
+  display: flex;
+  width: 70vw;
+  margin: auto;
+}
+
+.priceAndDescription {
+  display: flex;
+  flex-direction: column;
+  background-color: #1F2227;
+  border-radius: 12px;
+  padding: 20px;
   width: 40%;
 }
 
-.galleryAndPay {
-  display: flex;
-  justify-content: space-between;
-  width: 60%;
-  margin: auto;
+.priceDetail p {
+  font-size: 1.5em;
 }
 
-.pay {
+.image-gallery-thumbnail-image {
+  background-color: #1F2227;
+  border-radius: 12px;
+}
+
+.image-gallery-image {
+  background-color: #1F2227;
+  border-radius: 12px;
+}
+
+/* ========= FEATURES ==========*/
+
+.features-container {
+  background-color: #1F2227;
   display: flex;
   flex-direction: column;
-  width: calc(50% - 0.5rem); /* Restar el margen entre los calendarios */
-  padding: 20px;
-  background-color: white;
-  margin-right: 1.5rem; /* Espacio adicional a la derecha */
-  overflow: hidden; /* Ocultar el contenido que exceda el tamaño de la clase */
+  align-items: center;
+  border-radius: 12px;
+  margin-top: 20px;
 }
 
-.priceDetail {
-  color: black;
+.featuresBox {
+  width: 90%;
 }
 
-.pay button {
-  margin: 5px;
-}
-
-.priceDetail {
+.features {
   display: flex;
-}
-
-.priceDetail h2 {
-  margin: 0px;
-  padding-right: 10px;
-}
-
-.priceDetail p {
-  margin: 0px;
-  padding-top: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0px;
 }
 
 .features li {
   display: flex;
   align-items: center;
-  background-color: #122E4F;
   margin: 5px;
-  padding-right: 8px;
-  border-radius: 8px;
-
+  border-radius: 12px;
+  border: 1px solid #3A4047;
+  width: 40%;
 }
 
 .features div {
@@ -81,50 +85,49 @@
   justify-content: center;
   width: 2.2rem;
   height: 2.2rem;
-  background-color: rgb(255, 255, 255);
-  border-radius: 100%;
   margin: 3px 10px;
 }
 
-.features li p {
-  margin: 0.5rem 0;
-}
+/* ========= ALQUILER ==========*/
 
-ul {
-  padding: 0;
-  margin: 0;
-}
-.backArrowDetail {
-  width: 50px;
-  margin-bottom: 20px;
-}
-
-.calendars {
-  display: flex;
-  position: relative;
-  max-width: 100%;
-}
-
-.calendars > * {
-  flex: 1;
-  max-width: 50%;
+.calendar-window{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  z-index: 9999; /* Coloca este elemento por encima de todos */
 }
 
 .calendar-container {
-  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.rbc-btn-group button {
-  padding: 0.25rem 0.5rem; /* Ajustar el padding para reducir el tamaño */
-  font-size: 0.75rem; /* Ajustar el tamaño de la fuente */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #3A4047;
+  padding: 20px;
+  border-radius: 12px;
 }
 
-.calendar-container > .calendars:first-child {
-  margin-right: 1rem; 
-  z-index: 2; 
+
+
+
+
+
+
+.Rating {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: auto;
+  margin-bottom: 5rem;
 }
+
 
 @media (max-width: 760px) {
   .bodyDetail {
@@ -170,11 +173,3 @@ ul {
     width: 70%;
   }
 }
-.Rating {
-  display: flex;
-  justify-content: space-between;
-  width: 60%;
-  margin: auto;
-  margin-bottom: 5rem;
-}
-

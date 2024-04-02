@@ -122,138 +122,70 @@ const Detail = () => {
 
   sessionStorage.setItem("redirectPath", window.location.pathname);
 
-  return (
-    <div className="body img-background">
-      {product ? (
-        <div className="bodyDetail">
-          <div className="galleryAndPay">
-            <div className="gallery">
-              <h2>{product.name}</h2>
-              <ImageGallery
-                items={product.images.map((image, index) => ({
-                  original: image.url,
-                  thumbnail: image.url,
-                  originalAlt: `${product.name} ${index + 1}`,
-                  thumbnailAlt: `${product.name} ${index + 1}`,
-                }))}
-                autoPlay={false}
-                showPlayButton={false}
-                showBullets={false}
-                thumbnailPosition="right"
-                showNav={false}
-                showFullscreenButton={false}
-              />
-            </div>
+  const [showAlquiler, setShowAlquiler] = useState(false)
+  const handleAlquiler = (show) => {
+    setShowAlquiler(show)
+  }
 
-            <div className="pay">
+
+  return (
+    <div className="img-background">
+
+      {product ? (
+
+        <div className="bodyDetail">
+
+          <div>
+            <div className="nameAndBack">
+              <h2>{product.name}</h2>
               <Link to={"/home"}>
                 <img className="backArrowDetail" src="\src\assets\back.png" />
               </Link>
+            </div>
 
-              <div className="priceDetail">
-                <h2>USD: {product.price}</h2>
-                <p>Por dos días</p>
+            <div className="galleryAndPrice">
+              <div className="">
+                <ImageGallery
+                  items={product.images.map((image, index) => ({
+                    original: image.url,
+                    thumbnail: image.url,
+                    originalAlt: `${product.name} ${index + 1}`,
+                    thumbnailAlt: `${product.name} ${index + 1}`,
+                  }))}
+                  autoPlay={false}
+                  showPlayButton={false}
+                  showBullets={false}
+                  thumbnailPosition="right"
+                  showNav={false}
+                  showFullscreenButton={false}
+                  disableThumbnailScroll={true} />
               </div>
 
-              <img
-                className="paymentMethods"
-                src="\src\assets\medios de pago.png"
-              />
-            </div>
-          </div>
-          <div className="calendar-container">
-            <div className="calendars">
-              <Calendar
-                productId={id}
-                selectedDates={selectedDates}
-                onSelectDates={handleSelectDates}
-              />
-            </div>
+              <div className="priceAndDescription">
+                <div className="priceDetail">
+                  <p>$: {product.price} USD</p>
+                </div>
 
-            <button
-              className="button buttonBlue"
-              onClick={() => {
-                if (!userData) {
-                  Swal.fire({
-                    icon: "info",
-                    title: "Solo para usuarios del sitio",
-                    text: "Debes iniciar sesión o registrarte para poder realizar esta acción.",
-                    showCancelButton: true,
-                    confirmButtonText: "Iniciar sesión",
-                    cancelButtonText: "Registrarse",
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      navigate("/login");
-                    } else if (result.dismiss === Swal.DismissReason.cancel) {
-                      navigate("/registroUsuario");
-                    }
-                  });
-                } else {
-                  setShowForm(true);
-                }
-              }}
-            >
-              Alquilar ahora
-            </button>
-            {showForm && (
-              <div className="reservationForm">
-                <h3>Confirma tus datos para realizar la reserva</h3>
-                {selectedDates.startDate && selectedDates.endDate && (
-                  <p>
-                    <strong>Cantidad de días:</strong>{" "}
-                    {calculateDays(
-                      selectedDates.startDate,
-                      selectedDates.endDate
-                    )}
-                  </p>
-                )}
-                {product && (
-                  <div>
-                    <p>
-                      <strong>Producto:</strong> {product.name}
-                    </p>
-                    <p>
-                      <strong>Precio por día:</strong> {product.price}
-                    </p>
-                    {selectedDates.startDate && selectedDates.endDate && (
-                      <p>
-                        <strong>Precio total:</strong>{" "}
-                        {calculateAmount(
-                          product.price,
-                          selectedDates.startDate,
-                          selectedDates.endDate
-                        ).toFixed(2)}
-                      </p>
-                    )}
-                  </div>
-                )}
-                <p>
-                  <strong>Nombre:</strong> {userData.user.name}
-                </p>
-                <p>
-                  <strong>Apellido:</strong> {userData.user.lastName}
-                </p>
-                <p>
-                  <strong>Correo electrónico:</strong> {userData.user.email}
-                </p>
                 <button
-                  className="button buttonPrimary"
-                  onClick={() => handleReservation()}
-                >
-                  Confirmar reserva
+                  className="button buttonBig buttonTerciary"
+                  onClick={() => handleAlquiler(true)}
+                >Alquilar Ahora
                 </button>
+
+                <div className="">
+                  <h2>Descripción</h2>
+                  <p>{product.description}</p>
+                </div>
               </div>
-            )}
+            </div>
           </div>
 
-          <div className="info">
-            <div className="product_description">
-              <h2>Descripción</h2>
-              <p>{product.description}</p>
-            </div>
 
-            <div className="caracteristicas">
-              <h2>Características</h2>
+          <div className="features-container">
+
+            <h2>Características</h2>
+            <div className="featuresBox">
+
               <ul className="features">
                 {product.features.map((feature, index) => (
                   <li key={index}>
@@ -268,11 +200,130 @@ const Detail = () => {
               </ul>
             </div>
           </div>
+
+
+          {showAlquiler &&
+            <div className="calendar-window">
+
+              <div className="calendar-container">
+                <h2>Selecciona los días</h2>
+
+                <div className="calendars">
+                  <Calendar
+                    productId={id}
+                    selectedDates={selectedDates}
+                    onSelectDates={handleSelectDates}
+                  />
+                </div>
+
+                {showForm == false &&
+                  <div className="buttonFormBox">
+                    <button
+                      className="button buttonBig buttonTerciary"
+                      onClick={() => {
+                        if (!userData) {
+                          Swal.fire({
+                            icon: "info",
+                            title: "Solo para usuarios del sitio",
+                            text: "Debes iniciar sesión o registrarte para poder realizar esta acción.",
+                            showCancelButton: true,
+                            confirmButtonText: "Iniciar sesión",
+                            cancelButtonText: "Registrarse",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              navigate("/login");
+                            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                              navigate("/registroUsuario");
+                            }
+                          });
+                        } else {
+                          setShowForm(true);
+                        }
+                      }}
+                    >
+                      Reservar
+                    </button>
+
+                    <button
+                      className="button buttonBig buttonSecundary"
+                      onClick={() => handleAlquiler(false)}
+                    >Cancelar</button>
+                  </div>
+
+                }
+
+
+                {showForm && (
+                  <div className="reservationForm">
+                    <h3>Confirma tus datos para realizar la reserva</h3>
+                    {selectedDates.startDate && selectedDates.endDate && (
+                      <p>
+                        <strong>Cantidad de días:</strong>{" "}
+                        {calculateDays(
+                          selectedDates.startDate,
+                          selectedDates.endDate
+                        )}
+                      </p>
+                    )}
+                    {product && (
+                      <div>
+                        <p>
+                          <strong>Producto:</strong> {product.name}
+                        </p>
+                        <p>
+                          <strong>Precio por día:</strong> {product.price}
+                        </p>
+                        {selectedDates.startDate && selectedDates.endDate && (
+                          <p>
+                            <strong>Precio total:</strong>{" "}
+                            {calculateAmount(
+                              product.price,
+                              selectedDates.startDate,
+                              selectedDates.endDate
+                            ).toFixed(2)}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                    <p>
+                      <strong>Nombre:</strong> {userData.user.name}
+                    </p>
+                    <p>
+                      <strong>Apellido:</strong> {userData.user.lastName}
+                    </p>
+                    <p>
+                      <strong>Correo electrónico:</strong> {userData.user.email}
+                    </p>
+
+                    <div className="buttonFormBox">
+                      <button
+                        className="button buttonBig buttonTerciary"
+                        onClick={() => {
+                          handleReservation();
+                          handleAlquiler(false);
+                        }}
+                      >
+                        Confirmar Alquiler
+                      </button>
+                      <button
+                        className="button buttonBig buttonSecundary"
+                        onClick={() => handleAlquiler(false)}
+                      >Cancelar</button>
+                    </div>
+
+                  </div>
+                )}
+              </div>
+            </div>
+          }
+
           <div className="Rating">
             <RatingComponent productId={id} />
           </div>
         </div>
+
       ) : (
+
         <div className="loader-container">
           <div className="loader"></div>
         </div>
