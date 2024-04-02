@@ -5,6 +5,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const IconButton = ({ onClick, children, className, icon }) => {
     const [faIcon, setFaIcon] = useState('');
@@ -21,6 +22,9 @@ const IconButton = ({ onClick, children, className, icon }) => {
         }
         else if (icon == 'eye') {
             setFaIcon(faEye);
+        }
+        else if (icon == 'star') {
+            setFaIcon(faStar);
         }
       }, []);
     

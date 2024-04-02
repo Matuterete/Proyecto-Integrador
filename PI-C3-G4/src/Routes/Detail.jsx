@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
-import "react-image-gallery/Styles/css/image-gallery.css";
+import "react-image-gallery/styles/css/image-gallery.css";
 import requestToAPI from "../services/requestToAPI";
 import RatingComponent from "../Components/RatingComponent";
 import Calendar from "../Components/Calendar";
@@ -41,10 +41,11 @@ const Detail = () => {
   };
 
   const calculateDays = (startDate, endDate) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+    // Convertir las fechas a formato de fecha sin la hora
+    const start = new Date(startDate.setHours(0, 0, 0, 0));
+    const end = new Date(endDate.setHours(0, 0, 0, 0));
     const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24) +1);
     return diffDays;
   };
 
@@ -82,16 +83,6 @@ const Detail = () => {
         return;
       }
 
-      const daysTotal = calculateDays(
-        selectedDates.startDate,
-        selectedDates.endDate
-      );
-      const amount = calculateAmount(
-        product.price,
-        selectedDates.startDate,
-        selectedDates.endDate
-      );
-
       console.log("userData:", userData);
       const data = {
         userId: userData.user.id,
@@ -119,10 +110,17 @@ const Detail = () => {
         alert(
           "Ocurrió un error al realizar la reserva. Por favor, inténtelo de nuevo más tarde."
         );
+        handleLogin(userData);
       }
     }
   };
 
+  const handleLogin = (userData) => {
+    setUserData(userData);
+    sessionStorage.setItem("userData", JSON.stringify(userData));
+  };
+
+  sessionStorage.setItem("redirectPath", window.location.pathname);
   return (
     <div className="body">
       {product ? (
@@ -173,7 +171,26 @@ const Detail = () => {
 
             <button
               className="button buttonPrimary"
-              onClick={() => setShowForm(true)}
+              onClick={() => {
+                if (!userData) {
+                  Swal.fire({
+                    icon: "info",
+                    title: "Solo para usuarios del sitio",
+                    text: "Debes iniciar sesión o registrarte para poder realizar esta acción.",
+                    showCancelButton: true,
+                    confirmButtonText: "Iniciar sesión",
+                    cancelButtonText: "Registrarse",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      navigate("/login");
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                      navigate("/registroUsuario");
+                    }
+                  });
+                } else {
+                  setShowForm(true);
+                }
+              }}
             >
               Alquilar ahora
             </button>
