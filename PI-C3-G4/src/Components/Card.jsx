@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import "../Components/Styles/Card.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFavContext } from "./FavContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Share from "./Share";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 import RatingAverage from "./RatingAverage";
 
 const Card = ({ product, userData }) => {
@@ -72,7 +71,7 @@ const Card = ({ product, userData }) => {
       </div>
       <div className="card-content">
         <div className="price-container">
-          <p className="price">${product.price} USD</p>
+          <h3 className="price">$ {product.price} USD</h3>
         </div>
         <div className="social">
           <div>
@@ -81,9 +80,10 @@ const Card = ({ product, userData }) => {
           <div>
             <Share
               onClick={handleShareClick}
-              url={"detail/" + product.id}
+              url={"/detail/" + product.id}
               image={product.images[0].url}
               nombre={product.name}
+              description={product.description}
             />
           </div>
         </div>

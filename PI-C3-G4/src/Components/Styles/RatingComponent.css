@@ -1,45 +1,36 @@
-/* Estilos para el componente RatingComponent */
-
-/* Estilos para el contenedor del componente Rating */
 .rating-container {
-    margin-bottom: 10px; /* Margen inferior para separar del siguiente elemento */
-  }
-  
-  /* Estilos para las estrellas */
-  .star {
-    color: gold; /* Color de las estrellas */
-    font-size: 24px; /* Tamaño de la fuente de las estrellas */
-  }
-  
-  /* Estilos para el textarea */
-  .textarea {
-    width: 100%; /* Ancho del textarea */
-    height: 100px; /* Altura del textarea */
-    padding: 10px; /* Espacio interno del textarea */
-    font-size: 16px; /* Tamaño de la fuente */
-    border: 1px solid #ccc; /* Borde del textarea */
-    border-radius: 5px; /* Radio del borde */
-    resize: vertical; /* Permite redimensionar verticalmente */
-  }
-  
-  /* Estilos para el contenedor del botón */
-  .button-container {
-    text-align: center; /* Centra horizontalmente los elementos */
-  }
-  
-  /* Estilos para el botón */
-  .button-container button {
-    padding: 10px 20px; /* Espacio interno del botón */
-    font-size: 16px; /* Tamaño de la fuente del botón */
-    background-color: #007bff; /* Color de fondo del botón */
-    color: white; /* Color del texto del botón */
-    border: none; /* Quitar el borde del botón */
-    border-radius: 5px; /* Radio del borde */
-    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
-  }
-  
-  /* Estilos adicionales para el botón cuando está enfocado */
-  .button-container button:focus {
-    outline: none; /* Quitar el contorno del foco */
-  }
-  
+  margin-bottom: 10px;
+}
+
+.star {
+  color: gold;
+  font-size: 24px;
+}
+
+.textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}
+
+.button-container {
+  text-align: center;
+}
+
+.button-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-container button:focus {
+  outline: none;
+}
