@@ -40,6 +40,7 @@ const Share = ({ url, image, nombre, description }) => {
             borderRadius: "4px",
             color: "#333",
             display: "flex",
+            zIndex: 2,
           },
         }}
       >
