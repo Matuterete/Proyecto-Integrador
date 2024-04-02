@@ -22,7 +22,7 @@ function UserList({ users, onEdit, onDelete }) {
 
             <li className="list-item">
               <div className=''><p>ID{objeto.id}</p></div>
-              <p>{objeto.name}</p>
+              <p>{objeto.name} {objeto.lastName} ROLE: {objeto.role}</p>
 
               <div className='box-editar-eliminar'>
                 <IconButton className='button buttonTerciary ' onClick={() => onEdit(objeto)} icon="pencil">Editar</IconButton>

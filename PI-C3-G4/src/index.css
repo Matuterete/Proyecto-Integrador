@@ -107,14 +107,41 @@ main {
   margin: 100px;
 }
 
+/* ========== REGISTRO Y LOG DE USUARIO ========== */
+.bodyLogUser {
+  display: flex;
+  align-items: center;
+  padding-top: 200px;
+  padding-bottom: 50px;
+  background: linear-gradient(45deg, #113269 0%, #512A53 100%);
+}
 
+.imgParlantes {
+  width: 40vw;
+}
+
+.imgParlantes img {
+  max-width: 100%;
+  height: auto;
+  padding: auto;
+}
 /* ========== FORMULARIO GENERICO ========== */
 
 .form {
-  padding-top: 60px;
-  background-color:#3A4047;
-  width: 500px;
+  padding-top: 30px;
+  background-color:#1E273D;
+  width: 400px;
   border-radius: 12px;
+}
+.titleForm{
+  display: flex;
+  flex-direction: column;
+  align-items:start;
+  border-bottom: 1px solid #41E55B;
+  margin-bottom: 20px;
+}
+.titleForm h1{
+  margin: 0px;
 }
 
 .form h1 {
@@ -132,6 +159,7 @@ main {
 .form-group label {
   display: block;
   margin-bottom: 5px;
+  color: #41E55B;
 }
 
 .form-group input {
