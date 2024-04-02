@@ -115,14 +115,12 @@
   margin-bottom: 10vh;
 }
 
-.slick-slider {
+.slick-slider { 
+  width: 80%; 
+  margin: 0 auto; 
   background-color: transparent;
   margin-bottom: 10vh;
-  border: solid 4px black;
-}
-
-.productos-container .fav-button-div {
-  display: none;
+  border: solid 4px lightgreen;
 }
 
 .fav-button-div {
@@ -135,15 +133,18 @@
 }
 
 .producto {
-  flex: 0 0 auto;
-  margin-right: 10px;
-  width: 100%;
+ 
+  width: 70%;
 }
 
 .pagination-container {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.productos-por-categoria h2{
+  text-align: center;
 }
 
 @media (max-width: 760px) {

@@ -46,10 +46,12 @@ const Home = () => {
 
   const [sliderSettings, setSliderSettings] = useState({
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    draggable: true,
+    focusOnSelect: false,
   });
 
   useEffect(() => {
@@ -116,12 +118,19 @@ const Home = () => {
     }
   };
 
-  const handleProductoClick = (product) => {
+  const handleProductoClick = (product, e) => {
+    if (
+      e.target.classList.contains("favorite-button") ||
+      e.target.classList.contains("share-button")
+    ) {
+      e.stopPropagation();
+      return;
+    }
     navigate(`/detail/${product.id}`, { state: { product } });
   };
 
   const handleProductoSelect = async (product) => {
-    setProductId(product.id); 
+    setProductId(product.id);
     setSelectedProduct(product);
     try {
       const url = `rentals/find/product/${product.id}`;
@@ -231,7 +240,7 @@ const Home = () => {
               }}
               onSelectDates={handleSelectDates}
               onSelectProduct={handleProductoSelect}
-              productId={productId} 
+              productId={productId}
             />
           </div>
         )}
@@ -248,7 +257,6 @@ const Home = () => {
       </div>
 
       <div className="categories">
-
         <div className="categories-container">
           {categorias.map((category) => (
             <div
@@ -257,7 +265,15 @@ const Home = () => {
               onClick={() => handleCategoriaClick(category.id, category.title)}
             >
               <img src={category.url} alt={category.title} />
-              <p className={categoriaSeleccionada == category.title? 'selected-item-border-green' : ''}>{category.title}</p>
+              <p
+                className={
+                  categoriaSeleccionada == category.title
+                    ? "selected-item-border-green"
+                    : ""
+                }
+              >
+                {category.title}
+              </p>
             </div>
           ))}
         </div>
@@ -265,7 +281,10 @@ const Home = () => {
 
       {mostrarProductosPorCategoria && (
         <div className="productos-por-categoria">
-          <h1>{categoriaSeleccionada} ({productosPorCategoria.length} productos encontrados)</h1>
+          <h2>
+            {categoriaSeleccionada} ({productosPorCategoria.length} productos
+            encontrados)
+          </h2>
           <Slider {...sliderSettings}>
             {productosPorCategoria.map((producto) => {
               console.log("Productos por categoría:", productosPorCategoria);
@@ -276,10 +295,13 @@ const Home = () => {
                     onClick={() => handleProductoClick(producto)}
                   >
                     <div className="card-wrapper">
-                      <Card product={producto} userData={userData} />
+                      <Card
+                        product={producto}
+                        userData={userData}
+                        stopPropagation={true}
+                      />
                     </div>
                   </div>
-                  
                 </div>
               );
             })}
@@ -292,7 +314,7 @@ const Home = () => {
           <p className="cardTitle-2">Recomendados</p>
           <div className="cardGrid-2">
             {productosRecomendados.length === 0 &&
-              !mostrarProductosPorCategoria ? (
+            !mostrarProductosPorCategoria ? (
               <div className="loader-container">
                 <div className="loader"></div>
               </div>
