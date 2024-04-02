@@ -268,7 +268,7 @@ const Detail = () => {
             </div>
           </div>
           <div className="Rating">
-            <RatingComponent productId={id} />
+            <RatingComponent productId={id} userData={userData}/>
           </div>
         </div>
       ) : (

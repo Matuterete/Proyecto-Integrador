@@ -4,9 +4,11 @@ import { useFavContext, FavProvider } from "../Components/FavContext.jsx";
 import Card from "../Components/Card.jsx";
 import IconButton from '../Components/IconButton';
 import requestToAPI from "../services/requestToAPI";
+import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 
 const UserProfile = () => {
+  let navigate = useNavigate();
   const currentDate = new Date();
 
   const prevFavoriteProducts = useRef([]);
@@ -15,7 +17,8 @@ const UserProfile = () => {
     JSON.parse(sessionStorage.getItem("userData"))
   );
   const [favoriteProductDetails, setFavoriteProductDetails] = useState([]);
-  const [rentals, setRentals] = useState([]);
+  const [currentRentals, setCurrentRentals] = useState([]);
+  const [finishedRentals, setFinishedRentals] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,20 +31,34 @@ const UserProfile = () => {
       }
     };
     fetchData();
-    const fetchRentals = async () => {
+    const fetchCurrentRentals = async () => {
       if (userData && userData.user && userData.user.id) {
         try {
           const response = await requestToAPI(
             `rentals/find/user/${userData.user.id}`,
             "GET"
           );
-          setRentals(response || []);
+          setCurrentRentals(response.filter(rental => stringToDate(rental.dateEnd) >= currentDate) || []);
         } catch (error) {
-          console.error("Error fetching rentals:", error);
+          console.error("Error fetching current rentals:", error);
         }
       }
     };
-    fetchRentals();
+    fetchCurrentRentals();
+    const fetchFinishedRentals = async () => {
+      if (userData && userData.user && userData.user.id) {
+        try {
+          const response = await requestToAPI(
+            `rentals/find/user/${userData.user.id}`,
+            "GET"
+          );
+          setFinishedRentals(response.filter(rental => stringToDate(rental.dateEnd) < currentDate) || []);
+        } catch (error) {
+          console.error("Error fetching finished rentals:", error);
+        }
+      }
+    };
+    fetchFinishedRentals();
   }, [userData]);
 
   useEffect(() => {
@@ -79,33 +96,42 @@ const UserProfile = () => {
     return new Date(dateString);
   };
 
-  const handleCancelRental = (rentalId) => {
+  const handleCancelRental = (rental) => {
     Swal.fire({
       title: '¿Estás seguro?',
-      text: `Una vez cancelada la reserva ${rentalId}, no podrás recuperar esta reserva`,
+      text: `Una vez cancelada la reserva del producto ${rental.product.name}, no podrás recuperarla`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, cancelarla',
+      confirmButtonText: 'Sí, cancelar reserva',
       cancelButtonText: 'No cancelarla'
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          '¡Eliminado!',
-          'No se ha implementado la funcionalidad de cancelar la reserva',
-          'success'
-        );
+        requestToAPI(`rentals/delete/id/${rental.id}`, 'DELETE')
+        .then(() => {
+          setCurrentRentals(currentRentals.filter(currentRental => currentRental.id !== rental.id));
+          Swal.fire(
+            'Cancelado!',
+            'La reserva se ha cancelado correctamente',
+            'success'
+          );
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error inesperado',
+            text: 'Hubo un error al intentar cancelar la reserva',
+            showConfirmButton: true
+          });
+          console.error(error);
+        });
       }
     });
   };
 
   const handleRateProduct = (productoId) => {
-    Swal.fire(
-      `Puntuar el producto ${productoId}!`,
-      'No se ha implementado la funcionalidad de puntuar el producto',
-      'success'
-    );
+    navigate(`/detail/${productoId}`);
   };
 
   return (
@@ -147,21 +173,35 @@ const UserProfile = () => {
 
         <div className="Container2">
           <div className="Box">
-            <p className="cardTitle-2">Mis Reservas</p>
+            <p className="cardTitle-2">Reservas actuales</p>
             <div className="container-list">
-              {rentals.map(rental => (
+              {currentRentals.map(rental => (
                 <div key={rental.id} className="list-item">
                   <p>Id: {rental.id}</p>
                   <h4>{rental.product.name}</h4>
                   <p>{rental.dateStart} - {rental.dateEnd} ({rental.daysTotal} días)</p>
                   <p>{rental.amount}</p>
                   <div>
-                    {stringToDate(rental.dateStart) < currentDate ? (
-                      <IconButton className='button buttonSecundary' onClick={() => handleRateProduct(rental.product.id)} icon="star">Puntuar</IconButton>
-                    ) : (
-                      ""
-                    )}
-                    <IconButton className='button buttonTerciary' onClick={() => handleCancelRental(rental.id)} icon="minus">Cancelar</IconButton>
+                    <IconButton className='button buttonTerciary' onClick={() => handleCancelRental(rental)} icon="minus">Cancelar</IconButton>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="Container2">
+          <div className="Box">
+            <p className="cardTitle-2">Reservas finalizadas</p>
+            <div className="container-list">
+              {finishedRentals.map(rental => (
+                <div key={rental.id} className="list-item">
+                  <p>Id: {rental.id}</p>
+                  <h4>{rental.product.name}</h4>
+                  <p>{rental.dateStart} - {rental.dateEnd} ({rental.daysTotal} días)</p>
+                  <p>{rental.amount}</p>
+                  <div>
+                    <IconButton className='button buttonSecundary' onClick={() => handleRateProduct(rental.product.id)} icon="star">Puntuar</IconButton>
                   </div>
                 </div>
               ))}

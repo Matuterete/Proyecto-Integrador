@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Rating from 'react-rating';
+import Swal from "sweetalert2";
 import '../Components/Styles/RatingComponent.css';
 
-const RatingComponent = ({ productId }) => {
+const RatingComponent = ({ productId, userData }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [receivedRatings, setReceivedRatings] = useState([]);
@@ -14,13 +15,30 @@ const RatingComponent = ({ productId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const currentDate = new Date().toISOString();
-    const newRating = { rating, comment, date: currentDate }; // Modificación aquí, no es necesario incluir productId ya que está implícito en el componente
-    const updatedRatings = [...receivedRatings, newRating]; // Actualizamos el estado con la nueva valoración
-    setReceivedRatings(updatedRatings); // Actualizamos el estado
-    localStorage.setItem(`product_${productId}_ratings`, JSON.stringify(updatedRatings)); // Guardamos en el localStorage
-    setRating(0);
-    setComment('');
+    if (!userData) {
+      Swal.fire({
+        icon: "info",
+        title: "Solo para usuarios del sitio",
+        text: "Debes iniciar sesión o registrarte para poder realizar esta acción.",
+        showCancelButton: true,
+        confirmButtonText: "Iniciar sesión",
+        cancelButtonText: "Registrarse",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          navigate("/registroUsuario");
+        }
+      });
+    } else {
+      const currentDate = new Date().toISOString();
+      const newRating = { rating, comment, date: currentDate }; // Modificación aquí, no es necesario incluir productId ya que está implícito en el componente
+      const updatedRatings = [...receivedRatings, newRating]; // Actualizamos el estado con la nueva valoración
+      setReceivedRatings(updatedRatings); // Actualizamos el estado
+      localStorage.setItem(`product_${productId}_ratings`, JSON.stringify(updatedRatings)); // Guardamos en el localStorage
+      setRating(0);
+      setComment('');
+    }
   };
 
   const calculateAverageRating = () => {
@@ -31,7 +49,7 @@ const RatingComponent = ({ productId }) => {
 
   const calculateTotalRating = () => {
     if (receivedRatings.length === 0) return 0;
-          
+
     return receivedRatings.length;
   };
 
@@ -45,7 +63,7 @@ const RatingComponent = ({ productId }) => {
           empty="☆"
           full="★"
         />
-        <textarea 
+        <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           className="textarea"
@@ -53,7 +71,7 @@ const RatingComponent = ({ productId }) => {
           required
         />
         <div className="button-container">
-          <button type="submit">Enviar</button>
+          <button type="submit" >Enviar</button>
         </div>
       </form>
 
