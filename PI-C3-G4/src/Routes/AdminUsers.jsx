@@ -77,26 +77,27 @@ function AdminUsers() {
     }).then((result) => {
       if (result.isConfirmed) {
         requestToAPI(`users/delete/id/${userId}`, 'DELETE')
-        .then(() => {
-          setUsers(users.filter(user => user.id !== userId));
-          Swal.fire(
-            '¡Eliminado!',
-            'El elemento ha sido eliminado.',
-            'success'
-          );
-        })
-        .catch(error => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error inesperado',
-            text: 'Hubo un error al intentar eliminar el usuario',
-            showConfirmButton: false,
-            timer: 2000
+          .then(() => {
+            setUsers(users.filter(user => user.id !== userId));
+            Swal.fire(
+              '¡Eliminado!',
+              'El elemento ha sido eliminado.',
+              'success'
+            );
+          })
+          .catch(error => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error inesperado',
+              text: 'Hubo un error al intentar eliminar el usuario',
+              showConfirmButton: false,
+              timer: 2000
+            });
           });
       }
     });
   };
-
+  
   return (
     <div className='img-background'>
       
