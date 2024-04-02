@@ -7,6 +7,7 @@ import RatingComponent from "../Components/RatingComponent";
 import Calendar from "../Components/Calendar";
 import Swal from "sweetalert2";
 import "../Components/Styles/Detail.css";
+import backButton from '../assets/back.png'
 
 const Detail = () => {
   const { id } = useParams();
@@ -139,7 +140,7 @@ const Detail = () => {
             <div className="nameAndBack">
               <h2>{product.name}</h2>
               <Link to={"/home"}>
-                <img className="backArrowDetail" src="\src\assets\back.png" />
+                <img className="backArrowDetail" src={backButton} />
               </Link>
             </div>
 
