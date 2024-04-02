@@ -20,7 +20,7 @@ const Share = ({  url, image, nombre }) => {
   return (
     <div>
       <button className="share-button" onClick={openModal}>
-        <FontAwesomeIcon icon={faShareNodes} /> Compartir
+        <FontAwesomeIcon icon={faShareNodes} />
       </button>
       <Modal
         isOpen={modalIsOpen}

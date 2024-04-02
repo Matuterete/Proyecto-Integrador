@@ -167,18 +167,20 @@ function RegistroUsuario() {
   };
 
   return (
-    <div className="form">
-      <h1 className="title">Formulario de Registro de Usuarios</h1>
-      <div className="container-img">
-        <img
-          src={registroUsuario}
-          alt="logo registro de usuario"
-          height="100px"
-          width="100px"
-        />
-      </div>
+    <div className="img-background bodyLogUser">
 
-      <form ref={form} onSubmit={handleSubmit}>
+      <form ref={form} onSubmit={handleSubmit} className="form">
+
+        <h1 className="title">Formulario de Registro de Usuarios</h1>
+        <div className="container-img">
+          <img
+            src={registroUsuario}
+            alt="logo registro de usuario"
+            height="100px"
+            width="100px"
+          />
+        </div>
+
         <div className="form-group">
           <label>
             Nombre:
@@ -242,10 +244,8 @@ function RegistroUsuario() {
             />
           </label>
         </div>
-        <div className="form-group buttonCenter">
-          <button type="submit" className="button buttonPrimary buttonBig">
-            Guardar Usuario
-          </button>
+        <div className="buttonFormBox">
+          <button type="submit" className="button buttonBlue buttonBig">Guardar Usuario</button>
         </div>
         {mostrarDespuesDeGuardar ? (
           <div></div>
@@ -263,7 +263,9 @@ function RegistroUsuario() {
           </div>
         )}
       </form>
+
     </div>
+
   );
 }
 

@@ -117,12 +117,6 @@ function ProductEditForm({ product, onSave, onCancel }) {
       </div>
       <div className='form-group'>
         <label>
-          Activo:
-          <input type="checkbox" checked={isActive} onChange={handleIsActiveChange} />
-        </label>
-      </div>
-      <div className='form-group'>
-        <label>
           Stock:
           <input type="number" value={stock} onChange={handleStockChange} />
         </label>
@@ -139,10 +133,10 @@ function ProductEditForm({ product, onSave, onCancel }) {
           </select>
         </label>
       </div>
-      <div className='form-group buttonCenter'>
-        <button type='submit' className='button buttonPrimary buttonBig'>Guardar Cambios</button>
+      <div className='buttonFormBox'>
+        <button type='submit' className='button buttonBlue buttonBig'>Guardar Cambios</button>
         &nbsp;&nbsp;&nbsp;
-        <button type='button' className='button buttonTerciary buttonBig' onClick={onCancel}>Cancelar</button>
+        <button type='button' className='button buttonSecundary buttonBig' onClick={onCancel}>Cancelar</button>
       </div>
     </form>
   );

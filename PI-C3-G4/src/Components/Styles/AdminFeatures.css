@@ -3,11 +3,24 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 100px 50px;
+}
+.asdf{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.addFeatureButton {
-    margin: 20px;
+.bodyCategorias {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px 50px;
+}
+.buttonFormBoxFeature{
+    display: flex;
+    justify-content: space-between;
+    width: 230px;
 }
 
 /*======== ADD FEATURES =========*/
@@ -18,7 +31,7 @@
     align-items: center;
     border-radius: 20px;
     padding: 20px;
-    border: 2px solid #2878d4;
+    margin-bottom: 50px;
 }
  
 .buttonImagefeature {
@@ -33,6 +46,8 @@
 
 .selectImages {
     display: flex;
+    flex-wrap: wrap;
+    width: 90%;
 }
 
 .selectImage {
@@ -74,40 +89,6 @@ label {
 
 /*======== LISTA DE FEATURES =========*/
 
-.titleFeatures {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-.adminFeactures li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #F9F7F7;
-    margin: 5px;
-    border-radius: 8px;
-    width: 900PX;
-}
-
-.divSVG {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 100%;
-    margin: 3px 10px;
-}
-
-.adminFeactures li p {
-    margin: 2px 0px;
-}
-
-.divLi {
-    display: flex;
-    align-items: center;
-}
 
 

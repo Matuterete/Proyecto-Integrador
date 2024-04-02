@@ -69,7 +69,7 @@ function UserEditForm({ user, onSave, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='Form container'>
+    <form onSubmit={handleSubmit} className='form'>
       <h2>Editar usuario</h2>
       <div className='form-group'>
         <label>
@@ -90,10 +90,6 @@ function UserEditForm({ user, onSave, onCancel }) {
         </label>
       </div>
       <div className='form-group'>
-        <label>
-          Activo:
-          <input type="checkbox" checked={isActive} onChange={handleIsActiveChange} />
-        </label>
       </div>
       <div className='form-group'>
         <label>
@@ -106,10 +102,11 @@ function UserEditForm({ user, onSave, onCancel }) {
           </select>
         </label>
       </div>
-      <div className='form-group buttonCenter'>
-        <button type='submit' className='button buttonPrimary buttonBig'>Guardar Cambios</button>
+
+      <div className='buttonFormBox'>
+        <button type='submit' className='button buttonBlue buttonBig'>Guardar Cambios</button>
         &nbsp;&nbsp;&nbsp;
-        <button type='button' className='button buttonTerciary buttonBig' onClick={onCancel}>Cancelar</button>
+        <button type='button' className='button buttonSecundary buttonBig' onClick={onCancel}>Cancelar</button>
       </div>
     </form>
   );

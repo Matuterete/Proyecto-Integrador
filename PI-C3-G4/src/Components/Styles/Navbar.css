@@ -2,7 +2,7 @@
   display: flex;
   position: fixed;
   flex-direction: column;
-  z-index: 9999;
+  z-index: 999;
 }
 
 .navbar {
@@ -11,16 +11,23 @@
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  background-color: #F9F7F7;
-  color: var(--color-text);
-  width: 100vw;
   height: auto;
+  background-color: #000000;
+  color: white;
+  padding: 20px 20px;
+  width: 100%;
+  top: 0;
+  border-bottom: 1px solid #4073AF;
 }
 
 .buttons {
   display: flex;
   align-items: flex-start;
   align-items: center;
+}
+.button_login_registro_desktop{
+  padding-right: 25px;
+  display: flex;
 }
 
 .buttons button {
@@ -54,6 +61,7 @@
 .user{
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .user p{
   color: black;
@@ -65,13 +73,17 @@
   /* align-items: baseline; */
   font-size: smaller;
   margin-right: 1rem;
+  color: white;
 }
 .user-logo{
-  font-weight: bold;
-}
 
-.user-logo:hover{
-  background-color: #d6d0d0;
+  background-color: #3683D7;
+  color: white;
+  height: 45px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 

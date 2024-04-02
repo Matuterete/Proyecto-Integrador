@@ -205,7 +205,7 @@ const Home = () => {
   };
 
   return (
-    <div className="body">
+    <div className="body img-background">
       <div className="Search-Calendar">
         <h1>¿Querés consultar la DISPONIBILIDAD de un producto?</h1>
         <p>
@@ -248,7 +248,7 @@ const Home = () => {
       </div>
 
       <div className="categories">
-        <h1>Categorías</h1>
+
         <div className="categories-container">
           {categorias.map((category) => (
             <div
@@ -257,11 +257,12 @@ const Home = () => {
               onClick={() => handleCategoriaClick(category.id, category.title)}
             >
               <img src={category.url} alt={category.title} />
-              <p>{category.title}</p>
+              <p className={categoriaSeleccionada == category.title? 'selected-item-border-green' : ''}>{category.title}</p>
             </div>
           ))}
         </div>
       </div>
+
       {mostrarProductosPorCategoria && (
         <div className="productos-por-categoria">
           <h1>{categoriaSeleccionada} ({productosPorCategoria.length} productos encontrados)</h1>
@@ -291,7 +292,7 @@ const Home = () => {
           <p className="cardTitle-2">Recomendados</p>
           <div className="cardGrid-2">
             {productosRecomendados.length === 0 &&
-            !mostrarProductosPorCategoria ? (
+              !mostrarProductosPorCategoria ? (
               <div className="loader-container">
                 <div className="loader"></div>
               </div>

@@ -55,42 +55,43 @@ const Card = ({ product, userData }) => {
   };
 
   return (
-      <div className="card">
-        <button onClick={handleLikeClick} className="fav-button">
-          {isProductLiked ? (
-            <FontAwesomeIcon icon={faHeart} className="liked-icon" />
-          ) : (
-            <FontAwesomeIcon icon={faHeart} className="not-liked-icon" />
-          )}
-        </button>
-        <Link to={"/detail/" + product.id} className="h2card">
-          <div>
-            <img className="image" src={product.images[0].url} alt="" />
-          </div>
-        </Link>
+    <div className="card">
+      <button onClick={handleLikeClick} className="fav-button">
+        {isProductLiked ? (
+          <FontAwesomeIcon icon={faHeart} className="liked-icon" />
+        ) : (
+          <FontAwesomeIcon icon={faHeart} className="not-liked-icon" />
+        )}
+      </button>
+      <Link to={"/detail/" + product.id} className="h2card">
+        <div className="card-img">
+          <img src={product.images[0].url} alt="" />
+        </div>
+      </Link>
+      <div className="name-card">
         <h2 className="name">{product.name}</h2>
-        <div className="card-content">
-          <div className="price-container">
-            <p className="price">{product.price}</p>
-            <p className="currency">USD</p>
+      </div>
+      <div className="card-content">
+        <div className="price-container">
+          <p className="price">${product.price} USD</p>
+        </div>
+        <div className="social">
+          <div>
+            <RatingAverage productId={product.id} />
           </div>
-          <div className="social">
-            <div>
-              <RatingAverage productId={product.id} />  
-            </div>
-            <div>
-              <Share
-                onClick={() => {
-                  openModal();
-                }}
-                url={"detail/" + product.id}
-                image={product.images[0].url}
-                nombre={product.name}
-              />
-            </div>
+          <div>
+            <Share
+              onClick={() => {
+                openModal();
+              }}
+              url={"detail/" + product.id}
+              image={product.images[0].url}
+              nombre={product.name}
+            />
           </div>
         </div>
       </div>
+    </div>
   );
 };
 
