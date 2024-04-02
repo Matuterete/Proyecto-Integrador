@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import requestToAPI from "../services/requestToAPI";
-import './Styles/login.css'
+import './Styles/Login.css'
 
 function Login() {
   const [usuario, setUsuario] = useState({
