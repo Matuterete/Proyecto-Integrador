@@ -77,7 +77,6 @@ const Detail = () => {
       const response = await requestToAPI("rentals/add", "POST", data);
       console.log("Reserva exitosa:", response);
 
-      setShowForm(false); // Hide the form after successful reservation
 
       Swal.fire({
         icon: "success",
@@ -282,6 +281,7 @@ const Detail = () => {
                         onClick={() => {
                           handleReservation();
                           setShowForm(false);
+                          setShowAlquiler(false);
                         }}
                       >
                         Confirmar Alquiler
