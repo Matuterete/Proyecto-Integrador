@@ -183,6 +183,7 @@ main {
   border-radius: 12px;
   color: #A7A7AB;
   font-size: 18px;
+  font-family: inherit;
 }
 
 .form-group select {
@@ -252,9 +253,12 @@ main {
   padding-right: 4rem;
 }
 
-.share-buttons{
+.modal-buttons{
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 2rem;
+
 }
 .share-social-modal button {
   color: #ffffff;
@@ -266,11 +270,11 @@ main {
   font-size: 0.7rem;
   margin-top: 0.5rem;
 }
-.close-share{
+.close-modal{
   background-color: #495c79;
 }
 
-.close-share:hover{
+.close-modal:hover{
   background-color: #334050;
 }
 
