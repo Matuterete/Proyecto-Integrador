@@ -7,7 +7,8 @@
   flex-direction: column;
   color: white;
 }
-.name-card{
+
+.name-card {
   height: 60px;
 }
 
@@ -25,19 +26,28 @@
   font-weight: bold;
 }
 
-.card-img{
-  width: 100%; /* Ancho deseado para el contenedor */
-  height: 0; /* Inicializamos la altura en 0 */
-  padding-top: 100%; /* La altura será igual al 100% del ancho */
-  position: relative; /* Para que los elementos internos se posicionen con respecto al contenedor */
+.card-img {
+  width: 100%;
+  /* Ancho deseado para el contenedor */
+  height: 0;
+  /* Inicializamos la altura en 0 */
+  padding-top: 100%;
+  /* La altura será igual al 100% del ancho */
+  position: relative;
+  /* Para que los elementos internos se posicionen con respecto al contenedor */
   overflow: hidden;
 }
+
 .card img {
-  width: 100%; /* La imagen ocupará todo el ancho del contenedor */
-    height: 100%; /* La imagen ocupará todo el alto del contenedor */
-    position: absolute; /* La imagen se posiciona absolutamente dentro del contenedor */
-    top: 0; /* Se ajusta a la parte superior del contenedor */
-    left: 0;
+  width: 100%;
+  /* La imagen ocupará todo el ancho del contenedor */
+  height: 100%;
+  /* La imagen ocupará todo el alto del contenedor */
+  position: absolute;
+  /* La imagen se posiciona absolutamente dentro del contenedor */
+  top: 0;
+  /* Se ajusta a la parte superior del contenedor */
+  left: 0;
 }
 
 .social {
@@ -60,8 +70,8 @@
   border-radius: 50%;
   width: 28px;
   height: 28px;
-  border-color: lightgreen;
-  color: lightgreen;
+  border-color: greenyellow;
+  color: greenyellow;
 }
 
 .card:hover {
@@ -86,7 +96,7 @@
   color: #3A4047;
 }
 
-.not-liked-icon:hover{
+.not-liked-icon:hover {
   color: #3683D7;
   animation: heartBeat 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
   transition: color 0.3s ease-in;
@@ -122,4 +132,66 @@
     transform: scale(1);
   }
 }
+.mobile-fav{
+  display: none;
+}
+@media (max-width: 425px) {
 
+  .fav-button {
+    display: none;
+  }
+
+  .card:hover {
+    transform: scale(1);
+    box-shadow: none;
+  }
+  .name {
+    font-size: 0.6rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  .price {
+    font-size: 0.8em;
+  }
+
+  .name-card {
+    height: auto;
+  }
+
+  .social {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: larger;
+  }
+
+  .card-content {
+    padding: 5px;
+    align-items: center;
+  }
+
+  .card-content span {
+    font-size: 0.6em;
+  }
+
+  .share-button {
+    border: none;
+    font-size: 0.7em;
+  }
+
+  .mobile-fav {
+    display: block;
+    border: none;
+    background-color: unset;
+    font-size: 0.8em;
+  }
+  .favAndShare{
+    display: flex;
+    align-items: center;
+  }
+.h2card{
+  padding: 0;
+}
+}

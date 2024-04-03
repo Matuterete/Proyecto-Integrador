@@ -77,7 +77,14 @@ const Card = ({ product, userData }) => {
           <div>
             <RatingAverage productId={product.id} fetchDetails={false}/>
           </div>
-          <div>
+          <div className="favAndShare">
+            <button onClick={handleLikeClick} className="mobile-fav">
+              {isProductLiked ? (
+                <FontAwesomeIcon icon={faHeart} className="liked-icon" />
+              ) : (
+                <FontAwesomeIcon icon={faHeart} className="not-liked-icon" />
+              )}
+            </button>
             <Share
               onClick={handleShareClick}
               url={"/detail/" + product.id}

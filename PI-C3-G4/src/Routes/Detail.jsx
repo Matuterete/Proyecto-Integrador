@@ -129,6 +129,24 @@ const Detail = () => {
     setShowAlquiler(show);
   };
 
+  const [thumbnailPositionMovile, setThumbnailPositionMovile] = useState('right')
+  useEffect(() => {
+    const handleResize = () => {
+      // Aquí puedes definir tu lógica para determinar el tamaño de las estrellas según el ancho de la pantalla
+      if (window.innerWidth < 427) {
+        setThumbnailPositionMovile("bottom");
+      } else {
+        setThumbnailPositionMovile("right");
+      }
+    };
+
+    handleResize(); // Llamada inicial
+    window.addEventListener("resize", handleResize); // Escucha los cambios de tamaño de la pantalla
+
+    return () => {
+      window.removeEventListener("resize", handleResize); // Limpia el evento al desmontar el componente
+    };
+  }, []);
   return (
     <div className="img-background">
       {product ? (
@@ -153,9 +171,8 @@ const Detail = () => {
                   autoPlay={false}
                   showPlayButton={false}
                   showBullets={false}
-                  thumbnailPosition="right"
-                  showNav={false}
-                  quier
+                  thumbnailPosition={thumbnailPositionMovile}
+                  showNav={false}quier
                   showFullscreenButton={false}
                   disableThumbnailScroll={true}
                   additionalClass="imagen-cuadrada"
