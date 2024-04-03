@@ -10,7 +10,7 @@ const AdminPage = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [sessionData, setSessionData] = useState(null);
 
-  const [elementSelected, setElementSelected] = useState()
+  const [elementSelected, setElementSelected] = useState('productos')
 
   useEffect(() => {
     const checkWindowSize = () => {
@@ -44,7 +44,6 @@ const AdminPage = () => {
   return (
     <div className='bodyPage img-background'>
       <div className='adminMenu'>
-        <h1 className='TitleAdminP'>Menú de Administración General</h1>
         <div className='Menu'>
           <div className='ButtonContainer'>
             {!isMobile && (

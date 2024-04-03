@@ -143,7 +143,7 @@ const Detail = () => {
             </div>
 
             <div className="galleryAndPrice">
-              <div className="">
+              <div className="gallery">
                 <ImageGallery
                   items={product.images.map((image, index) => ({
                     original: image.url,
@@ -155,9 +155,10 @@ const Detail = () => {
                   showPlayButton={false}
                   showBullets={false}
                   thumbnailPosition="right"
-                  showNav={false}
+                  showNav={false}quier
                   showFullscreenButton={false}
                   disableThumbnailScroll={true}
+                  additionalClass="imagen-cuadrada"
                 />
               </div>
 
