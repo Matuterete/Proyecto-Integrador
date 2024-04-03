@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "../Components/Styles/Card.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useFavContext } from "./FavContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,6 +6,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Share from "./Share";
 import Swal from "sweetalert2";
 import RatingAverage from "./RatingAverage";
+import "./Styles/Card.css";
 
 const Card = ({ product, userData }) => {
   const { addFavorite, removeFavorite, favoriteProducts } = useFavContext();
