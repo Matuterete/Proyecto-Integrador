@@ -23,11 +23,11 @@ const Timer = () => {
     return (
         <div className="timer">
             <strong>
-                <span>¡Tranquilo! Si no has recibido el correo, en:</span>
+                <span>Si no has recibido el correo, Espera:</span>
                 <strong className='element'>
                     {minutes}:{seconds.toString().padStart(2, '0')}
                 </strong>
-                <span>minutos podrás reenviarlo sin problema.</span></strong>
+                <span>para reenviar el correo de confirmación</span></strong>
         </div>
     );
 };
