@@ -7,7 +7,8 @@ import RatingComponent from "../Components/RatingComponent";
 import Calendar from "../Components/Calendar";
 import Swal from "sweetalert2";
 import "../Components/Styles/Detail.css";
-import backButton from '../assets/back.png'
+import backButton from '../assets/back.png';
+import FloatingSocialButtons from '../components/FloatingSocialButtons';
 
 const Detail = () => {
   const { id } = useParams();
@@ -293,7 +294,9 @@ const Detail = () => {
               </div>
             </div>
           )}
-
+          <div>     
+      <FloatingSocialButtons />
+    </div>
           <div className="Rating">
             <RatingComponent productId={id} />
           </div>
