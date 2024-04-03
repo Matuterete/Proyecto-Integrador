@@ -147,11 +147,35 @@
   text-align: center;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 425px) {
+
+  .search-container{
+    display: none;
+  }
+
+  /* ========== CATEGORIA ========== */
+  .categoria img{
+    width: 20px;
+  }
+  .categoria p{
+    font-size: 0.5em;
+    margin-top: 0;
+  }
+  .categories-container {
+    display: flex;
+    justify-content:space-around;
+    flex-wrap: wrap;
+    gap: 0px;
+    width: 90vw;
+  }
+/* ========== SLIDER ========== */
+
+
+
   .slick-slide .producto {
-    width: 90% !important;
-    margin: 0 auto 20px !important;
-    max-width: 90% !important;
+    width: 90%;
+    margin: 0 auto 20px;
+    max-width: 90%;
   }
 
   .cardGrid-2 {

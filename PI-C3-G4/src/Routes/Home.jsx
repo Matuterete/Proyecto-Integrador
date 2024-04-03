@@ -56,6 +56,37 @@ const Home = () => {
     draggable: true,
     focusOnSelect: false,
   });
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setSliderSettings({
+          ...sliderSettings,
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        });
+      } else if (window.innerWidth < 400) {
+        setSliderSettings({
+          ...sliderSettings,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        });
+      } else {
+        setSliderSettings({
+          ...sliderSettings,
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        });
+      }
+    };
+
+    // Agregar el evento de cambio de tamaño de la ventana
+    window.addEventListener('resize', handleResize);
+
+    // Limpiar el efecto cuando el componente se desmonte
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     async function fetchData() {

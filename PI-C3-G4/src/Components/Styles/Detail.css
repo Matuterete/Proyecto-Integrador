@@ -140,47 +140,8 @@
 }
 
 
-@media (max-width: 760px) {
-  .bodyDetail {
-    width: 100%;
-    margin: 2px;
-  }
+@media (max-width: 425) {
 
-  .galleryAndPay {
-    flex-direction: column;
-  }
+ 
 
-  .gallery {
-    width: 90%;
-    margin: 5px;
-  }
-
-  .image-gallery-slide img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .product_description {
-    width: 90%;
-    margin: 10px;
-  }
-
-  .pay {
-    margin-top: 10px;
-    margin: 2px;
-  }
-
-  .info {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .features {
-    margin: 20px;
-    padding: 0;
-  }
-
-  .paymentMethods {
-    width: 70%;
-  }
 }
