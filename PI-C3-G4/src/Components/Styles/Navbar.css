@@ -14,13 +14,14 @@
   height: auto;
   background-color: #000000;
   color: white;
-  padding: 20px 20px;
+  padding: 10px;
   width: 100%;
   top: 0;
   border-bottom: 1px solid #4073AF;
 }
 
 .navbar-logo {
+  display: flex;
   padding-left: 60px;
 }
 
@@ -74,26 +75,25 @@
 }
 
 /* ========== MENU DESPLEGABLE ========== */
+
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
 .dropdown-content {
-  display: none;
   position: absolute;
   border-radius: 12px;
   background-color: #272B32;
   min-width: 160px;
   z-index: 1;
 
-  right: 0;
+  right: -300px;
   /* Alinea el menú a la derecha */
   top: 100%;
   /* Alinea el menú justo debajo del botón */
-  max-width: calc(100% - 20px);
-  /* Limita el ancho del menú al ancho de la pantalla menos un espacio de margen */
   overflow-x: hidden;
+  transition: right 0.3s ease;
 }
 
 .dropdown-content a {
@@ -109,19 +109,94 @@
 }
 
 .dropdown:hover .dropdown-content {
-  display: block;
+  right: 10%;
 }
 
-@media (min-width: 761px) {
-  nav#mobile {
+
+
+
+
+
+.menuMobile {
+  display: none;
+}
+
+/* Estilos para versión móvil */
+@media (max-width: 425px) {
+
+  .button_login_registro_desktop,
+  .user {
     display: none;
+  }
+  
+  .menuMobile {
+    display: block;
+  }
+  .navbar-logo img{
+    width: 200px;
+  }
+  .buttonCerrarMenu{
+    height: 30px;
+    width: 100%;
+    font-size: 1em;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    color: white;
+    border-bottom: 1px solid rgb(102, 131, 238);
+  }
+
+  .navbar-logo{
+    padding-left: 0px;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    align-items: end;
+    top: 0;
+    right: -60%;
+    /* Empieza fuera de la pantalla */
+    width: 50%;
+    height: 150vh;
+    /* 100% del alto de la ventana */
+    background-color: #172031;
+    transition: right 0.3s ease;
+    padding: 10px;
+  }
+
+  .menu.open {
+    right: 0;
+    /* Muestra el menú moviéndolo hacia la derecha */
+  }
+
+  .menuHamburguesa {
+    color: white;
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    padding-right: 30px;
+  }
+  .menu p{
+    padding: 8px;
+    display: flex;
+    justify-content: end;
+ 
   }
 }
 
+/* @media (min-width: 761px) {
+  nav#mobile {
+    display: none;
+  }
+} 
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
 
-  .desktop-nav,
+ .desktop-nav,
   .buttons {
     display: none;
   }
@@ -152,7 +227,7 @@
   }
 
   #menu-toggle {
-    color: black;
+    color: rgb(255, 255, 255);
     display: block;
     background: none;
     border: none;
@@ -166,7 +241,7 @@
   #mobile-menu {
     display: none;
     position: fixed;
-    background-color: #F9F7F7;
+    background-color: #272B32;
     min-width: 30%;
     right: 0%;
     padding: 15px;
@@ -185,5 +260,5 @@
 
   .mobile-menu-items a {
     margin-bottom: 10px;
-  }
-}
+  } 
+}/*

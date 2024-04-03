@@ -77,7 +77,6 @@ const Detail = () => {
       const response = await requestToAPI("rentals/add", "POST", data);
       console.log("Reserva exitosa:", response);
 
-
       Swal.fire({
         icon: "success",
         title: "Reserva exitosa",
@@ -129,6 +128,25 @@ const Detail = () => {
     setShowAlquiler(show);
   };
 
+  const [thumbnailPositionMovile, setThumbnailPositionMovile] =
+    useState("right");
+  useEffect(() => {
+    const handleResize = () => {
+      // Aquí puedes definir tu lógica para determinar el tamaño de las estrellas según el ancho de la pantalla
+      if (window.innerWidth < 427) {
+        setThumbnailPositionMovile("bottom");
+      } else {
+        setThumbnailPositionMovile("right");
+      }
+    };
+
+    handleResize(); // Llamada inicial
+    window.addEventListener("resize", handleResize); // Escucha los cambios de tamaño de la pantalla
+
+    return () => {
+      window.removeEventListener("resize", handleResize); // Limpia el evento al desmontar el componente
+    };
+  }, []);
   return (
     <div className="img-background">
       {product ? (
@@ -144,18 +162,31 @@ const Detail = () => {
             <div className="galleryAndPrice">
               <div className="gallery">
                 <ImageGallery
-                  items={product.images.map((image, index) => ({
-                    original: image.url,
-                    thumbnail: image.url,
-                    originalAlt: `${product.name} ${index + 1}`,
-                    thumbnailAlt: `${product.name} ${index + 1}`,
-                  }))}
+                  items={[
+                    ...product.images.map((image, index) => ({
+                      original: image.url,
+                      thumbnail: image.url,
+                      originalAlt: `${product.name} ${index + 1}`,
+                      thumbnailAlt: `${product.name} ${index + 1}`,
+                    })),
+                    ...Array.from({
+                      length: Math.max(5 - product.images.length, 0),
+                    }).map((_, index) => ({
+                      original:
+                        "https://prothechnics-images.s3.us-east-2.amazonaws.com/products/no-imgen-available.svg",
+                      thumbnail:
+                        "https://prothechnics-images.s3.us-east-2.amazonaws.com/products/no-imgen-available.svg",
+                      originalAlt: `${product.name} Missing Image ${index + 1}`,
+                      thumbnailAlt: `${product.name} Missing Image ${
+                        index + 1
+                      }`,
+                    })),
+                  ]}
                   autoPlay={false}
                   showPlayButton={false}
                   showBullets={false}
-                  thumbnailPosition="right"
+                  thumbnailPosition={thumbnailPositionMovile}
                   showNav={false}
-                  quier
                   showFullscreenButton={false}
                   disableThumbnailScroll={true}
                   additionalClass="imagen-cuadrada"

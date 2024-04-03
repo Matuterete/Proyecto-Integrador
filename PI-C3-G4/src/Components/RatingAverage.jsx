@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
 import "../Components/Styles/RatingAverage.css";
 import requestToAPI from "../services/requestToAPI";
 
 const RatingAverage = ({ productId, fetchDetails }) => {
   const [averageRating, setAverageRating] = useState(0);
+  const [starSize, setStarSize] = useState("1.2rem"); // Tamaño inicial de las estrellas
   const [details, setDetails] = useState([]);
   const [totalRatings, setTotalRatings] = useState(0);
   const offsetHours = 3;
@@ -39,8 +40,28 @@ const RatingAverage = ({ productId, fetchDetails }) => {
     fetchProductRating();
   }, [productId, fetchDetails]);
 
+  // Función para actualizar el tamaño de las estrellas en respuesta al cambio de tamaño de la pantalla
+  useEffect(() => {
+    const handleResize = () => {
+      // Aquí puedes definir tu lógica para determinar el tamaño de las estrellas según el ancho de la pantalla
+      if (window.innerWidth < 426) {
+        setStarSize("0.8rem");
+      } else {
+        setStarSize("1.2rem");
+      }
+    };
+
+    handleResize(); // Llamada inicial
+    window.addEventListener("resize", handleResize); // Escucha los cambios de tamaño de la pantalla
+
+    return () => {
+      window.removeEventListener("resize", handleResize); // Limpia el evento al desmontar el componente
+    };
+  }, []);
+
   return (
     <div className="rating-average-container">
+
       {fetchDetails ? (
         <div className="rating-details">
           {details.map((detail, index) => (
@@ -63,15 +84,17 @@ const RatingAverage = ({ productId, fetchDetails }) => {
             starRatedColor="greenyellow"
             starEmptyColor="#194F32"
             numberOfStars={5}
-            starDimension="1.2rem"
+            starDimension={starSize}
             starSpacing="0.125rem"
           />
           <p className="ratings-amount">({totalRatings})</p>
         </span>
       )}
+
     </div>
   );
 };
+
 
 const formatDate = (dateString) => {
   const offsetHours = 3;
@@ -80,3 +103,4 @@ const formatDate = (dateString) => {
 }
 
 export default RatingAverage;
+

@@ -30,9 +30,8 @@
 }
 
 /* Optional: Add responsive styles for smaller screens */
-@media (max-width: 768px) {
+@media (max-width: 425px) {
   .pagination {
-    flex-direction: column;
     align-items: center;
   }
 

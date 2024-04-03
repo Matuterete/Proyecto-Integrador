@@ -70,7 +70,7 @@ function Login() {
       <form onSubmit={handleSubmit} className='form'>
 
         <div className="titleForm">
-          <h1>Iniciar Sesión</h1>
+          <h2>Bienvenido a ProThechnics!</h2>
         </div>
 
         <div className="form-group">

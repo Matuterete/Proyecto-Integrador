@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Data
 @Entity
-
 @Table(name = "products")
 public class Product {
     @Id
@@ -42,12 +41,8 @@ public class Product {
     @Schema(hidden = true)
     private List<Feature> features;
     @Column(name = "average_rating")
-    private Double averageRating;
+    private Double averageRating = 0.0;
     @OneToMany(mappedBy = "product")
     @Schema(hidden = true)
     private List<UserFav> fav;
-//    @OneToMany(mappedBy = "product")
-//    @Schema(hidden = true)
-//    private List<UserReview> reviews;
-
 }
