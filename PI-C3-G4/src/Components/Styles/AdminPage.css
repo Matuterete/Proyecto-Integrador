@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-top: 150px;
+  margin-top: 50px;
 }
 
 .TitleAdminP {
@@ -27,6 +27,7 @@
   border-bottom: 1px solid #3A4047;
   display: flex;
   flex-direction: column;
+  width: 100vw;
 }
 
 .Menu h2 {

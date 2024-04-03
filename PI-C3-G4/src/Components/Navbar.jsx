@@ -90,25 +90,46 @@ const Navbar = () => {
               <div className="name">
                 <span>{sessionData.user.name} {sessionData.user.lastName}</span>
               </div>
-              <Link to="/userprofile">
-                <button className="user-logo">{userLogo}</button>
-              </Link>
-              {sessionData.user.role === "ADMIN" ||
-              sessionData.user.role === "SUPERADMIN" ? (
-                <Link to="/administracion">
-                  <button className="button buttonPrimary buttonBig">Admin Page</button>
-                </Link>
-              ) : (
-                ""
-              )}
 
-              <button className="button buttonPrimary buttonBig" onClick={handleLogout}>
-                Cerrar Sesion
-              </button>
+
+
+
+              <div class="dropdown">
+
+                <div class="dropbtn">
+                  <div className="user-logo-container">
+                    <button className="user-logo">{userLogo}</button>
+                    <img src="\src\assets\FlechaAbajo.png" alt="" />
+                  </div>
+                </div>
+
+                <div class="dropdown-content">
+                  <Link to="/userprofile">
+                    <p>Mi perfil</p>
+                  </Link>
+                  {sessionData.user.role === "ADMIN" ||
+                    sessionData.user.role === "SUPERADMIN" ? (
+                    <Link to="/administracion">
+                      <p>Admin Page</p>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+
+                  <a onClick={handleLogout}>
+                    Cerrar Sesion
+                  </a>
+                </div>
+
+              </div>
+
+
+
+
             </div>
           ) : (
-            <div className="button_login_registro_desktop titleFeatures">
-             
+            <div className="button_login_registro_desktop">
+
               <Link to="/registroUsuario" className="button button-sin-borde">
                 Crear Cuenta
               </Link>

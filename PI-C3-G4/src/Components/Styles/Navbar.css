@@ -20,32 +20,6 @@
   border-bottom: 1px solid #4073AF;
 }
 
-.buttons {
-  display: flex;
-  align-items: flex-start;
-  align-items: center;
-}
-.button_login_registro_desktop{
-  padding-right: 25px;
-  display: flex;
-}
-
-.buttons button {
-  margin-right: 30px;
-  width: auto;
-  padding: 0.3rem 0.7rem;
-}
-
-.buttons div {
-  margin-top: 2px;
-  margin-right: 5px;
-}
-
-.buttons div a {
-  margin: 8px;
-  text-decoration: none;
-}
-
 .navbar-logo {
   padding-left: 60px;
 }
@@ -58,27 +32,36 @@
   width: 300px;
 }
 
-.user{
+.button_login_registro_desktop {
+  display: flex;
+  margin-right: 40px;
+}
+
+.user {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.user p{
-  color: black;
+  margin-right: 30px;
 }
 
-.user .name{
+.user .name {
   display: flex;
   flex-direction: column;
-  /* align-items: baseline; */
-  font-size: smaller;
   margin-right: 1rem;
   color: white;
 }
-.user-logo{
 
+.user-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+}
+
+.user-logo {
   background-color: #3683D7;
   color: white;
+  width: 45px;
   height: 45px;
   border-radius: 50%;
   border: none;
@@ -86,6 +69,48 @@
   cursor: pointer;
 }
 
+.user-logo-container img {
+  margin: 5px;
+}
+
+/* ========== MENU DESPLEGABLE ========== */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  border-radius: 12px;
+  background-color: #272B32;
+  min-width: 160px;
+  z-index: 1;
+
+  right: 0;
+  /* Alinea el menú a la derecha */
+  top: 100%;
+  /* Alinea el menú justo debajo del botón */
+  max-width: calc(100% - 20px);
+  /* Limita el ancho del menú al ancho de la pantalla menos un espacio de margen */
+  overflow-x: hidden;
+}
+
+.dropdown-content a {
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover {
+  border: 1px solid #3683D7;
+  border-radius: 12px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 
 @media (min-width: 761px) {
   nav#mobile {
@@ -95,6 +120,7 @@
 
 
 @media (max-width: 760px) {
+
   .desktop-nav,
   .buttons {
     display: none;
@@ -133,8 +159,8 @@
     font-size: 2rem;
     cursor: pointer;
     position: fixed;
-    right: 10px; 
-    top: 10px; 
+    right: 10px;
+    top: 10px;
   }
 
   #mobile-menu {
@@ -144,7 +170,7 @@
     min-width: 30%;
     right: 0%;
     padding: 15px;
-    margin-top: 30px; 
+    margin-top: 30px;
   }
 
   #mobile-menu.active {

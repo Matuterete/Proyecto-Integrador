@@ -16,7 +16,7 @@ const UserProfile = () => {
   );
   const [favoriteProductDetails, setFavoriteProductDetails] = useState([]);
   const [rentals, setRentals] = useState([]);
-  const [elementSelected, setElementSelected] = useState()
+  const [elementSelected, setElementSelected] = useState('favoritos')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -116,7 +116,6 @@ const UserProfile = () => {
     <div className="userprof img-background">
 
       <div className='adminMenu'>
-        <h1 className='TitleAdminP'>Menú de Usuario</h1>
         <div className='Menu'>
           <div className='ButtonContainer'>
 
