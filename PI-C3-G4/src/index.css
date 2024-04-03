@@ -1,12 +1,12 @@
 :root {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: white;
 }
 
 .img-background {
-  background-color: #0D1117;
+  background-color: #0d1117;
 }
 
 body {
@@ -57,7 +57,7 @@ main {
 
 .buttonPrimary {
   /* background-color: #145fb5; */
-  background-color: rgba(20, 95, 181, 0.0);
+  background-color: rgba(20, 95, 181, 0);
   color: white;
 }
 
@@ -67,9 +67,9 @@ main {
 }
 
 .buttonSecundary {
-  background-color: #272B32;
-  color: #FF5A51;
-  border-color: #3A4047;
+  background-color: #272b32;
+  color: #ff5a51;
+  border-color: #3a4047;
 }
 
 .buttonSecundary:hover {
@@ -78,7 +78,7 @@ main {
 
 .buttonTerciary {
   border: none;
-  background-color: #459F53;
+  background-color: #459f53;
   color: #ffffff;
 }
 
@@ -87,7 +87,7 @@ main {
 }
 
 .buttonBlue {
-  background-color: #1F6FEA;
+  background-color: #1f6fea;
   color: white;
   border: none;
 }
@@ -116,7 +116,7 @@ main {
   align-items: center;
   padding-top: 200px;
   padding-bottom: 50px;
-  background: linear-gradient(45deg, #113269 0%, #512A53 100%);
+  background: linear-gradient(45deg, #113269 0%, #512a53 100%);
 }
 
 .imgParlantes {
@@ -133,7 +133,7 @@ main {
 
 .form {
   padding-top: 30px;
-  background-color: #1E273D;
+  background-color: #1e273d;
   width: 400px;
   border-radius: 12px;
 }
@@ -142,7 +142,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: start;
-  border-bottom: 1px solid #04DAD3;
+  border-bottom: 1px solid #04dad3;
   margin-bottom: 20px;
 }
 
@@ -165,7 +165,7 @@ main {
 .form-group label {
   display: block;
   margin-bottom: 5px;
-  color: #04DAD3;
+  color: #04dad3;
 }
 
 .form-group input {
@@ -175,7 +175,7 @@ main {
   border: none;
   background-color: transparent;
   border-radius: 12px;
-  border: 1px solid #0F73ED;
+  border: 1px solid #0f73ed;
   height: 30px;
   font-size: 18px;
   color: white;
@@ -235,7 +235,6 @@ main {
   margin-left: 10px;
 }
 
-
 /* ========== COMPARTIR EN REDES ========== */
 
 .share-social-modal {
@@ -257,21 +256,17 @@ main {
   padding-right: 4rem;
 }
 
-
 .share-buttons {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 2rem;
-
 }
-.modal-buttons{
-
+.modal-buttons {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 2rem;
-
 }
 
 .share-social-modal button {
@@ -285,7 +280,6 @@ main {
   margin-top: 0.5rem;
 }
 
-
 .close-share {
   background-color: #495c79;
 }
@@ -293,12 +287,11 @@ main {
 .close-share:hover {
   background-color: #334050;
 }
-.close-modal{
+.close-modal {
   background-color: #495c79;
 }
 
-.close-modal:hover{
-
+.close-modal:hover {
   background-color: #334050;
 }
 
@@ -323,7 +316,7 @@ main {
   background-color: #323232;
   margin: 5px;
   border-radius: 8px;
-  width: 900PX;
+  width: 900px;
 }
 
 .divSVG {
@@ -355,7 +348,7 @@ p {
 }
 
 .categoria-SVG {
-  width: 20PX;
+  width: 20px;
 }
 
 .titleAdminUser {
@@ -383,7 +376,6 @@ p {
 }
 
 @media (max-width: 425px) {
-
   h2 {
     font-size: 0.8em;
   }
@@ -403,7 +395,7 @@ p {
 
   .form {
     padding-top: 20px;
-    background-color: #1E273D;
+    background-color: #1e273d;
     width: 300px;
     border-radius: 12px;
   }
@@ -411,16 +403,4 @@ p {
   p {
     font-size: 0.8em;
   }
-} 
-
-/* ========== CARD ========== */
-
-.card {
-  background-color: #272b32;
-  border-radius: 8px;
-  padding: 0;
-  margin: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  color: white;
 }
