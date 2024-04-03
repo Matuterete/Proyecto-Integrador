@@ -34,9 +34,9 @@ function Login() {
       const redirectPath = sessionStorage.getItem("redirectPath");
       if (redirectPath) {
         navigate(redirectPath);
-        sessionStorage.removeItem("redirectPath"); 
+        sessionStorage.removeItem("redirectPath");
       } else {
-        
+
         if (
           response.user.role === "ADMIN" ||
           response.user.role === "SUPERADMIN"
@@ -61,10 +61,18 @@ function Login() {
   };
 
   return (
-    <div className="img-background bodyA">
+    <div className="bodyLogUser bodyA">
+
+      <div className="imgParlantes">
+        <img src="\src\assets\Parlantes-fondo.png" alt="" />
+      </div>
 
       <form onSubmit={handleSubmit} className='form'>
-        <h1>Iniciar Sesión</h1>
+
+        <div className="titleForm">
+          <h1>Iniciar Sesión</h1>
+        </div>
+
         <div className="form-group">
           <label>
             Correo electrónico:
@@ -88,7 +96,7 @@ function Login() {
           </label>
         </div>
         <div className="buttonFormBox">
-          <button type="submit" className='button buttonBlue buttonBig'>Ingresar</button>
+          <button type="submit" className='button buttonTerciary buttonBig'>Ingresar</button>
         </div>
       </form>
     </div>
