@@ -3,11 +3,12 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import requestToAPI from "../services/requestToAPI";
-import RatingComponent from "../Components/RatingComponent";
+import RatingAverage from "../Components/RatingAverage";
 import Calendar from "../Components/Calendar";
 import Swal from "sweetalert2";
 import "../Components/Styles/Detail.css";
-import backButton from '../assets/back.png'
+import backButton from "../assets/back.png";
+import FloatingSocialButtons from "../Components/FloatingSocialButtons";
 
 const Detail = () => {
   const { id } = useParams();
@@ -76,7 +77,6 @@ const Detail = () => {
       const response = await requestToAPI("rentals/add", "POST", data);
       console.log("Reserva exitosa:", response);
 
-      setShowForm(false); // Hide the form after successful reservation
 
       Swal.fire({
         icon: "success",
@@ -142,7 +142,7 @@ const Detail = () => {
             </div>
 
             <div className="galleryAndPrice">
-              <div className="">
+              <div className="gallery">
                 <ImageGallery
                   items={product.images.map((image, index) => ({
                     original: image.url,
@@ -155,16 +155,20 @@ const Detail = () => {
                   showBullets={false}
                   thumbnailPosition="right"
                   showNav={false}
+                  quier
                   showFullscreenButton={false}
                   disableThumbnailScroll={true}
+                  additionalClass="imagen-cuadrada"
                 />
               </div>
 
               <div className="priceAndDescription">
                 <div className="priceDetail">
-                  <p>$: {product.price} USD</p>
+                  <p>$ {product.price} USD</p>
                 </div>
-
+                <div>
+                  <RatingAverage productId={product.id} fetchDetails={false} />
+                </div>
                 <button
                   className="button buttonBig buttonTerciary"
                   onClick={() => handleAlquiler(true)}
@@ -277,6 +281,7 @@ const Detail = () => {
                         onClick={() => {
                           handleReservation();
                           setShowForm(false);
+                          setShowAlquiler(false);
                         }}
                       >
                         Confirmar Alquiler
@@ -293,9 +298,11 @@ const Detail = () => {
               </div>
             </div>
           )}
-
-          <div className="Rating">
-            <RatingComponent productId={id} />
+          <div>
+            <FloatingSocialButtons />
+          </div>
+          <div>
+            <RatingAverage productId={product.id} fetchDetails={true} />
           </div>
         </div>
       ) : (

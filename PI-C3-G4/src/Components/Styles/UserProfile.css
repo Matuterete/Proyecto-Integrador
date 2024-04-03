@@ -38,3 +38,12 @@
   margin: 4px 0;
 }
 
+.rate-modal{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-profile{
+  width: 1000px !important;
+}

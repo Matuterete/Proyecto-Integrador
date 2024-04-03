@@ -19,7 +19,7 @@ body {
 }
 .bodyA{
   padding-top: 200px;
-  min-height: 68vh;
+  min-height: 62vh;
 }
 
 #root {
@@ -107,14 +107,41 @@ main {
   margin: 100px;
 }
 
+/* ========== REGISTRO Y LOG DE USUARIO ========== */
+.bodyLogUser {
+  display: flex;
+  align-items: center;
+  padding-top: 200px;
+  padding-bottom: 50px;
+  background: linear-gradient(45deg, #113269 0%, #512A53 100%);
+}
 
+.imgParlantes {
+  width: 40vw;
+}
+
+.imgParlantes img {
+  max-width: 100%;
+  height: auto;
+  padding: auto;
+}
 /* ========== FORMULARIO GENERICO ========== */
 
 .form {
-  padding-top: 60px;
-  background-color:#3A4047;
-  width: 500px;
+  padding-top: 30px;
+  background-color:#1E273D;
+  width: 400px;
   border-radius: 12px;
+}
+.titleForm{
+  display: flex;
+  flex-direction: column;
+  align-items:start;
+  border-bottom: 1px solid #41E55B;
+  margin-bottom: 20px;
+}
+.titleForm h1{
+  margin: 0px;
 }
 
 .form h1 {
@@ -132,6 +159,7 @@ main {
 .form-group label {
   display: block;
   margin-bottom: 5px;
+  color: #41E55B;
 }
 
 .form-group input {
@@ -155,6 +183,7 @@ main {
   border-radius: 12px;
   color: #A7A7AB;
   font-size: 18px;
+  font-family: inherit;
 }
 
 .form-group select {
@@ -224,9 +253,12 @@ main {
   padding-right: 4rem;
 }
 
-.share-buttons{
+.modal-buttons{
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 2rem;
+
 }
 .share-social-modal button {
   color: #ffffff;
@@ -238,11 +270,11 @@ main {
   font-size: 0.7rem;
   margin-top: 0.5rem;
 }
-.close-share{
+.close-modal{
   background-color: #495c79;
 }
 
-.close-share:hover{
+.close-modal:hover{
   background-color: #334050;
 }
 

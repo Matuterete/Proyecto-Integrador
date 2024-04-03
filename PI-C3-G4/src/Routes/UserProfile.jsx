@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import "../Components/Styles/UserProfile.css";
-import { useFavContext, FavProvider } from "../Components/FavContext.jsx";
+import { useFavContext } from "../Components/FavContext.jsx";
 import Card from "../Components/Card.jsx";
-import IconButton from '../Components/IconButton';
+import IconButton from "../Components/IconButton";
 import requestToAPI from "../services/requestToAPI";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+import ReactModal from "react-modal";
 
 const UserProfile = () => {
   const currentDate = new Date();
-
+  const [showRatingModal, setShowRatingModal] = useState(false);
   const prevFavoriteProducts = useRef([]);
   const { favoriteProducts, loading, fetchFavoriteProducts } = useFavContext();
   const [userData, setUserData] = useState(
@@ -16,7 +17,8 @@ const UserProfile = () => {
   );
   const [favoriteProductDetails, setFavoriteProductDetails] = useState([]);
   const [rentals, setRentals] = useState([]);
-  const [elementSelected, setElementSelected] = useState()
+  const [elementSelected, setElementSelected] = useState("favoritos");
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,7 +64,6 @@ const UserProfile = () => {
       }
     };
 
-    // Verificar si la lista de productos favoritos ha cambiado antes de hacer el fetch
     const isFavoriteProductsChanged =
       JSON.stringify(favoriteProducts) !==
       JSON.stringify(prevFavoriteProducts.current);
@@ -72,67 +73,132 @@ const UserProfile = () => {
     }
   }, [favoriteProducts]);
 
-  console.log(userData.user.id); // OK: ID 13
-  console.log(favoriteProducts); // Vacio
-  console.log(favoriteProductDetails); //Array vaci
-
   const stringToDate = (dateString) => {
-    return new Date(dateString);
+    const date = new Date(dateString);
+    date.setHours(date.getHours() + 3);
+    return date;
   };
 
   const handleCancelRental = (rentalId) => {
     Swal.fire({
-      title: '¿Estás seguro?',
-      text: `Una vez cancelada la reserva ${rentalId}, no podrás recuperar esta reserva`,
-      icon: 'warning',
+      title: "¿Estás seguro?",
+      text: `Una vez cancelada la reserva ${rentalId}, no podrás recuperarla.`,
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, cancelarla',
-      cancelButtonText: 'No cancelarla'
+      confirmButtonColor: "#459F53",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí cancelarla",
+      cancelButtonText: "No cancelarla",
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
-          '¡Eliminado!',
-          'No se ha implementado la funcionalidad de cancelar la reserva',
-          'success'
+          "¡Eliminado!",
+          "No se ha implementado la funcionalidad de cancelar la reserva",
+          "success"
         );
       }
     });
   };
 
-  const handleRateProduct = (productoId) => {
-    Swal.fire(
-      `Puntuar el producto ${productoId}!`,
-      'No se ha implementado la funcionalidad de puntuar el producto',
-      'success'
-    );
+  const handleRateProduct = (productId, dateEnd, productName) => {
+    setSelectedProduct({ productId, productName });
+    const endReservationDate = new Date(dateEnd);
+    if (currentDate < endReservationDate) {
+      Swal.fire({
+        title: "Aviso",
+        text: "No se puede calificar el producto hasta que se haya finalizado la reserva.",
+        icon: "warning",
+      });
+    } else {
+      setShowRatingModal(true);
+    }
   };
+
   const handleButton = (select) => {
-    setElementSelected(select)
-  }
+    setElementSelected(select);
+  };
+
+  const handleSubmitRating = async (event) => {
+    event.preventDefault();
+
+    const ratingValue = event.target.rating.value;
+    const reviewValue = event.target.review.value;
+
+    const ratingData = {
+      userId: userData.user.id,
+      productId: selectedProduct.productId,
+      rating: parseInt(ratingValue),
+      review: reviewValue,
+    };
+
+    try {
+      const response = await requestToAPI(
+        "users/rating/add",
+        "POST",
+        ratingData
+      );
+      console.log(response);
+      if (response.userId > 0) {
+        setShowRatingModal(false);
+        Swal.fire({
+          title: "¡Éxito!",
+          text: "La calificación se ha enviado correctamente. Muchas gracias",
+          icon: "success",
+        });
+      } 
+    } catch (error) {
+      console.error("Error al enviar la calificación:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Ocurrió un error al enviar la calificación. Por favor, inténtalo de nuevo más tarde.",
+        icon: "error",
+      });
+    }
+  };
 
   return (
     <div className="userprof img-background">
-
-      <div className='adminMenu'>
-        <h1 className='TitleAdminP'>Menú de Usuario</h1>
-        <div className='Menu'>
-          <div className='ButtonContainer'>
-
+      <div className="adminMenu">
+        <div className="Menu">
+          <div className="ButtonContainer">
             <>
-              <button className={elementSelected == 'favoritos' ? 'selected-item-border-green button button-sin-borde' : 'button button-sin-borde'} onClick={() => handleButton('favoritos')}>Favoritos</button>
-              <button className={elementSelected == 'reservas' ? 'selected-item-border-green button button-sin-borde' : 'button button-sin-borde'} onClick={() => handleButton('reservas')}>Reservas</button>
-              <button className={elementSelected == 'userData' ? 'selected-item-border-green button button-sin-borde' : 'button button-sin-borde'} onClick={() => handleButton('userData')}>Mis Datos</button>
-
+              <button
+                className={
+                  elementSelected == "favoritos"
+                    ? "selected-item-border-green button button-sin-borde"
+                    : "button button-sin-borde"
+                }
+                onClick={() => handleButton("favoritos")}
+              >
+                Favoritos
+              </button>
+              <button
+                className={
+                  elementSelected == "reservas"
+                    ? "selected-item-border-green button button-sin-borde"
+                    : "button button-sin-borde"
+                }
+                onClick={() => handleButton("reservas")}
+              >
+                Reservas
+              </button>
+              <button
+                className={
+                  elementSelected == "userData"
+                    ? "selected-item-border-green button button-sin-borde"
+                    : "button button-sin-borde"
+                }
+                onClick={() => handleButton("userData")}
+              >
+                Mis Datos
+              </button>
             </>
-
           </div>
         </div>
       </div>
 
       <div>
-        {elementSelected === 'favoritos' &&
+        {elementSelected === "favoritos" && (
           <div className="Container2">
             <div className="Box">
               <p className="cardTitle-2">Favoritos</p>
@@ -148,49 +214,124 @@ const UserProfile = () => {
                 )}
               </div>
             </div>
-          </div>}
+          </div>
+        )}
       </div>
 
       <div>
-        {elementSelected === 'reservas' &&
+        {elementSelected === "reservas" && (
           <div className="Container2">
             <div className="Box">
               <p className="cardTitle-2">Reservas</p>
 
-              <div className='body-product-list'>
-                <ul className='adminFeactures'>
+              <div className="body-product-list">
+                <ul className="adminFeactures">
                   {rentals.map((objeto, index) => (
-
-                    <div className='divLi' key={objeto.id}>
-
-                      <li className="list-item">
-                        <div className=''><p>ID{objeto.id}</p></div>
+                    <div className="divLi" key={objeto.id}>
+                      <li className="list-item user-profile">
+                        <div className="">
+                          <p>ID{objeto.id}</p>
+                        </div>
 
                         <p>{objeto.product.name}</p>
-                        <p>{objeto.dateStart} - {objeto.dateEnd} ({objeto.daysTotal} días)</p>
+                        <p>
+                          {objeto.dateStart} - {objeto.dateEnd} (
+                          {objeto.daysTotal} días)
+                        </p>
                         <p>${objeto.amount} USD</p>
 
-                        <div className='box-editar-eliminar'>
-                          {stringToDate(objeto.dateStart) < currentDate ? (
-                            <IconButton className='button buttonTerciary' onClick={() => handleRateProduct(objeto.product.id)} icon="star">Puntuar</IconButton>
-                          ) : (
-                            ""
-                          )}
-                          <IconButton className='button buttonSecundary' onClick={() => handleCancelRental(objeto.id)} icon="minus">Cancelar</IconButton>
+                        <div className="box-editar-eliminar">
+                          <IconButton
+                            className="button buttonTerciary"
+                            onClick={() =>
+                              handleRateProduct(
+                                objeto.product.id,
+                                objeto.dateEnd,
+                                objeto.product.name
+                              )
+                            }
+                            icon="star"
+                          >
+                            Votar
+                          </IconButton>
+                          <IconButton
+                            className="button buttonSecundary"
+                            onClick={() => handleCancelRental(objeto.id)}
+                            icon="minus"
+                          >
+                            Cancelar
+                          </IconButton>
                         </div>
                       </li>
                     </div>
                   ))}
                 </ul>
               </div>
-
-
             </div>
-          </div>}
+          </div>
+        )}
       </div>
 
+      <ReactModal
+        isOpen={showRatingModal}
+        style={{
+          overlay: { backgroundColor: "rgba(0, 0, 0, 0.75)" },
+          content: {
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "500px",
+            height: "450px",
+            backgroundColor: "#fafafa",
+            borderRadius: "1rem",
+            color: "#333",
+            display: "flex",
+            justifyContent: "center",
+          },
+        }}
+      >
+        <div className="rate-modal">
+          <h2>Califica {selectedProduct && selectedProduct.productName}</h2>
+          <form className="form form-group" onSubmit={handleSubmitRating}>
+            <label htmlFor="rating">Calificación:</label>
+            <input
+              type="number"
+              id="rating"
+              name="rating"
+              min="1"
+              max="5"
+              placeholder="Ingresa un valor de 1 a 5"
+              onInput={(e) => {
+                if (e.target.value > 5) {
+                  e.target.value = 5;
+                }
+              }}
+            />
+            <label htmlFor="review">Reseña:</label>
+            <textarea
+              id="review"
+              name="review"
+              rows="4"
+              cols="50"
+              placeholder="Si quieres, cuentanos que te pareció el producto."
+            ></textarea>
+            <div className="modal-buttons">
+              <button type="submit" className="button buttonTerciary buttonBig">
+                Enviar
+              </button>
+              <button
+                className="button buttonTerciary buttonBig close-modal"
+                onClick={() => setShowRatingModal(false)}
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      </ReactModal>
+
       <div>
-        {elementSelected === 'userData' &&
+        {elementSelected === "userData" && (
           <div>
             {userData && userData.user ? (
               <div className="user-card">
@@ -208,10 +349,9 @@ const UserProfile = () => {
             ) : (
               ""
             )}
-          </div>}
+          </div>
+        )}
       </div>
-
-
     </div>
   );
 };

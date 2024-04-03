@@ -5,63 +5,60 @@
   height: 100vh;
 }
 
-.calendar-card {
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+.rdrMonth, .rdrMonthAndYearWrapper{
+  background-color: #3a4047;
 }
-/* Estilos para el selector del año */
-.rdrYearPicker > select {
-  background-color: #122e4f;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
+
+.rdrDayNumber span {
+  color: white;
+}
+
+.rdrYearPicker > select, .rdrMonthPicker > select {
+  border: 1px solid #289e3b;
+  border-radius: 20px;
   padding: 15px 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100px;
   color: white;
 }
-.rdrMonthPicker > select {
-  background-color: #122e4f;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
-  padding: 15px 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100px;
-  text-transform: capitalize;
-  color: white;
+
+.rdrMonthPicker > select:hover, .rdrYearPicker > select:hover {
+  background-color: #3a4047;
+  transform: scale(1.1);
 }
-.rdrMonthPicker > select:hover {
-  background-color: rgb(58, 108, 183);
-}
-.rdrYearPicker > select:hover {
-  background-color: rgb(58, 108, 183);
-}
+
 
 .rdrMonthName {
   text-transform: capitalize;
-  color: #122e4f;
+  color: #D7DDE2;
   font-size: 1rem;
   font-weight: bold;
 }
 
 .rdrWeekDays > span {
   text-transform: capitalize;
-  color: #122e4f;
+  color: #D7DDE2;
   font-weight: bold;
 }
 
-.rdrDayDisabled {
-  cursor: not-allowed; /* Cambiar cursor al pasar sobre fechas deshabilitadas */
-  background-color: rgba(63, 125, 205, 0.164);
+
+.rdrDayDisabled{
+  cursor: not-allowed;
+  background-color: #2b3035;
   font-weight: bold;
 }
-.rdrDayDisabled > span {
-  font-weight: bold;
+
+
+.rdrMonthPicker select, .rdrYearPicker select {
+  background-color: #3a4047;
+  color: #289e3b;
 }
-.rdrMonthAndYearWrapper > button {
-  background-color: #afafaf;
+
+.rdrNextButton,.rdrPprevButton{
+  color: #289e3b; 
+  border-radius: 50%;  
 }
+
 .rdrMonthAndYearWrapper > button:hover {
   background-color: rgb(58, 108, 183);
 }
