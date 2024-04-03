@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../Components/Styles/Home.css";
-import FloatingSocialButtons from '../components/FloatingSocialButtons';
+import FloatingSocialButtons from '../Components/FloatingSocialButtons';
 
 
 
