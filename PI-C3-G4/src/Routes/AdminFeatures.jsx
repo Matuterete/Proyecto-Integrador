@@ -33,7 +33,6 @@ const AdminFeatures = () => {
 
                 setResponseData(await requestToAPI(url, method, data, headers))
 
-                console.log('llamado de api FEATURE')
             } catch (error) {
                 // Manejo de errores
                 console.error('Error fetching data:', error);
@@ -53,7 +52,6 @@ const AdminFeatures = () => {
 
                     setResponseDataCRUD(await requestToAPI(url, method, data, headers))
 
-                    console.log('llamado de api CRUD')
                 } catch (error) {
                     // Manejo de errores
                     console.error('Error fetching data:');
@@ -68,7 +66,7 @@ const AdminFeatures = () => {
     const handleInput = async (feature) => {
 
         Swal.fire({
-            title: 'Editar elemento',
+            title: 'Editar Caracteristica',
             input: 'text',
             inputPlaceholder: 'Nuevo nombre',
             showCancelButton: true,
@@ -91,7 +89,7 @@ const AdminFeatures = () => {
                 return new Promise((resolve) => {
                     // Simulando una petición asíncrona, puedes hacer la lógica de edición aquí
                     setTimeout(() => {
-                        console.log('Valor editado:', newValue);
+
                         resolve();
                     }, 1000);
                 });
@@ -159,6 +157,10 @@ const AdminFeatures = () => {
         setMostrarFormulario(!mostrarFormulario)
     }
 
+    const handleChangeCancel = () => {
+        setMostrarFormulario(false)
+    }
+
     /*========= DELETE FEATURE ==========*/
 
     const handleClickDelete = (key) => {
@@ -194,65 +196,67 @@ const AdminFeatures = () => {
 
     return (
         <>
-            {responseData ? (<div className='bodyFeatures'>
+            {responseData ? (
+                <div className='bodyFeatures img-background'>
 
-                <div className='titleFeatures'>
-                    <h2>Administrar caracteristicas</h2>
-                </div>
-                <div>
-                    <div className='addFeatureButton'>
-                        <IconButton className='button buttonPrimary buttonBig' onClick={toggleFormulario} icon="plus">Añadir Nueva</IconButton>
-                    </div>
-
-                    {mostrarFormulario && (
-                        <div className='addFeature'>
-                            <label>
-                                Nombre de la nueva Caracteristica:
-                                <input type="text" value={inputValue} onChange={handleChange} />
-                            </label>
-
-                            <p>seleccionar Imagen</p>
-                            <div className='selectImages'>
-                                {responseData.map((feature) => (
-                                    <button className='buttonImagefeature' key={feature.id} onClick={() => handleChangeImage(feature.url)}>
-                                        <img src={feature.url} alt={`Imagen ${feature.id}`} />
-                                    </button>
-                                ))}
-                            </div>
-
-                            {selectedImage &&
-                                <div className='selectImage'>
-                                    <p>Imagen Seleccionada:</p>
-                                    <button className='buttonImagefeature'>
-                                        <img src={selectedImage} />
-                                    </button>
-                                </div>
-                            }
-
-                            <button className='addFeatureButton button buttonSecundary' type="button" onClick={handleChangeSend}>Enviar</button>
+                    <div className='asdf'>
+                        <div className='space-between container-add-button'>
+                            <h2>Administrar de Caracteristicas</h2>
+                            <IconButton className='button buttonBlue buttonBig' onClick={toggleFormulario} icon="plus">Agregar Caracteristica</IconButton>
                         </div>
-                    )}
 
-                    <ul className='adminFeactures'>
-                        {responseData.map((objeto, index) => (
+                        {mostrarFormulario && (
+                            <div className='addFeature form'>
+                                <label>
+                                    Nombre de la nueva Caracteristica:
+                                    <input type="text" value={inputValue} onChange={handleChange} />
+                                </label>
 
-                            <div className='divLi' key={objeto.id}>
+                                <p>seleccionar Imagen</p>
+                                <div className='selectImages'>
+                                    {responseData.map((feature) => (
+                                        <button className='buttonImagefeature' key={feature.id} onClick={() => handleChangeImage(feature.url)}>
+                                            <img src={feature.url} alt={`Imagen ${feature.id}`} />
+                                        </button>
+                                    ))}
+                                </div>
 
-                                <li className="list-item">
-                                    <div className='divSVG'><img src={objeto.url} /></div>
-                                    <p>ID {objeto.id} - {objeto.title}</p>
-
-                                    <div>
-                                        {/* {<IconButton className='button buttonPrimary' icon="eye">Consultar</IconButton>} */}
-                                        <IconButton className='button buttonPrimary' onClick={() => handleInput(objeto)} icon="pencil">Editar</IconButton>
-                                        <IconButton className='button buttonTerciary' onClick={() => handleClickDelete(objeto.id)} icon="minus">Eliminar</IconButton>
+                                {selectedImage &&
+                                    <div className='selectImage'>
+                                        <p>Imagen Seleccionada:</p>
+                                        <button className='buttonImagefeature'>
+                                            <img src={selectedImage} />
+                                        </button>
                                     </div>
-                                </li>
+                                }
+
+                                <div className='buttonFormBoxFeature'>
+                                    <button className='addFeatureButton button buttonBlue buttonBig' type="button" onClick={handleChangeSend}>Confirmar</button>
+                                    <button className='button buttonBig buttonSecundary' onClick={handleChangeCancel}>Cancelar</button>
+                                </div>
+
                             </div>
-                        ))}
-                    </ul>
-                </div>
-            </div>)
+                        )}
+
+                        <ul className='adminFeactures'>
+                            {responseData.map((objeto, index) => (
+
+                                <div className='divLi' key={objeto.id}>
+
+                                    <li className="list-item">
+                                        <div className='divSVG'><img src={objeto.url} /></div>
+                                        <p>ID {objeto.id} - {objeto.title}</p>
+
+                                        <div className='box-editar-eliminar'>
+                                            <IconButton className='button buttonTerciary ' onClick={() => handleInput(objeto)} icon="pencil">Editar</IconButton>
+                                            <IconButton className='button buttonSecundary ' onClick={() => handleClickDelete(objeto.id)} icon="minus">Eliminar</IconButton>
+                                        </div>
+                                    </li>
+                                </div>
+                            ))}
+                        </ul>
+                    </div>
+                </div>)
                 :
                 (<div className="loader-container">
                     <div className="loader"></div>

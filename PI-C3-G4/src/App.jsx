@@ -22,6 +22,7 @@ import "./App.css";
 import ProtectedRoute from "./Utils/ProtectedRoute";
 import { useEffect, useState } from "react";
 import UserProfile from "./Routes/UserProfile";
+import ReactModal from 'react-modal';
 
 function App() {
   const { state } = useContext();
@@ -29,11 +30,15 @@ function App() {
   const [sessionData, setSessionData] = useState(
     sessionStorage.getItem("userData") || ""
   );
+  
+  useEffect(() => {
+    ReactModal.setAppElement('#root');
+  }, []);
 
   return (
     <BrowserRouter>
       <FavProvider>
-        <div className={`${state.theme} pagina`}>
+        <div className={`pagina`}>
           <Navbar />
 
           <Routes>

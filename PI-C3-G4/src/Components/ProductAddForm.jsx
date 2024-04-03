@@ -7,7 +7,6 @@ function ProductAddForm({ onAdd, onCancel }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  // const [isActive, setIsActive] = useState(true);
   const [stock, setStock] = useState(1);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -46,10 +45,6 @@ function ProductAddForm({ onAdd, onCancel }) {
   const handlePriceChange = (e) => {
     setPrice(e.target.value);
   };
-
-  // const handleIsActiveChange = (e) => {
-  //   setIsActive(e.target.checked);
-  // };
 
   const handleStockChange = (e) => {
     setStock(e.target.value);
@@ -183,7 +178,6 @@ function ProductAddForm({ onAdd, onCancel }) {
         name,
         description,
         price,
-        // isActive,
         stock,
         category: {
           id: selectedCategory,
@@ -256,7 +250,6 @@ function ProductAddForm({ onAdd, onCancel }) {
       setName("");
       setDescription("");
       setPrice("");
-      // setIsActive(true);
       setStock(1);
       setSelectedCategory("");
       setPrimaryImage(null);
@@ -319,7 +312,7 @@ function ProductAddForm({ onAdd, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="Form container">
+    <form onSubmit={handleSubmit} className="form container">
       <h2>Agregar nuevo producto</h2>
       <div className="form-group">
         <label>
@@ -389,10 +382,9 @@ function ProductAddForm({ onAdd, onCancel }) {
         </label>
       </div>
       <div>
-        <p>Imágenes (1MB Max)</p>
         <div className="form-group flex">
           <label>
-            Portada del Producto:
+            Imagen Principal (Obligatoria):
             <input
               className="image-load"
               type="file"
@@ -411,7 +403,7 @@ function ProductAddForm({ onAdd, onCancel }) {
         </div>
         <div className="form-group flex">
           <label>
-            Adicionales:
+            Imagenes Adicionales (Opcionales):
             <input
               className="image-load"
               type="file"
@@ -469,18 +461,19 @@ function ProductAddForm({ onAdd, onCancel }) {
             )}
           </div>
         ))}
-        <button className="button" type="button" onClick={handleAddFeature}>
+        <button className="button buttonBlue" type="button" onClick={handleAddFeature}>
           Agregar Característica
         </button>
       </div>
-      <div className="form-group buttonCenter">
-        <button type="submit" className="button buttonPrimary buttonBig">
+
+      <div className="buttonFormBox">
+        <button type="submit" className="button buttonBlue buttonBig">
           Agregar Producto
         </button>
         &nbsp;&nbsp;&nbsp;
         <button
           type="button"
-          className="button buttonTerciary buttonBig"
+          className="button buttonSecundary buttonBig"
           onClick={() => {
             onCancel();
             window.location.reload();

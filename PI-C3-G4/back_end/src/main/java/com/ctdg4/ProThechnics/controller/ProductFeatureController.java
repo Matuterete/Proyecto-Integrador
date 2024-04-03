@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/products_features")
 @CrossOrigin(origins = "*")
+@Hidden
 public class ProductFeatureController {
 
     private ProductFeatureService productFeatureService;

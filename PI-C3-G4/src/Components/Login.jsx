@@ -1,8 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import requestToAPI from "../services/requestToAPI";
+
 
 function Login() {
   const [usuario, setUsuario] = useState({
@@ -34,9 +34,9 @@ function Login() {
       const redirectPath = sessionStorage.getItem("redirectPath");
       if (redirectPath) {
         navigate(redirectPath);
-        sessionStorage.removeItem("redirectPath"); 
+        sessionStorage.removeItem("redirectPath");
       } else {
-        
+
         if (
           response.user.role === "ADMIN" ||
           response.user.role === "SUPERADMIN"
@@ -48,6 +48,7 @@ function Login() {
       }
 
       window.location.reload();
+
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -60,9 +61,18 @@ function Login() {
   };
 
   return (
-    <div className="form">
-      <h1>Iniciar Sesión</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="bodyLogUser bodyA">
+
+      <div className="imgParlantes">
+        <img src="\src\assets\Parlantes-fondo.png" alt="" />
+      </div>
+
+      <form onSubmit={handleSubmit} className='form'>
+
+        <div className="titleForm">
+          <h2>Bienvenido a ProThechnics!</h2>
+        </div>
+
         <div className="form-group">
           <label>
             Correo electrónico:
@@ -85,10 +95,8 @@ function Login() {
             />
           </label>
         </div>
-        <div className="form-group buttonCenter">
-          <button type="submit" className="button buttonPrimary buttonBig">
-            Ingresar
-          </button>
+        <div className="buttonFormBox">
+          <button type="submit" className='button buttonTerciary buttonBig'>Ingresar</button>
         </div>
       </form>
     </div>

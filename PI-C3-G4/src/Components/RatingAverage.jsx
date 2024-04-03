@@ -1,55 +1,106 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import StarRatings from "react-star-ratings";
+import "../Components/Styles/RatingAverage.css";
+import requestToAPI from "../services/requestToAPI";
 
-const RatingAverage = ({ productId }) => {
-  const [receivedRatings, setReceivedRatings] = useState([]);
+const RatingAverage = ({ productId, fetchDetails }) => {
+  const [averageRating, setAverageRating] = useState(0);
+  const [starSize, setStarSize] = useState("1.2rem"); // Tamaño inicial de las estrellas
+  const [details, setDetails] = useState([]);
+  const [totalRatings, setTotalRatings] = useState(0);
+  const offsetHours = 3;
 
   useEffect(() => {
-    // Cargar los comentarios del localStorage al montar el componente
-    const storedRatings = JSON.parse(localStorage.getItem(`product_${productId}_ratings`)) || [];
-    setReceivedRatings(storedRatings);
-  }, [productId]);
+    const fetchProductRating = async () => {
+      try {
+        const response = await requestToAPI(
+          `users/ratings/find/product/${productId}`
+        );
+        if (Array.isArray(response) && response.length > 0) {
+          const ratings = response.map((rating) => rating.rating);
+          const average =
+            ratings.reduce((acc, curr) => acc + curr, 0) / ratings.length;
+          setAverageRating(average);
+          setTotalRatings(response.length);
 
-  const calculateAverageRating = () => {
-    if (receivedRatings.length === 0) return 0;
-    const total = receivedRatings.reduce((acc, curr) => acc + curr.rating, 0);
-    return total / receivedRatings.length;
-  };
+          if (fetchDetails) {
+            setDetails(response);
+          }
+        } else {
+          console.log(
+            `No se encontraron calificaciones para el producto con ID: ${productId}`
+          );
+          setTotalRatings(0);
+        }
+      } catch (error) {
+        console.error("Error al obtener la calificación del producto:", error);
+      }
+    };
 
-  const renderStarRating = (rating) => {
-    const fullStars = Math.floor(rating);
-    const remainder = rating % 1;
-    let halfStar = false;
-  
-    // Consideramos una estrella a medio llenar si la parte decimal está entre 0.25 y 0.75, o exactamente en 0.5
-    if (remainder >= 0.25 && remainder <= 0.75) {
-      halfStar = true;
-    }
-  
-    const stars = [];
-    for (let i = 0; i < fullStars; i++) {
-      stars.push("★");
-    }
-    if (halfStar) {
-      // Usamos el carácter Unicode para representar una estrella a medio llenar
-      stars.push("✮");
-    }
-    const emptyStars = 5 - stars.length;
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push("☆");
-    }
-  
-    return stars.join("");
-  };
+    fetchProductRating();
+  }, [productId, fetchDetails]);
+
+  // Función para actualizar el tamaño de las estrellas en respuesta al cambio de tamaño de la pantalla
+  useEffect(() => {
+    const handleResize = () => {
+      // Aquí puedes definir tu lógica para determinar el tamaño de las estrellas según el ancho de la pantalla
+      if (window.innerWidth < 426) {
+        setStarSize("0.8rem");
+      } else {
+        setStarSize("1.2rem");
+      }
+    };
+
+    handleResize(); // Llamada inicial
+    window.addEventListener("resize", handleResize); // Escucha los cambios de tamaño de la pantalla
+
+    return () => {
+      window.removeEventListener("resize", handleResize); // Limpia el evento al desmontar el componente
+    };
+  }, []);
 
   return (
-    <div>
-      <div>
-        <span style={{ fontSize: '24px' }}>
-        {calculateAverageRating().toFixed(1)} {renderStarRating(calculateAverageRating())}
+    <div className="rating-average-container">
+
+      {fetchDetails ? (
+        <div className="rating-details">
+          {details.map((detail, index) => (
+            <div key={index} className={`rating-detail-${index}`}>
+              <p>
+                {detail.userName} {detail.userLastName}
+              </p>
+              <p>
+                {detail.rating} - {detail.review}
+              </p>
+              <p>{formatDate(detail.date)}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <span>
+          {averageRating.toFixed(1)}
+          <StarRatings
+            rating={averageRating}
+            starRatedColor="greenyellow"
+            starEmptyColor="#194F32"
+            numberOfStars={5}
+            starDimension={starSize}
+            starSpacing="0.125rem"
+          />
+          <p className="ratings-amount">({totalRatings})</p>
         </span>
-      </div>
+      )}
+
     </div>
   );
 };
 
+
+const formatDate = (dateString) => {
+  const offsetHours = 3;
+  const adjustedDate = new Date(new Date(dateString).getTime() + offsetHours * 60 * 60 * 1000);
+  return adjustedDate.toLocaleDateString('es-ES', { day: '2-digit', month: 'long' });
+}
+
 export default RatingAverage;
+

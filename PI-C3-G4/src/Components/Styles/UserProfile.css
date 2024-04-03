@@ -1,14 +1,22 @@
-.bodyUserProfile {
+.userprof {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  padding-bottom: 100px;
+  min-height:73vh;
 }
+
 .user-card {
-  border: 1px solid #ccc;
   border-radius: 8px;
   padding: 1rem;
   display: flex;
-  background-color: #f9f7f7;
-  margin: 0rem 3.4rem 2rem 0.6rem;
+  align-items: center;
+  background-color: #4073AF;
+  width: 100%;
+}
+.favorite-card-box{
+  width: 70vw;
 }
 
 .avatar {
@@ -30,12 +38,12 @@
   margin: 4px 0;
 }
 
-.userprof {
+.rate-modal{
   display: flex;
   flex-direction: column;
-  margin: auto;
-  width: 60%;
-  margin-bottom: 5rem;
-  padding-top: 60px;
+  align-items: center;
 }
 
+.user-profile{
+  width: 1000px !important;
+}

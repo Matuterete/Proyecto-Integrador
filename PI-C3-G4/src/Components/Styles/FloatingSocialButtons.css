@@ -1,0 +1,23 @@
+.floating-social-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2; /* Asegúrate de que esté por encima de otros elementos */
+  }
+  
+  .floating-social-buttons button {
+    width: 60px; /* Ajusta el tamaño del botón según sea necesario */
+    height: 60px;
+    border-radius: 50%;
+    margin: 5px;
+    border: none;
+    background-color: #25D366; /* Color de fondo de WhatsApp */
+    color: #fff; /* Color del ícono de WhatsApp */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 24px; /* Tamaño del ícono de WhatsApp */
+  }
+  
+  .floating-social-buttons button:hover {
+    background-color: #128C7E; /* Color de fondo de WhatsApp al pasar el cursor */
+  }

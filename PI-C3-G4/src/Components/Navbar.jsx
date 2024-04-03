@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react";
-import Sun from "../assets/Sun.svg";
-import Moon from "../assets/Moon.svg";
-import Logo from "../assets/Logo.png";
-import Usuario from "../assets/usuario.svg";
+import { useEffect, useState } from "react";
+import Logo from "../assets/Logo-2.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "../Utils/Context.jsx";
-import { TOGGLE_THEME } from "../Reducers/Reducer.jsx";
 import "./Styles/Navbar.css";
 import Swal from "sweetalert2";
 
@@ -14,9 +10,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  const handleTheme = () => {
-    dispatch({ type: TOGGLE_THEME });
-  };
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -69,68 +63,123 @@ const Navbar = () => {
     window.location.reload();
   };
 
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+
+
+  // Función para mostrar el SweetAlert2
+  const showNotAvailableOnMobileAlert = () => {
+    Swal.fire({
+      title: 'Página no disponible en dispositivos móviles',
+      text: 'Lo siento, esta página no está disponible en dispositivos móviles.',
+      icon: 'error',
+      confirmButtonText: 'Entendido'
+    });
+  };
   return (
     <section className="header">
       <nav className="navbar">
-        <div className="navbar-logo">
-          <Link onClick={handleReload}>
-            <img src={Logo} alt="Logo"></img>
-          </Link>
-        </div>
 
-        <nav id="mobile">
-          <button id="menu-toggle" onClick={toggleMobileMenu}>
-            ☰
-          </button>
-          <div id="mobile-menu" className={isMobileMenuOpen ? "active" : ""}>
-            <div className="mobile-menu-items">
-              <Link to="/login">Iniciar sesión</Link>
-              <Link to="/registroUsuario">Crear Cuenta</Link>
+        <Link className="navbar-logo" onClick={handleReload}>
+          <img src={Logo} alt="Logo"></img>
+        </Link>
+
+        <div>
+          <div className="menuMobile">
+
+            <button className="menuHamburguesa" onClick={toggleMenu}>☰</button>
+
+            <div className={`menu ${isOpen ? 'open' : ''}`}>
+              <button className="buttonCerrarMenu" onClick={toggleMenu}>Cerrar menu</button>
+
+              <div>
+                {sessionData ? (
+                  <Link to="/userprofile" onClick={toggleMenu}>
+                    <p>Mi perfil</p>
+                  </Link>
+                ) : null}
+
+                {sessionData && (sessionData.user.role === "ADMIN" || sessionData.user.role === "SUPERADMIN") && (
+                  <Link onClick={() => {
+                    showNotAvailableOnMobileAlert();
+                  }}>
+                    <p>Admin Page</p>
+                  </Link>
+                )}
+
+                {sessionData ? (
+                  <p onClick={()=>{handleLogout(); }}>
+                    Cerrar Sesion
+                  </p>
+                ) : (
+                  <div className="">
+
+                    <Link onClick={toggleMenu} to="/registroUsuario" className="button button-sin-borde">
+                      Crear Cuenta
+                    </Link>
+                    <Link onClick={toggleMenu} to="/login" className="button button-sin-borde">
+                      Iniciar Sesión
+                    </Link>
+
+                  </div>
+                )}
+              </div>
+
             </div>
           </div>
-        </nav>
 
-        <div className="buttons">
-          {sessionData ? (
-            <div className="user">
-              <div className="name">
-                <span>{sessionData.user.name}</span>
-                <span>{sessionData.user.lastName}</span>
+          <div>
+            {sessionData ? (
+              <div className="user">
+                <div className="name">
+                  <span>{sessionData.user.name} {sessionData.user.lastName}</span>
+                </div>
+
+                <div className="dropdown">
+
+                  <div className="dropbtn">
+                    <div className="user-logo-container">
+                      <button className="user-logo">{userLogo}</button>
+                      <img src="\src\assets\FlechaAbajo.png" alt="" />
+                    </div>
+                  </div>
+
+                  <div className="dropdown-content">
+                    <Link to="/userprofile">
+                      <p>Mi perfil</p>
+                    </Link>
+
+                    {sessionData.user.role === "ADMIN" ||
+                      sessionData.user.role === "SUPERADMIN" ? (
+                      <Link to="/administracion">
+                        <p>Admin Page</p>
+                      </Link>
+                    ) : ("")}
+
+                    <a onClick={handleLogout}>
+                      Cerrar Sesion
+                    </a>
+                  </div>
+                </div>
               </div>
-              <Link to="/userprofile">
-                <button className="button user-logo">{userLogo}</button>
-              </Link>
-              {sessionData.user.role === "ADMIN" ||
-              sessionData.user.role === "SUPERADMIN" ? (
-                <Link to="/administracion">
-                  <button className="button buttonTerciary">Admin Page</button>
+            ) : (
+              <div className="button_login_registro_desktop">
+
+                <Link to="/registroUsuario" className="button button-sin-borde">
+                  Crear Cuenta
                 </Link>
-              ) : (
-                ""
-              )}
+                <Link to="/login" className="button buttonPrimary">
+                  Iniciar Sesión
+                </Link>
 
-              <button className="button buttonPrimary" onClick={handleLogout}>
-                Cerrar Sesion
-              </button>
-            </div>
-          ) : (
-            <div>
-              <Link to="/login" className="button buttonPrimary">
-                Iniciar Sesión
-              </Link>
-              <Link to="/registroUsuario" className="button buttonTerciary">
-                Crear Cuenta
-              </Link>
-            </div>
-          )}
-
-          <button className="button buttonSecundary" onClick={handleTheme}>
-            <img
-              src={state.theme === "light" ? Moon : Sun}
-              width="20px"
-              alt="Theme"
-            ></img>
-          </button>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
     </section>

@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-
 public class RentalDTO {
     private Long id;
     private Long userId;

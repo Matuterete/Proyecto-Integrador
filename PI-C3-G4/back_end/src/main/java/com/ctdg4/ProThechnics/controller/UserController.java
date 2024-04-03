@@ -4,6 +4,7 @@ import com.ctdg4.ProThechnics.dto.UserDTO;
 import com.ctdg4.ProThechnics.dto.UserFullDTO;
 import com.ctdg4.ProThechnics.entity.User;
 import com.ctdg4.ProThechnics.entity.UserRating;
+import com.ctdg4.ProThechnics.entity.UserRatingProjection;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.service.UserRoleService;
 import com.ctdg4.ProThechnics.service.UserService;
@@ -171,12 +172,12 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User ratings not found")
     })
     @GetMapping("/ratings/find/product/{productId}")
-    public ResponseEntity<List<UserRating>> findRatingsByProductId(@PathVariable Long productId) throws ResourceNotFoundException {
-        List<UserRating> productRatings = userService.findRatingsByProductId(productId);
+    public ResponseEntity<?> findRatingsByProductId(@PathVariable Long productId) {
+        List<UserRatingProjection> productRatings = userService.findRatingsByProductId(productId);
         if (!productRatings.isEmpty()) {
             return ResponseEntity.ok(productRatings);
         } else {
-            throw new ResourceNotFoundException("User ratings not found for product with ID: " + productId);
+            return ResponseEntity.ok("No se encontraron calificaciones para el producto con ID: " + productId);
         }
     }
 

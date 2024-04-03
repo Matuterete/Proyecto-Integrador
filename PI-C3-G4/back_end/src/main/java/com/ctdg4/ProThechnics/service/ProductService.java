@@ -125,7 +125,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    private ProductDTO mapToDTOOnlyWithPrimaryImages(Product product) {
+    ProductDTO mapToDTOOnlyWithPrimaryImages(Product product) {
 
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
         CategoryDTO categoryDTO = mapToDTO(product.getCategory());

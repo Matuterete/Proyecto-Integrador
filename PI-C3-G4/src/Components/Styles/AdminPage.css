@@ -1,43 +1,46 @@
 .bodyPage {
-    display: flex;
-    flex-direction: column;
-    padding-top: 60px;
-    min-height: 36.4vw;
-  }
-  
-  .adminMenu {
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-top: 150px;
-    flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+  padding-top: 60px;
+  min-height: 83vh;
+  padding-bottom: 50px;
 }
-  
-  .TitleAdminP {
-    display: block;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .Menu {
-    margin-top: 20px;
-    border-top: 1px solid #ccc;
-    padding-top: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .Menu h2 {
-    font-size: 1.5rem;
-  }
-  
-  .ButtonContainer {
-    margin-top: 10px;
-    display: flex;
-    align-self: center;
-    gap: 2rem;
-  }
 
-  .Button:last-child {
-    margin-right: 0;
-  }
+.adminMenu {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.TitleAdminP {
+  display: block;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.Menu {
+  margin-top: 20px;
+  padding-top: 20px;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #3A4047;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.Menu h2 {
+  font-size: 1.5rem;
+}
+
+.ButtonContainer {
+  margin-top: 10px;
+  display: flex;
+  align-self: center;
+  gap: 2rem;
+}
+
+.Button:last-child {
+  margin-right: 0;
+}

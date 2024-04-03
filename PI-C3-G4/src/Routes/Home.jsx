@@ -12,6 +12,9 @@ import Swal from "sweetalert2";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../Components/Styles/Home.css";
+import FloatingSocialButtons from '../Components/FloatingSocialButtons';
+
+
 
 const Home = () => {
   const [categorias, setCategorias] = useState([]);
@@ -46,11 +49,44 @@ const Home = () => {
 
   const [sliderSettings, setSliderSettings] = useState({
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    draggable: true,
+    focusOnSelect: false,
   });
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setSliderSettings({
+          ...sliderSettings,
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        });
+      } else if (window.innerWidth < 400) {
+        setSliderSettings({
+          ...sliderSettings,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        });
+      } else {
+        setSliderSettings({
+          ...sliderSettings,
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        });
+      }
+    };
+
+    // Agregar el evento de cambio de tamaño de la ventana
+    window.addEventListener('resize', handleResize);
+
+    // Limpiar el efecto cuando el componente se desmonte
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -116,12 +152,19 @@ const Home = () => {
     }
   };
 
-  const handleProductoClick = (product) => {
+  const handleProductoClick = (product, e) => {
+    if (
+      e.target.classList.contains("favorite-button") ||
+      e.target.classList.contains("share-button")
+    ) {
+      e.stopPropagation();
+      return;
+    }
     navigate(`/detail/${product.id}`, { state: { product } });
   };
 
   const handleProductoSelect = async (product) => {
-    setProductId(product.id); 
+    setProductId(product.id);
     setSelectedProduct(product);
     try {
       const url = `rentals/find/product/${product.id}`;
@@ -205,9 +248,9 @@ const Home = () => {
   };
 
   return (
-    <div className="body">
+    <div className="body img-background">
       <div className="Search-Calendar">
-        <h1>¿Querés consultar la DISPONIBILIDAD de un producto?</h1>
+        <h1>¿Querés consultar la disponibilidad de un producto?</h1>
         <p>
           Seleccioná el producto que estés buscando, elegí una fecha de inicio y
           devolución del producto y realizá tu búsqueda
@@ -231,7 +274,7 @@ const Home = () => {
               }}
               onSelectDates={handleSelectDates}
               onSelectProduct={handleProductoSelect}
-              productId={productId} 
+              productId={productId}
             />
           </div>
         )}
@@ -248,7 +291,6 @@ const Home = () => {
       </div>
 
       <div className="categories">
-        <h1>Categorías</h1>
         <div className="categories-container">
           {categorias.map((category) => (
             <div
@@ -257,14 +299,26 @@ const Home = () => {
               onClick={() => handleCategoriaClick(category.id, category.title)}
             >
               <img src={category.url} alt={category.title} />
-              <p>{category.title}</p>
+              <p
+                className={
+                  categoriaSeleccionada == category.title
+                    ? "selected-item-border-green"
+                    : ""
+                }
+              >
+                {category.title}
+              </p>
             </div>
           ))}
         </div>
       </div>
+
       {mostrarProductosPorCategoria && (
         <div className="productos-por-categoria">
-          <h1>{categoriaSeleccionada} ({productosPorCategoria.length} productos encontrados)</h1>
+          <h2>
+            {categoriaSeleccionada} ({productosPorCategoria.length} productos
+            encontrados)
+          </h2>
           <Slider {...sliderSettings}>
             {productosPorCategoria.map((producto) => {
               console.log("Productos por categoría:", productosPorCategoria);
@@ -275,10 +329,13 @@ const Home = () => {
                     onClick={() => handleProductoClick(producto)}
                   >
                     <div className="card-wrapper">
-                      <Card product={producto} userData={userData} />
+                      <Card
+                        product={producto}
+                        userData={userData}
+                        stopPropagation={true}
+                      />
                     </div>
                   </div>
-                  
                 </div>
               );
             })}
@@ -301,6 +358,10 @@ const Home = () => {
               ))
             )}
           </div>
+
+          <div>     
+      <FloatingSocialButtons />
+    </div>
           <Pagination
             productsPerPage={productsPerPage}
             totalProducts={productosRecomendados.length}

@@ -6,6 +6,7 @@ import Pagination from '../Components/Pagination';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import "../Components/Styles/AdminUsers.css";
+import requestToAPI from "../services/requestToAPI";
 
 function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -14,23 +15,19 @@ function AdminUsers() {
   const [showUserList, setShowUserList] = useState(true);
   const [showUserAddForm, setShowUserAddForm] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
+
   // const [usuarioLogueado] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
 
   let navigate = useNavigate();
 
   useEffect(() => {
-    // if (usuarioLogueado) {
-    axios.get('http://prothechnics.us.to:8080/api/users/find/all')
+    requestToAPI('users/find/all', 'GET')
       .then(response => {
-        setUsers(response.data);
+        setUsers(response);
       })
       .catch(error => {
         console.error(error);
       });
-    // }
-    // else {
-    //   navigate("/home");
-    // }
   }, []);
 
   const indexOfLastUser = currentPage * usersPerPage;
@@ -79,35 +76,34 @@ function AdminUsers() {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        // Aquí puedes realizar la acción de eliminación
-        axios.delete(`http://prothechnics.us.to:8080/api/users/delete/id/${userId}`)
-        .then(() => {
-          setUsers(users.filter(user => user.id !== userId));
-          Swal.fire(
-            '¡Eliminado!',
-            'El elemento ha sido eliminado.',
-            'success'
-          );
-        })
-        .catch(error => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error inesperado',
-            text: 'Hubo un error al intentar eliminar el usuario',
-            showConfirmButton: false,
-            timer: 2000 // Cerrar automáticamente después de 2 segundos
+        requestToAPI(`users/delete/id/${userId}`, 'DELETE')
+          .then(() => {
+            setUsers(users.filter(user => user.id !== userId));
+            Swal.fire(
+              '¡Eliminado!',
+              'El elemento ha sido eliminado.',
+              'success'
+            );
+          })
+          .catch(error => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error inesperado',
+              text: 'Hubo un error al intentar eliminar el usuario',
+              showConfirmButton: false,
+              timer: 2000
+            });
           });
-          console.error(error);
-        });
       }
     });
   };
-
+  
   return (
-    <div>
-      <h2 className='container-title'>Administrar Usuarios</h2>
+    <div className='img-background'>
+      
       {showUserList && (
         <div>
+          
           <UserList
             users={currentUsers}
             onEdit={handleEditUser}
