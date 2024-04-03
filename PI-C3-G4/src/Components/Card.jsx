@@ -75,7 +75,7 @@ const Card = ({ product, userData }) => {
         </div>
         <div className="social">
           <div>
-            <RatingAverage productId={product.id} />
+            <RatingAverage productId={product.id} fetchDetails={false}/>
           </div>
           <div className="favAndShare">
             <button onClick={handleLikeClick} className="mobile-fav">

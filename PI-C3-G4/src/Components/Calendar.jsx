@@ -52,7 +52,6 @@ function Calendar({ selectedDates, onSelectDates, productId }) {
       }
     });
     setFechasOcupadas(disabledDates);
-    console.log(disabledDates);
   }, [reservations]);
 
   const handleSelect = (ranges) => {
@@ -82,9 +81,9 @@ function Calendar({ selectedDates, onSelectDates, productId }) {
             },
           ]}
           onChange={handleSelect}
-          rangeColors={["#122e4f"]}
+          rangeColors={["#289e3b"]}
           disabledDates={fechasOcupadas}
-          showDateDisplay={true}
+          showDateDisplay={false}
           months={monthsToShow}
           direction="horizontal"
           locale={es}

@@ -4,6 +4,7 @@ import com.ctdg4.ProThechnics.dto.UserDTO;
 import com.ctdg4.ProThechnics.dto.UserFullDTO;
 import com.ctdg4.ProThechnics.entity.User;
 import com.ctdg4.ProThechnics.entity.UserRating;
+import com.ctdg4.ProThechnics.entity.UserRatingProjection;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.service.UserRoleService;
 import com.ctdg4.ProThechnics.service.UserService;
@@ -172,7 +173,7 @@ public class UserController {
     })
     @GetMapping("/ratings/find/product/{productId}")
     public ResponseEntity<?> findRatingsByProductId(@PathVariable Long productId) {
-        List<UserRating> productRatings = userService.findRatingsByProductId(productId);
+        List<UserRatingProjection> productRatings = userService.findRatingsByProductId(productId);
         if (!productRatings.isEmpty()) {
             return ResponseEntity.ok(productRatings);
         } else {

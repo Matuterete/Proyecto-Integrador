@@ -3,10 +3,7 @@ package com.ctdg4.ProThechnics.service;
 import com.ctdg4.ProThechnics.dto.UserDTO;
 import com.ctdg4.ProThechnics.dto.UserFavDTO;
 import com.ctdg4.ProThechnics.dto.UserFullDTO;
-import com.ctdg4.ProThechnics.entity.Role;
-import com.ctdg4.ProThechnics.entity.Product;
-import com.ctdg4.ProThechnics.entity.User;
-import com.ctdg4.ProThechnics.entity.UserRating;
+import com.ctdg4.ProThechnics.entity.*;
 import com.ctdg4.ProThechnics.exception.ResourceNotFoundException;
 import com.ctdg4.ProThechnics.repository.*;
 import jakarta.transaction.Transactional;
@@ -84,8 +81,8 @@ public class UserService {
         return userRatingRepository.findByUserId(userId);
     }
 
-    public List<UserRating> findRatingsByProductId(Long productId) {
-        return userRatingRepository.findByProductId(productId);
+    public List<UserRatingProjection> findRatingsByProductId(Long productId) {
+        return userRatingRepository.findCustomProjectionByProductId(productId);
     }
 
     public UserRating addUserRating(UserRating userRating) throws ResourceNotFoundException {
