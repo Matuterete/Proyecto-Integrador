@@ -97,7 +97,7 @@
   color: #3683d7;
 }
 
-.cardGrid-2 {
+/* .cardGrid-2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 3rem;
@@ -108,6 +108,10 @@
   margin-left: 1rem;
   font-size: 1.5rem;
   font-weight: bolder;
+} */
+
+.mobile-fav {
+  display: none;
 }
 
 @keyframes heartBeat {
@@ -123,9 +127,7 @@
     transform: scale(1);
   }
 }
-.mobile-fav {
-  display: none;
-}
+
 @media (max-width: 425px) {
   .fav-button {
     display: none;
@@ -135,8 +137,9 @@
     transform: scale(1);
     box-shadow: none;
   }
+
   .name {
-    font-size: 0.6rem;
+    font-size: 0.6em;
     padding: 0;
     margin: 0;
   }
@@ -177,10 +180,12 @@
     background-color: unset;
     font-size: 0.8em;
   }
+
   .favAndShare {
     display: flex;
     align-items: center;
   }
+
   .h2card {
     padding: 0;
   }

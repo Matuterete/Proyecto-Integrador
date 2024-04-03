@@ -1,4 +1,18 @@
+/* ========== traido de card css ========== */
+.cardGrid-2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 3rem;
+}
 
+.cardTitle-2 {
+  margin-top: 0;
+  margin-left: 1rem;
+  font-size: 1.5rem;
+  font-weight: bolder;
+}
+
+/* ========== home ========== */
 .body {
   padding-top: 10vh;
   padding-bottom: 50px;
