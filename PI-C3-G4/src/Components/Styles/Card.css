@@ -1,11 +1,11 @@
 .card {
-  background-color: #272b32;
-  border-radius: 8px;
-  padding: 0;
-  margin: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  color: white;
+  background-color: #272b32 !important;
+  border-radius: 8px !important;
+  padding: 0 !important;
+  margin: 0.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  color: white !important;
 }
 
 .name-card {
