@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// import "../Components/Styles/Card.css";
+import "../Components/Styles/Card.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useFavContext } from "./FavContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
