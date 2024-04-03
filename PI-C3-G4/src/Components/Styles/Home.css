@@ -1,5 +1,5 @@
  /* ========== CARD ========== */
-.card {
+/* .card {
   background-color: #272b32;
   border-radius: 8px;
   padding: 0;
@@ -29,25 +29,17 @@
 
 .card-img {
   width: 100%;
-  /* Ancho deseado para el contenedor */
   height: 0px;
-  /* Inicializamos la altura en 0 */
   padding-top: 100%;
-  /* La altura será igual al 100% del ancho */
   position: relative;
-  /* Para que los elementos internos se posicionen con respecto al contenedor */
   overflow: hidden;
 }
 
 .card img {
   width: 100%;
-  /* La imagen ocupará todo el ancho del contenedor */
   height: 100%;
-  /* La imagen ocupará todo el alto del contenedor */
   position: absolute;
-  /* La imagen se posiciona absolutamente dentro del contenedor */
   top: 0;
-  /* Se ajusta a la parte superior del contenedor */
   left: 0;
 }
 
@@ -193,7 +185,7 @@
   .h2card {
     padding: 0;
   }
-}
+} */
 
 /* ========== COMIENZA HOME ========== */
 
