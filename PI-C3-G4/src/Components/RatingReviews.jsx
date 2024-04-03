@@ -1,35 +1,37 @@
-import { useEffect, useState } from "react";
-import StarRatings from "react-star-ratings";
-import "../Components/Styles/RatingAverage.css";
+import { useEffect, useState } from 'react';
+import StarRatings from 'react-star-ratings';
+import '../Components/Styles/RatingAverage.css';
 import requestToAPI from "../services/requestToAPI";
 
 const RatingAverage = ({ productId }) => {
+
   const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
     const fetchProductRating = async () => {
       try {
-        const response = await requestToAPI(
-          `users/ratings/find/product/${productId}`
-        );
+        const response = await requestToAPI(`users/ratings/find/product/${productId}`);
         if (response.length > 0) {
           const ratings = response.map((rating) => rating.rating);
-          const average =
-            ratings.reduce((acc, curr) => acc + curr, 0) / ratings.length;
+          const average = ratings.reduce((acc, curr) => acc + curr, 0) / ratings.length;
           setAverageRating(average);
         }
       } catch (error) {
-        console.error("Error al obtener la calificación del producto:", error);
+        if (error.response && error.response.status === 404) {
+          console.log('No se encontraron calificaciones para el producto con ID:', productId);
+        } else {
+          console.error('Error al obtener la calificación del producto:', error);
+        }
       }
     };
-
+  
     fetchProductRating();
   }, [productId]);
 
   return (
     <div className="rating-average-container">
       <span>
-        {averageRating.toFixed(1)}
+      {averageRating.toFixed(1)} 
         <StarRatings
           rating={averageRating}
           starRatedColor="greenyellow"
