@@ -6,7 +6,7 @@ const FloatingSocialButtons = () => {
   const [message, setMessage] = useState('');
 
   const handleOpenWhatsAppChat = () => {
-    const phoneNumber = '+573017350191'; // Reemplaza con tu número de teléfono para probar
+    const phoneNumber = '+5712345678'; // Reemplaza con tu número de teléfono para probar
     const message = 'Hola, estoy interesado en obtener más información.';
     const encodedMessage = encodeURIComponent(message);
     
