@@ -62,7 +62,6 @@ const UserProfile = () => {
       }
     };
 
-    // Verificar si la lista de productos favoritos ha cambiado antes de hacer el fetch
     const isFavoriteProductsChanged =
       JSON.stringify(favoriteProducts) !==
       JSON.stringify(prevFavoriteProducts.current);
@@ -71,10 +70,6 @@ const UserProfile = () => {
       prevFavoriteProducts.current = favoriteProducts;
     }
   }, [favoriteProducts]);
-
-  console.log(userData.user.id); // OK: ID 13
-  console.log(favoriteProducts); // Vacio
-  console.log(favoriteProductDetails); //Array vaci
 
   const stringToDate = (dateString) => {
     return new Date(dateString);
