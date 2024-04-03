@@ -8,7 +8,7 @@ import Calendar from "../Components/Calendar";
 import Swal from "sweetalert2";
 import "../Components/Styles/Detail.css";
 import backButton from '../assets/back.png';
-import FloatingSocialButtons from '../components/FloatingSocialButtons';
+import FloatingSocialButtons from '../Components/FloatingSocialButtons';
 
 const Detail = () => {
   const { id } = useParams();
