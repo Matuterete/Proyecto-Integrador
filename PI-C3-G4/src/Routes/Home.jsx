@@ -12,6 +12,9 @@ import Swal from "sweetalert2";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../Components/Styles/Home.css";
+import FloatingSocialButtons from '../components/FloatingSocialButtons';
+
+
 
 const Home = () => {
   const [categorias, setCategorias] = useState([]);
@@ -324,6 +327,10 @@ const Home = () => {
               ))
             )}
           </div>
+
+          <div>     
+      <FloatingSocialButtons />
+    </div>
           <Pagination
             productsPerPage={productsPerPage}
             totalProducts={productosRecomendados.length}
