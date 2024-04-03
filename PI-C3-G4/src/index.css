@@ -354,7 +354,7 @@ p{
   flex-direction: column;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #122E4F;
     background-color: #bcbcbc;
@@ -364,4 +364,4 @@ p{
     background-color: #4073AF;
     color: #F9F7F7;
   }
-}
+} */
