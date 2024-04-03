@@ -29,7 +29,7 @@
 .card-img {
   width: 100%;
   /* Ancho deseado para el contenedor */
-  height: 0;
+  height: 0px;
   /* Inicializamos la altura en 0 */
   padding-top: 100%;
   /* La altura será igual al 100% del ancho */
