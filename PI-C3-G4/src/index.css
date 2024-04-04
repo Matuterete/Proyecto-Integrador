@@ -167,7 +167,8 @@ main {
   margin-bottom: 5px;
   color: #04dad3;
 }
-.form-group input{
+
+.form-group input {
   width: 94%;
   padding: 8px;
   padding-left: 20px;
@@ -390,11 +391,21 @@ p {
 }
 
 /* ========== SweetAlert2  ========== */
-.my-swal-text {
-  font-size: 10px !important;
+.my-popup-class {
+  background-color: #1F2227;
+  color: #D7DDE2;
+  border-radius: 12px;
+  border: 1px solid #D7DDE2;
 }
 
 @media (max-width: 425px) {
+
+  /* ========== SweetAlert2  ========== */
+  .my-popup-class {
+    width: 80vw;
+    font-size: 12px;
+  }
+
   h2 {
     font-size: 1em;
   }

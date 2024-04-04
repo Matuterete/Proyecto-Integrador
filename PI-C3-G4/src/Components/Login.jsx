@@ -56,6 +56,9 @@ function Login() {
         title: "Usuario incorrecto",
         text: `Los datos son incorrectos o el usuario ${usuario.correo} no se encuentra registrado en el sistema`,
         showConfirmButton: true,
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     }
   };

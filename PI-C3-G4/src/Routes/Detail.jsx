@@ -62,6 +62,9 @@ const Detail = () => {
           icon: "warning",
           title: "Seleccione un rango de fechas",
           text: "Debe seleccionar un rango de fechas para poder realizar el alquiler.",
+          customClass: {
+            popup: 'my-popup-class'
+          }
         });
         return;
       }
@@ -81,6 +84,9 @@ const Detail = () => {
         icon: "success",
         title: "Reserva exitosa",
         text: "Tu reserva se ha realizado con éxito.",
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     } catch (error) {
       if (error.response && error.response.status === 409) {
@@ -115,6 +121,9 @@ const Detail = () => {
         showCancelButton: true,
         confirmButtonText: "Iniciar sesión",
         cancelButtonText: "Registrarse",
+        customClass: {
+          popup: 'my-popup-class' // Agrega una clase personalizada al contenedor del SweetAlert2
+        }
       }).then((result) => {
         if (result.isConfirmed) {
           navigate("/login");

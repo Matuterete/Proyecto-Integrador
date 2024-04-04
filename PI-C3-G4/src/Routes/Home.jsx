@@ -134,6 +134,9 @@ const Home = () => {
         icon: "warning",
         title: "Seleccione un producto",
         text: "Primero debe seleccionar un producto antes de continuar.",
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     } else {
       setShowCalendars((prevShowCalendars) => !prevShowCalendars);
@@ -150,6 +153,9 @@ const Home = () => {
           showCancelButton: true,
           confirmButtonText: "Iniciar sesión",
           cancelButtonText: "Registrarse",
+          customClass: {
+            popup: 'my-popup-class'
+          }
         }).then((result) => {
           if (result.isConfirmed) {
             navigate("/login");

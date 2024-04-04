@@ -54,7 +54,10 @@ function UserEditForm({ user, onSave, onCancel }) {
           icon: 'success',
           title: 'Usuario actualizado correctamente',
           showConfirmButton: false,
-          timer: 2000 // Cerrar automáticamente después de 2 segundos
+          timer: 2000,
+          customClass: {
+            popup: 'my-popup-class'
+          }
         });
       })
       .catch(error => {
@@ -63,7 +66,10 @@ function UserEditForm({ user, onSave, onCancel }) {
           title: 'Error inesperado',
           text: 'Hubo un error al intentar actualizar el usuario',
           showConfirmButton: false,
-          timer: 2000 // Cerrar automáticamente después de 2 segundos
+          timer: 2000,
+          customClass: {
+            popup: 'my-popup-class'
+          }
         });
       });
   };

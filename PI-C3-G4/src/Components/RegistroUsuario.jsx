@@ -88,6 +88,9 @@ function RegistroUsuario() {
         title: "Nombre incorrecto",
         text: "El nombre debe ser mayor a 2 caracteres",
         showConfirmButton: true,
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     } else if (lastName.length < 3) {
       Swal.fire({
@@ -95,6 +98,9 @@ function RegistroUsuario() {
         title: "Apellido incorrecto",
         text: "El apellido debe ser mayor a 2 caracteres",
         showConfirmButton: true,
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     } else if (!esEmailValido) {
       Swal.fire({
@@ -102,6 +108,9 @@ function RegistroUsuario() {
         title: "Email incorrecto",
         text: "El correo electrónico no tiene el formato correcto, un formato válido es por ejemplo user@mail.com",
         showConfirmButton: true,
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     } else if (!passwordRegex.test(password)) {
       Swal.fire({
@@ -116,6 +125,9 @@ function RegistroUsuario() {
             <div>Contener al menos un símbolo: ! @ # $ % ^ & * ( ) _ + .</div>
           `,
         showConfirmButton: true,
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     } else if (password != password2) {
       Swal.fire({
@@ -123,6 +135,9 @@ function RegistroUsuario() {
         title: "Contraseñas incorrectas",
         text: "Las contraseñas no coinciden",
         showConfirmButton: true,
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     } else {
       try {
@@ -143,6 +158,9 @@ function RegistroUsuario() {
             title: "Usuario existente",
             text: "El correo ingresado ya está registrado",
             showConfirmButton: true,
+            customClass: {
+              popup: 'my-popup-class'
+            }
           });
         } else {
           Swal.fire({
@@ -150,6 +168,9 @@ function RegistroUsuario() {
             title: "Error inesperado",
             text: "Ocurrió un error al intentar registrar el usuario",
             showConfirmButton: true,
+            customClass: {
+              popup: 'my-popup-class'
+            }
           });
         }
       }
@@ -164,6 +185,9 @@ function RegistroUsuario() {
       title: "El usuario ha quedado registrado correctamente",
       showConfirmButton: false,
       timer: 1500,
+      customClass: {
+        popup: 'my-popup-class'
+      }
     });
     navigate("/login");
   };

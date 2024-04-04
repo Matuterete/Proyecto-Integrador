@@ -73,6 +73,9 @@ const AdminFeatures = () => {
             confirmButtonText: 'Guardar',
             cancelButtonText: 'Cancelar',
             showLoaderOnConfirm: true,
+            customClass: {
+                popup: 'my-popup-class'
+            },
             preConfirm: (newValue) => {
                 // Aquí puedes realizar la lógica de edición
                 setDataRequest({
@@ -131,7 +134,10 @@ const AdminFeatures = () => {
                 icon: 'success',
                 title: 'Elemento agregado con éxito',
                 showConfirmButton: false,
-                timer: 1500 // Cerrar automáticamente después de 1.5 segundos
+                timer: 1500,
+                customClass: {
+                    popup: 'my-popup-class'
+                }
             });
 
             setDataRequest({
@@ -152,6 +158,9 @@ const AdminFeatures = () => {
                 icon: 'warning',
                 title: 'Falta completar',
                 text: 'Por favor, completa todos los campos antes de continuar.',
+                customClass: {
+                    popup: 'my-popup-class'
+                }
             });
         }
         setMostrarFormulario(!mostrarFormulario)
@@ -173,7 +182,10 @@ const AdminFeatures = () => {
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Sí, eliminarlo',
-            cancelButtonText: 'Cancelar'
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                popup: 'my-popup-class'
+            }
         }).then((result) => {
             if (result.isConfirmed) {
                 // Aquí puedes realizar la acción de eliminación
