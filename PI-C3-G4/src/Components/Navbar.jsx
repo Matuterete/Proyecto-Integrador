@@ -108,7 +108,7 @@ const Navbar = () => {
                   <Link onClick={() => {
                     showNotAvailableOnMobileAlert();
                   }}>
-                    <p>Admin Page</p>
+                    <p>Administración</p>
                   </Link>
                 )}
 
@@ -157,7 +157,7 @@ const Navbar = () => {
                     {sessionData.user.role === "ADMIN" ||
                       sessionData.user.role === "SUPERADMIN" ? (
                       <Link to="/administracion">
-                        <p>Admin Page</p>
+                        <p>Administración</p>
                       </Link>
                     ) : ("")}
 
