@@ -12,9 +12,7 @@ import Swal from "sweetalert2";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../Components/Styles/Home.css";
-import FloatingSocialButtons from '../Components/FloatingSocialButtons';
-
-
+import FloatingSocialButtons from "../Components/FloatingSocialButtons";
 
 const Home = () => {
   const [categorias, setCategorias] = useState([]);
@@ -79,12 +77,12 @@ const Home = () => {
       }
     };
 
-    // Agregar el evento de cambio de tamaño de la ventana
-    window.addEventListener('resize', handleResize);
+    
+    window.addEventListener("resize", handleResize);
 
-    // Limpiar el efecto cuando el componente se desmonte
+    
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -163,17 +161,14 @@ const Home = () => {
     navigate(`/detail/${product.id}`, { state: { product } });
   };
 
-  const handleProductoSelect = async (product) => {
-    setProductId(product.id);
-    setSelectedProduct(product);
+  const handleProductoSelect = async (productId) => {
+    setProductId(productId); 
     try {
-      const url = `rentals/find/product/${product.id}`;
-      const method = "GET";
-      const headers = {};
-      const responseData = await requestToAPI(url, method, null, headers);
-      console.log(responseData);
+      const availabilityResponse = await requestToAPI(`rentals/find/product/${productId}`, "GET");
+      console.log(availabilityResponse); 
+      
     } catch (error) {
-      console.error("Error fetching product availability:", error);
+      console.error("Error al obtener la disponibilidad del producto:", error);
     }
   };
 
@@ -359,9 +354,9 @@ const Home = () => {
             )}
           </div>
 
-          <div>     
-      <FloatingSocialButtons />
-    </div>
+          <div>
+            <FloatingSocialButtons />
+          </div>
           <Pagination
             productsPerPage={productsPerPage}
             totalProducts={productosRecomendados.length}

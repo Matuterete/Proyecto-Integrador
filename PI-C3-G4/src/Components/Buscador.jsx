@@ -14,10 +14,9 @@ const Buscador = ({ onSearch, onSelectProduct }) => {
         const method = "GET";
         const response = await requestToAPI(endpoint, method);
         const options = response.map((product) => {
-          const imageUrl =
-            product.images.length > 0 ? product.images[0].url : ""; // Get the URL of the first image
+          const imageUrl = product.images.length > 0 ? product.images[0].url : "";
           return {
-            value: product.name, // Use the product name as the value
+            value: product.name, 
             label: (
               <div>
                 {imageUrl && (
@@ -34,6 +33,7 @@ const Buscador = ({ onSearch, onSelectProduct }) => {
                 {product.name}
               </div>
             ),
+            id: product.id, 
           };
         });
         setProducts(options);
@@ -47,15 +47,11 @@ const Buscador = ({ onSearch, onSelectProduct }) => {
   const handleProductChange = async (selectedOption) => {
     try {
       setSelectedProduct(selectedOption);
-      const productName = selectedOption.value; // Get the selected product name
-      console.log(productName)
-      const endpoint = `products/find/name/${productName}`; // Search by product name
-      const method = "GET";
-      const response = await requestToAPI(endpoint, method);
-      onSearch(response);
-      onSelectProduct(response, productName); // Pass the product name instead of the ID
+      const productId = products.find((product) => product.value === selectedOption.value)?.id;
+      onSearch(selectedOption); 
+      onSelectProduct(productId); 
     } catch (error) {
-      console.error(error); 
+      console.error(error);
     }
   };
 
