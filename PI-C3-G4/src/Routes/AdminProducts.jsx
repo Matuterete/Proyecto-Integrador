@@ -16,7 +16,6 @@ function AdminProducts() {
   const [showProductList, setShowProductList] = useState(true);
   const [showProductAddForm, setShowProductAddForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
-  // const [usuarioLogueado] = useState(JSON.parse(localStorage.getItem('usuarioLogueado')))
 
   let navigate = useNavigate();
 
@@ -116,6 +115,7 @@ function AdminProducts() {
             paginate={paginate}
             currentPage={currentPage} />
         </div>
+        
       )}
       {showProductAddForm && 
         <ProductAddForm onAdd={handleSaveProduct} onCancel={handleCancelProduct} />
