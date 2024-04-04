@@ -6,6 +6,7 @@ import IconButton from "../Components/IconButton";
 import requestToAPI from "../services/requestToAPI";
 import Swal from "sweetalert2";
 import ReactModal from "react-modal";
+import Rating from "react-rating";
 
 const UserProfile = () => {
   const currentDate = new Date();
@@ -121,12 +122,13 @@ const UserProfile = () => {
   const handleSubmitRating = async (event) => {
     event.preventDefault();
 
-    const ratingValue = event.target.rating.value;
+    //const ratingValue = event.target.rating.value;
     const reviewValue = event.target.review.value;
 
     const ratingData = {
       userId: userData.user.id,
       productId: selectedProduct.productId,
+      // rating: parseInt(ratingValue),
       rating: parseInt(ratingValue),
       review: reviewValue,
     };
@@ -145,7 +147,7 @@ const UserProfile = () => {
           text: "La calificación se ha enviado correctamente. Muchas gracias",
           icon: "success",
         });
-      } 
+      }
     } catch (error) {
       console.error("Error al enviar la calificación:", error);
       Swal.fire({
@@ -156,6 +158,9 @@ const UserProfile = () => {
     }
   };
 
+
+
+  const [ratingValue, setRatingValue] = useState(0)
   return (
     <div className="userprof img-background">
       <div className="adminMenu">
@@ -228,19 +233,27 @@ const UserProfile = () => {
                 <ul className="adminFeactures">
                   {rentals.map((objeto, index) => (
                     <div className="divLi" key={objeto.id}>
-                      <li className="list-item user-profile">
-                        <div className="">
+                      <li className="list-item">
+                        <div className="id-card-reserva">
                           <p>ID{objeto.id}</p>
                         </div>
 
-                        <p>{objeto.product.name}</p>
+                        <p className="name-reserva">{objeto.product.name}</p>
                         <p>
                           {objeto.dateStart} - {objeto.dateEnd} (
-                          {objeto.daysTotal} días)
+                          {objeto.daysTotal} día/s)
                         </p>
                         <p>${objeto.amount} USD</p>
 
                         <div className="box-editar-eliminar">
+                          
+                          <IconButton
+                            className="button buttonSecundary"
+                            onClick={() => handleCancelRental(objeto.id)}
+                            icon="minus"
+                          >
+                            Cancelar
+                          </IconButton>
                           <IconButton
                             className="button buttonTerciary"
                             onClick={() =>
@@ -253,13 +266,6 @@ const UserProfile = () => {
                             icon="star"
                           >
                             Votar
-                          </IconButton>
-                          <IconButton
-                            className="button buttonSecundary"
-                            onClick={() => handleCancelRental(objeto.id)}
-                            icon="minus"
-                          >
-                            Cancelar
                           </IconButton>
                         </div>
                       </li>
@@ -282,8 +288,8 @@ const UserProfile = () => {
             transform: "translate(-50%, -50%)",
             width: "500px",
             height: "450px",
-            backgroundColor: "#fafafa",
-            borderRadius: "1rem",
+            backgroundColor: "transparent",
+            border: "",
             color: "#333",
             display: "flex",
             justifyContent: "center",
@@ -291,9 +297,9 @@ const UserProfile = () => {
         }}
       >
         <div className="rate-modal">
-          <h2>Califica {selectedProduct && selectedProduct.productName}</h2>
-          <form className="form form-group" onSubmit={handleSubmitRating}>
-            <label htmlFor="rating">Calificación:</label>
+
+          {/* <form className="form-rate form-group-rate" onSubmit={handleSubmitRating}>
+            <label htmlFor="rating">Calificación: {selectedProduct && selectedProduct.productName}</label>
             <input
               type="number"
               id="rating"
@@ -307,23 +313,51 @@ const UserProfile = () => {
                 }
               }}
             />
-            <label htmlFor="review">Reseña:</label>
+            <label htmlFor="review">Escribe tu opinion:</label>
             <textarea
               id="review"
               name="review"
               rows="4"
               cols="50"
-              placeholder="Si quieres, cuentanos que te pareció el producto."
+              placeholder="Este articulo ..."
             ></textarea>
             <div className="modal-buttons">
               <button type="submit" className="button buttonTerciary buttonBig">
                 Enviar
               </button>
               <button
-                className="button buttonTerciary buttonBig close-modal"
+                className="button buttonSecundary buttonBig close-modal"
                 onClick={() => setShowRatingModal(false)}
               >
                 Cancelar
+              </button>
+            </div>
+          </form> */}
+          <form className="form-rate form-group-rate" onSubmit={handleSubmitRating}>
+            <label htmlFor="rating">Calificación: {selectedProduct && selectedProduct.productName}</label>
+            <Rating
+              initialRating={ratingValue}
+              onClick={(value) => setRatingValue(value)}
+              emptySymbol={<span className="rating-star">&#9733;</span>}
+              fullSymbol={<span className="rating-star rating-star-active">&#9733;</span>}
+            />
+            <label htmlFor="review">Escribe tu opinion:</label>
+            <textarea
+              id="review"
+              name="review"
+              rows="4"
+              cols="50"
+              placeholder="Este articulo ..."
+            ></textarea>
+            <div className="modal-buttons-rate">
+              <button
+                className="button buttonSecundary close-modal"
+                onClick={() => setShowRatingModal(false)}
+              >
+                Cancelar
+              </button>
+              <button type="submit" className="button buttonTerciary">
+                Enviar
               </button>
             </div>
           </form>
