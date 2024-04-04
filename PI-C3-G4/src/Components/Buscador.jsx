@@ -17,7 +17,7 @@ const Buscador = ({ onSearch, onSelectProduct }) => {
           const imageUrl =
             product.images.length > 0 ? product.images[0].url : ""; // Get the URL of the first image
           return {
-            value: product.id,
+            value: product.name, // Use the product name as the value
             label: (
               <div>
                 {imageUrl && (
@@ -47,14 +47,15 @@ const Buscador = ({ onSearch, onSelectProduct }) => {
   const handleProductChange = async (selectedOption) => {
     try {
       setSelectedProduct(selectedOption);
-      const productId = selectedOption.value;
-      const endpoint = `products/find/id/${productId}`;
+      const productName = selectedOption.value; // Get the selected product name
+      console.log(productName)
+      const endpoint = `products/find/name/${productName}`; // Search by product name
       const method = "GET";
       const response = await requestToAPI(endpoint, method);
       onSearch(response);
-      onSelectProduct(response, productId);
+      onSelectProduct(response, productName); // Pass the product name instead of the ID
     } catch (error) {
-      console.error(error);
+      console.error(error); 
     }
   };
 

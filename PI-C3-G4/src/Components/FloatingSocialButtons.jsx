@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
-import '../Components/Styles/FloatingSocialButtons.css'; // Importa el archivo CSS para estilos
+import '../Components/Styles/FloatingSocialButtons.css'; 
 
 const FloatingSocialButtons = () => {
   const [message, setMessage] = useState('');
