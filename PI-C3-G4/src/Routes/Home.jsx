@@ -7,47 +7,29 @@ import { IoCalendarOutline } from "react-icons/io5";
 import Buscador from "../Components/Buscador.jsx";
 import requestToAPI from "../services/requestToAPI";
 import Slider from "react-slick";
-import { useFavContext } from "../Components/FavContext.jsx";
 import Swal from "sweetalert2";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../Components/Styles/Home.css";
-import FloatingSocialButtons from '../Components/FloatingSocialButtons';
-
-
+import FloatingSocialButtons from "../Components/FloatingSocialButtons";
 
 const Home = () => {
   const [categorias, setCategorias] = useState([]);
-  const [productosPorCategoria, setProductosPorCategoria] = useState([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
+  const [productosRecomendados, setProductosRecomendados] = useState([]);
+  const [productosPorCategoria, setProductosPorCategoria] = useState([]);
   const [mostrarProductosPorCategoria, setMostrarProductosPorCategoria] =
     useState(false);
-  const [productosRecomendados, setProductosRecomendados] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
-  const [productId, setProductId] = useState(null);
-  const [showCalendars, setShowCalendars] = useState(false);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(6);
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = productosRecomendados.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
-  const { favoriteProducts, loading, fetchFavoriteProducts } = useFavContext();
-  const [fetchFavoriteProductsCalled, setFetchFavoriteProductsCalled] =
-    useState(false);
-
-  const [userData, setUserData] = useState(
-    JSON.parse(sessionStorage.getItem("userData"))
-  );
-
+  const [showCalendars, setShowCalendars] = useState(false);
+  const [userData] = useState(JSON.parse(sessionStorage.getItem("userData")));
   const navigate = useNavigate();
 
-  const [sliderSettings, setSliderSettings] = useState({
+  const sliderSettings = {
     dots: true,
     infinite: true,
     speed: 500,
@@ -55,37 +37,36 @@ const Home = () => {
     slidesToScroll: 3,
     draggable: true,
     focusOnSelect: false,
-  });
+  };
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = productosRecomendados.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  <div className="cardGrid-2">
+    {currentProducts.map((product) => (
+      <Card product={product} key={product.id} userData={userData} />
+    ))}
+  </div>;
+
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setSliderSettings({
-          ...sliderSettings,
-          slidesToShow: 2,
-          slidesToScroll: 2,
-        });
-      } else if (window.innerWidth < 400) {
-        setSliderSettings({
-          ...sliderSettings,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        });
-      } else {
-        setSliderSettings({
-          ...sliderSettings,
-          slidesToShow: 3,
-          slidesToScroll: 3,
-        });
-      }
+      const slidesToShow =
+        window.innerWidth < 768 ? (window.innerWidth < 400 ? 1 : 2) : 3;
+      setSliderSettings({
+        ...sliderSettings,
+        slidesToShow,
+        slidesToScroll: slidesToShow,
+      });
     };
 
-    // Agregar el evento de cambio de tamaño de la ventana
-    window.addEventListener('resize', handleResize);
-
-    // Limpiar el efecto cuando el componente se desmonte
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -118,71 +99,38 @@ const Home = () => {
     fetchRandomProducts();
   }, []);
 
-  useEffect(() => {
-    if (userData && userData.user && !fetchFavoriteProductsCalled) {
-      fetchFavoriteProducts(userData.user.id);
-      setFetchFavoriteProductsCalled(true);
-    }
-  }, [userData, fetchFavoriteProducts, fetchFavoriteProductsCalled]);
-
   const handleCategoriaClick = async (categoryId, categoryTitle) => {
-    if (categoriaSeleccionada === categoryTitle) {
-      setCategoriaSeleccionada("");
-      setMostrarProductosPorCategoria(false);
-      setProductosPorCategoria([]);
-    } else {
-      try {
-        setCategoriaSeleccionada(categoryTitle);
-        console.log(categoryId);
+    try {
+      if (
+        mostrarProductosPorCategoria &&
+        categoryTitle === categoriaSeleccionada
+      ) {
+        setCategoriaSeleccionada("");
+        setMostrarProductosPorCategoria(false);
+        setProductosPorCategoria([]);
+      } else {
         const response = await requestToAPI(
           `products/find/category/${categoryId}`,
           "GET"
         );
-
-        if (Array.isArray(response)) {
-          setProductosPorCategoria(response);
-          setMostrarProductosPorCategoria(true);
-        } else {
-          setProductosPorCategoria([response]);
-          setMostrarProductosPorCategoria(true);
-        }
-      } catch (error) {
-        console.error("Error fetching products by category:", error);
+        setCategoriaSeleccionada(categoryTitle);
+        setProductosPorCategoria(
+          Array.isArray(response) ? response : [response]
+        );
+        setMostrarProductosPorCategoria(true);
       }
-    }
-  };
-
-  const handleProductoClick = (product, e) => {
-    if (
-      e.target.classList.contains("favorite-button") ||
-      e.target.classList.contains("share-button")
-    ) {
-      e.stopPropagation();
-      return;
-    }
-    navigate(`/detail/${product.id}`, { state: { product } });
-  };
-
-  const handleProductoSelect = async (product) => {
-    setProductId(product.id);
-    setSelectedProduct(product);
-    try {
-      const url = `rentals/find/product/${product.id}`;
-      const method = "GET";
-      const headers = {};
-      const responseData = await requestToAPI(url, method, null, headers);
-      console.log(responseData);
     } catch (error) {
-      console.error("Error fetching product availability:", error);
+      console.error("Error fetching products by category:", error);
     }
   };
 
-  const handleSearchResults = (results) => {
-    setSearchResults(results);
-  };
+  const handleProductoClick = (product) =>
+    navigate(`/detail/${product.id}`, { state: { product } });
+
+  const handleProductoSelect = (product) => setSelectedProduct(product);
 
   const handleToggleCalendars = () => {
-    if (!productId) {
+    if (!selectedProduct) {
       Swal.fire({
         icon: "warning",
         title: "Seleccione un producto",
@@ -192,8 +140,6 @@ const Home = () => {
       setShowCalendars((prevShowCalendars) => !prevShowCalendars);
     }
   };
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleAvailabilityCheck = async () => {
     try {
@@ -217,13 +163,11 @@ const Home = () => {
           `rentals/find/product/${selectedProduct.id}`,
           "GET"
         );
-
         const isProductAvailable = availabilityResponse.some(
           (rental) =>
             new Date(rental.dateStart) <= selectedEndDate &&
             new Date(rental.dateEnd) >= selectedStartDate
         );
-
         if (!isProductAvailable) {
           navigate(`/detail/${selectedProduct.id}`);
         } else {
@@ -237,11 +181,6 @@ const Home = () => {
     }
   };
 
-  const formattedRange =
-    selectedStartDate && selectedEndDate
-      ? `${selectedStartDate.toLocaleDateString()} - ${selectedEndDate.toLocaleDateString()}`
-      : "Seleccionar fecha";
-
   const handleSelectDates = (ranges) => {
     setSelectedStartDate(ranges.selection.startDate);
     setSelectedEndDate(ranges.selection.endDate);
@@ -253,13 +192,12 @@ const Home = () => {
         <h1>Alquiler de equipos profecionales</h1>
        
         <div className="search-container">
-          <Buscador
-            onSearch={handleSearchResults}
-            onSelectProduct={handleProductoSelect}
-          />
+          <Buscador onSelectProduct={handleProductoSelect} />
           <button className="Button-calendario" onClick={handleToggleCalendars}>
             <IoCalendarOutline className="calendar-icon" />
-            {formattedRange}
+            {selectedStartDate && selectedEndDate
+              ? `${selectedStartDate.toLocaleDateString()} - ${selectedEndDate.toLocaleDateString()}`
+              : "Seleccionar fecha"}
           </button>
         </div>
         {showCalendars && (
@@ -271,16 +209,14 @@ const Home = () => {
               }}
               onSelectDates={handleSelectDates}
               onSelectProduct={handleProductoSelect}
-              productId={productId}
+              productId={selectedProduct ? selectedProduct.id : null}
             />
           </div>
         )}
         {selectedProduct && selectedStartDate && selectedEndDate && (
           <button
             className="Button-calendario"
-            onClick={() => {
-              handleAvailabilityCheck();
-            }}
+            onClick={handleAvailabilityCheck}
           >
             Consultar Disponibilidad
           </button>
@@ -292,19 +228,15 @@ const Home = () => {
           {categorias.map((category) => (
             <div
               key={category.id}
-              className="categoria"
+              className={`categoria ${
+                categoriaSeleccionada === category.title
+                  ? "selected-item-border-green"
+                  : ""
+              }`}
               onClick={() => handleCategoriaClick(category.id, category.title)}
             >
               <img src={category.url} alt={category.title} />
-              <p
-                className={
-                  categoriaSeleccionada == category.title
-                    ? "selected-item-border-green"
-                    : ""
-                }
-              >
-                {category.title}
-              </p>
+              <p>{category.title}</p>
             </div>
           ))}
         </div>
@@ -317,25 +249,22 @@ const Home = () => {
             encontrados)
           </h2>
           <Slider {...sliderSettings}>
-            {productosPorCategoria.map((producto) => {
-              console.log("Productos por categoría:", productosPorCategoria);
-              return (
-                <div className="producto-wrapper" key={producto.id}>
-                  <div
-                    className="producto"
-                    onClick={() => handleProductoClick(producto)}
-                  >
-                    <div className="card-wrapper">
-                      <Card
-                        product={producto}
-                        userData={userData}
-                        stopPropagation={true}
-                      />
-                    </div>
+            {productosPorCategoria.map((producto) => (
+              <div className="producto-wrapper" key={producto.id}>
+                <div
+                  className="producto"
+                  onClick={() => handleProductoClick(producto)}
+                >
+                  <div className="card-wrapper">
+                    <Card
+                      product={producto}
+                      userData={userData}
+                      stopPropagation={true}
+                    />
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </Slider>
         </div>
       )}
@@ -355,10 +284,9 @@ const Home = () => {
               ))
             )}
           </div>
-
-          <div>     
-      <FloatingSocialButtons />
-    </div>
+          <div>
+            <FloatingSocialButtons />
+          </div>
           <Pagination
             productsPerPage={productsPerPage}
             totalProducts={productosRecomendados.length}

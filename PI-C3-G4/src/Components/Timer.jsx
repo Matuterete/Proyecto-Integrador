@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../Components/Styles/Timer.css'
 
 const Timer = () => {
-    const [secondsRemaining, setSecondsRemaining] = useState(120); // 1.5 minutes in seconds
+    const [secondsRemaining, setSecondsRemaining] = useState(120); 
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -10,11 +10,11 @@ const Timer = () => {
                 setSecondsRemaining(secondsRemaining - 1);
             } else {
                 clearInterval(interval);
-                // Aquí puedes agregar una acción para cuando el tiempo se agote
+                
             }
-        }, 1000); // 1 second interval
+        }, 1000);
 
-        return () => clearInterval(interval); // Cleanup function to stop the timer when the component unmounts
+        return () => clearInterval(interval); 
     }, [secondsRemaining]);
 
     const minutes = Math.floor(secondsRemaining / 60);
@@ -23,13 +23,14 @@ const Timer = () => {
     return (
         <div className="timer">
             <strong>
-                <span>¡Tranquilo! Si no has recibido el correo, en:</span>
+                <span>Si no has recibido el correo, Espera:</span>
                 <strong className='element'>
                     {minutes}:{seconds.toString().padStart(2, '0')}
                 </strong>
-                <span>minutos podrás reenviarlo sin problema.</span></strong>
+                <span>para reenviar el correo de confirmación</span></strong>
         </div>
     );
 };
 
 export default Timer;
+

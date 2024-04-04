@@ -1,8 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import registroUsuario from "../assets/imagen-Usuario.png";
 import "../Components/Styles/RegistroUsuario.css";
-import EmailConfirmation from "../Components/EmailConfirmation";
 import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";
 import Timer from "./Timer";
@@ -75,7 +73,7 @@ function RegistroUsuario() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setMostrarDespuesDeGuardar(false);
     const formData = { name, lastName, email, password };
     setFormData(formData);
 
@@ -134,17 +132,9 @@ function RegistroUsuario() {
           password,
           email,
         });
-        Swal.fire({
-          icon: "success",
-          title: "El usuario ha quedado registrado correctamente",
-          showConfirmButton: false,
-          timer: 1500,
-        });
 
         setMostrarDespuesDeGuardar(false);
         enviarCorreo();
-
-        navigate("/login");
       } catch (error) {
         console.error(error);
         if (error.response && error.response.status === 409) {
@@ -166,86 +156,99 @@ function RegistroUsuario() {
     }
   };
 
+  const handleResendEmail = () => {
+    setMostrarDespuesDeGuardar(false);
+    enviarCorreo();
+    Swal.fire({
+      icon: "success",
+      title: "El usuario ha quedado registrado correctamente",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    navigate("/login");
+  };
+
   return (
     <div className="img-background bodyLogUser">
-
       <div className="imgParlantes">
-        <img  src="\src\assets\Parlantes-fondo.png" alt="" />
+        <img src="\src\assets\Parlantes-fondo.png" alt="" />
       </div>
 
-
       <form ref={form} onSubmit={handleSubmit} className="form">
+        <div>
+          <div className="titleForm">
+            <h1>Registrate</h1>
+            <p>Es rápido y fácil</p>
+          </div>
 
-        <div className="titleForm">
-          <h1>Registrate</h1>
-          <p>Es rápido y fácil</p>
-        </div>
-
-        <div className="form-group">
-          <label>
-            Nombre:
-            <input
-              type="text"
-              name="name"
-              value={name}
-              onChange={handleNameChange}
-              required
-            />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Apellido:
-            <input
-              type="text"
-              name="lastName"
-              value={lastName}
-              onChange={handleLastNameChange}
-              required
-            />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Correo electrónico:
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={handleEmailChange}
-              required
-              autoComplete="email"
-            />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Contraseña:
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={handlePasswordChange}
-              required
-              autoComplete="new-password"
-            />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Repita contraseña:
-            <input
-              type="password"
-              name="password2"
-              value={password2}
-              onChange={handlePassword2Change}
-              required
-              autoComplete="new-password"
-            />
-          </label>
-        </div>
-        <div className="buttonFormBox">
-          <button type="submit" className="button buttonTerciary buttonBig">Registrarse</button>
+          <div className="form-group">
+            <label>
+              Nombre:
+              <input
+                type="text"
+                name="name"
+                value={name}
+                onChange={handleNameChange}
+                required
+              />
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Apellido:
+              <input
+                type="text"
+                name="lastName"
+                value={lastName}
+                onChange={handleLastNameChange}
+                required
+              />
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Correo electrónico:
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={handleEmailChange}
+                required
+                autoComplete="email"
+              />
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Contraseña:
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={handlePasswordChange}
+                required
+                autoComplete="new-password"
+              />
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Repita contraseña:
+              <input
+                type="password"
+                name="password2"
+                value={password2}
+                onChange={handlePassword2Change}
+                required
+                autoComplete="new-password"
+              />
+            </label>
+          </div>
+          <div className="buttonFormBox">
+            <button type="submit" className="button buttonTerciary buttonBig">
+              Registrarse
+            </button>
+          </div>
         </div>
         {mostrarDespuesDeGuardar ? (
           <div></div>
@@ -257,15 +260,17 @@ function RegistroUsuario() {
               electrónico.
             </p>
             <Timer />
-            <button type="submit" className="button buttonPrimary buttonBig">
+            <button
+              type="button"
+              onClick={handleResendEmail}
+              className="button buttonPrimary buttonBig"
+            >
               Reenviar correo
             </button>
           </div>
         )}
       </form>
-
     </div>
-
   );
 }
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import requestToAPI from "../services/requestToAPI";
-import { NavLink } from "react-router-dom";
+import { useDropzone } from "react-dropzone";
 
 function ProductAddForm({ onAdd, onCancel }) {
   const [name, setName] = useState("");
@@ -10,8 +10,7 @@ function ProductAddForm({ onAdd, onCancel }) {
   const [stock, setStock] = useState(1);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [primaryImage, setPrimaryImage] = useState(null);
-  const [additionalImages, setAdditionalImages] = useState([]);
+  const [images, setImages] = useState([]);
   const [features, setFeatures] = useState([]);
   const [featuresData, setFeaturesData] = useState({
     selectedFeatures: [],
@@ -33,7 +32,6 @@ function ProductAddForm({ onAdd, onCancel }) {
   }, []);
 
   // Handlers
-
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -54,6 +52,12 @@ function ProductAddForm({ onAdd, onCancel }) {
     setSelectedCategory(e.target.value);
   };
 
+  const handleImageDrop = (acceptedFiles) => {
+    if (acceptedFiles && acceptedFiles.length > 0) {
+      setImages(acceptedFiles);
+    }
+  };
+
   const handleFeatureChange = (index, e) => {
     setFeaturesData((prevData) => ({
       ...prevData,
@@ -68,7 +72,10 @@ function ProductAddForm({ onAdd, onCancel }) {
   const handleFeatureValueChange = (index, e) => {
     setFeaturesData((prevData) => ({
       ...prevData,
-      featureValues: { ...prevData.featureValues, [index]: e.target.value },
+      featureValues: {
+        ...prevData.featureValues,
+        [index]: e.target.value,
+      },
     }));
   };
 
@@ -95,82 +102,55 @@ function ProductAddForm({ onAdd, onCancel }) {
     });
   };
 
-  const handlePrimaryImageChange = (e) => {
-    setPrimaryImage(e.target.files[0]);
+  const uploadImagesToS3 = async (images, productId) => {
+    const formData = new FormData();
+    images.forEach((image, index) => {
+      formData.append("files", renameImage(image, productId, index + 1));
+    });
+    const bucketS3Response = await requestToAPI(
+      "storage/products/uploadFiles",
+      "POST",
+      formData
+    );
+    return bucketS3Response;
   };
 
-  const handleAdditionalImagesChange = (e) => {
-    const files = Array.from(e.target.files);
-    setAdditionalImages(files);
-  };
-
-  // Funciones
-
-  const renameImage = (image, productId, imageNumber) => {
+  const renameImage = (image, productId, index) => {
     const extension = image.name.split(".").pop();
-    const newName = `id_${productId}_img_${imageNumber}.${extension}`;
+    const newName = `id_${productId}_img_${index}.${extension}`;
     return new File([image], newName, { type: image.type });
   };
 
-  const buildImageData = (
-    primaryImageUrl,
-    additionalImageUrls,
-    productName,
-    productId
-  ) => {
-    const imageData = [];
-
-    const primaryImage = {
-      title: `${productName} 1`,
-      url: primaryImageUrl,
-      isPrimary: true,
+  const buildImageData = (imageUrls, productId) => {
+    return imageUrls.map((imageUrl, index) => ({
+      title: `${name} ${index + 1}`,
+      url: imageUrl,
+      isPrimary: index === 0,
       product: {
         id: productId,
       },
-    };
-
-    imageData.push(primaryImage);
-
-    if (additionalImageUrls.length > 0) {
-      additionalImageUrls.forEach((imageUrl, index) => {
-        const additionalImage = {
-          title: `${productName} ${index + 2}`,
-          url: imageUrl,
-          isPrimary: false,
-          product: {
-            id: productId,
-          },
-        };
-        imageData.push(additionalImage);
-      });
-    }
-
-    return imageData;
-  };
-
-  const buildFeatureData = () => {
-    const { selectedFeatures, featureValues } = featuresData;
-    const featureData = selectedFeatures.map((featureId) => ({
-      featureId,
-      featureValue: featureValues[featureId] || "",
     }));
-    return featureData;
   };
 
-  const clearInput = (inputId) => {
-    const input = document.getElementById(inputId);
-    if (input) {
-      input.value = "";
-    }
+  const buildFeatureData = (productId) => {
+    return featuresData.selectedFeatures.map((featureId, index) => ({
+      productId,
+      featureId: parseInt(featureId),
+      featureValue: featuresData.featureValues[index] || "",
+    }));
   };
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: handleImageDrop,
+    accept: "image/*",
+    multiple: true,
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     let productId;
     let bucketS3Response;
-
-    const featureData = buildFeatureData();
 
     try {
       //1 - Se guarda primero el producto
@@ -184,78 +164,26 @@ function ProductAddForm({ onAdd, onCancel }) {
         },
       });
 
-      // 2 - Se guardan las imagenes en Bucket S3 AWS
       productId = productResponse.id;
 
-      const formData = new FormData();
-      formData.append("files", renameImage(primaryImage, productId, 1));
-
-      for (let i = 0; i < additionalImages.length; i++) {
-        formData.append(
-          "files",
-          renameImage(additionalImages[i], productId, i + 2)
-        );
-      }
-
-      const bucketS3Response = await requestToAPI(
-        "storage/products/uploadFiles",
-        "POST",
-        formData
-      );
+      // 2 - Se guardan las imágenes en el Bucket S3 AWS y se obtienen las URLs
+      const imageUrls = await uploadImagesToS3(images, productId);
 
       // 3 - Se asocian las URLs de S3 a el producto en la Base de Datos
-
-      const imageUrls = bucketS3Response;
-
-      let primaryImageUrl = "";
-      let additionalImageUrls = [];
-
-      if (imageUrls.length === 1) {
-        primaryImageUrl = imageUrls[0];
-      } else if (imageUrls.length > 1) {
-        primaryImageUrl = imageUrls[0];
-        additionalImageUrls = imageUrls.slice(1);
-      }
-
-      const productName = name;
-
-      const imageData = buildImageData(
-        primaryImageUrl,
-        additionalImageUrls,
-        productName,
-        productId
-      );
-
-      let endpoint;
-      if (primaryImageUrl.length === 1) {
-        endpoint = "products/images/add";
-      } else {
-        endpoint = "products/images/multiple/add";
-      }
-
-      await requestToAPI(endpoint, "POST", imageData);
+      const imageData = buildImageData(imageUrls, productId);
+      await requestToAPI("products/images/multiple/add", "POST", imageData);
 
       // 4 - Se guardan las características del producto
-      const featureRequests = featureData.map((feature, index) => ({
-        productId,
-        featureId: parseInt(featuresData.selectedFeatures[index]),
-        featureValue: feature.featureValue,
-      }));
-
-      console.log(JSON.stringify(featureRequests));
-
+      const featureRequests = buildFeatureData(productId);
       await requestToAPI("products/features", "POST", featureRequests);
 
-      // Se limpia el Formulario si todo salio bien
+      // Se limpia el Formulario si todo salió bien
       setName("");
       setDescription("");
       setPrice("");
       setStock(1);
       setSelectedCategory("");
-      setPrimaryImage(null);
-      setAdditionalImages([]);
-      document.getElementById("primaryImageInput").value = null;
-      document.getElementById("additionalImagesInput").value = null;
+      setImages([]);
       setFeaturesData({
         selectedFeatures: [],
         featureValues: [],
@@ -284,6 +212,7 @@ function ProductAddForm({ onAdd, onCancel }) {
           showConfirmButton: true,
         });
 
+        // Deshacer las operaciones si hay un error
         if (productId) {
           try {
             await requestToAPI(`products/delete/id/${productId}`, "DELETE");
@@ -347,16 +276,6 @@ function ProductAddForm({ onAdd, onCancel }) {
           />
         </label>
       </div>
-      {/* <div className="form-group">
-        <label>
-          Activo:
-          <input
-            type="checkbox"
-            checked={isActive}
-            onChange={handleIsActiveChange}
-          />
-        </label>
-      </div> */}
       <div className="form-group">
         <label>
           Stock:
@@ -381,45 +300,23 @@ function ProductAddForm({ onAdd, onCancel }) {
           </select>
         </label>
       </div>
-      <div>
-        <div className="form-group flex">
-          <label>
-            Imagen Principal (Obligatoria):
-            <input
-              className="image-load"
-              type="file"
-              accept="image/*"
-              id="primaryImageInput"
-              onChange={handlePrimaryImageChange}
-              required
-            />
-          </label>
-          <button
-            className="cancel"
-            onClick={() => clearInput("primaryImageInput")}
-          >
-            ❌
-          </button>
+      <div className="form-group">
+        <div {...getRootProps()} className="dropzone">
+          <input {...getInputProps()} />
+          <p>
+            Arrastra y suelta las imágenes aquí, o haz clic para seleccionarlas.
+            <br></br>
+            La primer imagen se considera de portada.
+          </p>
         </div>
-        <div className="form-group flex">
-          <label>
-            Imagenes Adicionales (Opcionales):
-            <input
-              className="image-load"
-              type="file"
-              accept="image/*"
-              multiple
-              id="additionalImagesInput"
-              onChange={handleAdditionalImagesChange}
-            />
-          </label>
-          <button
-            className="cancel"
-            onClick={() => clearInput("additionalImagesInput")}
-          >
-            ❌
-          </button>
-        </div>
+      </div>
+      <div className="form-group image-drop">
+        {images.map((image, index) => (
+          <div key={index} className="image-preview">
+            <img src={URL.createObjectURL(image)} alt={`Image ${index}`} />
+            {index === 0 && <span className="img-pri">Principal</span>}
+          </div>
+        ))}
       </div>
       <div className="form-group flex2">
         {featuresData.selectedFeatures?.map((selectedFeature, index) => (
@@ -445,8 +342,8 @@ function ProductAddForm({ onAdd, onCancel }) {
                 Valor:
                 <input
                   type="text"
-                  value={featuresData.featureValues[selectedFeature] || ""}
-                  onChange={(e) => handleFeatureValueChange(selectedFeature, e)}
+                  value={featuresData.featureValues[index] || ""}
+                  onChange={(e) => handleFeatureValueChange(index, e)}
                 />
               </label>
             </div>
@@ -461,11 +358,14 @@ function ProductAddForm({ onAdd, onCancel }) {
             )}
           </div>
         ))}
-        <button className="button buttonBlue" type="button" onClick={handleAddFeature}>
+        <button
+          className="button buttonBlue"
+          type="button"
+          onClick={handleAddFeature}
+        >
           Agregar Característica
         </button>
       </div>
-
       <div className="buttonFormBox">
         <button type="submit" className="button buttonBlue buttonBig">
           Agregar Producto
