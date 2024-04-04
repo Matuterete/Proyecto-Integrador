@@ -1,6 +1,10 @@
 .rating-average-container {
   font-size: 1rem;
   color: #909aa5;
+  padding: 20px;
+}
+.name-rating-average{
+  font-size: 1.2em;
 }
 
 .rating-average-container span {
@@ -21,4 +25,13 @@
 .ratings-amount{
     font-size: 0.7rem;
     padding-top: 0.2rem;
+}
+.rating-detail{
+  border: 1px solid #3A4047;
+  padding: 10px;
+  border-radius: 12px;
+  width: 250px;
+}
+.date-rating{
+  text-align: right;
 }

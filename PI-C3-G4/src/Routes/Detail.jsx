@@ -148,9 +148,9 @@ const Detail = () => {
     };
   }, []);
   return (
-    <div className="img-background">
+    <div className=" img-background">
       {product ? (
-        <div className="bodyDetail">
+        <div className="body-Detail-container">
           <div>
             <div className="nameAndBack">
               <h2>{product.name}</h2>
@@ -177,9 +177,8 @@ const Detail = () => {
                       thumbnail:
                         "https://prothechnics-images.s3.us-east-2.amazonaws.com/products/no-imgen-available.svg",
                       originalAlt: `${product.name} Missing Image ${index + 1}`,
-                      thumbnailAlt: `${product.name} Missing Image ${
-                        index + 1
-                      }`,
+                      thumbnailAlt: `${product.name} Missing Image ${index + 1
+                        }`,
                     })),
                   ]}
                   autoPlay={false}
@@ -332,8 +331,14 @@ const Detail = () => {
           <div>
             <FloatingSocialButtons />
           </div>
-          <div>
-            <RatingAverage productId={product.id} fetchDetails={true} />
+          <div className="comentarios-container">
+            <h2>Opiniones del producto:</h2>
+            
+              <RatingAverage productId={product.id} fetchDetails={false} />
+            
+            
+              <RatingAverage productId={product.id} fetchDetails={true} />
+            
           </div>
         </div>
       ) : (

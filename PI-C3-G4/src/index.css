@@ -162,9 +162,22 @@ main {
 }
 
 .form-group label {
-  display: block;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 5px;
   color: #04dad3;
+}
+.form-group input{
+  width: 94%;
+  padding: 8px;
+  padding-left: 20px;
+  border: none;
+  background-color: transparent;
+  border-radius: 12px;
+  border: 1px solid #0f73ed;
+  height: 30px;
+  font-size: 18px;
+  color: white;
 }
 
 .form-group-rate input {

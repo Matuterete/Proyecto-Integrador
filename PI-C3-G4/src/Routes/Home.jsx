@@ -18,8 +18,7 @@ const Home = () => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
   const [productosRecomendados, setProductosRecomendados] = useState([]);
   const [productosPorCategoria, setProductosPorCategoria] = useState([]);
-  const [mostrarProductosPorCategoria, setMostrarProductosPorCategoria] =
-    useState(false);
+  const [mostrarProductosPorCategoria, setMostrarProductosPorCategoria] = useState(false);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -29,7 +28,7 @@ const Home = () => {
   const [userData] = useState(JSON.parse(sessionStorage.getItem("userData")));
   const navigate = useNavigate();
 
-  const sliderSettings = {
+  const [sliderSettings, setSliderSettings] = useState ({
     dots: true,
     infinite: true,
     speed: 500,
@@ -37,7 +36,7 @@ const Home = () => {
     slidesToScroll: 3,
     draggable: true,
     focusOnSelect: false,
-  };
+  })
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -48,16 +47,16 @@ const Home = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  <div className="cardGrid-2">
-    {currentProducts.map((product) => (
-      <Card product={product} key={product.id} userData={userData} />
-    ))}
-  </div>;
+  // <div className="cardGrid-2">
+  //   {currentProducts.map((product) => (
+  //     <Card product={product} key={product.id} userData={userData} />
+  //   ))}
+  // </div>;
 
   useEffect(() => {
     const handleResize = () => {
       const slidesToShow =
-        window.innerWidth < 768 ? (window.innerWidth < 400 ? 1 : 2) : 3;
+        window.innerWidth < 426 ? 2 : 3;
       setSliderSettings({
         ...sliderSettings,
         slidesToShow,
