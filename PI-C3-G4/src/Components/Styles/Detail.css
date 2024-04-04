@@ -164,6 +164,7 @@
   .backArrowDetail {
     width: 30px;
     margin: 10px;
+    margin-right: 5vw;
   }
 
   .nameAndBack h2 {
@@ -239,5 +240,8 @@
     background-color: #3A4047;
     padding: 20px;
     border-radius: 0px;
+  }
+  .comentarios-container{
+    width: 90vw;
   }
 }

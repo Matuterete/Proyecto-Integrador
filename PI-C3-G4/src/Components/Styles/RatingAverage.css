@@ -3,7 +3,8 @@
   color: #909aa5;
   padding: 20px;
 }
-.name-rating-average{
+
+.name-rating-average {
   font-size: 1.2em;
 }
 
@@ -22,16 +23,36 @@
   gap: 2rem;
 }
 
-.ratings-amount{
-    font-size: 0.7rem;
-    padding-top: 0.2rem;
+.ratings-amount {
+  font-size: 0.7rem;
+  padding-top: 0.2rem;
 }
-.rating-detail{
+
+.rating-detail {
   border: 1px solid #3A4047;
   padding: 10px;
   border-radius: 12px;
   width: 250px;
 }
-.date-rating{
+
+.date-rating {
   text-align: right;
+}
+
+@media (max-width: 425px) {
+
+  .rating-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .rating-detail {
+    border: 1px solid #3A4047;
+    padding: 10px;
+    border-radius: 12px;
+    width: 90%;
+    margin: auto;
+  }
+
 }
