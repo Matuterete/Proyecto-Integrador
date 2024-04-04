@@ -44,3 +44,17 @@
 .Button:last-child {
   margin-right: 0;
 }
+
+@media (max-width: 425px) {
+
+  .adminMenu {
+    margin-top: 0px;
+  }
+  .ButtonContainer button{
+   padding: 0%;
+   font-size: 0.8em;
+  }
+  .Menu {
+    margin-bottom: 20px;
+  }
+}

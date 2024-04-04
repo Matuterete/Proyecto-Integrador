@@ -4,7 +4,7 @@
   align-items: center;
   padding-top: 50px;
   padding-bottom: 100px;
-  min-height:73vh;
+  min-height: 73vh;
 }
 
 .user-card {
@@ -15,7 +15,8 @@
   background-color: #4073AF;
   width: 100%;
 }
-.favorite-card-box{
+
+.favorite-card-box {
   width: 70vw;
 }
 
@@ -38,12 +39,32 @@
   margin: 4px 0;
 }
 
-.rate-modal{
+.rate-modal {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.user-profile{
+.user-profile {
   width: 1000px !important;
+}
+
+@media (max-width: 425px) {
+
+  .user-card {
+    padding: 0.2em;
+    display: flex;
+    align-items: center;
+    background-color: #4073AF;
+    width: 100%;
+  }
+
+  .favorite-card-box {
+    width: 100vw;
+  }
+
+  .avatar {
+    width: 50px;
+    margin-right: 6px;
+  }
 }

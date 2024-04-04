@@ -98,12 +98,6 @@
   color: #3683d7;
 }
 
-.cardGrid-2 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 3rem;
-}
-
 .cardTitle-2 {
   margin-top: 0;
   margin-left: 1rem;
@@ -132,6 +126,13 @@
 @media (max-width: 425px) {
   .fav-button {
     display: none;
+  }
+  .ratings-amount{
+    display: none;
+  }
+  .cardTitle-2 {
+    margin-left: 1rem;
+    font-size: 1rem;
   }
 
   .card:hover {
@@ -190,7 +191,20 @@
   .h2card {
     padding: 0;
   }
+  .rating-average-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
+
+
+
+
+
+
+
+
 
 /* ========== home ========== */
 .body {
@@ -199,6 +213,7 @@
   width: 100%;
   color: white;
 }
+
 .Container {
   width: 70%;
   display: flex;
@@ -222,6 +237,7 @@
   display: flex;
   gap: 20px;
 }
+
 .buttons {
   display: flex;
   gap: 20px;
@@ -286,18 +302,6 @@
   margin-top: 5px;
 }
 
-.cardGrid-1 {
-  margin-top: 7vh;
-  margin-bottom: 5vh;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.cardGrid-2 {
-  width: 100%;
-}
-
 .productos-container {
   display: flex;
   flex-wrap: nowrap;
@@ -312,6 +316,13 @@
   background-color: transparent;
   margin-bottom: 10vh;
   border-bottom: solid 1px greenyellow;
+}
+.slick-dots li button:before {
+  color: greenyellow;
+  font-size: 1rem;
+}
+.slick-dots li.slick-active button:before {
+  color: greenyellow;
 }
 
 .fav-button-div {
@@ -337,6 +348,21 @@
   text-align: center;
 }
 
+/* .cardGrid-1 {
+  margin-top: 7vh;
+  margin-bottom: 5vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+} */
+
+.cardGrid-2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 3rem;
+  width: 100%;
+}
+
 @media (max-width: 425px) {
   .search-container {
     display: none;
@@ -346,10 +372,12 @@
   .categoria img {
     width: 20px;
   }
+
   .categoria p {
     font-size: 0.5em;
     margin-top: 0;
   }
+
   .categories-container {
     display: flex;
     justify-content: space-around;
@@ -357,21 +385,35 @@
     gap: 0px;
     width: 90vw;
   }
+
   /* ========== SLIDER ========== */
 
   .slick-slide .producto {
-    width: 90%;
+    width: 100%;
     margin: 0 auto 20px;
-    max-width: 90%;
+    max-width: 100%;
   }
+  .producto {
+    width: 100%;
+  }
+  .slick-dots li button:before {
+    color: greenyellow;
+    font-size: 0.6rem;
+  }
+  .card-wrapper {
+    width: 100%;
+    margin: 0;
+
+  }
+
+ /* ========== CARD GRID ========== */
 
   .cardGrid-2 {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0.2rem;
+    width: 95vw;
   }
 
-  .card-wrapper {
-    width: 90%;
-    margin: 0 auto 20px;
-  }
+
 }

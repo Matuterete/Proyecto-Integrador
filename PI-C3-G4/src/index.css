@@ -262,6 +262,7 @@ main {
   justify-content: center;
   gap: 2rem;
 }
+
 .modal-buttons {
   display: flex;
   align-items: center;
@@ -287,6 +288,7 @@ main {
 .close-share:hover {
   background-color: #334050;
 }
+
 .close-modal {
   background-color: #495c79;
 }
@@ -375,6 +377,11 @@ p {
   flex-direction: column;
 }
 
+/* ========== SweetAlert2  ========== */
+.my-swal-text {
+  font-size: 10px !important;
+}
+
 @media (max-width: 425px) {
   h2 {
     font-size: 0.8em;
@@ -403,4 +410,6 @@ p {
   p {
     font-size: 0.8em;
   }
+
+
 }
