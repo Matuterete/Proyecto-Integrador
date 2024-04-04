@@ -13,20 +13,21 @@
 .pagination button {
   text-decoration: none;
   padding: 8px 12px;
-  border: 1px solid gray;
+  border: 1px solid transparent;
   border-radius: 4px;
   color: #ffffff;
-  background-color: #194F32;
+  background-color: #175922;
   transition: background-color 0.3s;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .pagination button:hover {
-  border: 1px solid #ffffff;
+  border: 1px solid #41E55B;
 }
 
 .pagination .active button {
-  background-color: #4caf50;
+  background-color: #41E55B;
   color: #fff;
 }
 

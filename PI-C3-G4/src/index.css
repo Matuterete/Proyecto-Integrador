@@ -2,11 +2,11 @@
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: white;
+  color: #D7DDE2;
 }
 
 .img-background {
-  background-color: #0d1117;
+  background-color: #0D1117;
 }
 
 body {
@@ -56,13 +56,11 @@ main {
 }
 
 .buttonPrimary {
-  /* background-color: #145fb5; */
   background-color: rgba(20, 95, 181, 0);
   color: white;
 }
 
 .buttonPrimary:hover {
-  /* background-color: #4073AF; */
   box-shadow: 0px 2px 6px rgba(219, 226, 239, 1);
 }
 
@@ -78,12 +76,13 @@ main {
 
 .buttonTerciary {
   border: none;
-  background-color: #459f53;
+  background-color: #28923C;
+  border: 1px solid #459F53;
   color: #ffffff;
 }
 
 .buttonTerciary:hover {
-  background-color: #31763c;
+  background-color: #227b32;
 }
 
 .buttonBlue {
@@ -103,7 +102,7 @@ main {
 }
 
 .selected-item-border-green {
-  border-bottom: 4px solid greenyellow;
+  border-bottom: 4px solid #41E55B;
 }
 
 .swal2-popup {
@@ -168,7 +167,7 @@ main {
   color: #04dad3;
 }
 
-.form-group input {
+.form-group-rate input {
   width: 94%;
   padding: 8px;
   padding-left: 20px;
@@ -228,7 +227,7 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  color: white;
+  color: #D7DDE2;
 }
 
 .list-item button {
@@ -317,7 +316,7 @@ main {
   align-items: center;
   background-color: #323232;
   margin: 5px;
-  border-radius: 8px;
+  border-radius: 12px;
   width: 900px;
 }
 
@@ -411,5 +410,45 @@ p {
     font-size: 0.8em;
   }
 
+  /* ========== LISTA CRUD mobile ========== */
+  .adminFeactures {
+    padding: 0;
+  }
+
+  .adminFeactures li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: 1px solid #3A4047;
+    margin: 5px;
+    width: 80vw;
+    height: auto;
+  }
+
+  .body-product-list {
+    width: 100vw;
+  }
+
+  .list-item {
+    padding: 10px;
+  }
+
+  .list-item p {
+    padding: 4px;
+    width: 90%;
+  }
+
+  .box-editar-eliminar {
+    justify-content: center;
+    padding-top: 16px;
+    width: 100%;
+  }
+
+  .box-editar-eliminar button {
+    width: 40%;
+    height: 35px;
+  }
 
 }

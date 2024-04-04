@@ -81,7 +81,7 @@ const RatingAverage = ({ productId, fetchDetails }) => {
           {averageRating.toFixed(1)}
           <StarRatings
             rating={averageRating}
-            starRatedColor="greenyellow"
+            starRatedColor="#41E55B"
             starEmptyColor="#194F32"
             numberOfStars={5}
             starDimension={starSize}
