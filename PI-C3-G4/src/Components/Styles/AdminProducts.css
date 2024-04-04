@@ -49,3 +49,21 @@ a {
   all: unset;
   margin-top: 1rem;
 }
+
+.dropzone {
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropzone p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #666;
+}
+
+.image-preview img {
+ width: 10rem;
+}
