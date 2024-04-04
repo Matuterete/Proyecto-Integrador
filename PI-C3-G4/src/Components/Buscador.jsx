@@ -3,9 +3,10 @@ import Select from "react-select";
 import requestToAPI from "../services/requestToAPI";
 import "../Components/Styles/Buscador.css";
 
-const Buscador = ({ onSearch, onSelectProduct }) => {
+const Buscador = ({ onSelectProduct }) => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -13,30 +14,7 @@ const Buscador = ({ onSearch, onSelectProduct }) => {
         const endpoint = "products/find/all";
         const method = "GET";
         const response = await requestToAPI(endpoint, method);
-        const options = response.map((product) => {
-          const imageUrl =
-            product.images.length > 0 ? product.images[0].url : ""; // Get the URL of the first image
-          return {
-            value: product.id,
-            label: (
-              <div>
-                {imageUrl && (
-                  <img
-                    src={imageUrl}
-                    alt={product.name}
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      marginRight: "10px",
-                    }}
-                  />
-                )}
-                {product.name}
-              </div>
-            ),
-          };
-        });
-        setProducts(options);
+        setProducts(response);
       } catch (error) {
         console.error(error);
       }
@@ -44,27 +22,60 @@ const Buscador = ({ onSearch, onSelectProduct }) => {
     fetchProducts();
   }, []);
 
-  const handleProductChange = async (selectedOption) => {
-    try {
-      setSelectedProduct(selectedOption);
-      const productId = selectedOption.value;
-      const endpoint = `products/find/id/${productId}`;
-      const method = "GET";
-      const response = await requestToAPI(endpoint, method);
-      onSearch(response);
-      onSelectProduct(response, productId);
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    setFilteredProducts(products);
+  }, [products]);
+
+  const handleSearchChange = (searchQuery) => {
+    const filtered = products.filter((product) =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
+
+  const handleProductSelect = (selectedOption) => {
+    setSelectedProduct(selectedOption);
+    const selectedProduct = products.find(
+      (product) => product.name === selectedOption.value
+    );
+    onSelectProduct(selectedProduct);
+  };
+
+  const options = filteredProducts.map((product) => ({
+    value: product.name,
+    label: (
+      <div>
+        {product.images.length > 0 && (
+          <img
+            src={product.images[0].url}
+            alt={product.name}
+            style={{ width: "50px", height: "50px", marginRight: "10px" }}
+          />
+        )}
+        {product.name}
+      </div>
+    ),
+  }));
+
+  const formatOptionLabel = ({ value, label }) => {
+    if (selectedProduct && value === selectedProduct.value) {
+      return <div>{value}</div>;
     }
+    return label;
   };
 
   return (
     <div className="search">
       <Select
-        options={products}
+        options={options}
         value={selectedProduct}
-        onChange={handleProductChange}
+        onChange={handleProductSelect}
+        onInputChange={(value) => handleSearchChange(value)}
         placeholder="Buscar producto"
+        isSearchable
+        className="react-select-container"
+        classNamePrefix="react-select"
+        formatOptionLabel={formatOptionLabel}
       />
     </div>
   );
