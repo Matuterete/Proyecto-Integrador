@@ -81,7 +81,6 @@ const AdminFeatures = () => {
   };
 
   const handleDropEdit = (acceptedFiles) => {
-    console.log(acceptedFiles);
     const file = acceptedFiles[0];
     const newFileName =
       inputValue.toLowerCase().replace(/\s+/g, "_") +
@@ -209,6 +208,7 @@ const AdminFeatures = () => {
       fetchData();
       setInputValue("");
       setSelectedImageEdit(null);
+      setSelectedImage(null);
       setMostrarFormularioEdit({ mostrarForm: false, idEdit: 0 });
     } catch (error) {
       console.error(`Error al actualizar ${sectionTitle}:`, error);
