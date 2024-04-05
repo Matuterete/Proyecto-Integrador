@@ -1,14 +1,13 @@
-import React from 'react'
-import Logo from '../assets/Logo-2.png';
-import facebook from '../assets/ico-facebook.png'
-import insta from '../assets/ico-instagram.png'
-import whap from '../assets/ico-whatsapp.png'
-import tiktok from '../assets/ico-tiktok.png'
-import Swal from 'sweetalert2';
-import '../Components/Styles/Footer.css';
+import React from "react";
+import Logo from "../assets/Logo-2.png";
+import facebook from "../assets/ico-facebook.png";
+import insta from "../assets/ico-instagram.png";
+import whap from "../assets/ico-whatsapp.png";
+import tiktok from "../assets/ico-tiktok.png";
+import Swal from "sweetalert2";
+import "../Components/Styles/Footer.css";
 
 const Footer = () => {
-
   const handleTerminos = (e) => {
     Swal.fire({
       title: "<strong><u>Políticas de Uso, Cuidado y Precauciones</u></strong>",
@@ -68,49 +67,46 @@ const Footer = () => {
       showCloseButton: true,
       focusConfirm: false,
       customClass: {
-        popup: 'my-popup-class' // Agrega una clase personalizada al contenedor del SweetAlert2
-      }
+        popup: "my-popup-class", // Agrega una clase personalizada al contenedor del SweetAlert2
+      },
     });
   };
 
   return (
-    <footer className='footer'>
-
-      <div className='footer-logo'>
+    <footer className="footer">
+      <div className="footer-logo">
         <img src={Logo}></img>
       </div>
 
-      <div className='footer-iconos'>
-
+      <div className="footer-iconos">
         <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
-          <img src={facebook} alt='logo_facebook' width='20px' />
+          <img src={facebook} alt="logo_facebook" width="20px" />
         </a>
 
         <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
-          <img src={insta} alt='logo_insta' width='20px' />
+          <img src={insta} alt="logo_insta" width="20px" />
         </a>
 
         <a href="https://www.whatsapp.com" target="_blank" rel="noreferrer">
-          <img src={whap} alt='logo_whasap' width='20px' />
+          <img src={whap} alt="logo_whasap" width="20px" />
         </a>
 
         <a href="https://www.tiktok.com" target="_blank" rel="noreferrer">
-          <img src={tiktok} alt='logo_tiktok' width='20px' />
+          <img src={tiktok} alt="logo_tiktok" width="20px" />
         </a>
-
       </div>
 
-      <div className='footer-iconos'>
-        <button className='btn-terminos' onClick={handleTerminos}>
-          Términos y condiciones
+      <div className="footer-iconos">
+        <button className="btn-terminos" onClick={handleTerminos}>
+          Políticas de Uso, Cuidado y Precauciones
         </button>
       </div>
 
-      <div className='footer-copyright'>
-        <p className='copyright'>Copyright ® 2024</p>
+      <div className="footer-copyright">
+        <p className="copyright">Copyright ® 2024</p>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import "../Components/Styles/UserProfile.css";
 import { useFavContext } from "../Components/FavContext.jsx";
 import Card from "../Components/Card.jsx";
-import Usuario from "../assets/usuario.svg";
+import Usuario from "../assets/user_avatar.png";
 import IconButton from "../Components/IconButton";
 import requestToAPI from "../services/requestToAPI";
 import Swal from "sweetalert2";

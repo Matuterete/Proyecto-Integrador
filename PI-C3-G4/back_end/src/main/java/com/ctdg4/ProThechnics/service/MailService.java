@@ -39,14 +39,14 @@ public class MailService {
                 "            margin: 0 auto;" +
                 "        }" +
                 "        .caja {" +
-                "            width: 400px;" +
+                "            width: 300px;" +
                 "            margin: 0 auto;" +
                 "            text-align: center;" +
                 "            font-size: 10px;" +
                 "            font-weight: bold;" +
                 "        }" +
                 "        .product-image {" +
-                "            max-width: 400px;" +
+                "            max-width: 300px;" +
                 "            margin: 0 auto;" +
                 "        }" +
                 "    </style>" +

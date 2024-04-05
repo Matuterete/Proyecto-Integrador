@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import Dropzone from "react-dropzone";
 import Pagination from "../Components/Pagination";
 
-const AdminFeatures = () => {
+const AdminCategories = () => {
   const sectionTitle = "categoría";
   const urlTitle = "categories";
   const [responseData, setResponseData] = useState();
@@ -115,6 +115,9 @@ const AdminFeatures = () => {
           title: `La ${sectionTitle} se agrego satisfactoriamente`,
           showConfirmButton: false,
           timer: 1500,
+          customClass: {
+            popup: 'my-popup-class'
+          }
         });
 
         fetchData();
@@ -127,6 +130,9 @@ const AdminFeatures = () => {
           icon: "error",
           title: "Error",
           text: `Hubo un error al agregar la ${sectionTitle}.`,
+          customClass: {
+            popup: 'my-popup-class'
+          }
         });
       }
     } else {
@@ -134,6 +140,9 @@ const AdminFeatures = () => {
         icon: "warning",
         title: "Falta completar",
         text: "Por favor, completa todos los campos antes de continuar.",
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     }
   };
@@ -194,6 +203,9 @@ const AdminFeatures = () => {
           icon: "warning",
           title: "Falta completar",
           text: "Por favor, completa todos los campos antes de continuar.",
+          customClass: {
+            popup: 'my-popup-class'
+          }
         });
         return;
       }
@@ -203,6 +215,9 @@ const AdminFeatures = () => {
         title: `La ${sectionTitle} se actualizó satisfactoriamente`,
         showConfirmButton: false,
         timer: 1500,
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
 
       fetchData();
@@ -216,6 +231,9 @@ const AdminFeatures = () => {
         icon: "error",
         title: "Error",
         text: `Ocurrió un error al actualizar la ${sectionTitle}.`,
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     }
   };
@@ -230,6 +248,9 @@ const AdminFeatures = () => {
       cancelButtonColor: "#3085d6",
       confirmButtonText: "Confirmar",
       cancelButtonText: "Cancelar",
+      customClass: {
+        popup: 'my-popup-class'
+      }
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -250,11 +271,14 @@ const AdminFeatures = () => {
           // Eliminar de la base de datos
           await requestToAPI(`${urlTitle}/delete/id/${key}`, "DELETE");
 
-          Swal.fire(
-            "¡Eliminada!",
-            `La ${sectionTitle} ha sido eliminada satisfactoriamente.`,
-            "success"
-          );
+          Swal.fire({
+            title: "¡Eliminada!",
+            text: `La ${sectionTitle} ha sido eliminada satisfactoriamente.`,
+            icon: "success",
+            customClass: {
+              popup: 'my-popup-class'
+            }
+        });
           fetchData();
         } catch (error) {
           console.error(`Error al eliminar  ${sectionTitle}:`, error);
@@ -262,6 +286,9 @@ const AdminFeatures = () => {
             icon: "error",
             title: "Error",
             text: `Ocurrió un error al eliminar la ${sectionTitle}`,
+            customClass: {
+              popup: 'my-popup-class'
+            }
           });
         }
       }
@@ -365,7 +392,7 @@ const AdminFeatures = () => {
                       <img src={objeto.url} />
                     </div>
                     <p>
-                      ID {objeto.id} - {objeto.title}
+                      ID {objeto.id} | {objeto.title}
                     </p>
 
                     <div className="box-editar-eliminar">
@@ -479,4 +506,4 @@ const AdminFeatures = () => {
   );
 };
 
-export default AdminFeatures;
+export default AdminCategories;

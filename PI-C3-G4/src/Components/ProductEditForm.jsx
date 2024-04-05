@@ -101,7 +101,7 @@ function ProductEditForm({ product, onSave, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='Form container'>
+    <form onSubmit={handleSubmit} className='form container'>
       <h2>Editar producto</h2>
       <div className='form-group'>
         <label>

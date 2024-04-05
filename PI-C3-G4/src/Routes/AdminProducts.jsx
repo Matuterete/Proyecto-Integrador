@@ -81,11 +81,14 @@ function AdminProducts() {
         requestToAPI(`products/delete/id/${productId}`, 'DELETE')
           .then(() => {
             setProducts(products.filter(product => product.id !== productId));
-            Swal.fire(
-              '¡Eliminado!',
-              'Producto eliminado correctamente',
-              'success'
-            );
+            Swal.fire({
+              title:'¡Eliminado!',
+              text: 'Producto eliminado correctamente',
+              icon: 'success',
+              customClass: {
+                popup: 'my-popup-class'
+              }
+          });
           })
           .catch(error => {
             Swal.fire({
