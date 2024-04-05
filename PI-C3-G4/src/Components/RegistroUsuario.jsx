@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";
 import Timer from "./Timer";
 import requestToAPI from "../services/requestToAPI";
+import Parlantesfondo from "../assets/Parlantes-fondo.png"
 
 function RegistroUsuario() {
   const [name, setName] = useState("");
@@ -195,7 +196,7 @@ function RegistroUsuario() {
   return (
     <div className=" bodyLogUser">
       <div className="imgParlantes">
-        <img src="\src\assets\Parlantes-fondo.png" alt="" />
+      <img className="Login" src={Parlantesfondo}/>
       </div>
 
       <form ref={form} onSubmit={handleSubmit} className="form">

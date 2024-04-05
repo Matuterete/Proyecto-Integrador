@@ -311,8 +311,10 @@ function ProductAddForm({ onAdd, onCancel }) {
         </label>
       </div>
       <div className="form-group">
+        <label>Imagenes:</label>
         <div {...getRootProps()} className="dropzone">
           <input {...getInputProps()} />
+
           <p>
             Arrastra y suelta las imágenes aquí, o haz clic para seleccionarlas.
             <br></br>

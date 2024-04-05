@@ -1,280 +1,482 @@
-import React, { useEffect, useState } from 'react'
-import '../Components/Styles/AdminFeatures.css'
-import requestToAPI from '../services/requestToAPI';
-import IconButton from '../Components/IconButton';
-import Swal from 'sweetalert2';
-
+import { useEffect, useState } from "react";
+import "../Components/Styles/AdminFeatures.css";
+import requestToAPI from "../services/requestToAPI";
+import IconButton from "../Components/IconButton";
+import Swal from "sweetalert2";
+import Dropzone from "react-dropzone";
+import Pagination from "../Components/Pagination";
 
 const AdminFeatures = () => {
+  const sectionTitle = "característica";
+  const urlTitle = "features";
+  const [responseData, setResponseData] = useState();
+  const [resposeDataCRUD, setResponseDataCRUD] = useState();
+  const [dataRequest, setDataRequest] = useState({
+    url: "",
+    method: "",
+    data: null,
+    headers: {},
+  });
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [mostrarFormularioEdit, setMostrarFormularioEdit] = useState({
+    mostrarForm: false,
+    idEdit: 0,
+  });
+  const [inputValue, setInputValue] = useState("");
+  const [originalUrl, setOriginalUrl] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageEdit, setSelectedImageEdit] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(10);
 
-    const [responseData, setResponseData] = useState()
-    const [resposeDataCRUD, setResponseDataCRUD] = useState()
-    const [dataRequest, setDataRequest] = useState(
-        {
-            url: '',
-            method: '',
-            data: null,
-            headers: {}
+  const toggleFormulario = () => {
+    setMostrarFormulario(!mostrarFormulario);
+  };
+
+  const fetchData = async () => {
+    try {
+      const url = urlTitle + "/find/all";
+      const method = "GET";
+      const data = null;
+      const headers = {};
+
+      setResponseData(await requestToAPI(url, method, data, headers));
+    } catch (error) {
+      // Manejo de errores
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [resposeDataCRUD]);
+
+  useEffect(() => {
+    if (dataRequest.url !== "") {
+      async function fetchData() {
+        try {
+          const url = dataRequest.url;
+          const method = dataRequest.method;
+          const data = dataRequest.data;
+          const headers = dataRequest.headers;
+
+          setResponseDataCRUD(await requestToAPI(url, method, data, headers));
+        } catch (error) {
+          // Manejo de errores
+          console.error("Error fetching data:");
         }
-    )
-    const [mostrarFormulario, setMostrarFormulario] = useState(false);
+      }
+      fetchData();
+    }
+  }, [dataRequest]);
 
-    const toggleFormulario = () => {
-        setMostrarFormulario(!mostrarFormulario);
-    };
+  const handleDrop = (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    const newFileName =
+      inputValue.toLowerCase().replace(/\s+/g, "_") +
+      "." +
+      file.name.split(".").pop();
+    const newFile = new File([file], newFileName, { type: file.type });
+    setSelectedImage(newFile);
+  };
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const url = 'features/find/all';
-                const method = 'GET';
-                const data = null;
-                const headers = {}
+  const handleDropEdit = (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    const newFileName =
+      inputValue.toLowerCase().replace(/\s+/g, "_") +
+      "." +
+      file.name.split(".").pop();
+    const newFile = new File([file], newFileName, { type: file.type });
+    setSelectedImageEdit(newFile);
+  };
 
-                setResponseData(await requestToAPI(url, method, data, headers))
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-            } catch (error) {
-                // Manejo de errores
-                console.error('Error fetching data:', error);
-            }
-        }
+    if (inputValue !== "" && selectedImage !== null) {
+      try {
+        const formData = new FormData();
+        formData.append("files", selectedImage);
+        const imageUploadResponse = await requestToAPI(
+          `storage/${urlTitle}/uploadFiles`,
+          "POST",
+          formData
+        );
+
+        const [imageUrl] = imageUploadResponse;
+
+        await requestToAPI(`${urlTitle}/add`, "POST", {
+          title: inputValue,
+          url: imageUrl,
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: `La ${sectionTitle} se agrego satisfactoriamente`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
         fetchData();
-    }, [resposeDataCRUD])
-
-    useEffect(() => {
-        if (dataRequest.url != '') {
-            async function fetchData() {
-                try {
-                    const url = dataRequest.url;
-                    const method = dataRequest.method;
-                    const data = dataRequest.data;
-                    const headers = dataRequest.headers;
-
-                    setResponseDataCRUD(await requestToAPI(url, method, data, headers))
-
-                } catch (error) {
-                    // Manejo de errores
-                    console.error('Error fetching data:');
-                }
-            }
-            fetchData();
-        }
-    }, [dataRequest])
-
-    /*========= EDIT FEATURE ==========*/
-
-    const handleInput = async (feature) => {
-
+        setInputValue("");
+        setSelectedImage(null);
+        setMostrarFormulario(false);
+      } catch (error) {
+        console.error(`Error al agregar ${sectionTitle}:`, error);
         Swal.fire({
-            title: 'Editar Caracteristica',
-            input: 'text',
-            inputPlaceholder: 'Nuevo nombre',
-            showCancelButton: true,
-            confirmButtonText: 'Guardar',
-            cancelButtonText: 'Cancelar',
-            showLoaderOnConfirm: true,
-            customClass: {
-                popup: 'my-popup-class'
-            },
-            preConfirm: (newValue) => {
-                // Aquí puedes realizar la lógica de edición
-                setDataRequest({
-                    ...dataRequest,
-                    url: 'features/update',
-                    method: 'PUT',
-                    data: {
-                        id: feature.id,
-                        title: newValue,
-                        url: feature.url
-                    }, // Cambias los datos a los nuevos datos que deseas enviar
-                    headers: {}
-                })
-                return new Promise((resolve) => {
-                    // Simulando una petición asíncrona, puedes hacer la lógica de edición aquí
-                    setTimeout(() => {
-
-                        resolve();
-                    }, 1000);
-                });
-            },
-            allowOutsideClick: () => !Swal.isLoading()
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    '¡Editado!',
-                    'El elemento ha sido actualizado correctamente.',
-                    'success'
-                );
-            }
+          icon: "error",
+          title: "Error",
+          text: `Hubo un error al agregar la ${sectionTitle}.`,
         });
-    };
-
-    /*========= ADD FEATURE ==========*/
-
-    const [selectedImage, setSelectedImage] = useState(null);
-
-    const handleChangeImage = (event) => {
-        setSelectedImage(event);
-    };
-
-    const [inputValue, setInputValue] = useState('');
-
-    const handleChange = (event) => {
-        setInputValue(event.target.value);
-        console.log(inputValue)
-    };
-
-    const [enviar, setEnviar] = useState(false)
-
-    const handleChangeSend = () => {
-
-        if (inputValue != '' && selectedImage != null) {
-
-            Swal.fire({
-                icon: 'success',
-                title: 'Elemento agregado con éxito',
-                showConfirmButton: false,
-                timer: 1500,
-                customClass: {
-                    popup: 'my-popup-class'
-                }
-            });
-
-            setDataRequest({
-                ...dataRequest,
-                url: 'features/add',
-                method: 'POST',
-                data: {
-                    id: '',
-                    title: inputValue,
-                    url: selectedImage
-                },
-                headers: {}
-            })
-            setEnviar(!enviar)
-
-        } else {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Falta completar',
-                text: 'Por favor, completa todos los campos antes de continuar.',
-                customClass: {
-                    popup: 'my-popup-class'
-                }
-            });
-        }
-        setMostrarFormulario(!mostrarFormulario)
+      }
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "Falta completar",
+        text: "Por favor, completa todos los campos antes de continuar.",
+      });
     }
+  };
 
-    const handleChangeCancel = () => {
-        setMostrarFormulario(false)
+  const handleChangeCancel = () => {
+    setMostrarFormulario(false);
+    setMostrarFormularioEdit({ mostrarForm: false, idEdit: 0 });
+    setInputValue("");
+    setSelectedImage(null);
+    setSelectedImageEdit(null);
+  };
+
+  useEffect(() => {
+    if (mostrarFormularioEdit.idEdit !== 0) {
+      const selectedObject = responseData.find(
+        (objeto) => objeto.id === mostrarFormularioEdit.idEdit
+      );
+      setInputValue(selectedObject.title);
+      setSelectedImage(selectedObject.url);
     }
+  }, [mostrarFormularioEdit]);
 
-    /*========= DELETE FEATURE ==========*/
+  const handleInput = (objeto) => {
+    setMostrarFormularioEdit({ mostrarForm: true, idEdit: objeto.id });
+    setOriginalUrl(objeto.url);
+    console.log(originalUrl);
+  };
 
-    const handleClickDelete = (key) => {
+  const handleInputEdit = (e) => {
+    setInputValue(e.target.value);
+  };
 
+  const handleInputUpdate = async () => {
+    try {
+      if (inputValue !== "" && selectedImageEdit !== null) {
+        const formData = new FormData();
+        formData.append("files", selectedImageEdit);
+        const imageUploadResponse = await requestToAPI(
+          `storage/${urlTitle}/uploadFiles`,
+          "POST",
+          formData
+        );
+        const newImageUrl = imageUploadResponse[0];
+
+        await requestToAPI(`${urlTitle}/update`, "PUT", {
+          id: mostrarFormularioEdit.idEdit,
+          title: inputValue,
+          url: newImageUrl,
+        });
+      } else if (inputValue !== "") {
+        await requestToAPI(`${urlTitle}/update`, "PUT", {
+          id: mostrarFormularioEdit.idEdit,
+          title: inputValue,
+          url: originalUrl,
+        });
+      } else {
         Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Una vez eliminado, no podrás recuperar este elemento',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sí, eliminarlo',
-            cancelButtonText: 'Cancelar',
-            customClass: {
-                popup: 'my-popup-class'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Aquí puedes realizar la acción de eliminación
-                setDataRequest({
-                    ...dataRequest,
-                    url: `features/delete/id/${key}`,
-                    method: 'DELETE',
-                    data: {},
-                    headers: {}
-                })
-                console.log('Elemento eliminado');
-                Swal.fire(
-                    '¡Eliminado!',
-                    'El elemento ha sido eliminado.',
-                    'success'
-                );
-            }
+          icon: "warning",
+          title: "Falta completar",
+          text: "Por favor, completa todos los campos antes de continuar.",
         });
+        return;
+      }
+
+      Swal.fire({
+        icon: "success",
+        title: `La ${sectionTitle} se actualizó satisfactoriamente`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      fetchData();
+      setInputValue("");
+      setSelectedImageEdit(null);
+      setSelectedImage(null);
+      setMostrarFormularioEdit({ mostrarForm: false, idEdit: 0 });
+    } catch (error) {
+      console.error(`Error al actualizar ${sectionTitle}:`, error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: `Ocurrió un error al actualizar la ${sectionTitle}.`,
+      });
     }
+  };
 
-    return (
-        <>
-            {responseData ? (
-                <div className='bodyFeatures '>
+  const handleClickDelete = (key) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: `Una vez eliminada, no podrás recuperar esta ${sectionTitle}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Confirmar",
+      cancelButtonText: "Cancelar",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          // Obtener las URLs de las imágenes asociadas
+          const featureImages = responseData.find(
+            (feature) => feature.id === key
+          ).url;
+          console.log(featureImages);
 
-                    <div className='asdf'>
-                        <div className='space-between container-add-button'>
-                            <h2>Administrar de Caracteristicas</h2>
-                            <IconButton className='button buttonBlue buttonBig' onClick={toggleFormulario} icon="plus">Agregar Caracteristica</IconButton>
+          // Borrar las imágenes del bucket S3
+          if (featureImages) {
+            const deleteFormData = new FormData();
+            deleteFormData.append("url", featureImages);
+            console.log(deleteFormData);
+            await requestToAPI("storage/deleteFile", "DELETE", deleteFormData);
+          }
+
+          // Eliminar de la base de datos
+          await requestToAPI(`${urlTitle}/delete/id/${key}`, "DELETE");
+
+          Swal.fire(
+            "¡Eliminada!",
+            `La ${sectionTitle} ha sido eliminada satisfactoriamente.`,
+            "success"
+          );
+          fetchData();
+        } catch (error) {
+          console.error(`Error al eliminar  ${sectionTitle}:`, error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: `Ocurrió un error al eliminar la ${sectionTitle}`,
+          });
+        }
+      }
+    });
+  };
+
+  // Obtener las características actuales dependiendo de la página actual
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = responseData
+    ? responseData.slice(indexOfFirstProduct, indexOfLastProduct)
+    : [];
+
+  // Cambiar de página
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  return (
+    <>
+      {responseData ? (
+        <div className="bodyFeatures img-background">
+          <div className="asdf">
+            <div className="space-between container-add-button">
+              <h2>Administar {sectionTitle}s</h2>
+              <IconButton
+                className="button buttonBlue buttonBig"
+                onClick={toggleFormulario}
+                icon="plus"
+              >
+                Agregar {sectionTitle}
+              </IconButton>
+            </div>
+
+            {mostrarFormulario && (
+              <form onSubmit={handleSubmit} className="form container">
+                <div className="form-group">
+                  <h2>Agregar nueva {sectionTitle}</h2>
+                  <label>
+                    Nombre:
+                    <input
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                    />
+                  </label>
+                </div>
+                <div className="form-group">
+                  <Dropzone
+                    onDrop={handleDrop}
+                    accept={{
+                      "image/*": [".png", ".jpeg", ".jpg", ".gif", ".svg"],
+                    }}
+                    multiple={false}
+                    className="dropzone"
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <section className="form-group">
+                        <label>Icono:</label>
+                        <div {...getRootProps()} className="dropzone">
+                          <input {...getInputProps()} />
+                          <p>
+                            Arrastra y suelta un ícono aquí, o haz clic para
+                            seleccionar uno
+                          </p>
                         </div>
-
-                        {mostrarFormulario && (
-                            <div className='addFeature form'>
-                                <label>
-                                    Nombre de la nueva Caracteristica:
-                                    <input type="text" value={inputValue} onChange={handleChange} />
-                                </label>
-
-                                <p>seleccionar Imagen</p>
-                                <div className='selectImages'>
-                                    {responseData.map((feature) => (
-                                        <button className='buttonImagefeature' key={feature.id} onClick={() => handleChangeImage(feature.url)}>
-                                            <img src={feature.url} alt={`Imagen ${feature.id}`} />
-                                        </button>
-                                    ))}
-                                </div>
-
-                                {selectedImage &&
-                                    <div className='selectImage'>
-                                        <p>Imagen Seleccionada:</p>
-                                        <button className='buttonImagefeature'>
-                                            <img src={selectedImage} />
-                                        </button>
-                                    </div>
-                                }
-
-                                <div className='buttonFormBoxFeature'>
-                                    <button className='addFeatureButton button buttonBlue buttonBig' type="button" onClick={handleChangeSend}>Confirmar</button>
-                                    <button className='button buttonBig buttonSecundary' onClick={handleChangeCancel}>Cancelar</button>
-                                </div>
-
+                        {selectedImage && (
+                          <div className="form-group image-drop">
+                            <div className="image-preview space">
+                              <img
+                                src={URL.createObjectURL(selectedImage)}
+                                alt={inputValue}
+                              />
                             </div>
+                          </div>
                         )}
+                      </section>
+                    )}
+                  </Dropzone>
+                </div>
+                <div className="buttonFormBox">
+                  <button
+                    className="addFeatureButton button buttonBlue buttonBig"
+                    type="submit"
+                  >
+                    Confirmar
+                  </button>
+                  <button
+                    className="button buttonBig buttonSecundary"
+                    onClick={handleChangeCancel}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            )}
 
-                        <ul className='adminFeactures'>
-                            {responseData.map((objeto, index) => (
-
-                                <div className='divLi' key={objeto.id}>
-
-                                    <li className="list-item">
-                                        <div className='divSVG'><img src={objeto.url} /></div>
-                                        <p>ID {objeto.id} - {objeto.title}</p>
-
-                                        <div className='box-editar-eliminar'>
-                                            <IconButton className='button buttonTerciary ' onClick={() => handleInput(objeto)} icon="pencil">Editar</IconButton>
-                                            <IconButton className='button buttonSecundary ' onClick={() => handleClickDelete(objeto.id)} icon="minus">Eliminar</IconButton>
-                                        </div>
-                                    </li>
-                                </div>
-                            ))}
-                        </ul>
+            <ul className="adminFeactures">
+              {currentProducts.map((objeto, index) => (
+                <div className="divLi" key={objeto.id}>
+                  <li className="list-item">
+                    <div className="divSVG">
+                      <img src={objeto.url} />
                     </div>
-                </div>)
-                :
-                (<div className="loader-container">
-                    <div className="loader"></div>
-                </div>)}
-        </>
-    )
-}
+                    <p>
+                      ID {objeto.id} - {objeto.title}
+                    </p>
 
-export default AdminFeatures
+                    <div className="box-editar-eliminar">
+                      <IconButton
+                        className="button buttonTerciary "
+                        onClick={() => handleInput(objeto)}
+                        icon="pencil"
+                      >
+                        Editar
+                      </IconButton>
+                      <IconButton
+                        className="button buttonSecundary "
+                        onClick={() => handleClickDelete(objeto.id)}
+                        icon="minus"
+                      >
+                        Eliminar
+                      </IconButton>
+                    </div>
+                  </li>
+                  {mostrarFormularioEdit.mostrarForm &&
+                    mostrarFormularioEdit.idEdit == objeto.id && (
+                      <form className="form container spacer-form">
+                        <div className="form-group">
+                          <h2>Editar {sectionTitle}</h2>
+                          <label>
+                            Nombre:
+                            <input
+                              type="text"
+                              value={inputValue}
+                              onChange={handleInputEdit}
+                            />
+                          </label>
+                        </div>
+                        <div className="form-group">
+                          <Dropzone
+                            onDrop={handleDropEdit}
+                            accept={{
+                              "image/*": [
+                                ".png",
+                                ".jpeg",
+                                ".jpg",
+                                ".gif",
+                                ".svg",
+                              ],
+                            }}
+                            multiple={false}
+                            className="dropzone"
+                          >
+                            {({ getRootProps, getInputProps }) => (
+                              <section className="form-group">
+                                <label>Icono:</label>
+                                <div {...getRootProps()} className="dropzone">
+                                  <input {...getInputProps()} />
+                                  <p>
+                                    Arrastra y suelta un ícono aquí, o haz clic
+                                    para seleccionar uno
+                                  </p>
+                                </div>
+                                {selectedImageEdit && (
+                                  <div className="form-group image-drop">
+                                    <div className="image-preview space">
+                                      <img
+                                        src={URL.createObjectURL(
+                                          selectedImageEdit
+                                        )}
+                                        alt={inputValue}
+                                      />
+                                    </div>
+                                  </div>
+                                )}
+                              </section>
+                            )}
+                          </Dropzone>
+                        </div>
+                        <div className="buttonFormBox">
+                          <button
+                            className="addFeatureButton button buttonBlue buttonBig"
+                            type="button"
+                            onClick={handleInputUpdate}
+                          >
+                            Confirmar
+                          </button>
+                          <button
+                            className="button buttonBig buttonSecundary"
+                            onClick={handleChangeCancel}
+                          >
+                            Cancelar
+                          </button>
+                        </div>
+                      </form>
+                    )}
+                </div>
+              ))}
+            </ul>
+
+            {/* Agregar el componente de paginación */}
+            <Pagination
+              productsPerPage={productsPerPage}
+              totalProducts={responseData.length}
+              paginate={paginate}
+              currentPage={currentPage}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="loader-container">
+          <div className="loader"></div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default AdminFeatures;

@@ -45,6 +45,46 @@
   margin-right: 0;
 }
 
+
+.image-drop{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+}
+.dropzone {
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropzone p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fafafa;
+}
+
+.image-preview{
+  position: relative;
+  width: 10rem;
+}
+
+.image-preview img {
+ width: 10rem;
+}
+
+.space{
+  margin-top: 1rem;
+}
+.img-pri{
+  position: absolute;
+  font-size: x-small;
+  right: 5px; 
+  bottom: 5px; 
+}
+
 @media (max-width: 425px) {
 
   .adminMenu {

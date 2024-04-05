@@ -47,11 +47,6 @@ const Home = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // <div className="cardGrid-2">
-  //   {currentProducts.map((product) => (
-  //     <Card product={product} key={product.id} userData={userData} />
-  //   ))}
-  // </div>;
 
   useEffect(() => {
     const handleResize = () => {
@@ -196,7 +191,7 @@ const Home = () => {
   return (
     <div className="body-container">
       <div className="Search-Calendar">
-        <h1>Alquiler de equipos profecionales</h1>
+        <h1>Encontrá la mejor tecnología para tus eventos</h1>
 
         <div className="search-container">
           <Buscador onSelectProduct={handleProductoSelect} />
