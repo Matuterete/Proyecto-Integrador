@@ -194,6 +194,9 @@ function ProductAddForm({ onAdd, onCancel }) {
         title: "Producto agregado correctamente",
         showConfirmButton: false,
         timer: 2000,
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     } catch (error) {
       console.error("Error al crear el producto:", error);
@@ -203,6 +206,9 @@ function ProductAddForm({ onAdd, onCancel }) {
           title: "Error de duplicidad",
           text: "El producto ingresado ya existe",
           showConfirmButton: true,
+          customClass: {
+            popup: 'my-popup-class'
+          }
         });
       } else {
         Swal.fire({
@@ -210,6 +216,9 @@ function ProductAddForm({ onAdd, onCancel }) {
           title: "Error inesperado",
           text: "Hubo un error al intentar agregar el producto",
           showConfirmButton: true,
+          customClass: {
+            popup: 'my-popup-class'
+          }
         });
 
         // Deshacer las operaciones si hay un error

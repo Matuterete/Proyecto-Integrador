@@ -62,6 +62,9 @@ const Detail = () => {
           icon: "warning",
           title: "Seleccione un rango de fechas",
           text: "Debe seleccionar un rango de fechas para poder realizar el alquiler.",
+          customClass: {
+            popup: 'my-popup-class'
+          }
         });
         return;
       }
@@ -81,6 +84,9 @@ const Detail = () => {
         icon: "success",
         title: "Reserva exitosa",
         text: "Tu reserva se ha realizado con éxito.",
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     } catch (error) {
       if (error.response && error.response.status === 409) {
@@ -115,6 +121,9 @@ const Detail = () => {
         showCancelButton: true,
         confirmButtonText: "Iniciar sesión",
         cancelButtonText: "Registrarse",
+        customClass: {
+          popup: 'my-popup-class' // Agrega una clase personalizada al contenedor del SweetAlert2
+        }
       }).then((result) => {
         if (result.isConfirmed) {
           navigate("/login");
@@ -148,9 +157,9 @@ const Detail = () => {
     };
   }, []);
   return (
-    <div className="img-background">
+    <div className=" img-background">
       {product ? (
-        <div className="bodyDetail">
+        <div className="body-Detail-container">
           <div>
             <div className="nameAndBack">
               <h2>{product.name}</h2>
@@ -177,9 +186,8 @@ const Detail = () => {
                       thumbnail:
                         "https://prothechnics-images.s3.us-east-2.amazonaws.com/products/no-imgen-available.svg",
                       originalAlt: `${product.name} Missing Image ${index + 1}`,
-                      thumbnailAlt: `${product.name} Missing Image ${
-                        index + 1
-                      }`,
+                      thumbnailAlt: `${product.name} Missing Image ${index + 1
+                        }`,
                     })),
                   ]}
                   autoPlay={false}
@@ -332,8 +340,14 @@ const Detail = () => {
           <div>
             <FloatingSocialButtons />
           </div>
-          <div>
-            <RatingAverage productId={product.id} fetchDetails={true} />
+          <div className="comentarios-container">
+            <h2>Opiniones del producto:</h2>
+            
+              <RatingAverage productId={product.id} fetchDetails={false} />
+            
+            
+              <RatingAverage productId={product.id} fetchDetails={true} />
+            
           </div>
         </div>
       ) : (

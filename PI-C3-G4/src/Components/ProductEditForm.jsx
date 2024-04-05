@@ -80,7 +80,10 @@ function ProductEditForm({ product, onSave, onCancel }) {
           icon: 'success',
           title: 'Producto actualizado correctamente',
           showConfirmButton: false,
-          timer: 2000 // Cerrar automáticamente después de 2 segundos
+          timer: 2000, // Cerrar automáticamente después de 2 segundos
+          customClass: {
+            popup: 'my-popup-class'
+          }
         });
       })
       .catch(error => {
@@ -89,7 +92,10 @@ function ProductEditForm({ product, onSave, onCancel }) {
           icon: 'error',
           title: 'Error inesperado',
           text: 'Hubo un error al intentar actualizar el usuario',
-          showConfirmButton: true
+          showConfirmButton: true,
+          customClass: {
+            popup: 'my-popup-class'
+          }
         });
       });
   };

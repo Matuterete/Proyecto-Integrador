@@ -36,6 +36,9 @@ const AdminCategories = () => {
       confirmButtonText: "Agregar",
       cancelButtonText: "Cancelar",
       showLoaderOnConfirm: true,
+      customClass: {
+        popup: 'my-popup-class'
+      },
       preConfirm: (newCategoryName) => {
         if (!newCategoryName) {
           Swal.showValidationMessage(
@@ -82,6 +85,9 @@ const AdminCategories = () => {
       confirmButtonText: "Guardar",
       cancelButtonText: "Cancelar",
       showLoaderOnConfirm: true,
+      customClass: {
+        popup: 'my-popup-class'
+      },
       preConfirm: (newCategoryName) => {
         if (!newCategoryName) {
           Swal.showValidationMessage(
@@ -138,6 +144,9 @@ const AdminCategories = () => {
       cancelButtonColor: "#3085d6",
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
+      customClass: {
+        popup: 'my-popup-class'
+      }
     }).then((result) => {
       if (result.isConfirmed) {
         requestToAPI(`categories/delete/id/${categoryId}`, "DELETE")

@@ -18,8 +18,7 @@ const Home = () => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
   const [productosRecomendados, setProductosRecomendados] = useState([]);
   const [productosPorCategoria, setProductosPorCategoria] = useState([]);
-  const [mostrarProductosPorCategoria, setMostrarProductosPorCategoria] =
-    useState(false);
+  const [mostrarProductosPorCategoria, setMostrarProductosPorCategoria] = useState(false);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -29,7 +28,7 @@ const Home = () => {
   const [userData] = useState(JSON.parse(sessionStorage.getItem("userData")));
   const navigate = useNavigate();
 
-  const sliderSettings = {
+  const [sliderSettings, setSliderSettings] = useState({
     dots: true,
     infinite: true,
     speed: 500,
@@ -37,7 +36,7 @@ const Home = () => {
     slidesToScroll: 3,
     draggable: true,
     focusOnSelect: false,
-  };
+  })
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -48,22 +47,24 @@ const Home = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  <div className="cardGrid-2">
-    {currentProducts.map((product) => (
-      <Card product={product} key={product.id} userData={userData} />
-    ))}
-  </div>;
+  // <div className="cardGrid-2">
+  //   {currentProducts.map((product) => (
+  //     <Card product={product} key={product.id} userData={userData} />
+  //   ))}
+  // </div>;
 
   useEffect(() => {
     const handleResize = () => {
       const slidesToShow =
-        window.innerWidth < 768 ? (window.innerWidth < 400 ? 1 : 2) : 3;
+        window.innerWidth < 426 ? 2 : 3;
       setSliderSettings({
         ...sliderSettings,
         slidesToShow,
         slidesToScroll: slidesToShow,
       });
     };
+
+    handleResize()
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -135,6 +136,9 @@ const Home = () => {
         icon: "warning",
         title: "Seleccione un producto",
         text: "Primero debe seleccionar un producto antes de continuar.",
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     } else {
       setShowCalendars((prevShowCalendars) => !prevShowCalendars);
@@ -151,6 +155,9 @@ const Home = () => {
           showCancelButton: true,
           confirmButtonText: "Iniciar sesión",
           cancelButtonText: "Registrarse",
+          customClass: {
+            popup: 'my-popup-class'
+          }
         }).then((result) => {
           if (result.isConfirmed) {
             navigate("/login");
@@ -189,11 +196,8 @@ const Home = () => {
   return (
     <div className="body img-background">
       <div className="Search-Calendar">
-        <h1>¿Querés consultar la disponibilidad de un producto?</h1>
-        <p>
-          Seleccioná el producto que estés buscando, elegí una fecha de inicio y
-          devolución del producto y realizá tu búsqueda
-        </p>
+        <h1>Alquiler de equipos profecionales</h1>
+
         <div className="search-container">
           <Buscador onSelectProduct={handleProductoSelect} />
           <button className="Button-calendario" onClick={handleToggleCalendars}>
@@ -231,11 +235,10 @@ const Home = () => {
           {categorias.map((category) => (
             <div
               key={category.id}
-              className={`categoria ${
-                categoriaSeleccionada === category.title
+              className={`categoria ${categoriaSeleccionada === category.title
                   ? "selected-item-border-green"
                   : ""
-              }`}
+                }`}
               onClick={() => handleCategoriaClick(category.id, category.title)}
             >
               <img src={category.url} alt={category.title} />
@@ -277,7 +280,7 @@ const Home = () => {
           <p className="cardTitle-2">Recomendados</p>
           <div className="cardGrid-2">
             {productosRecomendados.length === 0 &&
-            !mostrarProductosPorCategoria ? (
+              !mostrarProductosPorCategoria ? (
               <div className="loader-container">
                 <div className="loader"></div>
               </div>

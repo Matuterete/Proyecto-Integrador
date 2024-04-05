@@ -47,6 +47,9 @@ const Navbar = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Sí, cerrar sesión",
+      customClass: {
+        popup: 'my-popup-class'
+      }
     }).then((result) => {
       if (result.isConfirmed) {
         sessionStorage.removeItem("userData");
@@ -78,7 +81,10 @@ const Navbar = () => {
       title: 'Página no disponible en dispositivos móviles',
       text: 'Lo siento, esta página no está disponible en dispositivos móviles.',
       icon: 'error',
-      confirmButtonText: 'Entendido'
+      confirmButtonText: 'Entendido',
+      customClass: {
+        popup: 'my-popup-class'
+      }
     });
   };
   return (
