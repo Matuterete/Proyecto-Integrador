@@ -63,13 +63,12 @@ const Detail = () => {
           title: "Seleccione un rango de fechas",
           text: "Debe seleccionar un rango de fechas para poder realizar el alquiler.",
           customClass: {
-            popup: 'my-popup-class'
-          }
+            popup: "my-popup-class",
+          },
         });
         return;
       }
 
-      console.log("userData:", userData);
       const data = {
         userId: userData.user.id,
         productId: id,
@@ -80,13 +79,65 @@ const Detail = () => {
       const response = await requestToAPI("rentals/add", "POST", data);
       console.log("Reserva exitosa:", response);
 
+      const { dateRent, daysTotal, amount } = response;
+      const rentDate = new Date(dateRent);
+      const meses = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
+      ];
+      const dia = rentDate.getDate();
+      const mes = rentDate.getMonth();
+      const año = rentDate.getFullYear();
+      const hora = rentDate.getHours();
+      const minutos = rentDate.getMinutes();
+
+      const fechaFormateada = `${dia} de ${meses[mes]} de ${año}`;
+      const horaFormateada = `${hora}:${minutos} hs`;
+      const fechaHoraFormateada = `${fechaFormateada} a las ${horaFormateada}`;
+
+
+      const mailData = {
+        subject:
+          userData.user.name +
+          ", tu alquiler de " +
+          product.name +
+          " se realizó con éxito.",
+        name: userData.user.name,
+        rentDateTime: fechaHoraFormateada,
+        productName: product.name,
+        productId: id,
+        imageUrl: product.images[0].url,
+        dateStart: response.dateStart,
+        dateEnd: response.dateEnd,
+        days: daysTotal,
+        dayAmount: product.price,
+        totalAmount: amount
+      };
+
+      const mailResponse = await requestToAPI(
+        `mail/send/${userData.user.email}`,
+        "POST",
+        mailData
+      );
+      console.log("Status Email:", mailResponse);
+
       Swal.fire({
         icon: "success",
         title: "Reserva exitosa",
-        text: "Tu reserva se ha realizado con éxito.",
+        text: "Tu reserva se ha realizado con éxito. En breve recibiras un correo con todos los detalles",
         customClass: {
-          popup: 'my-popup-class'
-        }
+          popup: "my-popup-class",
+        },
       });
     } catch (error) {
       if (error.response && error.response.status === 409) {
@@ -122,8 +173,8 @@ const Detail = () => {
         confirmButtonText: "Iniciar sesión",
         cancelButtonText: "Registrarse",
         customClass: {
-          popup: 'my-popup-class' 
-        }
+          popup: "my-popup-class",
+        },
       }).then((result) => {
         if (result.isConfirmed) {
           navigate("/login");
@@ -186,8 +237,9 @@ const Detail = () => {
                       thumbnail:
                         "https://prothechnics-images.s3.us-east-2.amazonaws.com/products/no-imgen-available.svg",
                       originalAlt: `${product.name} Missing Image ${index + 1}`,
-                      thumbnailAlt: `${product.name} Missing Image ${index + 1
-                        }`,
+                      thumbnailAlt: `${product.name} Missing Image ${
+                        index + 1
+                      }`,
                     })),
                   ]}
                   autoPlay={false}
@@ -342,12 +394,10 @@ const Detail = () => {
           </div>
           <div className="comentarios-container">
             <h2>Opiniones del producto:</h2>
-            
-              <RatingAverage productId={product.id} fetchDetails={false} />
-            
-            
-              <RatingAverage productId={product.id} fetchDetails={true} />
-            
+
+            <RatingAverage productId={product.id} fetchDetails={false} />
+
+            <RatingAverage productId={product.id} fetchDetails={true} />
           </div>
         </div>
       ) : (
