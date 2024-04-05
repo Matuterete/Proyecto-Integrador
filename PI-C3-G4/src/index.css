@@ -398,7 +398,72 @@ p {
   border: 1px solid #D7DDE2;
 }
 
+
+/* ========== RATING AVERAGE  ========== */
+.rating-average-container {
+  font-size: 1rem;
+  color: #909aa5;
+  padding: 20px;
+}
+
+.name-rating-average {
+  font-size: 1.2em;
+}
+
+.rating-average-container span {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.star-container {
+  vertical-align: bottom;
+}
+
+.rating-details {
+  display: flex;
+  gap: 2rem;
+}
+
+.ratings-amount {
+  font-size: 0.7rem;
+  padding-top: 0.2rem;
+}
+
+.rating-detail {
+  border: 1px solid #3A4047;
+  padding: 10px;
+  border-radius: 12px;
+  width: 250px;
+}
+
+.date-rating {
+  text-align: right;
+}
+
 @media (max-width: 425px) {
+
+  .rating-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .rating-detail {
+    border: 1px solid #3A4047;
+    padding: 10px;
+    border-radius: 12px;
+    width: 90%;
+    margin: auto;
+  }
+  .rating-average-container {
+    padding: 0px;
+  }
+
+}
+
+@media (max-width: 425px) {
+
 
   /* ========== SweetAlert2  ========== */
   .my-popup-class {
