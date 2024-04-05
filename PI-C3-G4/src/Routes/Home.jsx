@@ -18,13 +18,15 @@ const Home = () => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
   const [productosRecomendados, setProductosRecomendados] = useState([]);
   const [productosPorCategoria, setProductosPorCategoria] = useState([]);
-  const [mostrarProductosPorCategoria, setMostrarProductosPorCategoria] = useState(false);
+  const [mostrarProductosPorCategoria, setMostrarProductosPorCategoria] =
+    useState(false);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(6);
   const [showCalendars, setShowCalendars] = useState(false);
+  const [showCancel, setShowCancel] = useState(false);
   const [userData] = useState(JSON.parse(sessionStorage.getItem("userData")));
   const navigate = useNavigate();
 
@@ -36,7 +38,7 @@ const Home = () => {
     slidesToScroll: 3,
     draggable: true,
     focusOnSelect: false,
-  })
+  });
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -47,11 +49,9 @@ const Home = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-
   useEffect(() => {
     const handleResize = () => {
-      const slidesToShow =
-        window.innerWidth < 426 ? 2 : 3;
+      const slidesToShow = window.innerWidth < 426 ? 2 : 3;
       setSliderSettings({
         ...sliderSettings,
         slidesToShow,
@@ -59,7 +59,7 @@ const Home = () => {
       });
     };
 
-    handleResize()
+    handleResize();
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -132,16 +132,17 @@ const Home = () => {
         title: "Seleccione un producto",
         text: "Primero debe seleccionar un producto antes de continuar.",
         customClass: {
-          popup: 'my-popup-class'
-        }
+          popup: "my-popup-class",
+        },
       });
     } else {
       setShowCalendars((prevShowCalendars) => !prevShowCalendars);
     }
   };
 
-  const handleAvailabilityCheck = async () => {
+  const handleAvailabilityCheck = async (show = true) => {
     try {
+      setShowCancel(show);
       if (!userData) {
         Swal.fire({
           icon: "info",
@@ -151,8 +152,8 @@ const Home = () => {
           confirmButtonText: "Iniciar sesión",
           cancelButtonText: "Registrarse",
           customClass: {
-            popup: 'my-popup-class'
-          }
+            popup: "my-popup-class",
+          },
         }).then((result) => {
           if (result.isConfirmed) {
             navigate("/login");
@@ -188,6 +189,12 @@ const Home = () => {
     setSelectedEndDate(ranges.selection.endDate);
   };
 
+  const handleCancel = () => {
+    setSelectedStartDate(null);
+    setSelectedEndDate(null);
+    setShowCancel(false);
+  };
+
   return (
     <div className="body-container">
       <div className="Search-Calendar">
@@ -195,7 +202,10 @@ const Home = () => {
 
         <div className="search-container">
           <Buscador onSelectProduct={handleProductoSelect} />
-          <button className="button buttonBig buttonTerciary" onClick={handleToggleCalendars}>
+          <button
+            className="button buttonBig buttonTerciary"
+            onClick={handleToggleCalendars}
+          >
             <IoCalendarOutline className="calendar-icon" />
             {selectedStartDate && selectedEndDate
               ? `${selectedStartDate.toLocaleDateString()} - ${selectedEndDate.toLocaleDateString()}`
@@ -216,12 +226,20 @@ const Home = () => {
           </div>
         )}
         {selectedProduct && selectedStartDate && selectedEndDate && (
-          <button
-            className="button buttonBig buttonTerciary"
-            onClick={handleAvailabilityCheck}
-          >
-            Consultar Disponibilidad
-          </button>
+          <div className="CalendarButtons">
+            <button
+              className="button buttonBig buttonTerciary"
+              onClick={handleAvailabilityCheck}
+            >
+              Consultar Disponibilidad
+            </button>
+            <button
+              className="button buttonBig buttonSecundary"
+              onClick={handleCancel}
+            >
+              Cancelar
+            </button>
+          </div>
         )}
       </div>
 
@@ -230,10 +248,11 @@ const Home = () => {
           {categorias.map((category) => (
             <div
               key={category.id}
-              className={`categoria ${categoriaSeleccionada === category.title
+              className={`categoria ${
+                categoriaSeleccionada === category.title
                   ? "selected-item-border-green"
                   : ""
-                }`}
+              }`}
               onClick={() => handleCategoriaClick(category.id, category.title)}
             >
               <img src={category.url} alt={category.title} />
@@ -275,7 +294,7 @@ const Home = () => {
           <p className="cardTitle-2">Recomendados</p>
           <div className="cardGrid-2">
             {productosRecomendados.length === 0 &&
-              !mostrarProductosPorCategoria ? (
+            !mostrarProductosPorCategoria ? (
               <div className="loader-container">
                 <div className="loader"></div>
               </div>
