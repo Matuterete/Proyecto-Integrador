@@ -57,13 +57,6 @@ const Card = ({ product, userData }) => {
 
   return (
     <div className="card">
-      <button onClick={handleLikeClick} className="fav-button">
-        {isProductLiked ? (
-          <FontAwesomeIcon icon={faHeart} className="liked-icon" />
-        ) : (
-          <FontAwesomeIcon icon={faHeart} className="not-liked-icon" />
-        )}
-      </button>
       <Link to={"/detail/" + product.id} className="h2card">
         <div className="card-img">
           <img src={product.images[0].url} alt="" />

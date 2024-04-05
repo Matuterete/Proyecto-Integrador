@@ -189,7 +189,7 @@ const Home = () => {
   };
 
   return (
-    <div className="body img-background">
+    <div className="body-container">
       <div className="Search-Calendar">
         <h1>Encontrá la mejor tecnología para tus eventos</h1>
 

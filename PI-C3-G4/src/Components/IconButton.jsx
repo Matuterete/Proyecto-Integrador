@@ -26,6 +26,9 @@ const IconButton = ({ onClick, children, className, icon }) => {
         else if (icon == 'star') {
             setFaIcon(faStar);
         }
+        else if (icon == 'plus') {
+            setFaIcon(faStar);
+        }
       }, []);
     
     return (

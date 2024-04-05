@@ -9,14 +9,12 @@ import AdminUsers from './AdminUsers.jsx'
 const AdminPage = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [sessionData, setSessionData] = useState(null);
-
   const [elementSelected, setElementSelected] = useState('productos')
-
+ 
   useEffect(() => {
     const checkWindowSize = () => {
       setIsMobile(window.innerWidth < 768);
-    };
-
+    };   
     checkWindowSize();
     window.addEventListener('resize', checkWindowSize);
 
@@ -42,7 +40,7 @@ const AdminPage = () => {
   }
 
   return (
-    <div className='bodyPage img-background'>
+    <div className='bodyPage '>
       <div className='adminMenu'>
         <div className='Menu'>
           <div className='ButtonContainer'>
