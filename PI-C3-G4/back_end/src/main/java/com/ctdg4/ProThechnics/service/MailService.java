@@ -41,6 +41,9 @@ public class MailService {
                 "        .caja {" +
                 "            width: 400px;" +
                 "            margin: 0 auto;" +
+                "            text-align: center;" +
+                "            font-size: 10px;" +
+                "            font-weight: bold;" +
                 "        }" +
                 "        .product-image {" +
                 "            max-width: 400px;" +
@@ -50,21 +53,34 @@ public class MailService {
                 "</head>" +
                 "<body>" +
                 "    <div class=\"container\">" +
-                "        <img src=\"https://prothechnics-images.s3.us-east-2.amazonaws.com/site/mail_header_small.png\" alt=\"ProThechics Soluciones\">" +
+                "        <a href=\"https://www.prothechnics.shop/detail/" + mailStructure.getProductId() + "\">" +
+                "            <img src=\"https://prothechnics-images.s3.us-east-2.amazonaws.com/site/mail_header_small.png\" alt=\"ProThechics Soluciones\">" +
+                "        </a>" +
                 "        <p>Hola " + mailStructure.getName() + ",</p>" +
                 "        <p>Gracias por elegirnos para tu reciente alquiler de:</p>" +
                 "        <h1 style=\"text-align: center; font-weight: bold;\">" + mailStructure.getProductName() + "</h1>" +
                 "        <div class=\"caja\">" +
-                "            <img src=\"" + mailStructure.getImageUrl() + "\" alt=\"" + mailStructure.getProductName() + "\" class=\"product-image\">" +
+                "            <a href=\"https://www.prothechnics.shop/detail/" + mailStructure.getProductId() + "\">" +
+                "                <img src=\"" + mailStructure.getImageUrl() + "\" alt=\"" + mailStructure.getProductName() + "\" class=\"product-image\">" +
+                "            </a>" +
+                "        <span>Cliquea en la imagen para ver los detalles del producto. </span>" +
                 "        </div>" +
-                "        <p>La reserva se realizó el " + mailStructure.getRentDateTime() + " por un total de " + mailStructure.getDays() + " días.</p>" +
-                "        <p>El valor total del alquiler es de USD " + mailStructure.getTotalAmount() + ".</p>" +
+                "        <br><p>La reserva se realizó el " + mailStructure.getRentDateTime() + ".</p>" +
+                "        <p>Aquí tienes los detalles:</p>" +
+                "        <ul>" +
+                "            <li>Fecha Inicio: " + mailStructure.getDateStart() + "</li>" +
+                "            <li>Fecha Fin: " + mailStructure.getDateEnd() + "</li>" +
+                "            <li>Cantidad de Días: " + mailStructure.getDays() + "</li>" +
+                "            <li>Precio por Día: " + mailStructure.getDayAmount() + "</li>" +
+                "            <li>Costo Total: " + mailStructure.getTotalAmount() + "</li>" +
+                "        </ul>" +
                 "        <p>No dudes en contactarnos si tienes alguna pregunta. Puedes encontrarnos en nuestra web <a href=\"https://www.prothechnics.shop\">www.prothechnics.shop</a> o también puedes contactarnos por WhatsApp.</p>" +
                 "        <p>Gracias nuevamente por tu confianza.</p>" +
                 "        <p>Saludos, el equipo de ProThechnics Soluciones.</p>" +
                 "    </div>" +
                 "</body>" +
                 "</html>";
+
 
         helper.setText(htmlContent, true);
         mailSender.send(message);

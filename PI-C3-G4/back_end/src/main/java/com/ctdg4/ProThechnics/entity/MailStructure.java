@@ -9,7 +9,11 @@ public class MailStructure {
     private String name;
     private String rentDateTime;
     private String productName;
+    private String productId;
     private String imageUrl;
+    private String dateStart;
+    private String dateEnd;
     private String days;
+    private String dayAmount;
     private String totalAmount;
 }
