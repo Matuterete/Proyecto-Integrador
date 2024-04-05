@@ -38,7 +38,7 @@ const Card = ({ product, userData }) => {
         cancelButtonText: "Registrarse",
         showCloseButton: true,
         customClass: {
-          popup: 'my-popup-class' // Agrega una clase personalizada al contenedor del SweetAlert2
+          popup: "my-popup-class" // Agrega una clase personalizada al contenedor del SweetAlert2
         }
       }).then((result) => {
         if (result.isConfirmed) {
@@ -72,7 +72,7 @@ const Card = ({ product, userData }) => {
         </div>
         <div className="social">
           <div>
-            <RatingAverage productId={product.id} fetchDetails={false}/>
+            <RatingAverage productId={product.id} fetchDetails={false} />
           </div>
           <div className="favAndShare">
             <button onClick={handleLikeClick} className="mobile-fav">
@@ -84,10 +84,7 @@ const Card = ({ product, userData }) => {
             </button>
             <Share
               onClick={handleShareClick}
-              url={"/detail/" + product.id}
-              image={product.images[0].url}
-              nombre={product.name}
-              description={product.description}
+              product={product} // Pasar product como prop
             />
           </div>
         </div>
