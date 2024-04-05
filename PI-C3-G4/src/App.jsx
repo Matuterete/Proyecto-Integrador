@@ -4,7 +4,7 @@ import {
   Route,
   BrowserRouter,
 } from "react-router-dom";
-import { FavProvider } from './Components/FavContext.jsx'; 
+import { FavProvider } from './Components/FavContext.jsx';
 import { useContext } from "./Utils/Context";
 import Navbar from "./Components/Navbar";
 import Home from "./Routes/Home";
@@ -23,6 +23,8 @@ import ProtectedRoute from "./Utils/ProtectedRoute";
 import { useEffect, useState } from "react";
 import UserProfile from "./Routes/UserProfile";
 import ReactModal from 'react-modal';
+import Swal from 'sweetalert2';
+import 'sweetalert2/src/sweetalert2.scss';
 
 function App() {
   const { state } = useContext();
@@ -30,7 +32,7 @@ function App() {
   const [sessionData, setSessionData] = useState(
     sessionStorage.getItem("userData") || ""
   );
-  
+
   useEffect(() => {
     ReactModal.setAppElement('#root');
   }, []);

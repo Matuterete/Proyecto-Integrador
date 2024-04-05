@@ -88,8 +88,11 @@ const UserProfile = () => {
       showCancelButton: true,
       confirmButtonColor: "#459F53",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Sí cancelarla",
-      cancelButtonText: "No cancelarla",
+      confirmButtonText: "Sí cancelar",
+      cancelButtonText: "No cancelar",
+      customClass: {
+        popup: 'my-popup-class' // Agrega una clase personalizada al contenedor del SweetAlert2
+      }
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
@@ -109,6 +112,9 @@ const UserProfile = () => {
         title: "Aviso",
         text: "No se puede calificar el producto hasta que se haya finalizado la reserva.",
         icon: "warning",
+        customClass: {
+          popup: 'my-popup-class' // Agrega una clase personalizada al contenedor del SweetAlert2
+        }
       });
     } else {
       setShowRatingModal(true);
@@ -146,6 +152,9 @@ const UserProfile = () => {
           title: "¡Éxito!",
           text: "La calificación se ha enviado correctamente. Muchas gracias",
           icon: "success",
+          customClass: {
+            popup: 'my-popup-class'
+          }
         });
       }
     } catch (error) {
@@ -154,6 +163,9 @@ const UserProfile = () => {
         title: "Error",
         text: "Ocurrió un error al enviar la calificación. Por favor, inténtalo de nuevo más tarde.",
         icon: "error",
+        customClass: {
+          popup: 'my-popup-class'
+        }
       });
     }
   };

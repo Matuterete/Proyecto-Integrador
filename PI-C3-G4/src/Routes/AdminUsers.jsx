@@ -73,7 +73,10 @@ function AdminUsers() {
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
       confirmButtonText: 'Sí, eliminarlo',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        popup: 'my-popup-class'
+      }
     }).then((result) => {
       if (result.isConfirmed) {
         requestToAPI(`users/delete/id/${userId}`, 'DELETE')
@@ -91,7 +94,10 @@ function AdminUsers() {
               title: 'Error inesperado',
               text: 'Hubo un error al intentar eliminar el usuario',
               showConfirmButton: false,
-              timer: 2000
+              timer: 2000,
+              customClass: {
+                popup: 'my-popup-class'
+              }
             });
           });
       }

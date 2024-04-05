@@ -164,9 +164,23 @@ main {
 }
 
 .form-group label {
-  display: block;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 5px;
   color: #04dad3;
+}
+
+.form-group input {
+  width: 94%;
+  padding: 8px;
+  padding-left: 20px;
+  border: none;
+  background-color: transparent;
+  border-radius: 12px;
+  border: 1px solid #0f73ed;
+  height: 30px;
+  font-size: 18px;
+  color: white;
 }
 
 .form-group-rate input {
@@ -390,13 +404,88 @@ p {
 }
 
 /* ========== SweetAlert2  ========== */
-.my-swal-text {
-  font-size: 10px !important;
+.my-popup-class {
+  background-color: #1F2227;
+  color: #D7DDE2;
+  border-radius: 12px;
+  border: 1px solid #D7DDE2;
+}
+
+
+/* ========== RATING AVERAGE  ========== */
+.rating-average-container {
+  font-size: 1rem;
+  color: #909aa5;
+  padding: 20px;
+}
+
+.name-rating-average {
+  font-size: 1.2em;
+}
+
+.rating-average-container span {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.star-container {
+  vertical-align: bottom;
+}
+
+.rating-details {
+  display: flex;
+  gap: 2rem;
+}
+
+.ratings-amount {
+  font-size: 0.7rem;
+  padding-top: 0.2rem;
+}
+
+.rating-detail {
+  border: 1px solid #3A4047;
+  padding: 10px;
+  border-radius: 12px;
+  width: 250px;
+}
+
+.date-rating {
+  text-align: right;
 }
 
 @media (max-width: 425px) {
+
+  .rating-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .rating-detail {
+    border: 1px solid #3A4047;
+    padding: 10px;
+    border-radius: 12px;
+    width: 90%;
+    margin: auto;
+  }
+  .rating-average-container {
+    padding: 0px;
+  }
+
+}
+
+@media (max-width: 425px) {
+
+
+  /* ========== SweetAlert2  ========== */
+  .my-popup-class {
+    width: 80vw;
+    font-size: 12px;
+  }
+
   h2 {
-    font-size: 0.8em;
+    font-size: 1em;
   }
 
   h1 {
@@ -420,7 +509,7 @@ p {
   }
 
   p {
-    font-size: 0.8em;
+    font-size: 1em;
   }
 
   /* ========== LISTA CRUD mobile ========== */

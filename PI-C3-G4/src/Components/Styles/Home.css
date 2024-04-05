@@ -337,7 +337,7 @@
 }
 
 .producto {
-  width: 70%;
+  width: 80%;
 }
 
 .pagination-container {
@@ -364,6 +364,7 @@
   grid-gap: 3rem;
   width: 100%;
 }
+
 
 @media (max-width: 425px) {
   .search-container {

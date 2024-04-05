@@ -65,16 +65,32 @@ const RatingAverage = ({ productId, fetchDetails }) => {
       {fetchDetails ? (
         <div className="rating-details">
           {details.map((detail, index) => (
-            <div key={index} className={`rating-detail-${index}`}>
-              <p>
+
+            <div key={index} className={`rating-detail-${index} rating-detail`}>
+
+              <p className="name-rating-average">
                 {detail.userName} {detail.userLastName}
               </p>
+
+              <span>
+                <StarRatings
+                  rating={detail.rating}
+                  starRatedColor="#41E55B"
+                  starEmptyColor="#194F32"
+                  numberOfStars={5}
+                  starDimension={starSize}
+                  starSpacing="0.125rem"
+                />
+              </span>
+
               <p>
-                {detail.rating} - {detail.review}
+                {detail.review}
               </p>
-              <p>{formatDate(detail.date)}</p>
+
+              <p className="date-rating">{formatDate(detail.date)}</p>
             </div>
           ))}
+
         </div>
       ) : (
         <span>

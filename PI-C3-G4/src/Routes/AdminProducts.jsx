@@ -72,27 +72,33 @@ function AdminProducts() {
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
       confirmButtonText: 'Sí, eliminarlo',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        popup: 'my-popup-class'
+      }
     }).then((result) => {
       if (result.isConfirmed) {
         requestToAPI(`products/delete/id/${productId}`, 'DELETE')
-        .then(() => {
-          setProducts(products.filter(product => product.id !== productId));
-          Swal.fire(
-            '¡Eliminado!',
-            'Producto eliminado correctamente',
-            'success'
-          );
-        })
-        .catch(error => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error inesperado',
-            text: 'Hubo un error al intentar eliminar el producto',
-            showConfirmButton: true
+          .then(() => {
+            setProducts(products.filter(product => product.id !== productId));
+            Swal.fire(
+              '¡Eliminado!',
+              'Producto eliminado correctamente',
+              'success'
+            );
+          })
+          .catch(error => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error inesperado',
+              text: 'Hubo un error al intentar eliminar el producto',
+              showConfirmButton: true,
+              customClass: {
+                popup: 'my-popup-class'
+              }
+            });
+            console.error(error);
           });
-          console.error(error);
-        });
       }
     });
   };
@@ -106,9 +112,9 @@ function AdminProducts() {
             <IconButton className='button buttonBlue buttonBig' onClick={handleAddProduct} icon="plus">Agregar Producto</IconButton>
           </div>
           <ProductList
-              products={currentProducts}
-              onEdit={handleEditProduct}
-              onDelete={handleDeleteProduct} />
+            products={currentProducts}
+            onEdit={handleEditProduct}
+            onDelete={handleDeleteProduct} />
           <Pagination
             productsPerPage={productsPerPage}
             totalProducts={products.length}
@@ -117,10 +123,10 @@ function AdminProducts() {
         </div>
         
       )}
-      {showProductAddForm && 
+      {showProductAddForm &&
         <ProductAddForm onAdd={handleSaveProduct} onCancel={handleCancelProduct} />
       }
-      {editingProduct && 
+      {editingProduct &&
         <ProductEditForm product={editingProduct} onSave={handleSaveEdit} onCancel={handleCancelProduct} />
       }
     </div>

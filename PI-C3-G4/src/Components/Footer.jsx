@@ -66,7 +66,10 @@ const Footer = () => {
               </li>
             </ul>`,
       showCloseButton: true,
-      focusConfirm: false
+      focusConfirm: false,
+      customClass: {
+        popup: 'my-popup-class' // Agrega una clase personalizada al contenedor del SweetAlert2
+      }
     });
   };
 
