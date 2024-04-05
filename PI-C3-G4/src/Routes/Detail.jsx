@@ -122,7 +122,7 @@ const Detail = () => {
         confirmButtonText: "Iniciar sesión",
         cancelButtonText: "Registrarse",
         customClass: {
-          popup: 'my-popup-class' // Agrega una clase personalizada al contenedor del SweetAlert2
+          popup: 'my-popup-class' 
         }
       }).then((result) => {
         if (result.isConfirmed) {

@@ -52,7 +52,9 @@ const Navbar = () => {
       }
     }).then((result) => {
       if (result.isConfirmed) {
+        
         sessionStorage.removeItem("userData");
+        sessionStorage.removeItem("redirectPath"); 
         setSessionData(null);
         Swal.fire("Sesión cerrada", "", "success").then(() => {
           handleReload();
@@ -60,6 +62,7 @@ const Navbar = () => {
       }
     });
   };
+  
 
   const handleReload = () => {
     navigate("/");
