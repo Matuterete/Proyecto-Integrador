@@ -26,10 +26,10 @@ const RatingAverage = ({ productId, fetchDetails }) => {
           if (fetchDetails) {
             setDetails(response);
           }
-        } else {
-          console.log(
-            `No se encontraron calificaciones para el producto con ID: ${productId}`
-          );
+        // } else {
+        //   console.log(
+        //     `No se encontraron calificaciones para el producto con ID: ${productId}`
+        //   );
           setTotalRatings(0);
         }
       } catch (error) {

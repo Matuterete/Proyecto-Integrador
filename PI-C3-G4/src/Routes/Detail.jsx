@@ -77,7 +77,7 @@ const Detail = () => {
       };
 
       const response = await requestToAPI("rentals/add", "POST", data);
-      console.log("Reserva exitosa:", response);
+      // console.log("Reserva exitosa:", response);
 
       const { dateRent, daysTotal, amount } = response;
       const rentDate = new Date(dateRent);
@@ -129,7 +129,7 @@ const Detail = () => {
         "POST",
         mailData
       );
-      console.log("Status Email:", mailResponse);
+      // console.log("Status Email:", mailResponse);
 
       Swal.fire({
         icon: "success",

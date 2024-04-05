@@ -63,9 +63,9 @@ function RegistroUsuario() {
         ...formData,
       })
       .then(
-        () => {
-          console.log("¡ÉXITO!");
-        },
+        // () => {
+        //   console.log("¡ÉXITO!");
+        // },
         (error) => {
           console.log("FALLÓ...", error.text);
         }

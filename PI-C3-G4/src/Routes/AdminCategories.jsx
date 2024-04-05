@@ -159,7 +159,7 @@ const AdminFeatures = () => {
   const handleInput = (objeto) => {
     setMostrarFormularioEdit({ mostrarForm: true, idEdit: objeto.id });
     setOriginalUrl(objeto.url);
-    console.log(originalUrl);
+    // console.log(originalUrl);
   };
 
   const handleInputEdit = (e) => {
@@ -237,13 +237,13 @@ const AdminFeatures = () => {
           const featureImages = responseData.find(
             (feature) => feature.id === key
           ).url;
-          console.log(featureImages);
+          // console.log(featureImages);
 
           // Borrar las imágenes del bucket S3
           if (featureImages) {
             const deleteFormData = new FormData();
             deleteFormData.append("url", featureImages);
-            console.log(deleteFormData);
+            // console.log(deleteFormData);
             await requestToAPI("storage/deleteFile", "DELETE", deleteFormData);
           }
 

@@ -15,7 +15,7 @@ export const FavProvider = ({ children }) => {
     try {
       const response = await requestToAPI(`users/find/id/${userId}`, "GET");
       setFavoriteProducts(response.favorites || []);
-      console.log(favoriteProducts)
+     
     } catch (error) {
       console.error("Error fetching favorite products:", error);
     } finally {

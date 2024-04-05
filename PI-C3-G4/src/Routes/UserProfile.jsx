@@ -145,7 +145,7 @@ const UserProfile = () => {
         "POST",
         ratingData
       );
-      console.log(response);
+      // console.log(response);
       if (response.userId > 0) {
         setShowRatingModal(false);
         Swal.fire({

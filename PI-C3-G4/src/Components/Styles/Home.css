@@ -209,12 +209,6 @@
     justify-content: center;
   }
 
-  .Button-calendario {
-    height: 15vw;
-    width: 30vw;
-    text-align: center;
-    font-size: small;
-  }
 }
 
 
@@ -243,29 +237,11 @@
 .search-container {
   display: flex;
   align-items: center;
-  gap: 20px;
-}
-
-
-.Button-calendario {
-  font-size: medium;
-  background-color: #3A4047;
-  color: #289e3b;
-  border-radius: 8px;
-  border: 1px solid #289e3b;
-  cursor: pointer;
-  flex: 0 0 auto; 
-  width: 120px; 
-  transition: border-color 0.3s ease;
 }
 
 .buttons {
   display: flex;
   gap: 20px;
-}
-
-.Button-calendario:hover {
-  border-color: white
 }
 
 .calendars-container {
@@ -380,6 +356,9 @@
   max-width: 1000px;
   width: 80vw;
 }
+.search-container .buttonBig{
+  height: 40px;
+}
 
 @media (max-width: 425px) {
   /* ========== CATEGORIA ========== */
@@ -429,5 +408,13 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 0.2rem;
     width: 95vw;
+  }
+
+  .search-container {
+    align-items: center;
+    flex-direction: column;
+  }
+  .search-container .buttonBig{
+    width: 80vw;
   }
 }

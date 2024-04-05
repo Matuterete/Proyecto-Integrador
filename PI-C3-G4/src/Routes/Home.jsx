@@ -195,7 +195,7 @@ const Home = () => {
 
         <div className="search-container">
           <Buscador onSelectProduct={handleProductoSelect} />
-          <button className="Button-calendario" onClick={handleToggleCalendars}>
+          <button className="button buttonBig buttonTerciary" onClick={handleToggleCalendars}>
             <IoCalendarOutline className="calendar-icon" />
             {selectedStartDate && selectedEndDate
               ? `${selectedStartDate.toLocaleDateString()} - ${selectedEndDate.toLocaleDateString()}`
@@ -217,7 +217,7 @@ const Home = () => {
         )}
         {selectedProduct && selectedStartDate && selectedEndDate && (
           <button
-            className="Button-calendario"
+            className="button buttonBig buttonTerciary"
             onClick={handleAvailabilityCheck}
           >
             Consultar Disponibilidad
