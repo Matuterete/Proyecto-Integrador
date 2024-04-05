@@ -37,7 +37,7 @@ const Share = ({ url, image, nombre, description }) => {
             width: "550px",
             height: "450px",
             backgroundColor: "transparent",
-            borderRadius: "1rem",
+            borderRadius: "12px",
             border:"none",
             color: "#D7DDE2",
             display: "flex",
@@ -52,10 +52,10 @@ const Share = ({ url, image, nombre, description }) => {
           </div>
           <ShareSocial url={url} image={image} nombre={nombre} />
           <div className="modal-buttons">
-            <button className="button buttonTerciary" onClick={handleButtonClick}>
+            <button className="button buttonBig buttonTerciary" onClick={handleButtonClick}>
               Ver Datalles
             </button>
-            <button className="button buttonSecundary" onClick={closeModal}>
+            <button className="button buttonBig buttonSecundary" onClick={closeModal}>
               Cerrar
             </button>
           </div>

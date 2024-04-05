@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import requestToAPI from "../services/requestToAPI";
-import chroma from "chroma-js"; 
+import chroma from "chroma-js";
 import "../Components/Styles/Buscador.css";
 
 const Buscador = ({ onSelectProduct }) => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
-
+  const [searchHeight, setSearchHeight] = useState()
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -68,19 +68,21 @@ const Buscador = ({ onSelectProduct }) => {
   const colourStyles = {
     control: styles => ({
       ...styles,
-      backgroundColor: '#3A4047',
-      borderRadius: 8,
-      border: '1px solid #289e3b',
+      backgroundColor: '#1F2227',
+      borderRadius: 12,
+      border: '1px solid #D7DDE2',
+      height:'40px'
+
     }),
     option: (styles, { data, isDisabled, isFocused, isSelected }) => {
       return {
         ...styles,
-        backgroundColor: isDisabled ? 'red' : (isSelected ? '#289e3b' : '#3A4047'),
-        color: isSelected ? 'white' : '#289e3b',
+        backgroundColor: isDisabled ? 'red' : (isSelected ? '#3A4047' : '#3A4047'),
+        color: isSelected ? '#41E55B' : '#D7DDE2',
       };
     },
-    input: styles => ({ ...styles, color: '#289e3b' }),
-    singleValue: styles => ({ ...styles, color: '#289e3b' }),
+    input: styles => ({ ...styles, color: '#D7DDE2' }),
+    singleValue: styles => ({ ...styles, color: '#D7DDE2' }),
   };
 
   return (
@@ -95,7 +97,7 @@ const Buscador = ({ onSelectProduct }) => {
         className="react-select-container"
         classNamePrefix="react-select"
         formatOptionLabel={formatOptionLabel}
-        styles={colourStyles} 
+        styles={colourStyles}
       />
     </div>
   );

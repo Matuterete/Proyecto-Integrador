@@ -131,7 +131,7 @@
     display: block;
   }
   .navbar-logo img{
-    width: 200px;
+    width: 220px;
   }
   .buttonCerrarMenu{
     height: 30px;
@@ -173,7 +173,7 @@
     color: white;
     background-color: transparent;
     border: none;
-    font-size: 1.6em;
+    font-size: 2em;
     padding-right: 16px;
   }
   .menu p{
