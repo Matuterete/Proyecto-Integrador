@@ -22,7 +22,7 @@
 
 .navbar-logo {
   display: flex;
-  padding-left: 60px;
+  margin-left: 60px;
 }
 
 .navbar-logo:hover {

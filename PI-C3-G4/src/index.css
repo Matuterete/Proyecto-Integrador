@@ -589,3 +589,14 @@ p {
     width: 0vw;
   }
 }
+
+@media (max-width: 768px) {
+  
+  .imgLogin img {
+    display: none;
+  }
+  .imgLogin {
+    width: 0vw;
+  }
+
+}
