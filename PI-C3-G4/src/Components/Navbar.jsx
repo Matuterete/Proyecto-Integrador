@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Logo from "../assets/Logo-2.png";
+import FlechaAbajo from "../assets/FlechaAbajo.png"
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "../Utils/Context.jsx";
 import "./Styles/Navbar.css";
@@ -159,7 +160,7 @@ const Navbar = () => {
                   <div className="dropbtn">
                     <div className="user-logo-container">
                       <button className="user-logo">{userLogo}</button>
-                      <img src="\src\assets\FlechaAbajo.png" alt="" />
+                      <img src={FlechaAbajo} alt="" />
                     </div>
                   </div>
 

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import "../Components/Styles/UserProfile.css";
 import { useFavContext } from "../Components/FavContext.jsx";
 import Card from "../Components/Card.jsx";
+import Usuario from "../assets/usuario.svg";
 import IconButton from "../Components/IconButton";
 import requestToAPI from "../services/requestToAPI";
 import Swal from "sweetalert2";
@@ -91,8 +92,8 @@ const UserProfile = () => {
       confirmButtonText: "Sí cancelar",
       cancelButtonText: "No cancelar",
       customClass: {
-        popup: 'my-popup-class' // Agrega una clase personalizada al contenedor del SweetAlert2
-      }
+        popup: "my-popup-class", // Agrega una clase personalizada al contenedor del SweetAlert2
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
@@ -113,8 +114,8 @@ const UserProfile = () => {
         text: "No se puede calificar el producto hasta que se haya finalizado la reserva.",
         icon: "warning",
         customClass: {
-          popup: 'my-popup-class' // Agrega una clase personalizada al contenedor del SweetAlert2
-        }
+          popup: "my-popup-class", // Agrega una clase personalizada al contenedor del SweetAlert2
+        },
       });
     } else {
       setShowRatingModal(true);
@@ -153,8 +154,8 @@ const UserProfile = () => {
           text: "La calificación se ha enviado correctamente. Muchas gracias",
           icon: "success",
           customClass: {
-            popup: 'my-popup-class'
-          }
+            popup: "my-popup-class",
+          },
         });
       }
     } catch (error) {
@@ -164,15 +165,13 @@ const UserProfile = () => {
         text: "Ocurrió un error al enviar la calificación. Por favor, inténtalo de nuevo más tarde.",
         icon: "error",
         customClass: {
-          popup: 'my-popup-class'
-        }
+          popup: "my-popup-class",
+        },
       });
     }
   };
 
-
-
-  const [ratingValue, setRatingValue] = useState(0)
+  const [ratingValue, setRatingValue] = useState(0);
   return (
     <div className="userprof ">
       <div className="adminMenu">
@@ -258,7 +257,6 @@ const UserProfile = () => {
                         <p>${objeto.amount} USD</p>
 
                         <div className="box-editar-eliminar">
-                          
                           <IconButton
                             className="button buttonSecundary"
                             onClick={() => handleCancelRental(objeto.id)}
@@ -309,7 +307,6 @@ const UserProfile = () => {
         }}
       >
         <div className="rate-modal">
-
           {/* <form className="form-rate form-group-rate" onSubmit={handleSubmitRating}>
             <label htmlFor="rating">Calificación: {selectedProduct && selectedProduct.productName}</label>
             <input
@@ -345,13 +342,20 @@ const UserProfile = () => {
               </button>
             </div>
           </form> */}
-          <form className="form-rate form-group-rate" onSubmit={handleSubmitRating}>
-            <label htmlFor="rating">Calificación: {selectedProduct && selectedProduct.productName}</label>
+          <form
+            className="form-rate form-group-rate"
+            onSubmit={handleSubmitRating}
+          >
+            <label htmlFor="rating">
+              Calificación: {selectedProduct && selectedProduct.productName}
+            </label>
             <Rating
               initialRating={ratingValue}
               onClick={(value) => setRatingValue(value)}
               emptySymbol={<span className="rating-star">&#9733;</span>}
-              fullSymbol={<span className="rating-star rating-star-active">&#9733;</span>}
+              fullSymbol={
+                <span className="rating-star rating-star-active">&#9733;</span>
+              }
             />
             <label htmlFor="review">Escribe tu opinion:</label>
             <textarea
@@ -381,11 +385,7 @@ const UserProfile = () => {
           <div>
             {userData && userData.user ? (
               <div className="user-card">
-                <img
-                  src="\src\assets\usuario.svg"
-                  alt="User Avatar"
-                  className="avatar"
-                />
+                <img src={Usuario} alt="User Avatar" className="avatar" />
                 <div className="user-info">
                   <h2>{userData.user.name + " " + userData.user.lastName}</h2>
                   <p>Email: {userData.user.email}</p>
