@@ -54,5 +54,8 @@
     width: 90%;
     margin: auto;
   }
+  .rating-average-container {
+    padding: 0px;
+  }
 
 }

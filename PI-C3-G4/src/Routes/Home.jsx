@@ -28,7 +28,7 @@ const Home = () => {
   const [userData] = useState(JSON.parse(sessionStorage.getItem("userData")));
   const navigate = useNavigate();
 
-  const [sliderSettings, setSliderSettings] = useState ({
+  const [sliderSettings, setSliderSettings] = useState({
     dots: true,
     infinite: true,
     speed: 500,
@@ -63,6 +63,8 @@ const Home = () => {
         slidesToScroll: slidesToShow,
       });
     };
+
+    handleResize()
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -195,7 +197,7 @@ const Home = () => {
     <div className="body img-background">
       <div className="Search-Calendar">
         <h1>Alquiler de equipos profecionales</h1>
-       
+
         <div className="search-container">
           <Buscador onSelectProduct={handleProductoSelect} />
           <button className="Button-calendario" onClick={handleToggleCalendars}>
@@ -233,11 +235,10 @@ const Home = () => {
           {categorias.map((category) => (
             <div
               key={category.id}
-              className={`categoria ${
-                categoriaSeleccionada === category.title
+              className={`categoria ${categoriaSeleccionada === category.title
                   ? "selected-item-border-green"
                   : ""
-              }`}
+                }`}
               onClick={() => handleCategoriaClick(category.id, category.title)}
             >
               <img src={category.url} alt={category.title} />
@@ -279,7 +280,7 @@ const Home = () => {
           <p className="cardTitle-2">Recomendados</p>
           <div className="cardGrid-2">
             {productosRecomendados.length === 0 &&
-            !mostrarProductosPorCategoria ? (
+              !mostrarProductosPorCategoria ? (
               <div className="loader-container">
                 <div className="loader"></div>
               </div>
