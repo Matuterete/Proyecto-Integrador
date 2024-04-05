@@ -2,11 +2,11 @@
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #D7DDE2;
+  color: #d7dde2;
 }
 
 .img-background {
-  background-color: #0D1117;
+  background-color: #0d1117;
 }
 
 body {
@@ -76,8 +76,8 @@ main {
 
 .buttonTerciary {
   border: none;
-  background-color: #28923C;
-  border: 1px solid #459F53;
+  background-color: #28923c;
+  border: 1px solid #459f53;
   color: #ffffff;
 }
 
@@ -102,7 +102,7 @@ main {
 }
 
 .selected-item-border-green {
-  border-bottom: 4px solid #41E55B;
+  border-bottom: 4px solid #41e55b;
 }
 
 .swal2-popup {
@@ -136,7 +136,9 @@ main {
   width: 400px;
   border-radius: 12px;
 }
-
+.spacer-form {
+  margin: 1.5rem 0;
+}
 .titleForm {
   display: flex;
   flex-direction: column;
@@ -215,7 +217,7 @@ main {
 }
 
 .container-add-button {
-  width: 900px;
+  width: 920px;
   margin: 0px auto;
   display: flex;
   justify-content: left;
@@ -227,7 +229,7 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  color: #D7DDE2;
+  color: #d7dde2;
 }
 
 .list-item button {
@@ -331,12 +333,23 @@ main {
   margin: 3px 10px;
 }
 
+.divSVG img {
+  width: 90%;
+  height: 90%;
+
+}
+
+.adminFeactures {
+  padding: 0;
+}
+
 .adminFeactures li p {
   margin: 2px 0px;
 }
 
 .divLi {
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -411,17 +424,13 @@ p {
   }
 
   /* ========== LISTA CRUD mobile ========== */
-  .adminFeactures {
-    padding: 0;
-  }
-
   .adminFeactures li {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: transparent;
-    border: 1px solid #3A4047;
+    border: 1px solid #3a4047;
     margin: 5px;
     width: 80vw;
     height: auto;
@@ -450,5 +459,4 @@ p {
     width: 40%;
     height: 35px;
   }
-
 }

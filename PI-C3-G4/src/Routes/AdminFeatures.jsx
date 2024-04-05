@@ -1,56 +1,135 @@
-import React, { useEffect, useState } from "react";
-import ReactModal from "react-modal";
+import { useEffect, useState } from "react";
 import "../Components/Styles/AdminFeatures.css";
 import requestToAPI from "../services/requestToAPI";
 import IconButton from "../Components/IconButton";
 import Swal from "sweetalert2";
+import Dropzone from "react-dropzone";
+import Pagination from "../Components/Pagination";
 
 const AdminFeatures = () => {
-  const [responseData, setResponseData] = useState([]);
+  const sectionTitle = "característica";
+  const urlTitle = "features";
+  const [responseData, setResponseData] = useState();
+  const [resposeDataCRUD, setResponseDataCRUD] = useState();
   const [dataRequest, setDataRequest] = useState({
     url: "",
     method: "",
     data: null,
     headers: {},
   });
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [mostrarFormularioEdit, setMostrarFormularioEdit] = useState({
+    mostrarForm: false,
+    idEdit: 0,
+  });
   const [inputValue, setInputValue] = useState("");
+  const [originalUrl, setOriginalUrl] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageEdit, setSelectedImageEdit] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(10);
 
   const toggleFormulario = () => {
-    setModalIsOpen(!modalIsOpen);
+    setMostrarFormulario(!mostrarFormulario);
   };
 
-  const handleChangeImage = (event) => {
-    setSelectedImage(event);
+  const fetchData = async () => {
+    try {
+      const url = urlTitle + "/find/all";
+      const method = "GET";
+      const data = null;
+      const headers = {};
+
+      setResponseData(await requestToAPI(url, method, data, headers));
+    } catch (error) {
+      // Manejo de errores
+      console.error("Error fetching data:", error);
+    }
   };
 
-  const handleChange = (event) => {
-    setInputValue(event.target.value);
+  useEffect(() => {
+    fetchData();
+  }, [resposeDataCRUD]);
+
+  useEffect(() => {
+    if (dataRequest.url !== "") {
+      async function fetchData() {
+        try {
+          const url = dataRequest.url;
+          const method = dataRequest.method;
+          const data = dataRequest.data;
+          const headers = dataRequest.headers;
+
+          setResponseDataCRUD(await requestToAPI(url, method, data, headers));
+        } catch (error) {
+          // Manejo de errores
+          console.error("Error fetching data:");
+        }
+      }
+      fetchData();
+    }
+  }, [dataRequest]);
+
+  const handleDrop = (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    const newFileName =
+      inputValue.toLowerCase().replace(/\s+/g, "_") +
+      "." +
+      file.name.split(".").pop();
+    const newFile = new File([file], newFileName, { type: file.type });
+    setSelectedImage(newFile);
   };
 
-  const handleChangeSend = () => {
+  const handleDropEdit = (acceptedFiles) => {
+    console.log(acceptedFiles);
+    const file = acceptedFiles[0];
+    const newFileName =
+      inputValue.toLowerCase().replace(/\s+/g, "_") +
+      "." +
+      file.name.split(".").pop();
+    const newFile = new File([file], newFileName, { type: file.type });
+    setSelectedImageEdit(newFile);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     if (inputValue !== "" && selectedImage !== null) {
-      Swal.fire({
-        icon: "success",
-        title: "Elemento agregado con éxito",
-        showConfirmButton: false,
-        timer: 1500, // Cerrar automáticamente después de 1.5 segundos
-      });
+      try {
+        const formData = new FormData();
+        formData.append("files", selectedImage);
+        const imageUploadResponse = await requestToAPI(
+          `storage/${urlTitle}/uploadFiles`,
+          "POST",
+          formData
+        );
 
-      setDataRequest({
-        ...dataRequest,
-        url: "features/add",
-        method: "POST",
-        data: {
-          id: "",
+        const [imageUrl] = imageUploadResponse;
+
+        await requestToAPI(`${urlTitle}/add`, "POST", {
           title: inputValue,
-          url: selectedImage,
-        },
-        headers: {},
-      });
+          url: imageUrl,
+        });
 
-      setModalIsOpen(false);
+        Swal.fire({
+          icon: "success",
+          title: `La ${sectionTitle} se agrego satisfactoriamente`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        fetchData();
+        setInputValue("");
+        setSelectedImage(null);
+        setMostrarFormulario(false);
+      } catch (error) {
+        console.error(`Error al agregar ${sectionTitle}:`, error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: `Hubo un error al agregar la ${sectionTitle}.`,
+        });
+      }
     } else {
       Swal.fire({
         icon: "warning",
@@ -60,160 +139,343 @@ const AdminFeatures = () => {
     }
   };
 
-  const handleInput = async (feature) => {
-    Swal.fire({
-      title: "Editar Caracteristica",
-      input: "text",
-      inputPlaceholder: "Nuevo nombre",
-      showCancelButton: true,
-      confirmButtonText: "Guardar",
-      cancelButtonText: "Cancelar",
-      showLoaderOnConfirm: true,
-      preConfirm: (newValue) => {
-        setDataRequest({
-          ...dataRequest,
-          url: "features/update",
-          method: "PUT",
-          data: {
-            id: feature.id,
-            title: newValue,
-            url: feature.url,
-          },
-          headers: {},
-        });
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve();
-          }, 1000);
-        });
-      },
-      allowOutsideClick: () => !Swal.isLoading(),
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire(
-          "¡Editado!",
-          "El elemento ha sido actualizado correctamente.",
-          "success"
+  const handleChangeCancel = () => {
+    setMostrarFormulario(false);
+    setMostrarFormularioEdit({ mostrarForm: false, idEdit: 0 });
+    setInputValue("");
+    setSelectedImage(null);
+    setSelectedImageEdit(null);
+  };
+
+  useEffect(() => {
+    if (mostrarFormularioEdit.idEdit !== 0) {
+      const selectedObject = responseData.find(
+        (objeto) => objeto.id === mostrarFormularioEdit.idEdit
+      );
+      setInputValue(selectedObject.title);
+      setSelectedImage(selectedObject.url);
+    }
+  }, [mostrarFormularioEdit]);
+
+  const handleInput = (objeto) => {
+    setMostrarFormularioEdit({ mostrarForm: true, idEdit: objeto.id });
+    setOriginalUrl(objeto.url);
+    console.log(originalUrl);
+  };
+
+  const handleInputEdit = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleInputUpdate = async () => {
+    try {
+      if (inputValue !== "" && selectedImageEdit !== null) {
+        const formData = new FormData();
+        formData.append("files", selectedImageEdit);
+        const imageUploadResponse = await requestToAPI(
+          `storage/${urlTitle}/uploadFiles`,
+          "POST",
+          formData
         );
+        const newImageUrl = imageUploadResponse[0];
+
+        await requestToAPI(`${urlTitle}/update`, "PUT", {
+          id: mostrarFormularioEdit.idEdit,
+          title: inputValue,
+          url: newImageUrl,
+        });
+      } else if (inputValue !== "") {
+        await requestToAPI(`${urlTitle}/update`, "PUT", {
+          id: mostrarFormularioEdit.idEdit,
+          title: inputValue,
+          url: originalUrl,
+        });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "Falta completar",
+          text: "Por favor, completa todos los campos antes de continuar.",
+        });
+        return;
       }
-    });
+
+      Swal.fire({
+        icon: "success",
+        title: `La ${sectionTitle} se actualizó satisfactoriamente`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      fetchData();
+      setInputValue("");
+      setSelectedImageEdit(null);
+      setMostrarFormularioEdit({ mostrarForm: false, idEdit: 0 });
+    } catch (error) {
+      console.error(`Error al actualizar ${sectionTitle}:`, error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: `Ocurrió un error al actualizar la ${sectionTitle}.`,
+      });
+    }
   };
 
   const handleClickDelete = (key) => {
     Swal.fire({
       title: "¿Estás seguro?",
-      text: "Una vez eliminado, no podrás recuperar este elemento",
+      text: `Una vez eliminada, no podrás recuperar esta ${sectionTitle}`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
-      confirmButtonText: "Sí, eliminarlo",
+      confirmButtonText: "Confirmar",
       cancelButtonText: "Cancelar",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        setDataRequest({
-          ...dataRequest,
-          url: `features/delete/id/${key}`,
-          method: "DELETE",
-          data: {},
-          headers: {},
-        });
-        Swal.fire("¡Eliminado!", "El elemento ha sido eliminado.", "success");
+        try {
+          // Obtener las URLs de las imágenes asociadas
+          const featureImages = responseData.find(
+            (feature) => feature.id === key
+          ).url;
+          console.log(featureImages);
+
+          // Borrar las imágenes del bucket S3
+          if (featureImages) {
+            const deleteFormData = new FormData();
+            deleteFormData.append("url", featureImages);
+            console.log(deleteFormData);
+            await requestToAPI("storage/deleteFile", "DELETE", deleteFormData);
+          }
+
+          // Eliminar de la base de datos
+          await requestToAPI(`${urlTitle}/delete/id/${key}`, "DELETE");
+
+          Swal.fire(
+            "¡Eliminada!",
+            `La ${sectionTitle} ha sido eliminada satisfactoriamente.`,
+            "success"
+          );
+          fetchData();
+        } catch (error) {
+          console.error(`Error al eliminar  ${sectionTitle}:`, error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: `Ocurrió un error al eliminar la ${sectionTitle}`,
+          });
+        }
       }
     });
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await requestToAPI("features/find/all", "GET");
-        setResponseData(response);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-    fetchData();
-  }, []);
+  // Obtener las características actuales dependiendo de la página actual
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = responseData
+    ? responseData.slice(indexOfFirstProduct, indexOfLastProduct)
+    : [];
+
+  // Cambiar de página
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="bodyFeatures img-background">
-      <div className="asdf">
-        <div className="space-between container-add-button">
-          <h2>Administrar de Caracteristicas</h2>
-          <IconButton
-            className="button buttonBlue buttonBig"
-            onClick={toggleFormulario}
-            icon="plus"
-          >
-            Agregar Caracteristica
-          </IconButton>
-        </div>
-        <ul className="adminFeactures">
-          {responseData.map((objeto, index) => (
-            <div className="divLi" key={objeto.id}>
-              <li className="list-item">
-                <div className="divSVG">
-                  <img src={objeto.url} alt={`Imagen ${objeto.id}`} />
-                </div>
-                <p>
-                  ID {objeto.id} - {objeto.title}
-                </p>
-                <div className="box-editar-eliminar">
-                  <IconButton
-                    className="button buttonTerciary "
-                    onClick={() => handleInput(objeto)}
-                    icon="pencil"
-                  >
-                    Editar
-                  </IconButton>
-                  <IconButton
-                    className="button buttonSecundary "
-                    onClick={() => handleClickDelete(objeto.id)}
-                    icon="minus"
-                  >
-                    Eliminar
-                  </IconButton>
-                </div>
-              </li>
-            </div>
-          ))}
-        </ul>
-        <ReactModal
-          isOpen={modalIsOpen}
-          onRequestClose={toggleFormulario}
-          className="Modal"
-          overlayClassName="Overlay"
-        >
-          <form className="form container">
-            <div className="form-group">
-              <h2>Agregar Carcterística</h2>
-              <label>
-                Nombre:
-                <input type="text" value={inputValue} onChange={handleChange} />
-              </label>
-              <div className="form-group">
-                <label>Seleccionar Imagen</label>
-              </div>
-            </div>
-            <div className="buttonFormBoxFeature">
-              <button
-                className="addFeatureButton button buttonBlue buttonBig"
-                type="button"
-                onClick={handleChangeSend}
-              >
-                Confirmar
-              </button>
-              <button
-                className="button buttonBig buttonSecundary"
+    <>
+      {responseData ? (
+        <div className="bodyFeatures img-background">
+          <div className="asdf">
+            <div className="space-between container-add-button">
+              <h2>Administar {sectionTitle}s</h2>
+              <IconButton
+                className="button buttonBlue buttonBig"
                 onClick={toggleFormulario}
+                icon="plus"
               >
-                Cancelar
-              </button>
+                Agregar {sectionTitle}
+              </IconButton>
             </div>
-          </form>
-        </ReactModal>
-      </div>
-    </div>
+
+            {mostrarFormulario && (
+              <form onSubmit={handleSubmit} className="form container">
+                <div className="form-group">
+                  <h2>Agregar nueva {sectionTitle}</h2>
+                  <label>
+                    Nombre:
+                    <input
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                    />
+                  </label>
+                </div>
+                <div className="form-group">
+                  <Dropzone
+                    onDrop={handleDrop}
+                    accept={{
+                      "image/*": [".png", ".jpeg", ".jpg", ".gif", ".svg"],
+                    }}
+                    multiple={false}
+                    className="dropzone"
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <section className="form-group">
+                        <label>Icono:</label>
+                        <div {...getRootProps()} className="dropzone">
+                          <input {...getInputProps()} />
+                          <p>
+                            Arrastra y suelta un ícono aquí, o haz clic para
+                            seleccionar uno
+                          </p>
+                        </div>
+                        {selectedImage && (
+                          <div className="form-group image-drop">
+                            <div className="image-preview space">
+                              <img
+                                src={URL.createObjectURL(selectedImage)}
+                                alt={inputValue}
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </section>
+                    )}
+                  </Dropzone>
+                </div>
+                <div className="buttonFormBox">
+                  <button
+                    className="addFeatureButton button buttonBlue buttonBig"
+                    type="submit"
+                  >
+                    Confirmar
+                  </button>
+                  <button
+                    className="button buttonBig buttonSecundary"
+                    onClick={handleChangeCancel}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            )}
+
+            <ul className="adminFeactures">
+              {currentProducts.map((objeto, index) => (
+                <div className="divLi" key={objeto.id}>
+                  <li className="list-item">
+                    <div className="divSVG">
+                      <img src={objeto.url} />
+                    </div>
+                    <p>
+                      ID {objeto.id} - {objeto.title}
+                    </p>
+
+                    <div className="box-editar-eliminar">
+                      <IconButton
+                        className="button buttonTerciary "
+                        onClick={() => handleInput(objeto)}
+                        icon="pencil"
+                      >
+                        Editar
+                      </IconButton>
+                      <IconButton
+                        className="button buttonSecundary "
+                        onClick={() => handleClickDelete(objeto.id)}
+                        icon="minus"
+                      >
+                        Eliminar
+                      </IconButton>
+                    </div>
+                  </li>
+                  {mostrarFormularioEdit.mostrarForm &&
+                    mostrarFormularioEdit.idEdit == objeto.id && (
+                      <form className="form container spacer-form">
+                        <div className="form-group">
+                          <h2>Editar {sectionTitle}</h2>
+                          <label>
+                            Nombre:
+                            <input
+                              type="text"
+                              value={inputValue}
+                              onChange={handleInputEdit}
+                            />
+                          </label>
+                        </div>
+                        <div className="form-group">
+                          <Dropzone
+                            onDrop={handleDropEdit}
+                            accept={{
+                              "image/*": [
+                                ".png",
+                                ".jpeg",
+                                ".jpg",
+                                ".gif",
+                                ".svg",
+                              ],
+                            }}
+                            multiple={false}
+                            className="dropzone"
+                          >
+                            {({ getRootProps, getInputProps }) => (
+                              <section className="form-group">
+                                <label>Icono:</label>
+                                <div {...getRootProps()} className="dropzone">
+                                  <input {...getInputProps()} />
+                                  <p>
+                                    Arrastra y suelta un ícono aquí, o haz clic
+                                    para seleccionar uno
+                                  </p>
+                                </div>
+                                {selectedImageEdit && (
+                                  <div className="form-group image-drop">
+                                    <div className="image-preview space">
+                                      <img
+                                        src={URL.createObjectURL(
+                                          selectedImageEdit
+                                        )}
+                                        alt={inputValue}
+                                      />
+                                    </div>
+                                  </div>
+                                )}
+                              </section>
+                            )}
+                          </Dropzone>
+                        </div>
+                        <div className="buttonFormBox">
+                          <button
+                            className="addFeatureButton button buttonBlue buttonBig"
+                            type="button"
+                            onClick={handleInputUpdate}
+                          >
+                            Confirmar
+                          </button>
+                          <button
+                            className="button buttonBig buttonSecundary"
+                            onClick={handleChangeCancel}
+                          >
+                            Cancelar
+                          </button>
+                        </div>
+                      </form>
+                    )}
+                </div>
+              ))}
+            </ul>
+
+            {/* Agregar el componente de paginación */}
+            <Pagination
+              productsPerPage={productsPerPage}
+              totalProducts={responseData.length}
+              paginate={paginate}
+              currentPage={currentPage}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="loader-container">
+          <div className="loader"></div>
+        </div>
+      )}
+    </>
   );
 };
 
