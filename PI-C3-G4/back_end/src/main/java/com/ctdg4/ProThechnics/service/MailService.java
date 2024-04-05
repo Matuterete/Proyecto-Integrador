@@ -71,8 +71,8 @@ public class MailService {
                 "            <li>Fecha Inicio: " + mailStructure.getDateStart() + "</li>" +
                 "            <li>Fecha Fin: " + mailStructure.getDateEnd() + "</li>" +
                 "            <li>Cantidad de Días: " + mailStructure.getDays() + "</li>" +
-                "            <li>Precio por Día: " + mailStructure.getDayAmount() + "</li>" +
-                "            <li>Costo Total: " + mailStructure.getTotalAmount() + "</li>" +
+                "            <li>Precio por Día: USD " + mailStructure.getDayAmount() + "</li>" +
+                "            <li>Costo Total: USD " + mailStructure.getTotalAmount() + "</li>" +
                 "        </ul>" +
                 "        <p>No dudes en contactarnos si tienes alguna pregunta. Puedes encontrarnos en nuestra web <a href=\"https://www.prothechnics.shop\">www.prothechnics.shop</a> o también puedes contactarnos por WhatsApp.</p>" +
                 "        <p>Gracias nuevamente por tu confianza.</p>" +
