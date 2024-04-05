@@ -199,6 +199,17 @@
     align-items: center;
     justify-content: center;
   }
+
+.Button-calendario{
+  height: 10vw;
+  width: 30vw;
+  text-align: center;
+}
+
+.Button-calendario span{
+  visibility: hidden;
+}
+
 }
 
 
@@ -253,7 +264,6 @@
   border-radius: 8px;
   border: 1px solid transparent;
   cursor: pointer;
-  height: 40px;
 }
 
 .Button-calendario:hover {
@@ -365,10 +375,7 @@
   width: 100%;
 }
 
-@media (max-width: 425px) {
-  .search-container {
-    display: none;
-  }
+@media (max-width: 425px) { 
 
   /* ========== CATEGORIA ========== */
   .categoria img {
