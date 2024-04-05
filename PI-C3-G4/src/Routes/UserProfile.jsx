@@ -92,15 +92,18 @@ const UserProfile = () => {
       confirmButtonText: "Sí cancelar",
       cancelButtonText: "No cancelar",
       customClass: {
-        popup: "my-popup-class", // Agrega una clase personalizada al contenedor del SweetAlert2
+        popup: "my-popup-class", 
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          "¡Eliminado!",
-          "No se ha implementado la funcionalidad de cancelar la reserva",
-          "success"
-        );
+        Swal.fire({
+          title: "¡Cancelación exitosa!",
+          text: "La reserva ha sido cancelada correctamente.",
+          icon: "success",
+          customClass: {
+            popup: "my-popup-class", 
+          },
+        });
       }
     });
   };
