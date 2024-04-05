@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import requestToAPI from "../services/requestToAPI";
+import chroma from "chroma-js"; 
 import "../Components/Styles/Buscador.css";
 
 const Buscador = ({ onSelectProduct }) => {
@@ -64,6 +65,24 @@ const Buscador = ({ onSelectProduct }) => {
     return label;
   };
 
+  const colourStyles = {
+    control: styles => ({
+      ...styles,
+      backgroundColor: '#3A4047',
+      borderRadius: 8,
+      border: '1px solid #289e3b',
+    }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+      return {
+        ...styles,
+        backgroundColor: isDisabled ? 'red' : (isSelected ? '#289e3b' : '#3A4047'),
+        color: isSelected ? 'white' : '#289e3b',
+      };
+    },
+    input: styles => ({ ...styles, color: '#289e3b' }),
+    singleValue: styles => ({ ...styles, color: '#289e3b' }),
+  };
+
   return (
     <div className="search">
       <Select
@@ -76,6 +95,7 @@ const Buscador = ({ onSelectProduct }) => {
         className="react-select-container"
         classNamePrefix="react-select"
         formatOptionLabel={formatOptionLabel}
+        styles={colourStyles} 
       />
     </div>
   );

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import requestToAPI from "../services/requestToAPI";
-
+import Loginimg from "../assets/login.svg";
 
 function Login() {
   const [usuario, setUsuario] = useState({
@@ -30,21 +30,12 @@ function Login() {
 
       sessionStorage.setItem("userData", JSON.stringify(response));
 
-      // Redirigir al usuario de vuelta a la página Detail
       const redirectPath = sessionStorage.getItem("redirectPath");
       if (redirectPath) {
-        navigate(redirectPath);
         sessionStorage.removeItem("redirectPath");
+        navigate(redirectPath);
       } else {
-
-        if (
-          response.user.role === "ADMIN" ||
-          response.user.role === "SUPERADMIN"
-        ) {
-          navigate("/administracion");
-        } else {
-          navigate("/home");
-        }
+        navigate("/home");
       }
 
       window.location.reload();
@@ -66,8 +57,8 @@ function Login() {
   return (
     <div className="bodyLogUser bodyA">
 
-      <div className="imgParlantes">
-        <img src="\src\assets\Parlantes-fondo.png" alt="" />
+      <div className="imgLogin">
+        <img className="Login" src={Loginimg} />
       </div>
 
       <form onSubmit={handleSubmit} className='form'>
