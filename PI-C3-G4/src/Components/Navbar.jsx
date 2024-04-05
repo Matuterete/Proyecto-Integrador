@@ -89,6 +89,7 @@ const Navbar = () => {
   };
   return (
     <section className="header">
+
       <nav className="navbar">
 
         <Link className="navbar-logo" onClick={handleReload}>
@@ -101,13 +102,17 @@ const Navbar = () => {
             <button className="menuHamburguesa" onClick={toggleMenu}>☰</button>
 
             <div className={`menu ${isOpen ? 'open' : ''}`}>
-              <button className="buttonCerrarMenu" onClick={toggleMenu}>Cerrar menu</button>
+              <button className="buttonCerrarMenu" onClick={toggleMenu}>✖</button>
 
               <div>
                 {sessionData ? (
-                  <Link to="/userprofile" onClick={toggleMenu}>
-                    <p>Mi perfil</p>
-                  </Link>
+                  <div>
+                    <h2>{sessionData.user.name} {sessionData.user.lastName}</h2>
+                    <Link to="/userprofile" onClick={toggleMenu}>
+                      <p>Mi perfil</p>
+                    </Link>
+                  </div>
+
                 ) : null}
 
                 {sessionData && (sessionData.user.role === "ADMIN" || sessionData.user.role === "SUPERADMIN") && (
@@ -119,7 +124,7 @@ const Navbar = () => {
                 )}
 
                 {sessionData ? (
-                  <p onClick={()=>{handleLogout(); }}>
+                  <p onClick={() => { handleLogout(); }}>
                     Cerrar Sesion
                   </p>
                 ) : (
@@ -188,6 +193,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+
     </section>
   );
 };

@@ -174,7 +174,7 @@ const UserProfile = () => {
 
   const [ratingValue, setRatingValue] = useState(0)
   return (
-    <div className="userprof img-background">
+    <div className="userprof ">
       <div className="adminMenu">
         <div className="Menu">
           <div className="ButtonContainer">

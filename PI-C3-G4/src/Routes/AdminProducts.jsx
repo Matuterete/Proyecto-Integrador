@@ -105,7 +105,7 @@ function AdminProducts() {
   };
 
   return (
-    <div className='img-background'>
+    <div className=''>
       {showProductList && (
         <div className='titleAndButtonAdmin'>
           <div className='container-add-button space-between'>

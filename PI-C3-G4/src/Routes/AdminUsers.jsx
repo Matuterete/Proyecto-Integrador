@@ -105,7 +105,7 @@ function AdminUsers() {
   };
   
   return (
-    <div className='img-background'>
+    <div className=''>
       
       {showUserList && (
         <div>

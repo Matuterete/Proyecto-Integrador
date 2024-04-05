@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   color: white;
+  max-width: 300px;
 }
 
 .name-card {
@@ -63,7 +64,8 @@
   width: 28px;
   height: 28px;
   border-color: #28923C;
-  color: #28923C ;
+  color: #28923C;
+  cursor: pointer;
 }
 
 .card:hover {
@@ -105,10 +107,6 @@
   font-weight: bolder;
 }
 
-.mobile-fav {
-  display: none;
-}
-
 
 @keyframes heartBeat {
   0% {
@@ -124,13 +122,38 @@
   }
 }
 
+.social {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: larger;
+}
+
+.mobile-fav {
+  border: none;
+  background-color: unset;
+  font-size: 1.4em;
+  cursor: pointer;
+}
+
+.favAndShare {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
 @media (max-width: 425px) {
-  .fav-button {
+  .mobile-fav {
+
+    font-size: 1em;
+  }
+
+  .ratings-amount {
     display: none;
   }
-  .ratings-amount{
-    display: none;
-  }
+
   .cardTitle-2 {
     margin-left: 1rem;
     font-size: 1rem;
@@ -177,24 +200,11 @@
     font-size: 0.8em;
   }
 
-  .mobile-fav {
-    display: block;
-    border: none;
-    background-color: unset;
-    font-size: 1em;
-  }
-
-  .favAndShare {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-evenly;
-  }
-
   .h2card {
     padding: 0;
   }
-  .rating-average-container{
+
+  .rating-average-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -210,12 +220,6 @@
 
 
 /* ========== home ========== */
-.body {
-  padding-top: 10vh;
-  padding-bottom: 50px;
-  width: 100%;
-  color: white;
-}
 
 .Container {
   width: 70%;
@@ -319,10 +323,12 @@
   margin-bottom: 10vh;
   border-bottom: solid 1px #41E55B;
 }
+
 .slick-dots li button:before {
   color: #41E55B;
   font-size: 1rem;
 }
+
 .slick-dots li.slick-active button:before {
   color: #41E55B;
 }
@@ -337,13 +343,18 @@
 }
 
 .producto {
-  width: 80%;
+  width: 90%;
 }
 
 .pagination-container {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.productos-por-categoria {
+  max-width: 1500px;
+  margin: auto;
 }
 
 .productos-por-categoria h2 {
@@ -361,8 +372,9 @@
 .cardGrid-2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 3rem;
-  width: 100%;
+  grid-gap: 1rem;
+  max-width: 1000px;
+  width: 80vw;
 }
 
 
@@ -373,11 +385,11 @@
 
   /* ========== CATEGORIA ========== */
   .categoria img {
-    width: 20px;
+    width: 24px;
   }
 
   .categoria p {
-    font-size: 0.5em;
+    font-size: 0.6em;
     margin-top: 0;
   }
 
@@ -396,20 +408,23 @@
     margin: 0 auto 20px;
     max-width: 100%;
   }
+
   .producto {
     width: 100%;
   }
+
   .slick-dots li button:before {
     color: greenyellow;
     font-size: 0.6rem;
   }
+
   .card-wrapper {
     width: 100%;
     margin: 0;
 
   }
 
- /* ========== CARD GRID ========== */
+  /* ========== CARD GRID ========== */
 
   .cardGrid-2 {
     display: grid;

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import requestToAPI from "../services/requestToAPI";
 import { useDropzone } from "react-dropzone";
+import IconButton from "./IconButton";
 
 function ProductAddForm({ onAdd, onCancel }) {
   const [name, setName] = useState("");
@@ -358,7 +359,7 @@ function ProductAddForm({ onAdd, onCancel }) {
             </div>
             {index > 0 && (
               <button
-                className="button eliminar"
+                className="button eliminar buttonSecundary"
                 type="button"
                 onClick={() => handleRemoveFeature(index)}
               >
@@ -367,14 +368,15 @@ function ProductAddForm({ onAdd, onCancel }) {
             )}
           </div>
         ))}
-        <button
-          className="button buttonBlue"
-          type="button"
+        <IconButton
+          className='button buttonPrimary '
+          icon="plus"
           onClick={handleAddFeature}
         >
-          Agregar Característica
-        </button>
+          Caracteristica
+        </IconButton>
       </div>
+
       <div className="buttonFormBox">
         <button type="submit" className="button buttonBlue buttonBig">
           Agregar Producto

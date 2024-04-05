@@ -193,7 +193,7 @@ function RegistroUsuario() {
   };
 
   return (
-    <div className="img-background bodyLogUser">
+    <div className=" bodyLogUser">
       <div className="imgParlantes">
         <img src="\src\assets\Parlantes-fondo.png" alt="" />
       </div>

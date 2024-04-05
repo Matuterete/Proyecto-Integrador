@@ -36,9 +36,10 @@ const Share = ({ url, image, nombre, description }) => {
             transform: "translate(-50%, -50%)",
             width: "550px",
             height: "450px",
-            backgroundColor: "#fafafa",
+            backgroundColor: "transparent",
             borderRadius: "1rem",
-            color: "#333",
+            border:"none",
+            color: "#D7DDE2",
             display: "flex",
           },
         }}
@@ -51,10 +52,10 @@ const Share = ({ url, image, nombre, description }) => {
           </div>
           <ShareSocial url={url} image={image} nombre={nombre} />
           <div className="modal-buttons">
-            <button className="go-to-detail-button" onClick={handleButtonClick}>
+            <button className="button buttonTerciary" onClick={handleButtonClick}>
               Ver Datalles
             </button>
-            <button className="close-modal" onClick={closeModal}>
+            <button className="button buttonSecundary" onClick={closeModal}>
               Cerrar
             </button>
           </div>

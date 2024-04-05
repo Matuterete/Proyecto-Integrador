@@ -174,7 +174,7 @@ const AdminCategories = () => {
   };
 
   return (
-    <div className="bodyCategorias img-background">
+    <div className="bodyCategorias ">
       
       <div className='container-add-button space-between'>
 

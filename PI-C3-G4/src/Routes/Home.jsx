@@ -194,7 +194,7 @@ const Home = () => {
   };
 
   return (
-    <div className="body img-background">
+    <div className="body-container">
       <div className="Search-Calendar">
         <h1>Alquiler de equipos profecionales</h1>
 

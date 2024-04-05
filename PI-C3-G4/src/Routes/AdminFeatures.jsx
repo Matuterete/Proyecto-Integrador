@@ -209,7 +209,7 @@ const AdminFeatures = () => {
     return (
         <>
             {responseData ? (
-                <div className='bodyFeatures img-background'>
+                <div className='bodyFeatures '>
 
                     <div className='asdf'>
                         <div className='space-between container-add-button'>

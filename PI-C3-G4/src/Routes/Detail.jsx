@@ -157,7 +157,7 @@ const Detail = () => {
     };
   }, []);
   return (
-    <div className=" img-background">
+    <div className="body-container">
       {product ? (
         <div className="body-Detail-container">
           <div>
