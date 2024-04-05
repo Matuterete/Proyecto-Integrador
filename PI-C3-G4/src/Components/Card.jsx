@@ -36,6 +36,7 @@ const Card = ({ product, userData }) => {
         showCancelButton: true,
         confirmButtonText: "Iniciar sesión",
         cancelButtonText: "Registrarse",
+        showCloseButton: true,
         customClass: {
           popup: 'my-popup-class' // Agrega una clase personalizada al contenedor del SweetAlert2
         }
