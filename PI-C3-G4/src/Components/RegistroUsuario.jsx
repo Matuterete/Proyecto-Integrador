@@ -51,7 +51,6 @@ function RegistroUsuario() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     const formData = { name, lastName, email, password };
     setFormData(formData);
 
@@ -125,7 +124,7 @@ function RegistroUsuario() {
           password,
           email,
         });
-        console.log(response);
+        setIsSubmitting(true);
         if (response.user.id > 0) {
           setIsSubmitting(false);
           setVerificationModalOpen(true);
