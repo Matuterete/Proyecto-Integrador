@@ -78,6 +78,7 @@ const UserProfile = () => {
   const stringToDate = (dateString) => {
     const date = new Date(dateString);
     date.setHours(date.getHours() + 3);
+    date.setDate(date.getDate());
     return date;
   };
 
@@ -101,7 +102,7 @@ const UserProfile = () => {
             `rentals/delete/id/${rentalId}`,
             "DELETE"
           );
-          console.log(response)
+          console.log(response);
           if (response === "Rental deleted successfully") {
             const updatedRentals = rentals.filter((r) => r.id !== rentalId);
             setRentals(updatedRentals);
@@ -277,8 +278,9 @@ const UserProfile = () => {
 
                         <p className="name-reserva">{objeto.product.name}</p>
                         <p>
-                          {objeto.dateStart} - {objeto.dateEnd} (
-                          {objeto.daysTotal} día/s)
+                          {stringToDate(objeto.dateStart).toLocaleDateString()}{" "}
+                          - {stringToDate(objeto.dateEnd).toLocaleDateString()}{" "}
+                          ({objeto.daysTotal + 1} día/s)
                         </p>
                         <p>${objeto.amount} USD</p>
 
