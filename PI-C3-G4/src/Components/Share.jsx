@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import Modal from "react-modal";
 import ShareSocial from "./ShareSocial";
+import ShareSocial from "./ShareSocial";
 
-const Share = ({ url, image, nombre, description }) => {
+const Share = ({ product, onClick }) => { // Recibir product como prop
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ const Share = ({ url, image, nombre, description }) => {
   };
 
   const handleButtonClick = () => {
-    navigate(url);
+    navigate(product.url); // Usar product.url en lugar de url
   };
 
   const MAX_DESCRIPTION_LENGTH = 250;
@@ -50,18 +51,19 @@ const Share = ({ url, image, nombre, description }) => {
             backgroundColor: "transparent",
             borderRadius: "12px",
             border: "none",
+            border: "none",
             color: "#D7DDE2",
             display: "flex",
           },
         }}
       >
         <div className="share-social-modal">
-          <h2>Compartir {nombre}</h2>
+          <h2>Compartir {product.name}</h2>
           <div className="product-info">
             <img src={image} height="180px" />
             <p>{truncateDescription(description, MAX_DESCRIPTION_LENGTH)}</p>
           </div>
-          <ShareSocial url={url} image={image} nombre={nombre} />
+          <ShareSocial url={"/detail/" + product.id} image={product.images[0].url} nombre={product.name} />
           <div className="modal-buttons">
             <button
               className="button buttonBig buttonTerciary"

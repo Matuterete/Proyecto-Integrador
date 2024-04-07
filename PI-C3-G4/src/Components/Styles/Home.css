@@ -244,6 +244,10 @@
   gap: 20px;
 }
 
+.CalendarButtons{
+  display: flex;
+}
+
 .calendars-container {
   display: flex;
   gap: 20px;

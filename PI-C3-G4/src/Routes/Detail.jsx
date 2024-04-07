@@ -43,8 +43,10 @@ const Detail = () => {
   };
 
   const calculateDays = (startDate, endDate) => {
-    const start = new Date(startDate.setHours(0, 0, 0, 0));
-    const end = new Date(endDate.setHours(0, 0, 0, 0));
+    const start = new Date(startDate.getTime());
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(endDate.getTime());
+    end.setHours(0, 0, 0, 0);
     const diffTime = Math.abs(end - start);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24) + 1);
     return diffDays;
@@ -105,7 +107,6 @@ const Detail = () => {
       const horaFormateada = `${hora}:${minutos} hs`;
       const fechaHoraFormateada = `${fechaFormateada} a las ${horaFormateada}`;
 
-
       const mailData = {
         subject:
           userData.user.name +
@@ -121,7 +122,7 @@ const Detail = () => {
         dateEnd: response.dateEnd,
         days: daysTotal,
         dayAmount: product.price,
-        totalAmount: amount
+        totalAmount: amount,
       };
 
       const mailResponse = await requestToAPI(

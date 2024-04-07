@@ -78,10 +78,11 @@ const UserProfile = () => {
   const stringToDate = (dateString) => {
     const date = new Date(dateString);
     date.setHours(date.getHours() + 3);
+    date.setDate(date.getDate());
     return date;
   };
 
-  const handleCancelRental = (rentalId) => {
+  const handleCancelRental = async (rentalId) => {
     Swal.fire({
       title: "¿Estás seguro?",
       text: `Una vez cancelada la reserva ${rentalId}, no podrás recuperarla.`,
@@ -92,15 +93,41 @@ const UserProfile = () => {
       confirmButtonText: "Sí cancelar",
       cancelButtonText: "No cancelar",
       customClass: {
-        popup: "my-popup-class", // Agrega una clase personalizada al contenedor del SweetAlert2
+        popup: "my-popup-class",
       },
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          "¡Eliminado!",
-          "No se ha implementado la funcionalidad de cancelar la reserva",
-          "success"
-        );
+        try {
+          const response = await requestToAPI(
+            `rentals/delete/id/${rentalId}`,
+            "DELETE"
+          );
+          console.log(response);
+          if (response === "Rental deleted successfully") {
+            const updatedRentals = rentals.filter((r) => r.id !== rentalId);
+            setRentals(updatedRentals);
+            Swal.fire({
+              title: "¡Cancelación exitosa!",
+              text: "La reserva ha sido cancelada correctamente.",
+              icon: "success",
+              customClass: {
+                popup: "my-popup-class",
+              },
+            });
+          } else {
+            throw new Error("Error al cancelar la reserva");
+          }
+        } catch (error) {
+          console.error("Error al cancelar la reserva:", error);
+          Swal.fire({
+            title: "Error",
+            text: "Ocurrió un error al cancelar la reserva. Por favor, inténtalo de nuevo más tarde.",
+            icon: "error",
+            customClass: {
+              popup: "my-popup-class",
+            },
+          });
+        }
       }
     });
   };
@@ -250,8 +277,9 @@ const UserProfile = () => {
 
                         <p className="name-reserva">{objeto.product.name}</p>
                         <p>
-                          {objeto.dateStart} - {objeto.dateEnd} (
-                          {objeto.daysTotal} día/s)
+                          {stringToDate(objeto.dateStart).toLocaleDateString()}{" "}
+                          - {stringToDate(objeto.dateEnd).toLocaleDateString()}{" "}
+                          ({objeto.daysTotal + 1} día/s)
                         </p>
                         <p>${objeto.amount} USD</p>
 
