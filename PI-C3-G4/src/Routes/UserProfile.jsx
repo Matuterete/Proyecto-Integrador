@@ -146,7 +146,6 @@ const UserProfile = () => {
         "POST",
         ratingData
       );
-      // console.log(response);
       if (response.userId > 0) {
         setShowRatingModal(false);
         Swal.fire({
@@ -307,41 +306,6 @@ const UserProfile = () => {
         }}
       >
         <div className="rate-modal">
-          {/* <form className="form-rate form-group-rate" onSubmit={handleSubmitRating}>
-            <label htmlFor="rating">Calificación: {selectedProduct && selectedProduct.productName}</label>
-            <input
-              type="number"
-              id="rating"
-              name="rating"
-              min="1"
-              max="5"
-              placeholder="Ingresa un valor de 1 a 5"
-              onInput={(e) => {
-                if (e.target.value > 5) {
-                  e.target.value = 5;
-                }
-              }}
-            />
-            <label htmlFor="review">Escribe tu opinion:</label>
-            <textarea
-              id="review"
-              name="review"
-              rows="4"
-              cols="50"
-              placeholder="Este articulo ..."
-            ></textarea>
-            <div className="modal-buttons">
-              <button type="submit" className="button buttonTerciary buttonBig">
-                Enviar
-              </button>
-              <button
-                className="button buttonSecundary buttonBig close-modal"
-                onClick={() => setShowRatingModal(false)}
-              >
-                Cancelar
-              </button>
-            </div>
-          </form> */}
           <form
             className="form-rate form-group-rate"
             onSubmit={handleSubmitRating}

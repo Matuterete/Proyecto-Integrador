@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 async function requestToAPI(endpoint, method, data = null, headers = {}) {
-  // const url = `http://localhost:8080/api/${endpoint}`;
+  // const url = `https://localhost:8080/api/${endpoint}`;
   const url = `https://prothechnics.mooo.com:8080/api/${endpoint}`;
   const response = await axios({
     method: method,

@@ -10,6 +10,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Random;
+
 @Service
 public class MailService {
 
@@ -19,11 +22,13 @@ public class MailService {
     private JavaMailSender mailSender;
     @Value("${spring.mail.username}")
     private String fromMail;
+    @Value("${email.fromName}")
+    private String fromName;
 
-    public void sendHtmlEmail(String mail, MailStructure mailStructure) throws MessagingException {
+    public void rentEmail(String mail, MailStructure mailStructure) throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        helper.setFrom(fromMail);
+        helper.setFrom(fromMail, fromName);
         helper.setTo(mail);
         helper.setSubject(mailStructure.getSubject());
 
@@ -36,6 +41,7 @@ public class MailService {
                 "    <style>" +
                 "        .container {" +
                 "            width: 600px;" +
+                "            font-size:  1rem;" +
                 "            margin: 0 auto;" +
                 "        }" +
                 "        .caja {" +
@@ -53,9 +59,7 @@ public class MailService {
                 "</head>" +
                 "<body>" +
                 "    <div class=\"container\">" +
-                "        <a href=\"https://www.prothechnics.shop/detail/" + mailStructure.getProductId() + "\">" +
                 "            <img src=\"https://prothechnics-images.s3.us-east-2.amazonaws.com/site/mail_header_small.png\" alt=\"ProThechics Soluciones\">" +
-                "        </a>" +
                 "        <p>Hola " + mailStructure.getName() + ",</p>" +
                 "        <p>Gracias por elegirnos para tu reciente alquiler de:</p>" +
                 "        <h1 style=\"text-align: center; font-weight: bold;\">" + mailStructure.getProductName() + "</h1>" +
@@ -85,4 +89,59 @@ public class MailService {
         helper.setText(htmlContent, true);
         mailSender.send(message);
     }
+
+    public void registerEmail(String name, String mail, Integer validationCode) throws MessagingException, UnsupportedEncodingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setFrom(fromMail, fromName);
+        helper.setTo(mail);
+        helper.setSubject(name + ", completa tu registro en ProThechnics Soluciones");
+
+        String htmlContent = "<!DOCTYPE html>" +
+                "<html lang=\"es\">" +
+                "<head>" +
+                "    <meta charset=\"UTF-8\">" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" +
+                "    <title>Bienvenido a ProThechnics</title>" +
+                "    <style>" +
+                "        .container {" +
+                "            width: 600px;" +
+                "            margin: 0 auto;" +
+                "            font-size:  1rem;" +
+                "            font-family: \"Poppins\", sans-serif;" +
+                "        }" +
+                "        .code {" +
+                "            text-weight: bold;" +
+                "            font-size:  2rem;" +
+                "            text-align: center;" +
+                "            background-color: black;" +
+                "            width: 30%;" +
+                "            margin: auto;" +
+                "            color: antiquewhite;" +
+                "            padding: 0.5rem;" +
+                "            letter-spacing: 5px;" +
+                "        }" +
+                "    </style>" +
+
+                "</head>" +
+                "<body>" +
+                "    <div class=\"container\">" +
+                "            <img src=\"https://prothechnics-images.s3.us-east-2.amazonaws.com/site/mail_header_small.png\" alt=\"ProThechics Soluciones\">" +
+                "    <p>Hola " + name + "</p>" +
+                "    <p>Nos complace informarte que nos llegó tu solicitud con éxito.</p>" +
+                "    <p>Para completar tu registro, por favor ingresa el siguiente código de verificación en nuestra página:</p>" +
+                "    <br> "+
+                "    <p class=\"code\">" + validationCode + "</p>" +
+                "    <br> "+
+                "    <p>Una vez completado, podrás iniciar sesión en nuestra plataforma haciendo clic en el siguiente enlace:</p>" +
+                "    <p><a href=\"https://www.prothechnics.shop/login\">Iniciar sesión</a></p>" +
+                "    <p>Gracias por unirte a nuestra comunidad. ¡Esperamos que tu experiencia sea increíble!</p>" +
+                "    <p>¡Saludos cordiales,<br>El equipo de ProThechnics</p>" +
+                "</body>" +
+                "</html>";
+
+        helper.setText(htmlContent, true);
+        mailSender.send(message);
+    }
+
 }

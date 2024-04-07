@@ -282,11 +282,11 @@ main {
 
 /* ========== COMPARTIR EN REDES ========== */
 
-.share-social-modal {
+.share-social-modal, .validate-modal {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   background-color: #272B32;
   border-radius: 12px;
 }
@@ -327,6 +327,16 @@ main {
   width: 100px;
 }
 
+.validate-modal p{
+  margin: 0 3rem;
+}
+
+.validate-modal input{
+  width: 50%;
+  text-align: center;
+  font-size: x-large;
+  margin: 2rem 0;
+}
 /* ========== LISTA CRUD ========== */
 
 .box-editar-eliminar {

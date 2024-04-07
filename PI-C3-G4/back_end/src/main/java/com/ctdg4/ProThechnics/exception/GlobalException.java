@@ -31,4 +31,9 @@ public class GlobalException {
     public ResponseEntity<String> handleDisabledException(DisabledException de){
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(de.getMessage());
     }
+
+    @ExceptionHandler({ValidationException.class})
+    public ResponseEntity<String> handleValidationException(ValidationException ve){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ve.getMessage());
+    }
 }

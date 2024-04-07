@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import Modal from "react-modal";
-import ShareSocial from "./ShareSocial"; 
+import ShareSocial from "./ShareSocial";
 
 const Share = ({ url, image, nombre, description }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -20,6 +20,17 @@ const Share = ({ url, image, nombre, description }) => {
   const handleButtonClick = () => {
     navigate(url);
   };
+
+  const MAX_DESCRIPTION_LENGTH = 250;
+
+  const truncateDescription = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength - 3) + "...";
+    } else {
+      return text;
+    }
+  };
+
   return (
     <div>
       <button className="share-button" onClick={openModal}>
@@ -38,7 +49,7 @@ const Share = ({ url, image, nombre, description }) => {
             height: "450px",
             backgroundColor: "transparent",
             borderRadius: "12px",
-            border:"none",
+            border: "none",
             color: "#D7DDE2",
             display: "flex",
           },
@@ -48,14 +59,20 @@ const Share = ({ url, image, nombre, description }) => {
           <h2>Compartir {nombre}</h2>
           <div className="product-info">
             <img src={image} height="180px" />
-            <p>{description}</p>
+            <p>{truncateDescription(description, MAX_DESCRIPTION_LENGTH)}</p>
           </div>
           <ShareSocial url={url} image={image} nombre={nombre} />
           <div className="modal-buttons">
-            <button className="button buttonBig buttonTerciary" onClick={handleButtonClick}>
+            <button
+              className="button buttonBig buttonTerciary"
+              onClick={handleButtonClick}
+            >
               Ver Datalles
             </button>
-            <button className="button buttonBig buttonSecundary" onClick={closeModal}>
+            <button
+              className="button buttonBig buttonSecundary"
+              onClick={closeModal}
+            >
               Cerrar
             </button>
           </div>

@@ -43,6 +43,8 @@ public class User implements UserDetails {
     private UserRole userRole;
     @OneToMany(mappedBy = "user")
     private Set<UserFav> fav;
+    @Column(name = "validation_code")
+    private Integer validationCode;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
