@@ -48,7 +48,7 @@ const Detail = () => {
     const end = new Date(endDate.getTime());
     end.setHours(0, 0, 0, 0);
     const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24) + 1);
     return diffDays;
   };
 
