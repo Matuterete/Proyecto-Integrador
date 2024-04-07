@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import Modal from "react-modal";
 import ShareSocial from "./ShareSocial";
-import ShareSocial from "./ShareSocial";
 
-const Share = ({ product, onClick }) => { // Recibir product como prop
+const Share = ({ product, onClick }) => { 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -51,7 +50,6 @@ const Share = ({ product, onClick }) => { // Recibir product como prop
             backgroundColor: "transparent",
             borderRadius: "12px",
             border: "none",
-            border: "none",
             color: "#D7DDE2",
             display: "flex",
           },
@@ -61,7 +59,7 @@ const Share = ({ product, onClick }) => { // Recibir product como prop
           <h2>Compartir {product.name}</h2>
           <div className="product-info">
             <img src={image} height="180px" />
-            <p>{truncateDescription(description, MAX_DESCRIPTION_LENGTH)}</p>
+            <p>{truncateDescription(product.description, MAX_DESCRIPTION_LENGTH)}</p>
           </div>
           <ShareSocial url={"/detail/" + product.id} image={product.images[0].url} nombre={product.name} />
           <div className="modal-buttons">
