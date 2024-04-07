@@ -18,7 +18,7 @@ const Share = ({ product, onClick }) => {
   };
 
   const handleButtonClick = () => {
-    navigate(product.url); 
+    navigate("/detail/" + product.id); 
   };
 
   const MAX_DESCRIPTION_LENGTH = 250;
