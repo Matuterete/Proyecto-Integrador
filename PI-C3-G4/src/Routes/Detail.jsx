@@ -126,7 +126,7 @@ const Detail = () => {
       };
 
       const mailResponse = await requestToAPI(
-        `mail/send/${userData.user.email}`,
+        `mail/send/rental/${userData.user.email}`,
         "POST",
         mailData
       );
