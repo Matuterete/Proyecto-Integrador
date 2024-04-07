@@ -18,7 +18,7 @@ const Share = ({ product, onClick }) => {
   };
 
   const handleButtonClick = () => {
-    navigate(product.url); // Usar product.url en lugar de url
+    navigate(product.url); 
   };
 
   const MAX_DESCRIPTION_LENGTH = 250;
@@ -58,7 +58,7 @@ const Share = ({ product, onClick }) => {
         <div className="share-social-modal">
           <h2>Compartir {product.name}</h2>
           <div className="product-info">
-            <img src={image} height="180px" />
+            <img src={product.images[0].url} height="180px" />
             <p>{truncateDescription(product.description, MAX_DESCRIPTION_LENGTH)}</p>
           </div>
           <ShareSocial url={"/detail/" + product.id} image={product.images[0].url} nombre={product.name} />
